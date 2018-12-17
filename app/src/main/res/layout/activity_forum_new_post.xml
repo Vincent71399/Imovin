@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activities.ForumNewPostActivity">
+
+    <EditText
+        android:id="@+id/title_input"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="10dp"
+        android:hint="@string/new_thread_title_hint"
+        android:background="@drawable/black_border_blackground"
+        android:textSize="24sp"
+        android:gravity="top|start"/>
+
+    <EditText
+        android:id="@+id/message_input"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/black_border_blackground"
+        android:hint="@string/new_thread_message_hint"
+        android:gravity="top|start"/>
+
+</LinearLayout>

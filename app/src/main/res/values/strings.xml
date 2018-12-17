@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Imovin</string>
+
+    <string name="login_email_title">Email</string>
+    <string name="login_password_title">Password</string>
+    <string name="login_btn_title">Login</string>
+    <string name="hint_email">name@email.com</string>
+    <string name="hint_password">********</string>
+
+    <string name="steps">Steps</string>
+    <string name="cal">Cal</string>
+    <string name="time">Time</string>
+    <string name="calories">Calories</string>
+    <string name="duration">Duration</string>
+
+    <string name="warning_text">Risk of Lapsing!</string>
+    <string name="daily_goal_text">Daily Goal: 7500</string>
+
+    <string name="forum_topics">forum topics</string>
+    <string name="comments_topics">Comments</string>
+    <string name="new_thread">New Thread</string>
+    <string name="forum">Forum</string>
+    <string name="comments">Comments</string>
+    <string name="post">Post</string>
+
+    <string name="new_thread_title_hint">Enter thread title...</string>
+    <string name="new_thread_message_hint">Enter thread message...</string>
+
+    <string name="post_a_comment">Post a comment</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_comment_here">Enter comment here...</string>
+
+    <string name="january">JAN</string>
+    <string name="february">FEB</string>
+    <string name="march">MAR</string>
+    <string name="april">APR</string>
+    <string name="may">MAY</string>
+    <string name="june">JUN</string>
+    <string name="july">JUL</string>
+    <string name="augest">AUG</string>
+    <string name="september">SEP</string>
+    <string name="october">OCT</string>
+    <string name="november">NOV</string>
+    <string name="december">DEC</string>
+
+    <string name="request_fail_message">Fail to connect the server, please check internet connection</string>
+
+</resources>

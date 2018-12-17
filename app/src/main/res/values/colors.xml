@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="white_color">#FFFFFF</color>
+    <color name="light_grey_color">#F6F5F3</color>
+    <color name="grey_color">#808080</color>
+    <color name="lesser_grey_color">#A3A3A3</color>
+    <color name="blue_color">#3498db</color>
+    <color name="black_color">#1C1C1C</color>
+    <color name="wheat_color">#FFF59F</color>
+
+    <color name="theme_purple">#800080</color>
+
+</resources>
