@@ -2,7 +2,6 @@ package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,11 +16,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import sg.edu.nus.imovin.Adapters.CommentAdapter;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Request.CreateCommentRequest;
+import sg.edu.nus.imovin.Retrofit.Request.CreateSocialCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
-import sg.edu.nus.imovin.Retrofit.Response.ThreadResponse;
+import sg.edu.nus.imovin.Retrofit.Response.SocialCommentResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
@@ -29,34 +28,7 @@ import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
-public class ForumNewCommentActivity extends Activity implements View.OnClickListener {
-
-    @BindView(R.id.comment_input) TextView comment_input;
-    @BindView(R.id.button_post) Button button_post;
-    @BindView(R.id.button_cancel) Button button_cancel;
-
-    protected String thread_id;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forum_new_comment);
-
-        LinkUIById();
-        SetFunction();
-    }
-
-    private void LinkUIById(){
-        ButterKnife.bind(this);
-    }
-
-    private void SetFunction(){
-        button_post.setOnClickListener(this);
-        button_cancel.setOnClickListener(this);
-
-        thread_id = getIntent().getStringExtra(IntentConstants.THREAD_ID);
-    }
-
+public class SocialNewCommentActivity extends ForumNewCommentActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -64,7 +36,7 @@ public class ForumNewCommentActivity extends Activity implements View.OnClickLis
                 if(comment_input.getText().toString().equals("")){
                     Toast.makeText(this, "Comment cannot be empty", Toast.LENGTH_SHORT).show();
                 }else {
-                    PostComment(new CreateCommentRequest(thread_id, comment_input.getText().toString()));
+                    PostComment(new CreateSocialCommentRequest(thread_id, comment_input.getText().toString()));
                 }
                 break;
             case R.id.button_cancel:
@@ -73,7 +45,7 @@ public class ForumNewCommentActivity extends Activity implements View.OnClickLis
         }
     }
 
-    private void PostComment(CreateCommentRequest createCommentRequest){
+    private void PostComment(CreateSocialCommentRequest createSocialCommentRequest){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -82,29 +54,29 @@ public class ForumNewCommentActivity extends Activity implements View.OnClickLis
 
         ImovinService service = retrofit.create(ImovinService.class);
 
-        Call<CommentResponse> call = service.createComment(createCommentRequest);
+        Call<SocialCommentResponse> call = service.createSocialComment(createSocialCommentRequest);
 
-        call.enqueue(new Callback<CommentResponse>() {
+        call.enqueue(new Callback<SocialCommentResponse>() {
             @Override
-            public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
+            public void onResponse(Call<SocialCommentResponse> call, Response<SocialCommentResponse> response) {
                 try {
-                    CommentResponse commentResponse = response.body();
-                    Log.d(LogConstants.LogTag, "ForumNewCommentActivity : " + commentResponse.getMessage());
+                    SocialCommentResponse socialCommentResponse = response.body();
+                    Log.d(LogConstants.LogTag, "SocialNewCommentActivity : " + socialCommentResponse.getMessage());
                     Intent resultIntent = new Intent();
-                    resultIntent.putExtra(IntentConstants.COMMENT_DATA, commentResponse.getData());
+                    resultIntent.putExtra(IntentConstants.COMMENT_DATA, socialCommentResponse.getData());
                     setResult(RESULT_OK, resultIntent);
                     finish();
 
                 }catch (Exception e){
                     e.printStackTrace();
-                    Log.d(LogConstants.LogTag, "Exception ForumNewCommentActivity : " + e.toString());
+                    Log.d(LogConstants.LogTag, "Exception SocialNewCommentActivity : " + e.toString());
                     Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<CommentResponse> call, Throwable t) {
-                Log.d(LogConstants.LogTag, "Failure ForumNewCommentActivity : " + t.toString());
+            public void onFailure(Call<SocialCommentResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure SocialNewCommentActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
         });

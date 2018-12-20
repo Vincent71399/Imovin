@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="5">
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:textColor="@color/theme_purple"
+            android:text="debauer"/>
+        <TextView
+            android:id="@+id/post_since"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/lesser_grey_color"
+            android:text="1d"
+            android:textAlignment="textEnd"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/feedContentText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check out my brand new rig!"/>
+    <ImageView
+        android:id="@+id/feedImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="Feed Image"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/commentIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_speech_small"
+            android:contentDescription="CommentIcon"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/numberCommentsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+</LinearLayout>

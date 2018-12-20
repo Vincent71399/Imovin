@@ -184,8 +184,9 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                 navigator_right_text.setText("+");
                 break;
             case FuncBlockConstants.SOCIAL:
-                navigator_right.setEnabled(false);
-                navigator_right_text.setVisibility(View.INVISIBLE);
+                navigator_right.setEnabled(true);
+                navigator_right_text.setVisibility(View.VISIBLE);
+                navigator_right_text.setText("+");
                 break;
         }
     }
@@ -196,6 +197,11 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                 Intent intent = new Intent();
                 intent.setClass(this, ForumNewPostActivity.class);
                 startActivityForResult(intent, IntentConstants.FORUM_NEW_POST);
+                break;
+            case FuncBlockConstants.SOCIAL:
+                Intent newSocialIntent = new Intent();
+                newSocialIntent.setClass(this, SocialNewPostActivity.class);
+                startActivityForResult(newSocialIntent, IntentConstants.SOCIAL_NEW_POST);
                 break;
         }
     }
