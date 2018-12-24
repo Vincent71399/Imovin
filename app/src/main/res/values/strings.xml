@@ -45,4 +45,10 @@
 
     <string name="request_fail_message">Fail to connect the server, please check internet connection</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="social_feed">Social Feed</string>
+    <string name="new_post">New Post</string>
+
+
 </resources>
