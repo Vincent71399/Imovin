@@ -19,6 +19,7 @@ import sg.edu.nus.imovin.Retrofit.Request.CreateThreadRequest;
 import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeSocialCommentRequest;
+import sg.edu.nus.imovin.Retrofit.Request.UploadImageRequest;
 import sg.edu.nus.imovin.Retrofit.Response.AuthFitbitResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
@@ -30,6 +31,7 @@ import sg.edu.nus.imovin.Retrofit.Response.SocialPostResponse;
 import sg.edu.nus.imovin.Retrofit.Response.StatisticsResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadResponse;
+import sg.edu.nus.imovin.Retrofit.Response.UploadImageResponse;
 
 public interface ImovinService {
     //login
@@ -117,5 +119,10 @@ public interface ImovinService {
     Call<CommentResponse> likeComment(
             @Url String url,
             @Body LikeSocialCommentRequest likeSocialCommentRequest
+    );
+
+    @POST(ConnectionURL.REQUEST_UPLOAD_IMAGE)
+    Call<UploadImageResponse> uploadImage(
+            @Body UploadImageRequest uploadImageRequest
     );
 }

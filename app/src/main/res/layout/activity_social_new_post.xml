@@ -20,4 +20,8 @@ tools:context="sg.edu.nus.imovin.Activities.SocialNewPostActivity">
     android:layout_height="wrap_content"
     android:src="@drawable/icons_upload_image"
     />
+    <TextView
+        android:id="@+id/uploadingText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

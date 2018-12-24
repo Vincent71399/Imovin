@@ -1,10 +1,17 @@
 package sg.edu.nus.imovin.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +21,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -21,11 +38,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import sg.edu.nus.imovin.Common.ImagePicker;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Request.CreateSocialPostRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreateThreadRequest;
+import sg.edu.nus.imovin.Retrofit.Request.UploadImageRequest;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadResponse;
+import sg.edu.nus.imovin.Retrofit.Response.UploadImageResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.ImovinApplication;
@@ -37,6 +57,8 @@ import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 public class SocialNewPostActivity extends BaseActivity implements View.OnClickListener {
 
     private View customActionBar;
+    ProgressDialog dialog = null;
+    String uploadFileName = "";
 
     @BindView(R.id.navigator_middle_title)
     TextView navigator_middle_title;
@@ -54,6 +76,7 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
     @BindView(R.id.socialPostMessageInput)
     EditText message_input;
     @BindView(R.id.socialPostUploadImage) ImageView image_input;
+    @BindView(R.id.uploadingText) TextView uploadingText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,10 +138,8 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.socialPostUploadImage:
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Select Picture"), IntentConstants.SELECT_PICTURE);
+                Intent chooseImageIntent = ImagePicker.getPickImageIntent(this);
+                startActivityForResult(chooseImageIntent, IntentConstants.SELECT_PICTURE);
         }
     }
 
@@ -162,7 +183,73 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode){
             case IntentConstants.SELECT_PICTURE:
+                Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+
+                image_input.setImageBitmap(bitmap);
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                final byte[] bytes = byteArrayOutputStream.toByteArray();
+
+
+
+                dialog = ProgressDialog.show(SocialNewPostActivity.this, "", "Uploading file...", true);
+
+                new Thread(new Runnable() {
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                uploadingText.setText("uploading started.....");
+                            }
+                        });
+
+                        String encodedString = null;
+                        try {
+                            encodedString = new String(Base64.encode(bytes, 0), "UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+
+                        UploadImageRequest uploadImageRequest = new UploadImageRequest(encodedString);
+                        postImage(uploadImageRequest);
+
+                    }
+                }).start();
+
                 break;
         }
+    }
+
+    private void postImage(UploadImageRequest uploadImageRequest){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        Call<UploadImageResponse> call = service.uploadImage(uploadImageRequest);
+
+        call.enqueue(new Callback<UploadImageResponse>() {
+            @Override
+            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
+                try {
+                    UploadImageResponse commentResponse = response.body();
+                    Log.d(LogConstants.LogTag, "SocialUploadImage : " + commentResponse.getMessage());
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception SocialUploadImage : " + e.toString());
+                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure SocialUploadImage : " + t.toString());
+                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
