@@ -1,6 +1,7 @@
 package sg.edu.nus.imovin.System;
 
 import android.app.Application;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -19,6 +20,7 @@ public class ImovinApplication extends Application {
 
     private static boolean NeedRefreshForum = false;
     private static boolean NeedRefreshSocialFeed = false;
+    private static boolean NeedRefreshPlan = false;
 
     public static ImovinApplication getInstance(){
         return instance;
@@ -82,5 +84,13 @@ public class ImovinApplication extends Application {
 
     public static void setNeedRefreshSocialNeed(boolean needRefreshSocialFeed){
         NeedRefreshSocialFeed = needRefreshSocialFeed;
+    }
+
+    public static boolean isNeedRefreshPlan() {
+        return NeedRefreshPlan;
+    }
+
+    public static void setNeedRefreshPlan(boolean needRefreshPlan) {
+        NeedRefreshPlan = needRefreshPlan;
     }
 }

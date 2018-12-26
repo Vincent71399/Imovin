@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,27 +19,26 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.R;
-import sg.edu.nus.imovin.Retrofit.Request.CreateCommentRequest;
-import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
+import sg.edu.nus.imovin.Retrofit.Request.CreatePlanRequest;
+import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.ImovinApplication;
-import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
-public class ForumNewCommentActivity extends Activity implements View.OnClickListener {
+public class AddPlanActivity extends Activity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
-    @BindView(R.id.comment_input) TextView comment_input;
-    @BindView(R.id.button_post) Button button_post;
+    @BindView(R.id.plan_title_input) EditText plan_title_input;
+    @BindView(R.id.steps_value) TextView steps_value;
+    @BindView(R.id.planStepsBar) SeekBar planStepsBar;
+    @BindView(R.id.button_add_plan) Button button_add_plan;
     @BindView(R.id.button_cancel) Button button_cancel;
-
-    protected String thread_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forum_new_comment);
+        setContentView(R.layout.activity_add_plan);
 
         LinkUIById();
         SetFunction();
@@ -48,20 +49,20 @@ public class ForumNewCommentActivity extends Activity implements View.OnClickLis
     }
 
     private void SetFunction(){
-        button_post.setOnClickListener(this);
+        button_add_plan.setOnClickListener(this);
         button_cancel.setOnClickListener(this);
 
-        thread_id = getIntent().getStringExtra(IntentConstants.THREAD_ID);
+        planStepsBar.setOnSeekBarChangeListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.button_post:
-                if(comment_input.getText().toString().equals("")){
-                    Toast.makeText(this, "Comment cannot be empty", Toast.LENGTH_SHORT).show();
+            case R.id.button_add_plan:
+                if(plan_title_input.getText().toString().equals("")){
+                    Toast.makeText(this, "Plan Name cannot be empty", Toast.LENGTH_SHORT).show();
                 }else {
-                    PostComment(new CreateCommentRequest(thread_id, comment_input.getText().toString()));
+                    AddPlan(new CreatePlanRequest(plan_title_input.getText().toString(), Integer.parseInt(steps_value.getText().toString())));
                 }
                 break;
             case R.id.button_cancel:
@@ -70,7 +71,23 @@ public class ForumNewCommentActivity extends Activity implements View.OnClickLis
         }
     }
 
-    private void PostComment(CreateCommentRequest createCommentRequest){
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        int steps = 5000 + 10000 * progress / 100;
+        steps_value.setText(String.valueOf(steps));
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    private void AddPlan(CreatePlanRequest createPlanRequest){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -79,29 +96,28 @@ public class ForumNewCommentActivity extends Activity implements View.OnClickLis
 
         ImovinService service = retrofit.create(ImovinService.class);
 
-        Call<CommentResponse> call = service.createComment(createCommentRequest);
+        Call<PlanResponse> call = service.createPlan(createPlanRequest);
 
-        call.enqueue(new Callback<CommentResponse>() {
+        call.enqueue(new Callback<PlanResponse>() {
             @Override
-            public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
+            public void onResponse(Call<PlanResponse> call, Response<PlanResponse> response) {
                 try {
-                    CommentResponse commentResponse = response.body();
-                    Log.d(LogConstants.LogTag, "ForumNewCommentActivity : " + commentResponse.getMessage());
+                    PlanResponse planResponse = response.body();
+                    Log.d(LogConstants.LogTag, "NewPlanActivity : " + planResponse.getMessage());
                     Intent resultIntent = new Intent();
-                    resultIntent.putExtra(IntentConstants.COMMENT_DATA, commentResponse.getData());
                     setResult(RESULT_OK, resultIntent);
                     finish();
 
                 }catch (Exception e){
                     e.printStackTrace();
-                    Log.d(LogConstants.LogTag, "Exception ForumNewCommentActivity : " + e.toString());
+                    Log.d(LogConstants.LogTag, "Exception NewPlanActivity : " + e.toString());
                     Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<CommentResponse> call, Throwable t) {
-                Log.d(LogConstants.LogTag, "Failure ForumNewCommentActivity : " + t.toString());
+            public void onFailure(Call<PlanResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure NewPlanActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
         });

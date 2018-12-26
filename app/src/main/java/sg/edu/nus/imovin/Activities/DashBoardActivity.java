@@ -2,12 +2,12 @@ package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -26,6 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import sg.edu.nus.imovin.Event.ForumEvent;
+import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.EventConstants;
@@ -188,8 +189,9 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                 navigator_right_text.setText("+");
                 break;
             case FuncBlockConstants.GOAL:
-                navigator_right.setEnabled(false);
-                navigator_right_text.setVisibility(View.INVISIBLE);
+                navigator_right.setEnabled(true);
+                navigator_right_text.setVisibility(View.VISIBLE);
+                navigator_right_text.setText("+");
                 break;
             case FuncBlockConstants.MONITOR:
                 navigator_right.setEnabled(false);
@@ -206,9 +208,14 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
     private void navRightClickFunc(int position){
         switch (mTitles[position]){
             case FuncBlockConstants.FORUM:
-                Intent intent = new Intent();
-                intent.setClass(this, ForumNewPostActivity.class);
-                startActivityForResult(intent, IntentConstants.FORUM_NEW_POST);
+                Intent intentForum = new Intent();
+                intentForum.setClass(this, ForumNewPostActivity.class);
+                startActivityForResult(intentForum, IntentConstants.FORUM_NEW_POST);
+                break;
+            case FuncBlockConstants.GOAL:
+                Intent intentGoal = new Intent();
+                intentGoal.setClass(this, AddPlanActivity.class);
+                startActivityForResult(intentGoal, IntentConstants.GOAL_NEW_PLAN);
                 break;
             case FuncBlockConstants.SOCIAL:
                 Intent newSocialIntent = new Intent();
@@ -264,6 +271,12 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                 if(resultCode == Activity.RESULT_OK){
                     ImovinApplication.setNeedRefreshForum(true);
                     EventBus.getDefault().post(new ForumEvent(EventConstants.REFRESH));
+                }
+                break;
+            case IntentConstants.GOAL_NEW_PLAN:
+                if(resultCode == Activity.RESULT_OK){
+                    ImovinApplication.setNeedRefreshForum(true);
+                    EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                 }
                 break;
         }

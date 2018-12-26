@@ -1,6 +1,5 @@
 package sg.edu.nus.imovin.Adapters;
 
-import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -9,10 +8,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import sg.edu.nus.imovin.R;
-
 import java.util.List;
 
+import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.ThreadData;
 
 import static sg.edu.nus.imovin.Common.CommonFunc.ConvertDateString2DisplayFormat;

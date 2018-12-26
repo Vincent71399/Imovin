@@ -1,6 +1,5 @@
 package sg.edu.nus.imovin.Retrofit.Response;
 
-import sg.edu.nus.imovin.Retrofit.Object.CommentData;
 import sg.edu.nus.imovin.Retrofit.Object.SocialCommentData;
 
 /**

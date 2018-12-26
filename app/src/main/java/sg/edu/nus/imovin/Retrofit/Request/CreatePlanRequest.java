@@ -2,7 +2,12 @@ package sg.edu.nus.imovin.Retrofit.Request;
 
 public class CreatePlanRequest {
     private String name;
-    private String target;
+    private Integer target;
+
+    public CreatePlanRequest(String name, Integer target) {
+        this.name = name;
+        this.target = target;
+    }
 
     public String getName() {
         return name;
@@ -12,11 +17,11 @@ public class CreatePlanRequest {
         this.name = name;
     }
 
-    public String getTarget() {
+    public Integer getTarget() {
         return target;
     }
 
-    public void setTarget(String target) {
+    public void setTarget(Integer target) {
         this.target = target;
     }
 }

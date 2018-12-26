@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,12 +13,17 @@ import com.bignerdranch.expandablerecyclerview.ChildViewHolder;
 import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.ParentViewHolder;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
+import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.Objects.PlanDataCategory;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
+import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
+import sg.edu.nus.imovin.System.ValueConstants;
 
 public class PlanAdapter extends ExpandableRecyclerAdapter<PlanDataCategory, PlanData, PlanAdapter.PlanDataCategoryViewHolder, PlanAdapter.PlanDataViewHolder> {
     private LayoutInflater mInflater;
@@ -44,14 +50,19 @@ public class PlanAdapter extends ExpandableRecyclerAdapter<PlanDataCategory, Pla
     class PlanDataViewHolder extends ChildViewHolder {
 
         private TextView plan_title;
+        private ImageView delete_plan_btn;
 
         public PlanDataViewHolder(View itemView) {
             super(itemView);
             plan_title = itemView.findViewById(R.id.plan_title);
+            delete_plan_btn = itemView.findViewById(R.id.delete_plan_btn);
         }
 
         public void bind(PlanData planData) {
             plan_title.setText(planData.getName());
+            if(planData.getPlanType().equals(ValueConstants.DefaultPlanType)){
+                delete_plan_btn.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -86,5 +97,14 @@ public class PlanAdapter extends ExpandableRecyclerAdapter<PlanDataCategory, Pla
                 Toast.makeText(ImovinApplication.getInstance(), child.getName(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        if(child.getPlanType().equals(ValueConstants.CustomPlanType)) {
+            childViewHolder.delete_plan_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new PlanEvent(EventConstants.DELETE, child.getId()));
+                }
+            });
+        }
     }
 }

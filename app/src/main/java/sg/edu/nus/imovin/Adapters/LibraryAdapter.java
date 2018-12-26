@@ -1,6 +1,5 @@
 package sg.edu.nus.imovin.Adapters;
 
-import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;

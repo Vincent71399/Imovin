@@ -19,7 +19,7 @@
             android:id="@+id/steps_value"
             android:text="0"
             android:textColor="@color/black_color"
-            android:textSize="60sp"
+            android:textSize="@dimen/textBig"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -27,7 +27,7 @@
         <TextView
             android:text="@string/steps"
             android:textColor="@color/black_color"
-            android:textSize="35sp"
+            android:textSize="@dimen/textSubBig"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -49,7 +49,7 @@
                     android:id="@+id/cal_value"
                     android:text="0"
                     android:textColor="@color/black_color"
-                    android:textSize="40sp"
+                    android:textSize="@dimen/textMid"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -57,7 +57,7 @@
                 <TextView
                     android:text="@string/cal"
                     android:textColor="@color/black_color"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/textSubMid"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -74,7 +74,7 @@
                     android:id="@+id/time_value"
                     android:text="00:00"
                     android:textColor="@color/black_color"
-                    android:textSize="40sp"
+                    android:textSize="@dimen/textMid"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -82,7 +82,7 @@
                 <TextView
                     android:text="@string/time"
                     android:textColor="@color/black_color"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/textSubMid"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -109,6 +109,7 @@
             android:layout_height="360dp" />
 
         <TextView
+            android:id="@+id/daily_goal"
             android:text="@string/daily_goal_text"
             android:textColor="@color/black_color"
             android:textSize="20sp"

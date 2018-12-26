@@ -1,8 +1,6 @@
 package sg.edu.nus.imovin.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -18,7 +16,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,11 +28,8 @@ import sg.edu.nus.imovin.Adapters.SocialFeedAdapter;
 import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.Event.ForumEvent;
 import sg.edu.nus.imovin.R;
-import sg.edu.nus.imovin.Retrofit.Object.CommentData;
-import sg.edu.nus.imovin.Retrofit.Object.SocialCommentData;
 import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostMultiResponse;
-import sg.edu.nus.imovin.Retrofit.Response.ThreadMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;

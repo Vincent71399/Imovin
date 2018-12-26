@@ -9,12 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +16,6 @@ import sg.edu.nus.imovin.Adapters.LibraryAdapter;
 import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.LibraryData;
-import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LibraryURLConstants;
 
 public class LibraryFragment extends Fragment {

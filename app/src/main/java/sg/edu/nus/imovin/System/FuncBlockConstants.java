@@ -3,9 +3,9 @@ package sg.edu.nus.imovin.System;
 import android.support.v4.app.Fragment;
 
 import sg.edu.nus.imovin.Fragments.ForumFragment;
+import sg.edu.nus.imovin.Fragments.GoalFragment;
 import sg.edu.nus.imovin.Fragments.HomeFragment;
 import sg.edu.nus.imovin.Fragments.LibraryFragment;
-import sg.edu.nus.imovin.Fragments.GoalFragment;
 import sg.edu.nus.imovin.Fragments.MonitorFragment;
 import sg.edu.nus.imovin.Fragments.SocialFeedFragment;
 

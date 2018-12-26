@@ -1,41 +1,25 @@
 package sg.edu.nus.imovin.Adapters;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
-import java.util.Locale;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Event.LikeCommentEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.CommentData;
-import sg.edu.nus.imovin.Retrofit.Request.LikeCommentRequest;
-import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
-import sg.edu.nus.imovin.Retrofit.Response.ThreadMultiResponse;
-import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.ImovinApplication;
-import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.Common.CommonFunc.ConvertDateString2DisplayFormat;
-import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_LIKE_COMMENT;
-import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentData_ViewHolder>{
     private List<CommentData> commentDataList;

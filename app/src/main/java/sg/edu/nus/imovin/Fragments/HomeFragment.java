@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.steps_btn) TextView steps_btn;
     @BindView(R.id.calories_btn) TextView calories_btn;
     @BindView(R.id.duration_btn) TextView duration_btn;
+    @BindView(R.id.daily_goal) TextView daily_goal;
 
     ArrayList<String> weekdayList;
     HashMap<String, Integer> dailyStepsHashMap;

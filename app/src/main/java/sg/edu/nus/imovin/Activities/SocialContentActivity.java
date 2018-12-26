@@ -36,8 +36,6 @@ import sg.edu.nus.imovin.Event.LikeCommentEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.CommentData;
 import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
-import sg.edu.nus.imovin.Retrofit.Object.ThreadData;
-import sg.edu.nus.imovin.Retrofit.Request.LikeCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeSocialCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
@@ -47,7 +45,6 @@ import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.Common.CommonFunc.ConvertDateString2DisplayFormat;
-import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_LIKE_COMMENT;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_LIKE_SOCIAL_COMMENT;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 

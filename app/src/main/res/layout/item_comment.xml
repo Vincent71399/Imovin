@@ -77,6 +77,6 @@
         android:orientation="vertical"
         android:background="@color/grey_color"
         android:layout_width="match_parent"
-        android:layout_height="2dp"></LinearLayout>
+        android:layout_height="2dp"/>
 
 </LinearLayout>

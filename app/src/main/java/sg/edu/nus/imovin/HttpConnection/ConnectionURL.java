@@ -14,14 +14,14 @@ public class ConnectionURL {
     public static final String REQUEST_LIKE_COMMENT = "/api/forum/thread/comment/%s/like";
     public static final String REQUEST_GET_ALL_PLANS = "/api/goal/plans";
     public static final String REQUEST_CREATE_PLAN = "/api/goal/plan";
-    public static final String REQUEST_GET_PLAN = "/api/goal/plan/:%d";
-    public static final String REQUEST_UPDATE_PLAN = "/api/goal/plan/:%d";
-    public static final String REQUEST_DELETE_PLAN = "/api/goal/plan/:%d";
+    public static final String REQUEST_GET_PLAN = "/api/goal/plan/%s";
+    public static final String REQUEST_UPDATE_PLAN = "/api/goal/plan/%s";
+    public static final String REQUEST_DELETE_PLAN = "/api/goal/plan/%s";
     public static final String REQUEST_CREATE_SOCIAL_POST = "/api/social/post";
     public static final String REQUEST_UPLOAD_IMAGE = "/api/social/post/upload-image";
     public static final String REQUEST_GET_ALL_SOCIAL_POSTS = "/api/social/posts";
     public static final String REQUEST_CREATE_SOCIAL_COMMENT = "/api/social/post/comment";
-    public static final String REQUEST_LIKE_SOCIAL_COMMENT = "/api/social/post/comment/:%s/like";
+    public static final String REQUEST_LIKE_SOCIAL_COMMENT = "/api/social/post/comment/%s/like";
     public static final String REQUEST_GET_LESSON = "/api/lessons";
 
     public static final String PARAMETER_DAYS = "days";

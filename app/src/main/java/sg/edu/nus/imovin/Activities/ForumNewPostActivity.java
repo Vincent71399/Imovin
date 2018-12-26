@@ -1,9 +1,8 @@
 package sg.edu.nus.imovin.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +21,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.R;
-import sg.edu.nus.imovin.Retrofit.Request.CreatePlanRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreateThreadRequest;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;

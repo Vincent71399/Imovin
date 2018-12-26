@@ -66,7 +66,6 @@ public class ForumFragment extends Fragment {
         super.onStart();
         EventBus.getDefault().register(this);
         if(ImovinApplication.isNeedRefreshForum()){
-            ImovinApplication.setNeedRefreshForum(false);
             Init();
         }
     }
@@ -94,6 +93,8 @@ public class ForumFragment extends Fragment {
     }
 
     private void Init(){
+        ImovinApplication.setNeedRefreshForum(false);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())

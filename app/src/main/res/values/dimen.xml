@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="LoginComponentMarginTop">30dp</dimen>
+
+    <dimen name="textBig">60sp</dimen>
+    <dimen name="textSubBig">35sp</dimen>
+
+    <dimen name="textMid">40sp</dimen>
+    <dimen name="textSubMid">25sp</dimen>
 </resources>

@@ -1,7 +1,6 @@
 package sg.edu.nus.imovin.Retrofit.Response;
 
 import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
-import sg.edu.nus.imovin.Retrofit.Object.ThreadData;
 
 /**
  * Created by wcafricanus on 19/12/18.

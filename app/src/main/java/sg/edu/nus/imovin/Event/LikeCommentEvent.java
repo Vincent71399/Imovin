@@ -1,7 +1,5 @@
 package sg.edu.nus.imovin.Event;
 
-import android.widget.Button;
-
 public class LikeCommentEvent {
     private String comment_id;
     private Boolean is_like;

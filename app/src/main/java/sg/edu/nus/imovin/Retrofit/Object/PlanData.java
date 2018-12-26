@@ -3,8 +3,10 @@ package sg.edu.nus.imovin.Retrofit.Object;
 public class PlanData{
     private String id;
     private String name;
-    private Integer type;
+    private Integer planType;
     private Integer target;
+    private String owner;
+    private String createdAt;
 
     public PlanData(String name) {
         this.name = name;
@@ -26,12 +28,28 @@ public class PlanData{
         this.name = name;
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getPlanType() {
+        return planType;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setPlanType(Integer planType) {
+        this.planType = planType;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Integer getTarget() {

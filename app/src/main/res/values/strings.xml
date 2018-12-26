@@ -22,6 +22,7 @@
     <string name="forum">Forum</string>
     <string name="comments">Comments</string>
     <string name="post">Post</string>
+    <string name="add">Add</string>
 
     <string name="new_thread_title_hint">Enter thread title...</string>
     <string name="new_thread_message_hint">Enter thread message...</string>
@@ -29,6 +30,10 @@
     <string name="post_a_comment">Post a comment</string>
     <string name="cancel">Cancel</string>
     <string name="enter_comment_here">Enter comment here...</string>
+
+    <string name="default_plans">Default Plans</string>
+    <string name="custom_plans">Custom Plans</string>
+    <string name="hint_add_plan">Enter Plan Name</string>
 
     <string name="january">JAN</string>
     <string name="february">FEB</string>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp"
+    android:background="#88222222"
+    android:gravity="center"
+    android:id="@+id/mainView"
+    tools:context=".Activities.AddPlanActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:background="@drawable/rounded_corner_bg">
+
+        <EditText
+            android:id="@+id/plan_title_input"
+            android:gravity="center"
+            android:background="@drawable/black_border_blackground"
+            android:hint="@string/hint_add_plan"
+            android:textColorHint="@color/lesser_grey_color"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="4"/>
+
+        <TextView
+            android:id="@+id/steps_value"
+            android:layout_marginTop="20dp"
+            android:text="10000"
+            android:textSize="@dimen/textMid"
+            android:textColor="@color/black_color"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="@string/steps"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black_color"
+            android:textSize="@dimen/textSubMid"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <SeekBar
+            android:id="@+id/planStepsBar"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="50"
+            android:secondaryProgress="50"/>
+
+        <View
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/button_add_plan"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/add"
+            android:textSize="18sp"
+            android:textColor="@color/blue_color"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/button_cancel"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:textSize="18sp"
+            android:textColor="@color/lesser_grey_color"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
