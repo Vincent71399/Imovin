@@ -1,8 +1,6 @@
 package sg.edu.nus.imovin.System;
 
 import android.app.Application;
-import android.util.Log;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -11,7 +9,6 @@ import java.io.IOException;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.logging.HttpLoggingInterceptor;
 import sg.edu.nus.imovin.Retrofit.Object.UserData;
 
 public class ImovinApplication extends Application {
@@ -65,33 +62,6 @@ public class ImovinApplication extends Application {
                     return chain.proceed(request);
                 }
             });
-        }else{
-            httpClient = null;
-        }
-    }
-
-    public static OkHttpClient.Builder getHttpClientWithJson() {
-        if(httpClient == null){
-            initHttpClientWithJson();
-        }
-        return httpClient;
-    }
-
-    private static void initHttpClientWithJson(){
-        if(userData != null){
-            httpClient = new OkHttpClient.Builder();
-
-            httpClient.addInterceptor(new Interceptor() {
-                @Override
-                public okhttp3.Response intercept(Chain chain) throws IOException {
-                    Request request = chain.request().newBuilder()
-                            .addHeader("Authorization", "Bearer " + ImovinApplication.getUserData().getToken())
-                            .addHeader("content-type", "application/json")
-                            .build();
-                    return chain.proceed(request);
-                }
-            });
-
         }else{
             httpClient = null;
         }

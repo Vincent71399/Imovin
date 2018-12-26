@@ -82,9 +82,13 @@ public interface ImovinService {
     );
 
     @GET
-    Call<PlanResponse> getPlan();
+    Call<PlanResponse> getPlan(
+            @Url String url
+    );
 
     @DELETE
-    Call<PlanResponse> deletePlan();
+    Call<PlanResponse> deletePlan(
+            @Url String url
+    );
 
 }

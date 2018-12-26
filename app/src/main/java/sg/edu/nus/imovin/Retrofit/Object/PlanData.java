@@ -1,10 +1,14 @@
 package sg.edu.nus.imovin.Retrofit.Object;
 
-public class PlanData {
+public class PlanData{
     private String id;
     private String name;
     private Integer type;
     private Integer target;
+
+    public PlanData(String name) {
+        this.name = name;
+    }
 
     public String getId() {
         return id;
