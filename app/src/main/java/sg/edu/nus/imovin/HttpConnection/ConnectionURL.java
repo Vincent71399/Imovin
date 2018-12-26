@@ -21,7 +21,7 @@ public class ConnectionURL {
     public static final String REQUEST_UPLOAD_IMAGE = "/api/social/post/upload-image";
     public static final String REQUEST_GET_ALL_SOCIAL_POSTS = "/api/social/posts";
     public static final String REQUEST_CREATE_SOCIAL_COMMENT = "/api/social/post/comment";
-    public static final String REQUEST_LIKE_SOCIAL_COMMENT = "/api/social/post/comment/:%d/like";
+    public static final String REQUEST_LIKE_SOCIAL_COMMENT = "/api/social/post/comment/:%s/like";
     public static final String REQUEST_GET_LESSON = "/api/lessons";
 
     public static final String PARAMETER_DAYS = "days";

@@ -2,11 +2,10 @@ package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,61 +21,62 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Adapters.CommentAdapter;
-import sg.edu.nus.imovin.Event.ForumEvent;
 import sg.edu.nus.imovin.Event.LikeCommentEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.CommentData;
+import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
 import sg.edu.nus.imovin.Retrofit.Object.ThreadData;
 import sg.edu.nus.imovin.Retrofit.Request.LikeCommentRequest;
+import sg.edu.nus.imovin.Retrofit.Request.LikeSocialCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseActivity;
-import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
+import static sg.edu.nus.imovin.Common.CommonFunc.ConvertDateString2DisplayFormat;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_LIKE_COMMENT;
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_LIKE_SOCIAL_COMMENT;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
-public class ForumCommentActivity extends BaseActivity implements View.OnClickListener {
+public class SocialContentActivity extends BaseActivity implements View.OnClickListener {
 
     private View customActionBar;
-    @BindView(R.id.navigator_middle_title) TextView navigator_middle_title;
-    @BindView(R.id.navigator_left) LinearLayout navigator_left;
-    @BindView(R.id.navigator_left_image) ImageView navigator_left_image;
+    @BindView(R.id.navigator_middle_title)
+    TextView navigator_middle_title;
+    @BindView(R.id.navigator_left)
+    LinearLayout navigator_left;
+    @BindView(R.id.navigator_left_image)
+    ImageView navigator_left_image;
     @BindView(R.id.navigator_left_text) TextView navigator_left_text;
-    @BindView(R.id.navigator_right) RelativeLayout navigator_right;
+    @BindView(R.id.navigator_right)
+    RelativeLayout navigator_right;
     @BindView(R.id.navigator_right_image) ImageView navigator_right_image;
 
-    @BindView(R.id.title_text) TextView title_text;
-    @BindView(R.id.owner_text) TextView owner_text;
-    @BindView(R.id.post_time) TextView post_time;
-    @BindView(R.id.message) TextView message;
+    @BindView(R.id.username) TextView username;
+    @BindView(R.id.post_since) TextView post_since;
+    @BindView(R.id.feedContentText) TextView feed_content_text;
+    @BindView(R.id.feedImage) ImageView feed_image;
     @BindView(R.id.comment_list) RecyclerView comment_list;
 
-    private ThreadData threadData;
+    private SocialFeedData socialFeedData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forum_comment);
+        setContentView(R.layout.activity_social_content);
 
         SetActionBar();
         LinkUIById();
@@ -117,18 +117,16 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void SetupData(){
-        threadData = (ThreadData) getIntent().getSerializableExtra(IntentConstants.THREAD_DATA);
+        socialFeedData = (SocialFeedData) getIntent().getSerializableExtra(IntentConstants.SOCIAL_POST_DATA);
 
-        title_text.setText(threadData.getTitle());
-        owner_text.setText(threadData.getOwnerName());
-        post_time.setText(threadData.getCreatedAt());
-        message.setText(threadData.getMessage());
+        username.setText(socialFeedData.getOwnerName());
+        post_since.setText(ConvertDateString2DisplayFormat(socialFeedData.getCreatedAt()));
+        feed_content_text.setText(socialFeedData.getMessage());
+        //feed_image.setText(threadData.getMessage());
     }
 
     private void SetFunction(){
-        navigator_middle_title.setText("");
-
-        navigator_left_text.setText(getString(R.string.forum));
+        navigator_left_text.setText(getString(R.string.social_feed));
         navigator_left_text.setVisibility(View.VISIBLE);
         navigator_left_image.setVisibility(View.VISIBLE);
 
@@ -140,7 +138,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void Init(){
-        CommentAdapter commentAdapter = new CommentAdapter(threadData.getComments());
+        CommentAdapter commentAdapter = new CommentAdapter(socialFeedData.getComments());
         comment_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         comment_list.setAdapter(commentAdapter);
     }
@@ -153,8 +151,8 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.navigator_right:
                 Intent intent = new Intent();
-                intent.setClass(this, ForumNewCommentActivity.class);
-                intent.putExtra(IntentConstants.THREAD_ID, threadData.getId());
+                intent.setClass(this, SocialNewCommentActivity.class);
+                intent.putExtra(IntentConstants.THREAD_ID, socialFeedData.getId());
                 startActivityForResult(intent, IntentConstants.FORUM_NEW_COMMENT);
                 break;
         }
@@ -162,7 +160,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LikeCommentEvent event) {
-        likeComment(event.getComment_id(), new LikeCommentRequest(threadData.getId(), event.getIs_like()));
+        likeComment(event.getComment_id(), new LikeSocialCommentRequest(socialFeedData.getId(), event.getIs_like()));
     }
 
     @Override
@@ -171,17 +169,17 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
             case IntentConstants.FORUM_NEW_COMMENT:
                 if(resultCode == Activity.RESULT_OK){
                     CommentData commentData = (CommentData) data.getSerializableExtra(IntentConstants.COMMENT_DATA);
-                    List<CommentData> commentDataList = threadData.getComments();
+                    List<CommentData> commentDataList = socialFeedData.getComments();
                     commentDataList.add(commentData);
-                    threadData.setComments(commentDataList);
+                    socialFeedData.setComments(commentDataList);
                     Init();
-                    ImovinApplication.setNeedRefreshForum(true);
+                    ImovinApplication.setNeedRefreshSocialNeed(true);
                 }
                 break;
         }
     }
 
-    public void likeComment(String comment_id, LikeCommentRequest likeCommentRequest){
+    public void likeComment(String comment_id, LikeSocialCommentRequest likeSocialCommentRequest){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -191,9 +189,9 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         ImovinService service = retrofit.create(ImovinService.class);
 
         String url = SERVER + String.format(
-                Locale.ENGLISH,REQUEST_LIKE_COMMENT, comment_id);
+                Locale.ENGLISH,REQUEST_LIKE_SOCIAL_COMMENT, comment_id);
 
-        Call<CommentResponse> call = service.likeComment(url, likeCommentRequest);
+        Call<CommentResponse> call = service.likeComment(url, likeSocialCommentRequest);
 
         call.enqueue(new Callback<CommentResponse>() {
             @Override
@@ -201,30 +199,29 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
                 try {
                     CommentResponse commentResponse = response.body();
                     CommentData resultData = commentResponse.getData();
-                    List<CommentData> commentDataList = threadData.getComments();
+                    List<CommentData> commentDataList = socialFeedData.getComments();
                     for(int i=0; i<commentDataList.size(); i++){
                         CommentData commentData = commentDataList.get(i);
                         if(commentData.getId().equals(resultData.getId())){
                             commentDataList.set(i, resultData);
                         }
                     }
-                    threadData.setComments(commentDataList);
+                    socialFeedData.setComments(commentDataList);
                     Init();
                     ImovinApplication.setNeedRefreshForum(true);
 
                 }catch (Exception e){
                     e.printStackTrace();
-                    Log.d(LogConstants.LogTag, "Exception ForumComment : " + e.toString());
+                    Log.d(LogConstants.LogTag, "Exception LikeSocialComment : " + e.toString());
                     Toast.makeText(ImovinApplication.getInstance(), ImovinApplication.getInstance().getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<CommentResponse> call, Throwable t) {
-                Log.d(LogConstants.LogTag, "Failure ForumComment : " + t.toString());
+                Log.d(LogConstants.LogTag, "Failure LikeSocialComment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), ImovinApplication.getInstance().getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 }

@@ -18,6 +18,7 @@ public class ImovinApplication extends Application {
     private static OkHttpClient.Builder httpClient;
 
     private static boolean NeedRefreshForum = false;
+    private static boolean NeedRefreshSocialFeed = false;
 
     public static ImovinApplication getInstance(){
         return instance;
@@ -73,5 +74,13 @@ public class ImovinApplication extends Application {
 
     public static void setNeedRefreshForum(boolean needRefreshForum) {
         NeedRefreshForum = needRefreshForum;
+    }
+
+    public static boolean isNeedRefreshSocialFeed(){
+        return NeedRefreshSocialFeed;
+    }
+
+    public static void setNeedRefreshSocialNeed(boolean needRefreshSocialFeed){
+        NeedRefreshSocialFeed = needRefreshSocialFeed;
     }
 }

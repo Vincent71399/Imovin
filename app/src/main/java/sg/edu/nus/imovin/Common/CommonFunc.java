@@ -8,7 +8,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.System.ImovinApplication;
@@ -45,8 +49,31 @@ public class CommonFunc {
     }
 
     public static String ConvertDateString2DisplayFormat(String dateString){
-        //To be implemented
-        return dateString;
+        String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        Date now = new Date();
+
+        String result = "0d";
+
+        try {
+            Date date = simpleDateFormat.parse(dateString);
+            long diffInMillies = now.getTime() - date.getTime();
+            long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            long diffInHours = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            long diffInMinutes = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            if(diffInDays>0)
+                return String.format("%dd", diffInDays);
+            else if(diffInHours>0)
+                return String.format("%dh", diffInHours);
+            else
+                return String.format("%dm", diffInMinutes);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     public static String GetFullDateString(long millisecond){
