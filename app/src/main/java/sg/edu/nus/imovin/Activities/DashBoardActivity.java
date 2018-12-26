@@ -47,18 +47,18 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
     private ViewPager vp;
     private final String[] mTitles = {
             FuncBlockConstants.HOME, FuncBlockConstants.LIBRARY, FuncBlockConstants.FORUM,
-            FuncBlockConstants.GOAL, FuncBlockConstants.MONITOR
+            FuncBlockConstants.GOAL, FuncBlockConstants.MONITOR, FuncBlockConstants.SOCIAL
     };
     private final int defaultPagePosition = 0;
     private int currentPagePosition = 0;
     private ArrayList<Fragment> mFragments;
     private int[] mIconUnselectIds = {
             R.drawable.icon_home_unselect, R.drawable.icon_library_unselect, R.drawable.icon_forum_unselect,
-            R.drawable.icon_goal_unselect, R.drawable.icon_monior_unselect
+            R.drawable.icon_goal_unselect, R.drawable.icon_monior_unselect, R.drawable.icon_social_feed_unselect
     };
     private int[] mIconSelectIds = {
             R.drawable.icon_home_select, R.drawable.icon_library_select, R.drawable.icon_forum_select,
-            R.drawable.icon_goal_select, R.drawable.icon_monior_select
+            R.drawable.icon_goal_select, R.drawable.icon_monior_select, R.drawable.icon_social_feed_select
     };
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private MyPagerAdapter mAdapter;
@@ -195,6 +195,11 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                 navigator_right.setEnabled(false);
                 navigator_right_text.setVisibility(View.INVISIBLE);
                 break;
+            case FuncBlockConstants.SOCIAL:
+                navigator_right.setEnabled(true);
+                navigator_right_text.setVisibility(View.VISIBLE);
+                navigator_right_text.setText("+");
+                break;
         }
     }
 
@@ -204,6 +209,11 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                 Intent intent = new Intent();
                 intent.setClass(this, ForumNewPostActivity.class);
                 startActivityForResult(intent, IntentConstants.FORUM_NEW_POST);
+                break;
+            case FuncBlockConstants.SOCIAL:
+                Intent newSocialIntent = new Intent();
+                newSocialIntent.setClass(this, SocialNewPostActivity.class);
+                startActivityForResult(newSocialIntent, IntentConstants.SOCIAL_NEW_POST);
                 break;
         }
     }
