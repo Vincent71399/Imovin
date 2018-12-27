@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp"
+    android:background="#88222222"
+    android:gravity="center"
+    android:id="@+id/mainView"
+    tools:context=".Activities.MonitorChangePlanActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="20dp"
+        android:background="@drawable/rounded_corner_bg">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/plan_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/add_plan_btn"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:text="@string/new_custom"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="@color/white_color"
+            android:background="@drawable/purple_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</RelativeLayout>

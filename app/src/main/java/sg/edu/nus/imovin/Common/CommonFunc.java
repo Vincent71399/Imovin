@@ -76,6 +76,11 @@ public class CommonFunc {
         return result;
     }
 
+    public static String GetCurrentMonthString(){
+        Calendar calendar = Calendar.getInstance();
+        return convertInt2Month(calendar.get(Calendar.MONTH)) + " " + calendar.get(Calendar.YEAR);
+    }
+
     public static String GetFullDateString(long millisecond){
         Calendar date = Calendar.getInstance();
         date.setTimeInMillis(millisecond);

@@ -34,33 +34,30 @@
                     android:scheme="imovin" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Activities.DashBoardActivity" />
-
         <activity
             android:name=".Activities.ForumNewPostActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".Activities.ForumNewCommentActivity"
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity android:name=".Activities.ForumCommentActivity" />
-
         <activity
             android:name=".Activities.SocialNewPostActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Activities.SocialContentActivity" />
-
         <activity
             android:name=".Activities.SocialNewCommentActivity"
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
-        <activity android:name=".Activities.AddPlanActivity"
+        <activity
+            android:name=".Activities.AddPlanActivity"
             android:theme="@style/Theme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Activities.MonitorChangePlanActivity"
+            android:theme="@style/Theme.Transparent"/>
 
     </application>
 
