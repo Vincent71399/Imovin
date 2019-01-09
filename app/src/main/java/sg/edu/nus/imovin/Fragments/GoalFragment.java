@@ -31,6 +31,7 @@ import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.Objects.PlanDataCategory;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
+import sg.edu.nus.imovin.Retrofit.Object.UserData;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
@@ -39,6 +40,7 @@ import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_DELETE_PLAN;
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_SELECT_PLAN;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 import static sg.edu.nus.imovin.System.ValueConstants.DefaultPlanType;
 
@@ -122,16 +124,23 @@ public class GoalFragment extends Fragment {
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(PlanEvent event) {
-        Toast.makeText(ImovinApplication.getInstance(), event.getMessage(), Toast.LENGTH_SHORT).show();
-        switch (event.getMessage()){
-            case EventConstants.REFRESH:
-                Init();
-                break;
-            case EventConstants.DELETE:
-                if(event.getId() != null){
-                    DeletePlan(event.getId());
-                }
-                break;
+        if(event.getModule() == PlanEvent.MODULE_GOAL) {
+            Toast.makeText(ImovinApplication.getInstance(), event.getMessage(), Toast.LENGTH_SHORT).show();
+            switch (event.getMessage()) {
+                case EventConstants.REFRESH:
+                    Init();
+                    break;
+                case EventConstants.DELETE:
+                    if (event.getId() != null) {
+                        DeletePlan(event.getId());
+                    }
+                    break;
+                case EventConstants.SELECT:
+                    if (event.getId() != null) {
+                        SelectPlan(event.getId());
+                    }
+                    break;
+            }
         }
     }
 
@@ -156,6 +165,46 @@ public class GoalFragment extends Fragment {
         plan_list.setAdapter(adapter);
     }
 
+    private void SelectPlan(String plan_id){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        String url = SERVER + String.format(
+                Locale.ENGLISH,REQUEST_SELECT_PLAN, plan_id);
+
+        Call<PlanResponse> call = service.selectPlan(url);
+
+        call.enqueue(new Callback<PlanResponse>() {
+            @Override
+            public void onResponse(Call<PlanResponse> call, Response<PlanResponse> response) {
+                try {
+                    PlanResponse planResponse = response.body();
+                    if(planResponse != null) {
+                        UserData userData = ImovinApplication.getUserData();
+                        userData.setSelectedPlan(planResponse.getData().getId());
+                        ImovinApplication.setUserData(userData);
+                        Init();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception GoalFragment : " + e.toString());
+                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PlanResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure GoalFragment : " + t.toString());
+                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void DeletePlan(String plan_id){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
@@ -166,9 +215,9 @@ public class GoalFragment extends Fragment {
         ImovinService service = retrofit.create(ImovinService.class);
 
         String url = SERVER + String.format(
-                Locale.ENGLISH,REQUEST_DELETE_PLAN, plan_id);
+                Locale.ENGLISH,REQUEST_SELECT_PLAN, plan_id);
 
-        Call<PlanResponse> call = service.deletePlan(url);
+        Call<PlanResponse> call = service.selectPlan(url);
 
         call.enqueue(new Callback<PlanResponse>() {
             @Override
@@ -176,6 +225,9 @@ public class GoalFragment extends Fragment {
                 try {
                     PlanResponse planResponse = response.body();
                     if(planResponse != null) {
+                        UserData userData = ImovinApplication.getUserData();
+                        userData.setSelectedPlan(planResponse.getData().getId());
+                        ImovinApplication.setUserData(userData);
                         Init();
                     }
                 }catch (Exception e){

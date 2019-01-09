@@ -10,6 +10,7 @@ public class UserData {
     private List<Integer> motives;
     private Boolean fitbitAuthenticated;
     private String token;
+    private String selectedPlan;
 
     public String getUid() {
         return uid;
@@ -65,5 +66,13 @@ public class UserData {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getSelectedPlan() {
+        return selectedPlan;
+    }
+
+    public void setSelectedPlan(String selectedPlan) {
+        this.selectedPlan = selectedPlan;
     }
 }

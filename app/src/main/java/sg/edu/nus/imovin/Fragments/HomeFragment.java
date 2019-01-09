@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -35,13 +36,17 @@ import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.Common.IntValueFormatter;
 import sg.edu.nus.imovin.Common.WeekdayAxisValueFormatter;
 import sg.edu.nus.imovin.R;
+import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Object.StatisticsData;
+import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Response.StatisticsResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
 import sg.edu.nus.imovin.System.ValueConstants;
 
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_DELETE_PLAN;
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_GET_PLAN;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
 
@@ -70,6 +75,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     HashMap<String, Integer> dailyStepsHashMap;
     HashMap<String, Integer> dailyCaloriesHashMap;
     HashMap<String, Integer> dailyDurationsHashMap;
+
+    private PlanData planData;
+    private List<Integer> barColors;
 
     public static HomeFragment getInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -101,6 +109,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void Init(){
+        queryPlan(ImovinApplication.getUserData().getSelectedPlan());
+    }
+
+    private void queryStatistics(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -132,6 +144,44 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    private void queryPlan(String plan_id){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        String url = SERVER + String.format(
+                Locale.ENGLISH,REQUEST_GET_PLAN, plan_id);
+
+        Call<PlanResponse> call = service.getPlan(url);
+
+        call.enqueue(new Callback<PlanResponse>() {
+            @Override
+            public void onResponse(Call<PlanResponse> call, Response<PlanResponse> response) {
+                try {
+                    PlanResponse planResponse = response.body();
+                    if(planResponse != null) {
+                        planData = planResponse.getData();
+                        queryStatistics();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception HomeFragment : " + e.toString());
+                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PlanResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure HomeFragment : " + t.toString());
+                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -157,6 +207,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void SetupData(List<StatisticsData> statisticsDataList){
+        int step_threshold = 7500;
+
+        if(planData != null){
+            step_threshold = planData.getTarget();
+        }
+
+        daily_goal.setText(getString(R.string.daily_goal_text) + step_threshold);
+
+        barColors = new ArrayList<>();
+
         int sumSteps = 0;
         for(StatisticsData statisticsData : statisticsDataList){
             Log.d(LogConstants.LogTag, "Steps : " + statisticsData.getSteps()
@@ -179,7 +239,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             sumSteps += statisticsData.getSteps();
         }
         int averageSteps = sumSteps / statisticsDataList.size();
-        if(averageSteps < 7500){
+        if(averageSteps < step_threshold){
             warning.setVisibility(View.VISIBLE);
         }else{
             warning.setVisibility(View.INVISIBLE);
@@ -215,6 +275,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 dailyStepsHashMap.put(SATURDAY, 0);
                 dailyCaloriesHashMap.put(SATURDAY, 0);
                 dailyDurationsHashMap.put(SATURDAY, 0);
+
+                if(statisticsDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+
                 break;
             case Calendar.MONDAY:
                 dailyStepsHashMap.put(SUNDAY, statisticsDataList.get(1).getSteps());
@@ -244,6 +317,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 dailyStepsHashMap.put(SATURDAY, 0);
                 dailyCaloriesHashMap.put(SATURDAY, 0);
                 dailyDurationsHashMap.put(SATURDAY, 0);
+
+                if(statisticsDataList.get(1).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+
                 break;
             case Calendar.TUESDAY:
                 dailyStepsHashMap.put(SUNDAY, statisticsDataList.get(2).getSteps());
@@ -273,6 +363,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 dailyStepsHashMap.put(SATURDAY, 0);
                 dailyCaloriesHashMap.put(SATURDAY, 0);
                 dailyDurationsHashMap.put(SATURDAY, 0);
+
+                if(statisticsDataList.get(2).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(1).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+
                 break;
             case Calendar.WEDNESDAY:
                 dailyStepsHashMap.put(SUNDAY, statisticsDataList.get(3).getSteps());
@@ -302,6 +413,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 dailyStepsHashMap.put(SATURDAY, 0);
                 dailyCaloriesHashMap.put(SATURDAY, 0);
                 dailyDurationsHashMap.put(SATURDAY, 0);
+
+                if(statisticsDataList.get(3).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(2).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(1).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+
                 break;
             case Calendar.THURSDAY:
                 dailyStepsHashMap.put(SUNDAY, statisticsDataList.get(4).getSteps());
@@ -331,6 +467,35 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 dailyStepsHashMap.put(SATURDAY, 0);
                 dailyCaloriesHashMap.put(SATURDAY, 0);
                 dailyDurationsHashMap.put(SATURDAY, 0);
+
+                if(statisticsDataList.get(4).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(3).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(2).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(1).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+
                 break;
             case Calendar.FRIDAY:
                 dailyStepsHashMap.put(SUNDAY, statisticsDataList.get(5).getSteps());
@@ -360,6 +525,39 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 dailyStepsHashMap.put(SATURDAY, 0);
                 dailyCaloriesHashMap.put(SATURDAY, 0);
                 dailyDurationsHashMap.put(SATURDAY, 0);
+
+                if(statisticsDataList.get(5).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(4).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(3).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(2).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(1).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+
                 break;
             case Calendar.SATURDAY:
                 dailyStepsHashMap.put(SUNDAY, statisticsDataList.get(6).getSteps());
@@ -389,6 +587,43 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 dailyStepsHashMap.put(SATURDAY, statisticsDataList.get(0).getSteps());
                 dailyCaloriesHashMap.put(SATURDAY, statisticsDataList.get(0).getCalories());
                 dailyDurationsHashMap.put(SATURDAY, statisticsDataList.get(0).getDuration());
+
+                if(statisticsDataList.get(6).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(5).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(4).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(3).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(2).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(1).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(statisticsDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+
                 break;
         }
 
@@ -408,13 +643,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         // Create DataSet using the HashMap
         ArrayList<BarEntry> entries = new ArrayList<>();
+
         for (Map.Entry<String, Integer> entry : dataHashMap.entrySet()){
             int intValue = weekdayList.indexOf(entry.getKey());
             entries.add(new BarEntry(intValue,entry.getValue()));
         }
         BarDataSet dataSet = new BarDataSet(entries,"By Category");
-        dataSet.setColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
-        //dataSet.setDrawValues(false);
+        dataSet.setColors(barColors);
 
         BarData data = new BarData(dataSet);
         data.setValueFormatter(new IntValueFormatter());
@@ -449,8 +684,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             entries.add(new BarEntry(intValue,entry.getValue()));
         }
         BarDataSet dataSet = new BarDataSet(entries,"By Category");
-        dataSet.setColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
-        //dataSet.setDrawValues(false);
+        dataSet.setColors(barColors);
 
         BarData data = new BarData(dataSet);
         data.setValueFormatter(new IntValueFormatter());

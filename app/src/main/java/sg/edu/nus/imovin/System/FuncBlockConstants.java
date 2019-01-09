@@ -2,6 +2,7 @@ package sg.edu.nus.imovin.System;
 
 import android.support.v4.app.Fragment;
 
+import sg.edu.nus.imovin.Fragments.ChallengeFragment;
 import sg.edu.nus.imovin.Fragments.ForumFragment;
 import sg.edu.nus.imovin.Fragments.GoalFragment;
 import sg.edu.nus.imovin.Fragments.HomeFragment;
@@ -16,6 +17,7 @@ public class FuncBlockConstants {
     public static final String GOAL = "Goal";
     public static final String MONITOR = "Monitor";
     public static final String SOCIAL = "Social";
+    public static final String CHALLENGE = "Challenge";
 
     public static Fragment getFunctionFragment(String title){
         Fragment fragment = null;
@@ -37,6 +39,9 @@ public class FuncBlockConstants {
                 break;
             case SOCIAL:
                 fragment = SocialFeedFragment.getInstance();
+                break;
+            case CHALLENGE:
+                fragment = ChallengeFragment.getInstance();
                 break;
         }
         return fragment;

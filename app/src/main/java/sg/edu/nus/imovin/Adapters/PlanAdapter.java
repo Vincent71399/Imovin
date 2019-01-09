@@ -1,13 +1,13 @@
 package sg.edu.nus.imovin.Adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.ChildViewHolder;
 import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
@@ -27,10 +27,18 @@ import sg.edu.nus.imovin.System.ValueConstants;
 
 public class PlanAdapter extends ExpandableRecyclerAdapter<PlanDataCategory, PlanData, PlanAdapter.PlanDataCategoryViewHolder, PlanAdapter.PlanDataViewHolder> {
     private LayoutInflater mInflater;
+    private int module;
 
     public PlanAdapter(Context context, @NonNull List<PlanDataCategory> parentList) {
         super(parentList);
         mInflater = LayoutInflater.from(context);
+        this.module = PlanEvent.MODULE_GOAL;
+    }
+
+    public PlanAdapter(Context context, @NonNull List<PlanDataCategory> parentList, int module) {
+        super(parentList);
+        mInflater = LayoutInflater.from(context);
+        this.module = module;
     }
 
     class PlanDataCategoryViewHolder extends ParentViewHolder {
@@ -91,18 +99,23 @@ public class PlanAdapter extends ExpandableRecyclerAdapter<PlanDataCategory, Pla
     public void onBindChildViewHolder(@NonNull PlanDataViewHolder childViewHolder, int parentPosition, int childPosition, @NonNull final PlanData child) {
         childViewHolder.bind(child);
 
-        childViewHolder.plan_title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ImovinApplication.getInstance(), child.getName(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
         if(child.getPlanType().equals(ValueConstants.CustomPlanType)) {
             childViewHolder.delete_plan_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new PlanEvent(EventConstants.DELETE, child.getId()));
+                    EventBus.getDefault().post(new PlanEvent(EventConstants.DELETE, child.getId(), module));
+                }
+            });
+        }
+
+        if(child.getId().equals(ImovinApplication.getUserData().getSelectedPlan())){
+            childViewHolder.plan_title.setTypeface(Typeface.DEFAULT_BOLD);
+            childViewHolder.delete_plan_btn.setVisibility(View.GONE);
+        }else{
+            childViewHolder.plan_title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new PlanEvent(EventConstants.SELECT, child.getId(), module));
                 }
             });
         }

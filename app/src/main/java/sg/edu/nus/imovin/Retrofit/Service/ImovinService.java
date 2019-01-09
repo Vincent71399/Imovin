@@ -87,6 +87,11 @@ public interface ImovinService {
             @Body CreatePlanRequest createPlanRequest
     );
 
+    @PUT
+    Call<PlanResponse> selectPlan(
+            @Url String url
+    );
+
     @GET
     Call<PlanResponse> getPlan(
             @Url String url
@@ -127,4 +132,7 @@ public interface ImovinService {
     Call<UploadImageResponse> uploadImage(
             @Body UploadImageRequest uploadImageRequest
     );
+
+    //Challenge
+
 }

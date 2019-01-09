@@ -7,6 +7,7 @@ public class ConnectionURL {
     public static final String REQUEST_AUTH_FITBIT = "/api/user/auth-fitbit";
     public static final String REQUEST_GET_STATISTICS = "/api/user/stats";
     public static final String REQUEST_UPDATE_STATISTICS = "/api/user/stats/update";
+    public static final String REQUEST_UPDATE_CHALLENGE = "/api/user/challenge/update";
     public static final String REQUEST_CREATE_THREAD = "/api/forum/thread";
     public static final String REQUEST_GET_THREAD = "/api/forum/thread/%s";
     public static final String REQUEST_GET_ALL_THREADS = "/api/forum/threads";
@@ -17,6 +18,7 @@ public class ConnectionURL {
     public static final String REQUEST_GET_PLAN = "/api/goal/plan/%s";
     public static final String REQUEST_UPDATE_PLAN = "/api/goal/plan/%s";
     public static final String REQUEST_DELETE_PLAN = "/api/goal/plan/%s";
+    public static final String REQUEST_SELECT_PLAN = "/api/goal/plan/%s/select";
     public static final String REQUEST_CREATE_SOCIAL_POST = "/api/social/post";
     public static final String REQUEST_UPLOAD_IMAGE = "/api/social/post/upload-image";
     public static final String REQUEST_GET_ALL_SOCIAL_POSTS = "/api/social/posts";
