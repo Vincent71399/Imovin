@@ -44,6 +44,7 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.date_text) TextView date_text;
     @BindView(R.id.calendar_gridview) GridView calendar_gridview;
     @BindView(R.id.change_plan_btn) TextView change_plan_btn;
+    @BindView(R.id.warning) TextView warning;
 
     public static MonitorFragment getInstance() {
         MonitorFragment monitorFragment = new MonitorFragment();
@@ -77,6 +78,12 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
         Calendar calendar = Calendar.getInstance();
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         getStatistics(dayOfMonth);
+
+        if(ImovinApplication.getShowWarning()){
+            warning.setVisibility(View.VISIBLE);
+        }else {
+            warning.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void getStatistics(int numOfDays){

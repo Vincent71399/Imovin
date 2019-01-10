@@ -46,24 +46,27 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
     private View decorView;
     private CommonTabLayout sub_tab_layout;
     private ViewPager vp;
-    private final String[] mTitles = {
-            FuncBlockConstants.HOME, FuncBlockConstants.LIBRARY, FuncBlockConstants.FORUM,
-            FuncBlockConstants.GOAL, FuncBlockConstants.MONITOR, FuncBlockConstants.SOCIAL,
-            FuncBlockConstants.CHALLENGE
-    };
+    private String[] mTitles;
+//            = {
+//            FuncBlockConstants.HOME, FuncBlockConstants.LIBRARY, FuncBlockConstants.FORUM,
+//            FuncBlockConstants.GOAL, FuncBlockConstants.MONITOR, FuncBlockConstants.SOCIAL,
+//            FuncBlockConstants.CHALLENGE
+//    };
     private final int defaultPagePosition = 0;
     private int currentPagePosition = 0;
     private ArrayList<Fragment> mFragments;
-    private int[] mIconUnselectIds = {
-            R.drawable.icon_home_unselect, R.drawable.icon_library_unselect, R.drawable.icon_forum_unselect,
-            R.drawable.icon_goal_unselect, R.drawable.icon_monior_unselect, R.drawable.icon_social_feed_unselect,
-            R.drawable.icon_challenge_unselect
-    };
-    private int[] mIconSelectIds = {
-            R.drawable.icon_home_select, R.drawable.icon_library_select, R.drawable.icon_forum_select,
-            R.drawable.icon_goal_select, R.drawable.icon_monior_select, R.drawable.icon_social_feed_select,
-            R.drawable.icon_challenge_select
-    };
+    private Integer[] mIconUnselectIds;
+//            = {
+//            R.drawable.icon_home_unselect, R.drawable.icon_library_unselect, R.drawable.icon_forum_unselect,
+//            R.drawable.icon_goal_unselect, R.drawable.icon_monior_unselect, R.drawable.icon_social_feed_unselect,
+//            R.drawable.icon_challenge_unselect
+//    };
+    private Integer[] mIconSelectIds;
+//        = {
+//            R.drawable.icon_home_select, R.drawable.icon_library_select, R.drawable.icon_forum_select,
+//            R.drawable.icon_goal_select, R.drawable.icon_monior_select, R.drawable.icon_social_feed_select,
+//            R.drawable.icon_challenge_select
+//    };
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private MyPagerAdapter mAdapter;
 
@@ -101,6 +104,10 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
 
     private void SetFunction(){
         navigator_right.setOnClickListener(this);
+        int profile = ImovinApplication.getUserData().getProfile();
+        mTitles = FuncBlockConstants.getFunctionBlockTitles_by_profile(profile);
+        mIconUnselectIds = FuncBlockConstants.getFunctionBlockUnselectIcons_by_profile(profile);
+        mIconSelectIds = FuncBlockConstants.getFunctionBlockSelectIcons_by_profile(profile);
     }
 
     private void Init(){

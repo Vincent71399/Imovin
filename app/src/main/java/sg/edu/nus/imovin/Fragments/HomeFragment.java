@@ -241,8 +241,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         int averageSteps = sumSteps / statisticsDataList.size();
         if(averageSteps < step_threshold){
             warning.setVisibility(View.VISIBLE);
+            ImovinApplication.setShowWarning(true);
         }else{
             warning.setVisibility(View.INVISIBLE);
+            ImovinApplication.setShowWarning(false);
         }
 
         int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);

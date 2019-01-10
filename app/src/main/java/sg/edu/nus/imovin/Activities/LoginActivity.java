@@ -87,7 +87,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //            Toast.makeText(getApplicationContext(), "Email and Password cannot be empty", Toast.LENGTH_SHORT).show();
 //        }else {
 
-        String email = "amotivation@gmail.com";
+        String email =
+//                "amotivation@gmail.com";
+                "externalregulation@gmail.com";
+//                "introjectedregulation@gmail.com";
+//                "identifiedregulation@gmail.com";
+//                "integratedregulation@gmail.com";
+//                "intrinsicregulation@gmail.com";
+//                "exerciselapse@gmail.com";
+
         String password = "password";
 
             Retrofit retrofit = new Retrofit.Builder()
