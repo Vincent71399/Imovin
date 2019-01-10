@@ -45,7 +45,6 @@ import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
 import sg.edu.nus.imovin.System.ValueConstants;
 
-import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_DELETE_PLAN;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_GET_PLAN;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
@@ -76,7 +75,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     HashMap<String, Integer> dailyCaloriesHashMap;
     HashMap<String, Integer> dailyDurationsHashMap;
 
-    private PlanData planData;
     private List<Integer> barColors;
 
     public static HomeFragment getInstance() {
@@ -163,8 +161,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Call<PlanResponse> call, Response<PlanResponse> response) {
                 try {
                     PlanResponse planResponse = response.body();
-                    if(planResponse != null) {
-                        planData = planResponse.getData();
+                    if(planResponse != null && planResponse.getData() != null) {
+                        ImovinApplication.setPlanData(planResponse.getData());
                         queryStatistics();
                     }
                 }catch (Exception e){
@@ -208,6 +206,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void SetupData(List<StatisticsData> statisticsDataList){
         int step_threshold = 7500;
+
+        PlanData planData = ImovinApplication.getPlanData();
 
         if(planData != null){
             step_threshold = planData.getTarget();

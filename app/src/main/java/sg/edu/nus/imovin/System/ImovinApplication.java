@@ -10,11 +10,13 @@ import java.io.IOException;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Object.UserData;
 
 public class ImovinApplication extends Application {
     private static ImovinApplication instance;
     private static UserData userData;
+    private static PlanData planData;
     private static ImageLoader imageLoader;
     private static OkHttpClient.Builder httpClient;
 
@@ -41,6 +43,14 @@ public class ImovinApplication extends Application {
 
     public static void setUserData(UserData userData) {
         ImovinApplication.userData = userData;
+    }
+
+    public static PlanData getPlanData() {
+        return planData;
+    }
+
+    public static void setPlanData(PlanData planData) {
+        ImovinApplication.planData = planData;
     }
 
     public static ImageLoader getImageLoader() {
