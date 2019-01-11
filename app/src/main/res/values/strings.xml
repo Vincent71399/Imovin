@@ -38,6 +38,10 @@
     <string name="custom_plans">Custom Plans</string>
     <string name="hint_add_plan">Enter Plan Name</string>
 
+    <string name="total_points">Total Points :</string>
+    <string name="daily_steps">Daily Steps</string>
+    <string name="lifetime_total_steps">Lifetime Total Steps</string>
+
     <string name="january">JAN</string>
     <string name="february">FEB</string>
     <string name="march">MAR</string>
@@ -53,7 +57,6 @@
 
     <string name="request_fail_message">Fail to connect the server, please check internet connection</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="social_feed">Social Feed</string>
     <string name="new_post">New Post</string>

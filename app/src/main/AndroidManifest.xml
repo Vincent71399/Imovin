@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.LoginActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +23,7 @@
         </activity>
         <activity
             android:name=".Activities.OauthResponseActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -34,30 +36,37 @@
                     android:scheme="imovin" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.DashBoardActivity" />
+        <activity android:name=".Activities.DashBoardActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activities.ForumNewPostActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".Activities.ForumNewCommentActivity"
             android:theme="@style/Theme.Transparent"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Activities.ForumCommentActivity" />
         <activity
             android:name=".Activities.SocialNewPostActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Activities.SocialContentActivity" />
         <activity
             android:name=".Activities.SocialNewCommentActivity"
             android:theme="@style/Theme.Transparent"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".Activities.AddPlanActivity"
             android:theme="@style/Theme.Transparent"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".Activities.MonitorChangePlanActivity"
-            android:theme="@style/Theme.Transparent"/>
+            android:theme="@style/Theme.Transparent"
+            android:screenOrientation="portrait"/>
 
     </application>
 

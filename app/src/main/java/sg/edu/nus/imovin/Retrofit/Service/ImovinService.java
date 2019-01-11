@@ -20,6 +20,7 @@ import sg.edu.nus.imovin.Retrofit.Request.LikeCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeSocialCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UploadImageRequest;
 import sg.edu.nus.imovin.Retrofit.Response.AuthFitbitResponse;
+import sg.edu.nus.imovin.Retrofit.Response.ChallengeResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
@@ -134,5 +135,6 @@ public interface ImovinService {
     );
 
     //Challenge
-
+    @GET(ConnectionURL.REQUEST_UPDATE_CHALLENGE)
+    Call<ChallengeResponse> getChallenge();
 }
