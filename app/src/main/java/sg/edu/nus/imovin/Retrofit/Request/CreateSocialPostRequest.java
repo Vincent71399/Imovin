@@ -6,11 +6,11 @@ package sg.edu.nus.imovin.Retrofit.Request;
 
 public class CreateSocialPostRequest {
     private String message;
-    private String imageUrl;
+    private String imageString;
 
-    public CreateSocialPostRequest(String message, String imageUrl) {
+    public CreateSocialPostRequest(String message, String imageString) {
         this.message = message;
-        this.imageUrl = imageUrl;
+        this.imageString = imageString;
     }
 
     public String getMessage() {
@@ -21,12 +21,12 @@ public class CreateSocialPostRequest {
         this.message = message;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageString() {
+        return imageString;
     }
 
-    public void setImageUrl(String imageUrl){
-        this.imageUrl = imageUrl;
+    public void setImageString(String imageString){
+        this.imageString = imageString;
     }
 
 }

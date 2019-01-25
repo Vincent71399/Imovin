@@ -4,7 +4,7 @@
 	android:layout_height="wrap_content">
 
 	<ImageView
-		android:id="@+id/image"
+		android:id="@+id/imageString"
 		android:layout_width="72dip"
 		android:layout_height="72dip"
 		android:layout_margin="3dip"
