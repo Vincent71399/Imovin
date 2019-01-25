@@ -1,8 +1,11 @@
 package sg.edu.nus.imovin.Adapters;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,8 +48,9 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.So
         holder.usernameText.setText(socialFeedData.getOwnerName());
         holder.postTimeText.setText(ConvertDateString2DisplayFormat(socialFeedData.getCreatedAt()));
         holder.feedContentText.setText(socialFeedData.getMessage());
-        holder.imageView.setImageResource(R.drawable.imovin_big);
-        //ImovinApplication.getImageLoader().displayImage(socialFeedData.getImageUrl(), holder.imageView);
+        byte[] decodedString = Base64.decode(socialFeedData.getImageString(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        holder.imageView.setImageBitmap(decodedByte);
         holder.commentsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

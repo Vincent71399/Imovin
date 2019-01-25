@@ -2,6 +2,8 @@ package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -9,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -119,7 +122,9 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
         username.setText(socialFeedData.getOwnerName());
         post_since.setText(ConvertDateString2DisplayFormat(socialFeedData.getCreatedAt()));
         feed_content_text.setText(socialFeedData.getMessage());
-        //feed_image.setText(threadData.getMessage());
+        byte[] decodedString = Base64.decode(socialFeedData.getImageString(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        feed_image.setImageBitmap(decodedByte);
     }
 
     private void SetFunction(){

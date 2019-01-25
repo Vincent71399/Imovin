@@ -11,7 +11,7 @@ public class SocialFeedData implements Serializable{
     private String id;
     private String ownerName;
     private String ownerId;
-    private String imageUrl;
+    private String imageString;
     private String message;
     private String createdAt;
     private List<CommentData> comments;
@@ -24,12 +24,12 @@ public class SocialFeedData implements Serializable{
         this.id = id;
     }
 
-    public String getImageUrl(){
-        return imageUrl;
+    public String getImageString(){
+        return imageString;
     }
 
-    public void setImageUrl(String imageUrl){
-        this.imageUrl = imageUrl;
+    public void setImageString(String imageString){
+        this.imageString = imageString;
     }
 
     public String getOwnerName() {

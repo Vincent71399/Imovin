@@ -1,7 +1,7 @@
 package sg.edu.nus.imovin.HttpConnection;
 
 public class ConnectionURL {
-    public static final String SERVER = "http://13.251.126.157:3000";
+    public static final String SERVER = "http://3.0.200.147:3000";
 
     public static final String REQUEST_EMAIL_LOGIN = "/api/auth/email-login";
     public static final String REQUEST_AUTH_FITBIT = "/api/user/auth-fitbit";

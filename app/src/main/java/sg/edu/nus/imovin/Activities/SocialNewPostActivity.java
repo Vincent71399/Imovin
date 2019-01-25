@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +47,7 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
     private View customActionBar;
     ProgressDialog dialog = null;
     String uploadFileName = "";
+    String imageString = "";
 
     @BindView(R.id.navigator_middle_title)
     TextView navigator_middle_title;
@@ -117,11 +119,11 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.navigator_right:
                 String message = message_input.getText().toString();
-                String imageUrl = "";
                 if(message.equals("")){
                     Toast.makeText(this, "Title and message cannot be empty", Toast.LENGTH_SHORT).show();
-                }else {
-                    PostNewSocialFeed(new CreateSocialPostRequest(message, imageUrl));
+                }
+                else {
+                    PostNewSocialFeed(new CreateSocialPostRequest(message, imageString));
                 }
                 break;
             case R.id.socialPostUploadImage:
@@ -149,6 +151,7 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
                     Log.d(LogConstants.LogTag, "SocialNewSocialFeedActivity : " + socialPostResponse.getMessage());
                     Intent resultIntent = new Intent();
                     setResult(RESULT_OK, resultIntent);
+                    ImovinApplication.setNeedRefreshSocialNeed(true);
                     finish();
 
                 }catch (Exception e){
@@ -177,31 +180,11 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                 final byte[] bytes = byteArrayOutputStream.toByteArray();
-
-
-
-                dialog = ProgressDialog.show(SocialNewPostActivity.this, "", "Uploading file...", true);
-
-                new Thread(new Runnable() {
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                uploadingText.setText("uploading started.....");
-                            }
-                        });
-
-                        String encodedString = null;
-                        try {
-                            encodedString = new String(Base64.encode(bytes, 0), "UTF-8");
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-
-                        UploadImageRequest uploadImageRequest = new UploadImageRequest(encodedString);
-                        postImage(uploadImageRequest);
-
-                    }
-                }).start();
+                try {
+                    imageString = new String(Base64.encode(bytes, 0), "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
 
                 break;
         }
