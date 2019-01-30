@@ -26,6 +26,7 @@ import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
+import sg.edu.nus.imovin.Services.FCMService;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.FitbitConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
@@ -89,12 +90,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         String email =
 //                "amotivation@gmail.com";
-                "externalregulation@gmail.com";
+//                "externalregulation@gmail.com";
 //                "introjectedregulation@gmail.com";
 //                "identifiedregulation@gmail.com";
 //                "integratedregulation@gmail.com";
 //                "intrinsicregulation@gmail.com";
 //                "exerciselapse@gmail.com";
+                "notification@gmail.com";
 
         String password = "password";
 
