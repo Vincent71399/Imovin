@@ -12,11 +12,17 @@ import android.view.ViewGroup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Adapters.LibraryAdapter;
 import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.LibraryData;
+import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
+import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LibraryURLConstants;
+
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
 public class LibraryFragment extends Fragment {
     private View rootView;
@@ -62,6 +68,4 @@ public class LibraryFragment extends Fragment {
         i.setData(Uri.parse(url));
         startActivity(i);
     }
-
-
 }

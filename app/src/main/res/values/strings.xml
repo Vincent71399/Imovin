@@ -40,7 +40,10 @@
 
     <string name="total_points">Total Points :</string>
     <string name="daily_steps">Daily Steps</string>
-    <string name="lifetime_total_steps">Lifetime Total Steps</string>
+    <string name="total_distance">Total Distance (km)</string>
+    <string name="total_days_with_7500_steps">Total days with > 7500 steps</string>
+    <string name="active_days_for_week">Active days for the week</string>
+    <string name="weekly_exercise_duration">Weekly exercise duration</string>
 
     <string name="january">JAN</string>
     <string name="february">FEB</string>

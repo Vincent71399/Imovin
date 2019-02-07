@@ -31,6 +31,7 @@ import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.FitbitConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
+import com.pusher.pushnotifications.PushNotifications;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
@@ -82,23 +83,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void EmailLogin(){
-//        String email = email_input.getText().toString();
-//        String password = password_input.getText().toString();
-//        if(email.equals("") || password.equals("")){
-//            Toast.makeText(getApplicationContext(), "Email and Password cannot be empty", Toast.LENGTH_SHORT).show();
-//        }else {
+        String email = email_input.getText().toString();
+        String password = password_input.getText().toString();
+        if(email.equals("") || password.equals("")){
+            Toast.makeText(getApplicationContext(), "Email and Password cannot be empty", Toast.LENGTH_SHORT).show();
+        }else {
 
-        String email =
-//                "amotivation@gmail.com";
-//                "externalregulation@gmail.com";
-//                "introjectedregulation@gmail.com";
-//                "identifiedregulation@gmail.com";
-//                "integratedregulation@gmail.com";
-//                "intrinsicregulation@gmail.com";
-//                "exerciselapse@gmail.com";
-                "notification@gmail.com";
-
-        String password = "password";
+//        String email =
+////                "amotivation@gmail.com";
+////                "externalregulation@gmail.com";
+////                "introjectedregulation@gmail.com";
+////                "identifiedregulation@gmail.com";
+////                "integratedregulation@gmail.com";
+////                "intrinsicregulation@gmail.com";
+////                "exerciselapse@gmail.com";
+//                "notification@gmail.com";
+//
+//        String password = "password";
 
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(SERVER)
@@ -119,6 +120,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         Log.d(LogConstants.LogTag, emailLoginResponse.getMessage());
                         Log.d("token_value", emailLoginResponse.getData().getToken());
                         ImovinApplication.setUserData(emailLoginResponse.getData());
+                        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
+                        PushNotifications.subscribe(emailLoginResponse.getData().getEmail());
+
                         if(emailLoginResponse.getData().getFitbitAuthenticated()){
                             LaunchDashboard();
                             finish();
@@ -139,7 +143,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     Toast.makeText(getApplicationContext(), "Fail to login", Toast.LENGTH_SHORT).show();
                 }
             });
-//        }
+        }
     }
 
     private void StartOauth(){

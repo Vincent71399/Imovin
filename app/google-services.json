@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "955789651656",
+    "firebase_url": "https://disa-imovin.firebaseio.com",
+    "project_id": "disa-imovin",
+    "storage_bucket": "disa-imovin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955789651656:android:efbf8d752463d2bc",
+        "android_client_info": {
+          "package_name": "sg.edu.nus.imovin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955789651656-idvbekgj8odstevdu9f5s8c7ouqim3g6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXar2hU2wkgueOwqtTwxSTlDs74EcLxSc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -46,6 +46,8 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/daily_steps_title"
+            android:visibility="gone"
             android:layout_marginTop="20dp"
             android:textColor="@color/black_color"
             android:text="@string/daily_steps"
@@ -59,15 +61,62 @@
             android:layout_height="wrap_content"/>
 
         <TextView
+            android:id="@+id/daily_distance_title"
+            android:visibility="gone"
             android:layout_marginTop="20dp"
             android:textColor="@color/black_color"
-            android:text="@string/lifetime_total_steps"
+            android:text="@string/total_distance"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/life_time_total_step_list"
+            android:id="@+id/daily_distance_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/step_target_title"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black_color"
+            android:text="@string/total_days_with_7500_steps"
+            android:textSize="@dimen/textSubMid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/steps_target_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/active_days_title"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black_color"
+            android:text="@string/active_days_for_week"
+            android:textSize="@dimen/textSubMid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/active_days_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/weekly_ex_title"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black_color"
+            android:text="@string/weekly_exercise_duration"
+            android:textSize="@dimen/textSubMid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/weekly_ex_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
