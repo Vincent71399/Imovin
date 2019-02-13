@@ -172,19 +172,20 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode){
             case IntentConstants.SELECT_PICTURE:
-                Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+                if(resultCode == RESULT_OK) {
+                    Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
 
-                image_input.setImageBitmap(bitmap);
+                    image_input.setImageBitmap(bitmap);
 
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                final byte[] bytes = byteArrayOutputStream.toByteArray();
-                try {
-                    imageString = new String(Base64.encode(bytes, 0), "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    final byte[] bytes = byteArrayOutputStream.toByteArray();
+                    try {
+                        imageString = new String(Base64.encode(bytes, 0), "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
-
                 break;
         }
     }

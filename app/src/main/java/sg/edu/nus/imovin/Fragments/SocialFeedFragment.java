@@ -17,6 +17,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +30,7 @@ import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.Event.ForumEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
+import sg.edu.nus.imovin.Retrofit.Response.SocialImageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.EventConstants;
@@ -36,6 +38,8 @@ import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_GET_SOCIAL_POST_IMAGE;
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_SELECT_PLAN;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
 public class SocialFeedFragment extends Fragment {
@@ -93,6 +97,33 @@ public class SocialFeedFragment extends Fragment {
     }
 
     private void Init(){
+        GetSocialData();
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEvent(ForumEvent event) {
+        Toast.makeText(ImovinApplication.getInstance(), event.getMessage(), Toast.LENGTH_SHORT).show();
+        switch (event.getMessage()){
+            case EventConstants.REFRESH:
+                Init();
+                break;
+        }
+    }
+
+    private void SetupData(){
+        SocialFeedAdapter socialFeedAdapter = new SocialFeedAdapter(getActivity(), socialFeedList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+
+        socialFeedListView.setLayoutManager(layoutManager);
+        socialFeedListView.setAdapter(socialFeedAdapter);
+
+        // add divider line between posts
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(socialFeedListView.getContext(),
+                layoutManager.getOrientation());
+        socialFeedListView.addItemDecoration(dividerItemDecoration);
+    }
+
+    private void GetSocialData(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -125,28 +156,4 @@ public class SocialFeedFragment extends Fragment {
             }
         });
     }
-
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onEvent(ForumEvent event) {
-        Toast.makeText(ImovinApplication.getInstance(), event.getMessage(), Toast.LENGTH_SHORT).show();
-        switch (event.getMessage()){
-            case EventConstants.REFRESH:
-                Init();
-                break;
-        }
-    }
-
-    private void SetupData(){
-        SocialFeedAdapter socialFeedAdapter = new SocialFeedAdapter(getActivity(), socialFeedList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-
-        socialFeedListView.setLayoutManager(layoutManager);
-        socialFeedListView.setAdapter(socialFeedAdapter);
-
-        // add divider line between posts
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(socialFeedListView.getContext(),
-                layoutManager.getOrientation());
-        socialFeedListView.addItemDecoration(dividerItemDecoration);
-    }
-
 }

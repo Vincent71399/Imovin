@@ -27,6 +27,7 @@ import sg.edu.nus.imovin.Retrofit.Response.LessonResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialCommentResponse;
+import sg.edu.nus.imovin.Retrofit.Response.SocialImageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostResponse;
 import sg.edu.nus.imovin.Retrofit.Response.StatisticsResponse;
@@ -118,6 +119,11 @@ public interface ImovinService {
 
     @GET(ConnectionURL.REQUEST_GET_ALL_SOCIAL_POSTS)
     Call<SocialPostMultiResponse> getAllSocialPosts();
+
+    @GET
+    Call<SocialImageResponse> getSocialImage_by_Id(
+            @Url String url
+    );
 
     @POST(ConnectionURL.REQUEST_CREATE_SOCIAL_COMMENT)
     Call<SocialCommentResponse> createSocialComment(

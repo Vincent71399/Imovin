@@ -94,7 +94,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //                "intrinsicregulation@gmail.com";
 //                "exerciselapse@gmail.com";
 //                "notification@gmail.com";
-
+//                        "all@gmail.com";
+//
 //        String password = "password";
 
         if(email.equals("") || password.equals("")){
