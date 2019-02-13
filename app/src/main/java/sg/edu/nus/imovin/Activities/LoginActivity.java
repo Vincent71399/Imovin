@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.pusher.pushnotifications.PushNotifications;
+
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -117,8 +119,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         Log.d(LogConstants.LogTag, emailLoginResponse.getMessage());
                         Log.d("token_value", emailLoginResponse.getData().getToken());
                         ImovinApplication.setUserData(emailLoginResponse.getData());
-//                        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
-//                        PushNotifications.subscribe(emailLoginResponse.getData().getEmail());
+                        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
+                        PushNotifications.subscribe(emailLoginResponse.getData().getEmail());
 
                         if(emailLoginResponse.getData().getFitbitAuthenticated()){
                             LaunchDashboard();
