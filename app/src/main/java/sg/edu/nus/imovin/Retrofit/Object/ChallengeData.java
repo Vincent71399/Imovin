@@ -1,7 +1,5 @@
 package sg.edu.nus.imovin.Retrofit.Object;
 
-import java.util.List;
-
 public class ChallengeData {
     private Challenge challenges;
     private Integer challegePoints;

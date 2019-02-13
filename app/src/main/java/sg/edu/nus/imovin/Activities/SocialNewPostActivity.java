@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

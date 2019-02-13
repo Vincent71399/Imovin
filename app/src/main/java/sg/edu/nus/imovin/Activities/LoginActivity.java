@@ -26,12 +26,10 @@ import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
-import sg.edu.nus.imovin.Services.FCMService;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.FitbitConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
-import com.pusher.pushnotifications.PushNotifications;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
@@ -77,7 +75,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.oauthBtn:
                 EmailLogin();
-//                LaunchDashboard();
                 break;
         }
     }
@@ -85,22 +82,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void EmailLogin(){
         String email = email_input.getText().toString();
         String password = password_input.getText().toString();
+
+//                String email =
+//                "amotivation@gmail.com";
+//                "externalregulation@gmail.com";
+//                "introjectedregulation@gmail.com";
+//                "identifiedregulation@gmail.com";
+//                "integratedregulation@gmail.com";
+//                "intrinsicregulation@gmail.com";
+//                "exerciselapse@gmail.com";
+//                "notification@gmail.com";
+
+//        String password = "password";
+
         if(email.equals("") || password.equals("")){
             Toast.makeText(getApplicationContext(), "Email and Password cannot be empty", Toast.LENGTH_SHORT).show();
         }else {
-
-//        String email =
-////                "amotivation@gmail.com";
-////                "externalregulation@gmail.com";
-////                "introjectedregulation@gmail.com";
-////                "identifiedregulation@gmail.com";
-////                "integratedregulation@gmail.com";
-////                "intrinsicregulation@gmail.com";
-////                "exerciselapse@gmail.com";
-//                "notification@gmail.com";
-//
-//        String password = "password";
-
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(SERVER)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -120,8 +117,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         Log.d(LogConstants.LogTag, emailLoginResponse.getMessage());
                         Log.d("token_value", emailLoginResponse.getData().getToken());
                         ImovinApplication.setUserData(emailLoginResponse.getData());
-                        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
-                        PushNotifications.subscribe(emailLoginResponse.getData().getEmail());
+//                        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
+//                        PushNotifications.subscribe(emailLoginResponse.getData().getEmail());
 
                         if(emailLoginResponse.getData().getFitbitAuthenticated()){
                             LaunchDashboard();

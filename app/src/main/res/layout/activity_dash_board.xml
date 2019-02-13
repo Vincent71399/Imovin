@@ -23,8 +23,6 @@
             android:layout_weight="0"
             android:layout_height="wrap_content"
             android:background="@color/light_grey_color"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             app:tl_textUnselectColor="@color/black_color"

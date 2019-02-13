@@ -1,7 +1,6 @@
 package sg.edu.nus.imovin.System;
 
 import android.app.Application;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -19,7 +18,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Object.UserData;
-import sg.edu.nus.imovin.Services.FCMService;
 
 public class ImovinApplication extends Application {
     private static ImovinApplication instance;

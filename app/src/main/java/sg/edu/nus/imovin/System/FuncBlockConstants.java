@@ -2,8 +2,6 @@ package sg.edu.nus.imovin.System;
 
 import android.support.v4.app.Fragment;
 
-import com.google.common.collect.Lists;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +12,6 @@ import sg.edu.nus.imovin.Fragments.HomeFragment;
 import sg.edu.nus.imovin.Fragments.LibraryFragment;
 import sg.edu.nus.imovin.Fragments.MonitorFragment;
 import sg.edu.nus.imovin.Fragments.SocialFeedFragment;
-import sg.edu.nus.imovin.Objects.Goal;
 import sg.edu.nus.imovin.R;
 
 public class FuncBlockConstants {
@@ -115,32 +112,29 @@ public class FuncBlockConstants {
         switch (profile){
             case 0:
                 mTitleList.add(HOME);
-                mTitleList.add(LIBRARY);
-                mTitleList.add(FORUM);
-                mTitleList.add(GOAL);
-                mTitleList.add(MONITOR);
-                mTitleList.add(SOCIAL);
                 mTitleList.add(CHALLENGE);
                 break;
             case 1:
                 mTitleList.add(HOME);
-                mTitleList.add(CHALLENGE);
+                mTitleList.add(SOCIAL);
                 break;
             case 2:
                 mTitleList.add(HOME);
-                mTitleList.add(SOCIAL);
+                mTitleList.add(LIBRARY);
                 break;
             case 3:
                 mTitleList.add(HOME);
+                mTitleList.add(GOAL);
                 mTitleList.add(LIBRARY);
                 break;
             case 4:
                 mTitleList.add(HOME);
                 mTitleList.add(GOAL);
-                mTitleList.add(LIBRARY);
+                mTitleList.add(MONITOR);
                 break;
             case 5:
                 mTitleList.add(HOME);
+                mTitleList.add(GOAL);
                 mTitleList.add(MONITOR);
                 break;
             case 6:
