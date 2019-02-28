@@ -106,7 +106,7 @@
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/chart_by_day"
             android:layout_width="match_parent"
-            android:layout_height="360dp" />
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/daily_goal"
