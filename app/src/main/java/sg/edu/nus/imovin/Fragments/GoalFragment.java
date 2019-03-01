@@ -1,5 +1,7 @@
 package sg.edu.nus.imovin.Fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import sg.edu.nus.imovin.Activities.AddPlanActivity;
 import sg.edu.nus.imovin.Adapters.PlanAdapter;
 import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.Objects.PlanDataCategory;
@@ -37,6 +40,7 @@ import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
+import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_SELECT_PLAN;
@@ -137,6 +141,24 @@ public class GoalFragment extends Fragment {
                 case EventConstants.SELECT:
                     if (event.getId() != null) {
                         SelectPlan(event.getId());
+                    }
+                    break;
+                case EventConstants.UPDATE:
+                    if (event.getId() != null) {
+                        Intent intentGoal = new Intent();
+                        intentGoal.setClass(getActivity(), AddPlanActivity.class);
+                        intentGoal.putExtra(AddPlanActivity.Update_Plan_ID, event.getId());
+                        PlanData pendingEditPlan = null;
+                        for(PlanData planData : planDataCustomList){
+                            if(planData.getId().equals(event.getId())){
+                                pendingEditPlan = planData;
+                            }
+                        }
+                        if(pendingEditPlan != null){
+                            intentGoal.putExtra(AddPlanActivity.Default_Plan_Name, pendingEditPlan.getName());
+                            intentGoal.putExtra(AddPlanActivity.Default_Plan_Target, pendingEditPlan.getTarget());
+                        }
+                        getActivity().startActivityForResult(intentGoal, IntentConstants.GOAL_EDIT_PLAN);
                     }
                     break;
             }
@@ -243,5 +265,4 @@ public class GoalFragment extends Fragment {
             }
         });
     }
-
 }

@@ -8,7 +8,8 @@ public class IntentConstants {
     public static final int SOCIAL_POST_CONTENT = 105;
     public static final int SELECT_PICTURE = 106;
     public static final int GOAL_NEW_PLAN = 107;
-    public static final int MONITOR_NEW_PLAN = 108;
+    public static final int GOAL_EDIT_PLAN = 108;
+    public static final int MONITOR_NEW_PLAN = 109;
 
     public static final String THREAD_DATA = "THREAD_DATA";
     public static final String THREAD_ID = "THREAD_ID";

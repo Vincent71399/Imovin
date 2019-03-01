@@ -29,7 +29,6 @@ import sg.edu.nus.imovin.Retrofit.Object.LibraryData;
 import sg.edu.nus.imovin.Retrofit.Response.LessonResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.ImovinApplication;
-import sg.edu.nus.imovin.System.LibraryURLConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
@@ -38,6 +37,8 @@ public class LibraryFragment extends Fragment {
     private View rootView;
 
     @BindView(R.id.library_list) RecyclerView library_list;
+
+    private List<LibraryData> libraryDataList;
 
     public static LibraryFragment getInstance() {
         LibraryFragment libraryFragment = new LibraryFragment();
@@ -63,7 +64,7 @@ public class LibraryFragment extends Fragment {
     }
 
     private void SetupData(List<List<Object>> lessonDataList){
-        List<LibraryData> libraryDataList = new ArrayList<>();
+        libraryDataList = new ArrayList<>();
         for(List<Object> lessonData : lessonDataList){
             if(lessonData.size() == 5) {
                 LibraryData libraryData = new LibraryData(
@@ -85,7 +86,7 @@ public class LibraryFragment extends Fragment {
         library_list.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                LibraryData libraryData = LibraryURLConstants.getLibraryList().get(position);
+                LibraryData libraryData = libraryDataList.get(position);
                 OpenUrlInBrowser(libraryData.getLink_url());
             }
         }));

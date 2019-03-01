@@ -284,6 +284,12 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                     EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                 }
                 break;
+            case IntentConstants.GOAL_EDIT_PLAN:
+                if(resultCode == Activity.RESULT_OK){
+                    ImovinApplication.setNeedRefreshForum(true);
+                    EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
+                }
+                break;
         }
     }
 }

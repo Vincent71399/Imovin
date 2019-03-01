@@ -18,6 +18,7 @@ import sg.edu.nus.imovin.Retrofit.Request.CreateThreadRequest;
 import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeSocialCommentRequest;
+import sg.edu.nus.imovin.Retrofit.Request.UpdatePlanRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UploadImageRequest;
 import sg.edu.nus.imovin.Retrofit.Response.AuthFitbitResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ChallengeResponse;
@@ -88,6 +89,12 @@ public interface ImovinService {
     @POST(ConnectionURL.REQUEST_CREATE_PLAN)
     Call<PlanResponse> createPlan(
             @Body CreatePlanRequest createPlanRequest
+    );
+
+    @PUT
+    Call<PlanResponse> updatePlan(
+            @Url String url,
+            @Body UpdatePlanRequest updatePlanRequest
     );
 
     @PUT

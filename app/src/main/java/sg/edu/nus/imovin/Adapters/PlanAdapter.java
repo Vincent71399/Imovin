@@ -3,6 +3,7 @@ package sg.edu.nus.imovin.Adapters;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,7 +111,16 @@ public class PlanAdapter extends ExpandableRecyclerAdapter<PlanDataCategory, Pla
 
         if(child.getId().equals(ImovinApplication.getUserData().getSelectedPlan())){
             childViewHolder.plan_title.setTypeface(Typeface.DEFAULT_BOLD);
+            childViewHolder.plan_title.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
             childViewHolder.delete_plan_btn.setVisibility(View.GONE);
+            if(parentPosition != 0) {
+                childViewHolder.plan_title.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EventBus.getDefault().post(new PlanEvent(EventConstants.UPDATE, child.getId(), module));
+                    }
+                });
+            }
         }else{
             childViewHolder.plan_title.setOnClickListener(new View.OnClickListener() {
                 @Override
