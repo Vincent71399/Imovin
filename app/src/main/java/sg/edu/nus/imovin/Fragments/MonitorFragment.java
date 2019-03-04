@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Activities.MonitorChangePlanActivity;
+import sg.edu.nus.imovin.Activities.MonitorDetailActivity;
 import sg.edu.nus.imovin.Adapters.CalendarAdapter;
 import sg.edu.nus.imovin.Objects.Goal;
 import sg.edu.nus.imovin.R;
@@ -45,6 +48,11 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.calendar_gridview) GridView calendar_gridview;
     @BindView(R.id.change_plan_btn) TextView change_plan_btn;
     @BindView(R.id.warning) TextView warning;
+
+    @BindView(R.id.calendar_prev_arrow) ImageView calendar_prev_arrow;
+    @BindView(R.id.calendar_next_arrow) ImageView calendar_next_arrow;
+
+    private List<Goal> goalList;
 
     public static MonitorFragment getInstance() {
         MonitorFragment monitorFragment = new MonitorFragment();
@@ -119,8 +127,21 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
     }
 
     private void SetupData(List<StatisticsData> statisticsDataList){
-        CalendarAdapter calendarAdapter = new CalendarAdapter(ImovinApplication.getInstance(),  generateCalendar(Lists.reverse(statisticsDataList)));
+        goalList = generateCalendar(Lists.reverse(statisticsDataList));
+        CalendarAdapter calendarAdapter = new CalendarAdapter(ImovinApplication.getInstance(),  goalList);
         calendar_gridview.setAdapter(calendarAdapter);
+        calendar_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(goalList.get(i).getShown()){
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), MonitorDetailActivity.class);
+                    intent.putExtra(MonitorDetailActivity.MONTH_YEAR, date_text.getText().toString());
+                    intent.putExtra(MonitorDetailActivity.GOAL, goalList.get(i));
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -130,6 +151,12 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), MonitorChangePlanActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.calendar_prev_arrow:
+
+                break;
+            case R.id.calendar_next_arrow:
+
                 break;
         }
     }
