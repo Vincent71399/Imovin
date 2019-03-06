@@ -76,8 +76,7 @@ public class CommonFunc {
         return result;
     }
 
-    public static String GetCurrentMonthString(){
-        Calendar calendar = Calendar.getInstance();
+    public static String GetCurrentMonthString(Calendar calendar){
         return convertInt2Month(calendar.get(Calendar.MONTH)) + " " + calendar.get(Calendar.YEAR);
     }
 
@@ -154,4 +153,26 @@ public class CommonFunc {
         }
     }
 
+    public static int dayDiffBetweenCalendar(Calendar startDate, Calendar endDate) {
+        startDate.set(Calendar.MILLISECOND, 0);
+        startDate.set(Calendar.MINUTE, 0);
+        startDate.set(Calendar.HOUR, 0);
+        startDate.set(Calendar.HOUR_OF_DAY, 0);
+
+        endDate.set(Calendar.MILLISECOND, 0);
+        endDate.set(Calendar.MINUTE, 0);
+        endDate.set(Calendar.HOUR,0);
+        endDate.set(Calendar.HOUR_OF_DAY, 0);
+
+        long endDateTimeStamp = endDate.getTimeInMillis();
+        long startDateTimeStamp = startDate.getTimeInMillis();
+
+        Long dayDiffLong = (endDateTimeStamp - startDateTimeStamp) / (24 * 60 * 60 * 1000);
+
+        return dayDiffLong.intValue();
+    }
+
+    public static boolean isSameMonth(Calendar targetCalendar, Calendar comparisonCalendar){
+        return targetCalendar.get(Calendar.MONTH) == comparisonCalendar.get(Calendar.MONTH) && targetCalendar.get(Calendar.YEAR) == comparisonCalendar.get(Calendar.YEAR);
+    }
 }

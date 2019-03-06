@@ -29,6 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Activities.MonitorChangePlanActivity;
 import sg.edu.nus.imovin.Activities.MonitorDetailActivity;
 import sg.edu.nus.imovin.Adapters.CalendarAdapter;
+import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.Objects.Goal;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
@@ -53,6 +54,8 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.calendar_next_arrow) ImageView calendar_next_arrow;
 
     private List<Goal> goalList;
+    private List<StatisticsData> statisticsDataList;
+    private Calendar calendarShownDay, calendarStartDay, calendarEndDay;
 
     public static MonitorFragment getInstance() {
         MonitorFragment monitorFragment = new MonitorFragment();
@@ -78,14 +81,34 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
 
     private void SetFunction(){
         change_plan_btn.setOnClickListener(this);
-
-        date_text.setText(GetCurrentMonthString());
+        calendar_prev_arrow.setOnClickListener(this);
+        calendar_next_arrow.setOnClickListener(this);
     }
 
     private void Init(){
-        Calendar calendar = Calendar.getInstance();
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        getStatistics(dayOfMonth);
+        calendarShownDay = Calendar.getInstance();
+        calendarShownDay.set(Calendar.MILLISECOND, 0);
+        calendarShownDay.set(Calendar.MINUTE, 0);
+        calendarShownDay.set(Calendar.HOUR, 0);
+        calendarShownDay.set(Calendar.HOUR_OF_DAY, 0);
+
+        calendarEndDay = Calendar.getInstance();
+        calendarEndDay.set(Calendar.MILLISECOND, 0);
+        calendarEndDay.set(Calendar.MINUTE, 0);
+        calendarEndDay.set(Calendar.HOUR, 0);
+        calendarEndDay.set(Calendar.HOUR_OF_DAY, 0);
+
+        calendarStartDay = Calendar.getInstance();
+        calendarStartDay.set(Calendar.MILLISECOND, 0);
+        calendarStartDay.set(Calendar.MINUTE, 0);
+        calendarStartDay.set(Calendar.HOUR, 0);
+        calendarStartDay.set(Calendar.HOUR_OF_DAY, 0);
+        calendarStartDay.set(Calendar.DAY_OF_MONTH, 1);
+        calendarStartDay.add(Calendar.YEAR, -1);
+
+        int dayDiff = CommonFunc.dayDiffBetweenCalendar(calendarStartDay, calendarEndDay);
+
+        getStatistics(dayDiff + 1);
 
         if(ImovinApplication.getShowWarning()){
             warning.setVisibility(View.VISIBLE);
@@ -93,6 +116,18 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
             warning.setVisibility(View.INVISIBLE);
         }
     }
+
+//    private void Init(){
+//        Calendar calendar = Calendar.getInstance();
+//        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+//        getStatistics(dayOfMonth);
+//
+//        if(ImovinApplication.getShowWarning()){
+//            warning.setVisibility(View.VISIBLE);
+//        }else {
+//            warning.setVisibility(View.INVISIBLE);
+//        }
+//    }
 
     private void getStatistics(int numOfDays){
         Retrofit retrofit = new Retrofit.Builder()
@@ -110,7 +145,8 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Call<StatisticsResponse> call, Response<StatisticsResponse> response) {
                 try {
                     StatisticsResponse statisticsResponse = response.body();
-                    SetupData(statisticsResponse.getData());
+                    statisticsDataList = statisticsResponse.getData();
+                    DisplayCalendar();
                 }catch (Exception e){
                     e.printStackTrace();
                     Log.d(LogConstants.LogTag, "Exception HomeFragment : " + e.toString());
@@ -124,6 +160,51 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void DisplayCalendar(){
+        date_text.setText(GetCurrentMonthString(calendarShownDay));
+
+        int dayOfMonth = calendarShownDay.get(Calendar.DAY_OF_MONTH);
+
+        int index = CommonFunc.dayDiffBetweenCalendar(calendarShownDay, calendarEndDay);
+
+//        Toast.makeText(getActivity(), "Day of Month : " + String.valueOf(dayOfMonth) + " Index : " + String.valueOf(index), Toast.LENGTH_SHORT).show();
+        SetupData(statisticsDataList.subList(index, dayOfMonth + index));
+
+        if(CommonFunc.isSameMonth(calendarShownDay, calendarStartDay)){
+            calendar_prev_arrow.setVisibility(View.INVISIBLE);
+            calendar_prev_arrow.setEnabled(false);
+        }else {
+            calendar_prev_arrow.setVisibility(View.VISIBLE);
+            calendar_prev_arrow.setEnabled(true);
+        }
+
+        if(CommonFunc.isSameMonth(calendarShownDay, calendarEndDay)){
+            calendar_next_arrow.setVisibility(View.INVISIBLE);
+            calendar_next_arrow.setEnabled(false);
+        }else{
+            calendar_next_arrow.setVisibility(View.VISIBLE);
+            calendar_next_arrow.setEnabled(true);
+        }
+
+    }
+
+    public boolean getPrevMonthCalendar(){
+        if(!CommonFunc.isSameMonth(calendarShownDay, calendarStartDay)){
+            calendarShownDay.set(Calendar.DAY_OF_MONTH, 1);
+            calendarShownDay.add(Calendar.DAY_OF_MONTH, -1);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean getNextMonthCalendar(){
+        if(!CommonFunc.isSameMonth(calendarShownDay, calendarEndDay)){
+            calendarShownDay.add(Calendar.MONTH, 1);
+            return true;
+        }
+        return false;
     }
 
     private void SetupData(List<StatisticsData> statisticsDataList){
@@ -153,10 +234,14 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.calendar_prev_arrow:
-
+                if(getPrevMonthCalendar()){
+                    DisplayCalendar();
+                }
                 break;
             case R.id.calendar_next_arrow:
-
+                if(getNextMonthCalendar()){
+                    DisplayCalendar();
+                }
                 break;
         }
     }
@@ -166,6 +251,8 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
 
         Calendar firstDay = Calendar.getInstance();
         firstDay.set(Calendar.DAY_OF_MONTH, 1);
+        firstDay.set(Calendar.MONTH, calendarShownDay.get(Calendar.MONTH));
+        firstDay.set(Calendar.YEAR, calendarShownDay.get(Calendar.YEAR));
 
         int numDays = firstDay.getActualMaximum(Calendar.DATE);
 
