@@ -1,6 +1,5 @@
 package sg.edu.nus.imovin.Fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -43,6 +42,7 @@ import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_DELETE_PLAN;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_SELECT_PLAN;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 import static sg.edu.nus.imovin.System.ValueConstants.DefaultPlanType;
@@ -75,7 +75,7 @@ public class GoalFragment extends Fragment {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        if(ImovinApplication.isNeedRefreshForum()){
+        if(ImovinApplication.isNeedRefreshPlanGoal()){
             Init();
         }
     }
@@ -91,7 +91,7 @@ public class GoalFragment extends Fragment {
     }
 
     private void Init(){
-        ImovinApplication.setNeedRefreshPlan(false);
+        ImovinApplication.setNeedRefreshPlanGoal(false);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
@@ -236,9 +236,9 @@ public class GoalFragment extends Fragment {
         ImovinService service = retrofit.create(ImovinService.class);
 
         String url = SERVER + String.format(
-                Locale.ENGLISH,REQUEST_SELECT_PLAN, plan_id);
+                Locale.ENGLISH,REQUEST_DELETE_PLAN, plan_id);
 
-        Call<PlanResponse> call = service.selectPlan(url);
+        Call<PlanResponse> call = service.deletePlan(url);
 
         call.enqueue(new Callback<PlanResponse>() {
             @Override
@@ -246,9 +246,6 @@ public class GoalFragment extends Fragment {
                 try {
                     PlanResponse planResponse = response.body();
                     if(planResponse != null) {
-                        UserData userData = ImovinApplication.getUserData();
-                        userData.setSelectedPlan(planResponse.getData().getId());
-                        ImovinApplication.setUserData(userData);
                         Init();
                     }
                 }catch (Exception e){

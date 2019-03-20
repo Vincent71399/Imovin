@@ -29,7 +29,8 @@ public class ImovinApplication extends Application {
 
     private static boolean NeedRefreshForum = false;
     private static boolean NeedRefreshSocialFeed = false;
-    private static boolean NeedRefreshPlan = false;
+    private static boolean NeedRefreshPlanGoal = false;
+    private static boolean NeedRefreshPlanMonitor = false;
 
     public static ImovinApplication getInstance(){
         return instance;
@@ -125,11 +126,24 @@ public class ImovinApplication extends Application {
         NeedRefreshSocialFeed = needRefreshSocialFeed;
     }
 
-    public static boolean isNeedRefreshPlan() {
-        return NeedRefreshPlan;
+    public static boolean isNeedRefreshPlanGoal() {
+        return NeedRefreshPlanGoal;
     }
 
-    public static void setNeedRefreshPlan(boolean needRefreshPlan) {
-        NeedRefreshPlan = needRefreshPlan;
+    public static void setNeedRefreshPlanGoal(boolean needRefreshPlanGoal) {
+        NeedRefreshPlanGoal = needRefreshPlanGoal;
+    }
+
+    public static boolean isNeedRefreshPlanMonitor() {
+        return NeedRefreshPlanMonitor;
+    }
+
+    public static void setNeedRefreshPlanMonitor(boolean needRefreshPlanMonitor) {
+        NeedRefreshPlanMonitor = needRefreshPlanMonitor;
+    }
+
+    public static void setNeedRefreshPlan(boolean needRefreshPlan){
+        NeedRefreshPlanGoal = needRefreshPlan;
+        NeedRefreshPlanMonitor = needRefreshPlan;
     }
 }

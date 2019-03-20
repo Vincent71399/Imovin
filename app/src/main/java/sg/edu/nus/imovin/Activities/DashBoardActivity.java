@@ -280,13 +280,13 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                 break;
             case IntentConstants.GOAL_NEW_PLAN:
                 if(resultCode == Activity.RESULT_OK){
-                    ImovinApplication.setNeedRefreshForum(true);
+                    ImovinApplication.setNeedRefreshPlan(true);
                     EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                 }
                 break;
             case IntentConstants.GOAL_EDIT_PLAN:
                 if(resultCode == Activity.RESULT_OK){
-                    ImovinApplication.setNeedRefreshForum(true);
+                    ImovinApplication.setNeedRefreshPlan(true);
                     EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                 }
                 break;

@@ -210,7 +210,7 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
                     }
                     socialFeedData.setComments(commentDataList);
                     Init();
-                    ImovinApplication.setNeedRefreshForum(true);
+                    ImovinApplication.setNeedRefreshSocialNeed(true);
 
                 }catch (Exception e){
                     e.printStackTrace();

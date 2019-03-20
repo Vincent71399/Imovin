@@ -85,6 +85,8 @@ public class MonitorChangePlanActivity extends Activity implements View.OnClickL
     }
 
     private void Init(){
+        ImovinApplication.setNeedRefreshPlanMonitor(false);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -146,6 +148,24 @@ public class MonitorChangePlanActivity extends Activity implements View.OnClickL
                         SelectPlan(event.getId());
                     }
                     break;
+                case EventConstants.UPDATE:
+                    if (event.getId() != null) {
+                        Intent intentGoal = new Intent();
+                        intentGoal.setClass(this, AddPlanActivity.class);
+                        intentGoal.putExtra(AddPlanActivity.Update_Plan_ID, event.getId());
+                        PlanData pendingEditPlan = null;
+                        for(PlanData planData : planDataCustomList){
+                            if(planData.getId().equals(event.getId())){
+                                pendingEditPlan = planData;
+                            }
+                        }
+                        if(pendingEditPlan != null){
+                            intentGoal.putExtra(AddPlanActivity.Default_Plan_Name, pendingEditPlan.getName());
+                            intentGoal.putExtra(AddPlanActivity.Default_Plan_Target, pendingEditPlan.getTarget());
+                        }
+                        startActivityForResult(intentGoal, IntentConstants.GOAL_EDIT_PLAN);
+                    }
+                    break;
             }
         }
     }
@@ -194,7 +214,8 @@ public class MonitorChangePlanActivity extends Activity implements View.OnClickL
                         UserData userData = ImovinApplication.getUserData();
                         userData.setSelectedPlan(planResponse.getData().getId());
                         ImovinApplication.setUserData(userData);
-                        ImovinApplication.setNeedRefreshForum(true);
+                        ImovinApplication.setNeedRefreshPlan(true);
+                        EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                         Init();
                     }
                 }catch (Exception e){
@@ -233,7 +254,8 @@ public class MonitorChangePlanActivity extends Activity implements View.OnClickL
                     PlanResponse planResponse = response.body();
                     if(planResponse != null) {
                         Init();
-                        ImovinApplication.setNeedRefreshForum(true);
+                        ImovinApplication.setNeedRefreshPlan(true);
+                        EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -256,6 +278,14 @@ public class MonitorChangePlanActivity extends Activity implements View.OnClickL
             case IntentConstants.MONITOR_NEW_PLAN:
                 if(resultCode == Activity.RESULT_OK){
                     Init();
+                    EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
+                }
+                break;
+            case IntentConstants.GOAL_EDIT_PLAN:
+                if(resultCode == Activity.RESULT_OK){
+                    ImovinApplication.setNeedRefreshPlan(true);
+                    Init();
+                    EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                 }
                 break;
         }

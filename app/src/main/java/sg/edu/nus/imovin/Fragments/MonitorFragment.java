@@ -117,18 +117,6 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-//    private void Init(){
-//        Calendar calendar = Calendar.getInstance();
-//        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-//        getStatistics(dayOfMonth);
-//
-//        if(ImovinApplication.getShowWarning()){
-//            warning.setVisibility(View.VISIBLE);
-//        }else {
-//            warning.setVisibility(View.INVISIBLE);
-//        }
-//    }
-
     private void getStatistics(int numOfDays){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
@@ -169,7 +157,6 @@ public class MonitorFragment extends Fragment implements View.OnClickListener {
 
         int index = CommonFunc.dayDiffBetweenCalendar(calendarShownDay, calendarEndDay);
 
-//        Toast.makeText(getActivity(), "Day of Month : " + String.valueOf(dayOfMonth) + " Index : " + String.valueOf(index), Toast.LENGTH_SHORT).show();
         SetupData(statisticsDataList.subList(index, dayOfMonth + index));
 
         if(CommonFunc.isSameMonth(calendarShownDay, calendarStartDay)){
