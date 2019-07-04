@@ -51,6 +51,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         HideActionBar();
         LinkUIById();
         SetFunction();
+
+        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
+        PushNotifications.subscribe("imovin");
     }
 
     @Override
@@ -85,7 +88,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         String email = email_input.getText().toString();
         String password = password_input.getText().toString();
 
-//                String email =
+        email =
 //                "amotivation@gmail.com";
 //                "externalregulation@gmail.com";
 //                "introjectedregulation@gmail.com";
@@ -93,10 +96,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //                "integratedregulation@gmail.com";
 //                "intrinsicregulation@gmail.com";
 //                "exerciselapse@gmail.com";
-//                "notification@gmail.com";
+                "notification@gmail.com";
 //                        "all@gmail.com";
 //
-//        String password = "password";
+        password = "password";
 
         if(email.equals("") || password.equals("")){
             Toast.makeText(getApplicationContext(), "Email and Password cannot be empty", Toast.LENGTH_SHORT).show();
@@ -120,8 +123,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         Log.d(LogConstants.LogTag, emailLoginResponse.getMessage());
                         Log.d("token_value", emailLoginResponse.getData().getToken());
                         ImovinApplication.setUserData(emailLoginResponse.getData());
-                        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
-                        PushNotifications.subscribe(emailLoginResponse.getData().getEmail());
+
+//                        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
+//                        PushNotifications.subscribe(emailLoginResponse.getData().getEmail());
 
                         if(emailLoginResponse.getData().getFitbitAuthenticated()){
                             LaunchDashboard();
