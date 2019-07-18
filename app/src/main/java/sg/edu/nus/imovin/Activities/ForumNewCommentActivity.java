@@ -1,6 +1,5 @@
 package sg.edu.nus.imovin.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,13 +19,14 @@ import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Request.CreateCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
+import sg.edu.nus.imovin.System.BaseSimpleActivity;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
-public class ForumNewCommentActivity extends Activity implements View.OnClickListener {
+public class ForumNewCommentActivity extends BaseSimpleActivity implements View.OnClickListener {
 
     @BindView(R.id.comment_input) TextView comment_input;
     @BindView(R.id.button_post) Button button_post;

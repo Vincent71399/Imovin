@@ -36,6 +36,7 @@ import sg.edu.nus.imovin.Retrofit.Object.UserData;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
+import sg.edu.nus.imovin.System.BaseSimpleActivity;
 import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
@@ -46,7 +47,7 @@ import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_SELECT_PLAN
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 import static sg.edu.nus.imovin.System.ValueConstants.DefaultPlanType;
 
-public class MonitorChangePlanActivity extends Activity implements View.OnClickListener {
+public class MonitorChangePlanActivity extends BaseSimpleActivity implements View.OnClickListener {
 
     private List<PlanData> planDataDefaultList;
     private List<PlanData> planDataCustomList;

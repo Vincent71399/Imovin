@@ -1,6 +1,5 @@
 package sg.edu.nus.imovin.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,13 +24,14 @@ import sg.edu.nus.imovin.Retrofit.Request.CreatePlanRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UpdatePlanRequest;
 import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
+import sg.edu.nus.imovin.System.BaseSimpleActivity;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_UPDATE_PLAN;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
-public class AddPlanActivity extends Activity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     @BindView(R.id.plan_title_input) EditText plan_title_input;
     @BindView(R.id.steps_value) TextView steps_value;

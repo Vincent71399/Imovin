@@ -1,7 +1,5 @@
 package sg.edu.nus.imovin.Activities;
 
-import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +10,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import sg.edu.nus.imovin.Objects.Goal;
 import sg.edu.nus.imovin.R;
+import sg.edu.nus.imovin.System.BaseSimpleActivity;
 
-public class MonitorDetailActivity extends Activity implements View.OnClickListener {
+public class MonitorDetailActivity extends BaseSimpleActivity implements View.OnClickListener {
 
     public static final String MONTH_YEAR = "MONTH_YEAR";
     public static final String GOAL = "GOAL";

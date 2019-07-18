@@ -2,6 +2,7 @@ package sg.edu.nus.imovin.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,7 @@ import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.FitbitConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
+import sg.edu.nus.imovin.System.SystemConstant;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
@@ -51,9 +53,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         HideActionBar();
         LinkUIById();
         SetFunction();
+        Init();
 
-        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
-        PushNotifications.subscribe("imovin");
+//        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
+//        PushNotifications.subscribe("imovin");
     }
 
     @Override
@@ -72,6 +75,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         oauthBtn.setOnClickListener(this);
     }
 
+    private void Init(){
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(SystemConstant.SHARE_PREFERENCE_LOCATION, Context.MODE_PRIVATE);
+        String username = preferences.getString(SystemConstant.USERNAME, "");
+        String password = preferences.getString(SystemConstant.PASSWORD, "");
+
+        Log.d("lutarez", "username : " + username + " ---  password : " + password);
+
+        if(!username.equals("") && !password.equals("")){
+            EmailLogin(username, password);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -79,28 +94,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 HideKeyboardAll();
                 break;
             case R.id.oauthBtn:
-                EmailLogin();
+                EmailLogin(email_input.getText().toString(), password_input.getText().toString());
                 break;
         }
     }
 
-    private void EmailLogin(){
-        String email = email_input.getText().toString();
-        String password = password_input.getText().toString();
-
-        email =
-//                "amotivation@gmail.com";
-//                "externalregulation@gmail.com";
-//                "introjectedregulation@gmail.com";
-//                "identifiedregulation@gmail.com";
-//                "integratedregulation@gmail.com";
-//                "intrinsicregulation@gmail.com";
-//                "exerciselapse@gmail.com";
-                "notification@gmail.com";
-//                        "all@gmail.com";
-//
-        password = "password";
-
+    private void EmailLogin(final String email, final String password){
         if(email.equals("") || password.equals("")){
             Toast.makeText(getApplicationContext(), "Email and Password cannot be empty", Toast.LENGTH_SHORT).show();
         }else {
@@ -124,8 +123,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         Log.d("token_value", emailLoginResponse.getData().getToken());
                         ImovinApplication.setUserData(emailLoginResponse.getData());
 
-//                        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
-//                        PushNotifications.subscribe(emailLoginResponse.getData().getEmail());
+                        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
+                        PushNotifications.subscribe(emailLoginResponse.getData().getEmail());
+
+                        SharedPreferences preferences = getApplicationContext().getSharedPreferences(SystemConstant.SHARE_PREFERENCE_LOCATION, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString(SystemConstant.USERNAME, email);
+                        editor.putString(SystemConstant.PASSWORD, password);
+                        editor.apply();
+
+                        Log.d("lutarez", "save username : " + email + " ---  password : " + password);
 
                         if(emailLoginResponse.getData().getFitbitAuthenticated()){
                             LaunchDashboard();
@@ -145,6 +152,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 public void onFailure(Call<EmailLoginResponse> call, Throwable t) {
                     Log.d(LogConstants.LogTag, "Failure EmailLogin : " + t.toString());
                     Toast.makeText(getApplicationContext(), "Fail to login", Toast.LENGTH_SHORT).show();
+
+                    SharedPreferences preferences = getApplicationContext().getSharedPreferences(SystemConstant.SHARE_PREFERENCE_LOCATION, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString(SystemConstant.USERNAME, "");
+                    editor.putString(SystemConstant.PASSWORD, "");
+                    editor.apply();
                 }
             });
         }
@@ -165,6 +178,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
+        finish();
     }
 
     private void LaunchDashboard(){
