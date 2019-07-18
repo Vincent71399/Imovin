@@ -7,11 +7,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pusher.pushnotifications.PushNotifications;
@@ -30,6 +34,7 @@ import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseActivity;
+import sg.edu.nus.imovin.System.Config;
 import sg.edu.nus.imovin.System.FitbitConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
@@ -41,9 +46,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @BindView(R.id.mainView) RelativeLayout mainView;
     @BindView(R.id.layout_container) LinearLayout layout_container;
+    @BindView(R.id.imovin_image) ImageView imovin_image;
+    @BindView(R.id.email_title) TextView email_title;
     @BindView(R.id.email_input) EditText email_input;
+    @BindView(R.id.password_title) TextView password_title;
     @BindView(R.id.password_input) EditText password_input;
-    @BindView(R.id.oauthBtn) Button oauthBtn;
+    @BindView(R.id.oauth_btn) Button oauth_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +80,40 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void SetFunction(){
         layout_container.setOnClickListener(this);
-        oauthBtn.setOnClickListener(this);
+        oauth_btn.setOnClickListener(this);
     }
 
     private void Init(){
+        if(Config.ENABLE_SPLASH_ANIMATION){
+            Animation moveBottomToTop = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move_from_bottom_to_top);
+            moveBottomToTop.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    email_title.setVisibility(View.INVISIBLE);
+                    email_input.setVisibility(View.INVISIBLE);
+                    password_title.setVisibility(View.INVISIBLE);
+                    password_input.setVisibility(View.INVISIBLE);
+                    oauth_btn.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    email_title.setVisibility(View.VISIBLE);
+                    email_input.setVisibility(View.VISIBLE);
+                    password_title.setVisibility(View.VISIBLE);
+                    password_input.setVisibility(View.VISIBLE);
+                    oauth_btn.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
+            imovin_image.setAnimation(moveBottomToTop);
+        }
+
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(SystemConstant.SHARE_PREFERENCE_LOCATION, Context.MODE_PRIVATE);
         String username = preferences.getString(SystemConstant.USERNAME, "");
         String password = preferences.getString(SystemConstant.PASSWORD, "");
@@ -93,7 +131,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.layout_container:
                 HideKeyboardAll();
                 break;
-            case R.id.oauthBtn:
+            case R.id.oauth_btn:
                 EmailLogin(email_input.getText().toString(), password_input.getText().toString());
                 break;
         }
