@@ -31,7 +31,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
+import sg.edu.nus.imovin.Retrofit.Request.ResetPasswordRequest;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
+import sg.edu.nus.imovin.Retrofit.Response.ResetPasswordResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.Config;
@@ -52,6 +54,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @BindView(R.id.password_title) TextView password_title;
     @BindView(R.id.password_input) EditText password_input;
     @BindView(R.id.oauth_btn) Button oauth_btn;
+    @BindView(R.id.forgot_pwd_btn) TextView forgot_pwd_btn;
+
+    private boolean isResetPwd = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +68,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         SetFunction();
         Init();
 
-//        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
-//        PushNotifications.subscribe("imovin");
     }
 
     @Override
@@ -81,6 +84,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void SetFunction(){
         layout_container.setOnClickListener(this);
         oauth_btn.setOnClickListener(this);
+        forgot_pwd_btn.setOnClickListener(this);
     }
 
     private void Init(){
@@ -94,6 +98,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     password_title.setVisibility(View.INVISIBLE);
                     password_input.setVisibility(View.INVISIBLE);
                     oauth_btn.setVisibility(View.INVISIBLE);
+                    forgot_pwd_btn.setVisibility(View.INVISIBLE);
                 }
 
                 @Override
@@ -103,6 +108,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     password_title.setVisibility(View.VISIBLE);
                     password_input.setVisibility(View.VISIBLE);
                     oauth_btn.setVisibility(View.VISIBLE);
+                    forgot_pwd_btn.setVisibility(View.VISIBLE);
                 }
 
                 @Override
@@ -132,7 +138,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 HideKeyboardAll();
                 break;
             case R.id.oauth_btn:
-                EmailLogin(email_input.getText().toString(), password_input.getText().toString());
+                if(isResetPwd){
+                    ResetPassword(email_input.getText().toString());
+                }else {
+                    EmailLogin(email_input.getText().toString(), password_input.getText().toString());
+                }
+                break;
+            case R.id.forgot_pwd_btn:
+                ToggleLoginReset();
                 break;
         }
     }
@@ -217,6 +230,70 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         i.setData(Uri.parse(url));
         startActivity(i);
         finish();
+    }
+
+    private void ResetPassword(String email){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        Call<ResetPasswordResponse> call = service.resetPassword(new ResetPasswordRequest(email));
+
+        call.enqueue(new Callback<ResetPasswordResponse>() {
+            @Override
+            public void onResponse(Call<ResetPasswordResponse> call, Response<ResetPasswordResponse> response) {
+
+                Log.d(LogConstants.LogTag, "Response : " + response.toString());
+                try {
+                    ResetPasswordResponse resetPasswordResponse = response.body();
+                    Log.d(LogConstants.LogTag, String.valueOf(resetPasswordResponse.getMeta().getCode()));
+
+                    if(resetPasswordResponse.getMeta().getCode().equals(200)){
+                        Toast.makeText(getApplicationContext(), "Reset password requested, please wait for email for reset link", Toast.LENGTH_SHORT).show();
+                        ToggleLoginReset();
+                    }else {
+                        Toast.makeText(getApplicationContext(), "Reset password fail, please check internet connection", Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "Reset password fail, please check internet connection", Toast.LENGTH_SHORT).show();
+                    Log.d(LogConstants.LogTag, "Exception EmailLogin : " + e.toString());
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResetPasswordResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure EmailLogin : " + t.toString());
+                Toast.makeText(getApplicationContext(), "Fail to login", Toast.LENGTH_SHORT).show();
+
+                SharedPreferences preferences = getApplicationContext().getSharedPreferences(SystemConstant.SHARE_PREFERENCE_LOCATION, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString(SystemConstant.USERNAME, "");
+                editor.putString(SystemConstant.PASSWORD, "");
+                editor.apply();
+            }
+        });
+
+    }
+
+    private void ToggleLoginReset(){
+        if(isResetPwd){
+            isResetPwd = false;
+            password_title.setVisibility(View.VISIBLE);
+            password_input.setVisibility(View.VISIBLE);
+            oauth_btn.setText(getString(R.string.login_btn_title));
+            forgot_pwd_btn.setText(getString(R.string.forgot_password_title));
+        }else {
+            isResetPwd = true;
+            password_title.setVisibility(View.GONE);
+            password_input.setVisibility(View.GONE);
+            oauth_btn.setText(getString(R.string.reset_password_btn_title));
+            forgot_pwd_btn.setText(getString(R.string.return_to_login_title));
+        }
     }
 
     private void LaunchDashboard(){

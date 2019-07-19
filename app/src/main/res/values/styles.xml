@@ -59,6 +59,18 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="clickableTitleStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@drawable/click_text_color</item>
+        <item name="android:layout_marginTop">@dimen/LoginComponentMarginTop</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="LinkContainerStyle">
         <item name="android:weightSum">100</item>
         <item name="android:orientation">horizontal</item>

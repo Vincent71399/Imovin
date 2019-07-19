@@ -4,6 +4,9 @@
     <string name="login_email_title">Email</string>
     <string name="login_password_title">Password</string>
     <string name="login_btn_title">Login</string>
+    <string name="reset_password_btn_title">Reset Password</string>
+    <string name="forgot_password_title">Forgot Password</string>
+    <string name="return_to_login_title">Return To Login</string>
     <string name="hint_email">name@email.com</string>
     <string name="hint_password">********</string>
 

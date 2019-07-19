@@ -18,6 +18,7 @@ import sg.edu.nus.imovin.Retrofit.Request.CreateThreadRequest;
 import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeSocialCommentRequest;
+import sg.edu.nus.imovin.Retrofit.Request.ResetPasswordRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UpdatePlanRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UploadImageRequest;
 import sg.edu.nus.imovin.Retrofit.Response.AuthFitbitResponse;
@@ -27,6 +28,7 @@ import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
 import sg.edu.nus.imovin.Retrofit.Response.LessonResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
+import sg.edu.nus.imovin.Retrofit.Response.ResetPasswordResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialCommentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialImageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostMultiResponse;
@@ -46,6 +48,11 @@ public interface ImovinService {
     @POST(ConnectionURL.REQUEST_AUTH_FITBIT)
     Call<AuthFitbitResponse> authFitbit(
             @Body AuthFitbitRequest authFitbitRequest
+    );
+
+    @POST(ConnectionURL.REQUEST_RESET_PASSWORD)
+    Call<ResetPasswordResponse> resetPassword(
+            @Body ResetPasswordRequest resetPasswordRequest
     );
 
     //home page

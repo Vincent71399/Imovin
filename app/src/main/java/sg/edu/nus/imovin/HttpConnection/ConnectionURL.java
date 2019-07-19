@@ -2,6 +2,7 @@ package sg.edu.nus.imovin.HttpConnection;
 
 public class ConnectionURL {
     public static final String SERVER = "http://3.0.200.147:3000";
+//    public static final String SERVER = "http://172.25.122.136:5000";
 
     public static final String REQUEST_EMAIL_LOGIN = "/api/auth/email-login";
     public static final String REQUEST_AUTH_FITBIT = "/api/user/auth-fitbit";
@@ -26,6 +27,8 @@ public class ConnectionURL {
     public static final String REQUEST_CREATE_SOCIAL_COMMENT = "/api/social/post/comment";
     public static final String REQUEST_LIKE_SOCIAL_COMMENT = "/api/social/post/comment/%s/like";
     public static final String REQUEST_GET_LESSON = "/api/lessons";
+
+    public static final String REQUEST_RESET_PASSWORD = "/security/reset";
 
     public static final String PARAMETER_DAYS = "days";
     public static final String PARAMETER_PASSWORD = "password";
