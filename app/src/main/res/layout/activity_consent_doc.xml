@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ConsentDocActivity">
+
+    <ScrollView
+        android:id="@+id/consent_form"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <TextView
+                android:text="@string/cf_title1"
+                style="@style/CF_bold_title_big"/>
+
+            <TextView
+                android:text="@string/cf_title2"
+                style="@style/CF_title_big"/>
+
+            <TextView
+                android:text="@string/cf_title3"
+                style="@style/CF_title_big"/>
+
+            <TextView
+                android:text="@string/cf_title4"
+                android:layout_marginTop="20dp"
+                style="@style/CF_bold_title"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:background="@color/black_color"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:text="@string/cf_content_title1"
+                style="@style/CF_bold_content"/>
+
+            <TextView
+                android:text="@string/cf_content_title2"
+                android:layout_marginTop="20dp"
+                style="@style/CF_bold_content"/>
+
+            <TextView
+                android:text="@string/cf_content_2_1"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:text="@string/cf_content_2_2"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:text="@string/cf_content_2_3"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:text="@string/cf_content_2_4"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:text="@string/cf_content_title3"
+                android:layout_marginTop="20dp"
+                style="@style/CF_bold_content"/>
+
+            <TextView
+                android:text="@string/cf_content_3_1"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:text="@string/cf_content_3_2"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:text="@string/cf_content_3_3"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:text="@string/cf_content_3_4"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:text="@string/cf_content_3_5"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:text="@string/cf_content_3_6"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:text="@string/cf_content_title4"
+                android:layout_marginTop="20dp"
+                style="@style/CF_bold_content"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:text="@string/cf_content_4_1"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:text="@string/cf_content_4_2"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:text="@string/cf_content_4_3"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:text="@string/cf_content_4_4"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:text="@string/cf_content_4_5"
+                style="@style/CF_content"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:text="@string/cf_content_4_6"
+                style="@style/CF_content"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/consent_doc_bottom_layout"/>
+
+
+</LinearLayout>

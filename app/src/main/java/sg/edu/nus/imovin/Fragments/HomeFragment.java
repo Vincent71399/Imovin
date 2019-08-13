@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void Init(){
-        queryPlan(ImovinApplication.getUserData().getSelectedPlan());
+        queryPlan(String.valueOf(ImovinApplication.getUserInfoResponse().getProfile()));
     }
 
     private void queryStatistics(){

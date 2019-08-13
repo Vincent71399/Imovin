@@ -18,10 +18,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Object.UserData;
+import sg.edu.nus.imovin.Retrofit.Response.UserInfoResponse;
 
 public class ImovinApplication extends Application {
     private static ImovinApplication instance;
+    private static String token;
     private static UserData userData;
+    private static UserInfoResponse userInfoResponse;
     private static PlanData planData;
     private static Boolean showWarning = false;
     private static ImageLoader imageLoader;
@@ -59,12 +62,28 @@ public class ImovinApplication extends Application {
         });
     }
 
+    public static String getToken() {
+        return token;
+    }
+
+    public static void setToken(String token) {
+        ImovinApplication.token = token;
+    }
+
     public static UserData getUserData() {
         return userData;
     }
 
     public static void setUserData(UserData userData) {
         ImovinApplication.userData = userData;
+    }
+
+    public static UserInfoResponse getUserInfoResponse() {
+        return userInfoResponse;
+    }
+
+    public static void setUserInfoResponse(UserInfoResponse userInfoResponse) {
+        ImovinApplication.userInfoResponse = userInfoResponse;
     }
 
     public static PlanData getPlanData() {
@@ -95,18 +114,18 @@ public class ImovinApplication extends Application {
     }
 
     private static void initHttpClient(){
-        if(userData != null){
+        if(token != null && !token.equals("")){
             httpClient = new OkHttpClient.Builder();
 
             httpClient.addInterceptor(new Interceptor() {
                 @Override
                 public okhttp3.Response intercept(Chain chain) throws IOException {
-                    Request request = chain.request().newBuilder().addHeader("Authorization", "Bearer " + ImovinApplication.getUserData().getToken()).build();
+                    Request request = chain.request().newBuilder().addHeader("Authorization", "Bearer " + ImovinApplication.getToken()).build();
                     return chain.proceed(request);
                 }
             });
         }else{
-            httpClient = null;
+            httpClient = new OkHttpClient.Builder();;
         }
     }
 

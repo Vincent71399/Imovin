@@ -1,11 +1,16 @@
 package sg.edu.nus.imovin.Retrofit.Service;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 import sg.edu.nus.imovin.HttpConnection.ConnectionURL;
@@ -21,6 +26,8 @@ import sg.edu.nus.imovin.Retrofit.Request.LikeSocialCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.ResetPasswordRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UpdatePlanRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UploadImageRequest;
+import sg.edu.nus.imovin.Retrofit.Request.UploadQuestionRequest;
+import sg.edu.nus.imovin.Retrofit.Response.ArticleResponse;
 import sg.edu.nus.imovin.Retrofit.Response.AuthFitbitResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ChallengeResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
@@ -28,6 +35,7 @@ import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
 import sg.edu.nus.imovin.Retrofit.Response.LessonResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
+import sg.edu.nus.imovin.Retrofit.Response.QuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ResetPasswordResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialCommentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialImageResponse;
@@ -36,7 +44,10 @@ import sg.edu.nus.imovin.Retrofit.Response.SocialPostResponse;
 import sg.edu.nus.imovin.Retrofit.Response.StatisticsResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadResponse;
+import sg.edu.nus.imovin.Retrofit.Response.UploadConsentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UploadImageResponse;
+import sg.edu.nus.imovin.Retrofit.Response.UploadQuestionnaireResponse;
+import sg.edu.nus.imovin.Retrofit.Response.UserInfoResponse;
 
 public interface ImovinService {
     //login
@@ -53,6 +64,24 @@ public interface ImovinService {
     @POST(ConnectionURL.REQUEST_RESET_PASSWORD)
     Call<ResetPasswordResponse> resetPassword(
             @Body ResetPasswordRequest resetPasswordRequest
+    );
+
+    @GET(ConnectionURL.REQUEST_GET_USER_INFO)
+    Call<UserInfoResponse> getUserInfo();
+
+    @Multipart
+    @PATCH(ConnectionURL.REQUEST_UPLOAD_USER_CONSENT_SIGNATURE)
+    Call<UploadConsentResponse> uploadConsent(
+            @Part("name") RequestBody name,
+            @Part MultipartBody.Part filename
+    );
+
+    @GET(ConnectionURL.REQUEST_GET_QUESTIONNAIRE)
+    Call<QuestionnaireResponse> getQuestionnaire();
+
+    @POST(ConnectionURL.REQUEST_UPLOAD_QUESTIONNAIRE)
+    Call<UploadQuestionnaireResponse> uploadQuestionnaire(
+            @Body UploadQuestionRequest uploadQuestionRequest
     );
 
     //home page
@@ -163,4 +192,7 @@ public interface ImovinService {
     //Library
     @GET(ConnectionURL.REQUEST_GET_LESSON)
     Call<LessonResponse> getLesson();
+
+    @GET(ConnectionURL.REQUEST_GET_ARTICLES)
+    Call<ArticleResponse> getArticles();
 }

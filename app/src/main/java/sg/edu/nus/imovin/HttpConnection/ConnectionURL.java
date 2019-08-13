@@ -1,7 +1,8 @@
 package sg.edu.nus.imovin.HttpConnection;
 
 public class ConnectionURL {
-    public static final String SERVER = "http://3.0.200.147:3000";
+//    public static final String SERVER = "http://3.0.200.147";
+    public static final String SERVER = "http://18.139.138.129";
 //    public static final String SERVER = "http://172.25.122.136:5000";
 
     public static final String REQUEST_EMAIL_LOGIN = "/api/auth/email-login";
@@ -29,6 +30,12 @@ public class ConnectionURL {
     public static final String REQUEST_GET_LESSON = "/api/lessons";
 
     public static final String REQUEST_RESET_PASSWORD = "/security/reset";
+    public static final String REQUEST_GET_USER_INFO = "/api/users/me";
+    public static final String REQUEST_GET_QUESTIONNAIRE = "/api/questionnaire/me";
+    public static final String REQUEST_GET_USER_ARTICLES = "/api/article";
+    public static final String REQUEST_UPLOAD_USER_CONSENT_SIGNATURE = "/api/signature/me";
+    public static final String REQUEST_UPLOAD_QUESTIONNAIRE = "/api/questionnaire-answer";
+    public static final String REQUEST_GET_ARTICLES = "/api/article";
 
     public static final String PARAMETER_DAYS = "days";
     public static final String PARAMETER_PASSWORD = "password";

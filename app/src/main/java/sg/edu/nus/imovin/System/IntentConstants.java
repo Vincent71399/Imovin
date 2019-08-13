@@ -11,8 +11,13 @@ public class IntentConstants {
     public static final int GOAL_EDIT_PLAN = 108;
     public static final int MONITOR_NEW_PLAN = 109;
 
+    public static final int CONSENT = 201;
+    public static final int QUESTIONNAIRE = 202;
+
     public static final String THREAD_DATA = "THREAD_DATA";
     public static final String THREAD_ID = "THREAD_ID";
     public static final String COMMENT_DATA = "COMMENT_DATA";
     public static final String SOCIAL_POST_DATA = "SOCIAL_POST_DATA";
+
+    public static final String QUESTION_DATA = "QUESTION_DATA";
 }

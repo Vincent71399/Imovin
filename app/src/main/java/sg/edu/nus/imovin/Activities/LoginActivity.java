@@ -1,10 +1,12 @@
 package sg.edu.nus.imovin.Activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -18,7 +20,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pusher.pushnotifications.PushNotifications;
 
 import java.util.Locale;
 
@@ -33,16 +34,21 @@ import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
 import sg.edu.nus.imovin.Retrofit.Request.ResetPasswordRequest;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
+import sg.edu.nus.imovin.Retrofit.Response.QuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ResetPasswordResponse;
+import sg.edu.nus.imovin.Retrofit.Response.UserInfoResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.Config;
 import sg.edu.nus.imovin.System.FitbitConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
+import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 import sg.edu.nus.imovin.System.SystemConstant;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
+import static sg.edu.nus.imovin.System.Config.AUTO_LOGIN;
+
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
@@ -57,6 +63,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @BindView(R.id.forgot_pwd_btn) TextView forgot_pwd_btn;
 
     private boolean isResetPwd = false;
+
+    private EmailLoginResponse emailLoginResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,14 +128,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             imovin_image.setAnimation(moveBottomToTop);
         }
 
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences(SystemConstant.SHARE_PREFERENCE_LOCATION, Context.MODE_PRIVATE);
-        String username = preferences.getString(SystemConstant.USERNAME, "");
-        String password = preferences.getString(SystemConstant.PASSWORD, "");
+        if(AUTO_LOGIN) {
+            SharedPreferences preferences = getApplicationContext().getSharedPreferences(SystemConstant.SHARE_PREFERENCE_LOCATION, Context.MODE_PRIVATE);
 
-        Log.d("lutarez", "username : " + username + " ---  password : " + password);
+            String username = preferences.getString(SystemConstant.USERNAME, "");
+            String password = preferences.getString(SystemConstant.PASSWORD, "");
 
-        if(!username.equals("") && !password.equals("")){
-            EmailLogin(username, password);
+            Log.d("lutarez", "username : " + username + " ---  password : " + password);
+
+            if (!username.equals("") && !password.equals("")) {
+                EmailLogin(username, password);
+            }
         }
     }
 
@@ -169,13 +180,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                     Log.d(LogConstants.LogTag, "Response : " + response.toString());
                     try {
-                        EmailLoginResponse emailLoginResponse = response.body();
+                        emailLoginResponse = response.body();
                         Log.d(LogConstants.LogTag, emailLoginResponse.getMessage());
                         Log.d("token_value", emailLoginResponse.getData().getToken());
-                        ImovinApplication.setUserData(emailLoginResponse.getData());
 
-                        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
-                        PushNotifications.subscribe(emailLoginResponse.getData().getEmail());
+                        ImovinApplication.setToken(emailLoginResponse.getData().getToken());
+
+//                        ImovinApplication.setUserData(emailLoginResponse.getData());
+//                        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
+//                        PushNotifications.subscribe(emailLoginResponse.getData().getEmail());
 
                         SharedPreferences preferences = getApplicationContext().getSharedPreferences(SystemConstant.SHARE_PREFERENCE_LOCATION, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -185,11 +198,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                         Log.d("lutarez", "save username : " + email + " ---  password : " + password);
 
-                        if(emailLoginResponse.getData().getFitbitAuthenticated()){
-                            LaunchDashboard();
-                            finish();
+                        if(!emailLoginResponse.getData().getHas_consented()) {
+                            StartConsent();
                         }else {
-                            StartOauth();
+                            GetQuestionNaire();
                         }
 
                     }catch (Exception e){
@@ -211,6 +223,51 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     editor.apply();
                 }
             });
+        }
+    }
+
+    private void StartConsent(){
+        Intent intent = new Intent();
+        intent.setClass(this, ConsentDocActivity.class);
+        startActivityForResult(intent, IntentConstants.CONSENT);
+    }
+
+    private void GetQuestionNaire(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        Call<QuestionnaireResponse> call = service.getQuestionnaire();
+
+        call.enqueue(new Callback<QuestionnaireResponse>() {
+            @Override
+            public void onResponse(Call<QuestionnaireResponse> call, Response<QuestionnaireResponse> response) {
+                QuestionnaireResponse questionnaireResponse = response.body();
+                StartQuestionNaire(questionnaireResponse);
+            }
+            @Override
+            public void onFailure(Call<QuestionnaireResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure getQuestionnaire : " + t.toString());
+            }
+        });
+    }
+
+    private void StartQuestionNaire(QuestionnaireResponse questionnaireResponse){
+        Intent intent = new Intent();
+        intent.setClass(this, QuestionnaireActivity.class);
+        intent.putExtra(IntentConstants.QUESTION_DATA, questionnaireResponse);
+        startActivityForResult(intent, IntentConstants.QUESTIONNAIRE);
+    }
+
+    private void CheckNeedOauth(){
+        if(emailLoginResponse.getData().getFitbitAuthenticated()){
+            GetUserInfo();
+        }else {
+            StartOauth();
         }
     }
 
@@ -252,7 +309,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     Log.d(LogConstants.LogTag, String.valueOf(resetPasswordResponse.getMeta().getCode()));
 
                     if(resetPasswordResponse.getMeta().getCode().equals(200)){
-                        Toast.makeText(getApplicationContext(), "Reset password requested, please wait for email for reset link", Toast.LENGTH_SHORT).show();
+                        openDialogBox();
                         ToggleLoginReset();
                     }else {
                         Toast.makeText(getApplicationContext(), "Reset password fail, please check internet connection", Toast.LENGTH_SHORT).show();
@@ -268,7 +325,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onFailure(Call<ResetPasswordResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure EmailLogin : " + t.toString());
-                Toast.makeText(getApplicationContext(), "Fail to login", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Reset password fail, please check internet connection", Toast.LENGTH_SHORT).show();
 
                 SharedPreferences preferences = getApplicationContext().getSharedPreferences(SystemConstant.SHARE_PREFERENCE_LOCATION, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
@@ -296,6 +353,40 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
+    private void GetUserInfo(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        Call<UserInfoResponse> call = service.getUserInfo();
+        call.enqueue(new Callback<UserInfoResponse>() {
+            @Override
+            public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
+                try {
+                    UserInfoResponse userInfoResponse = response.body();
+                    ImovinApplication.setUserInfoResponse(userInfoResponse);
+                    Log.d(LogConstants.LogTag, "success get userinfo");
+                    LaunchDashboard();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception get userinfo : " + e.toString());
+                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserInfoResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure get userinfo: " + t.toString());
+                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void LaunchDashboard(){
         Intent intent = new Intent();
         intent.setClass(this, DashBoardActivity.class);
@@ -306,5 +397,34 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(email_input.getWindowToken(), 0);
         inputMethodManager.hideSoftInputFromWindow(password_input.getWindowToken(), 0);
+    }
+
+    private void openDialogBox(){
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        builderSingle.setTitle("Email has been sent");
+        builderSingle.setMessage("Please check your email and click the link to reset password");
+        builderSingle.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builderSingle.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case IntentConstants.CONSENT:
+                if(resultCode == RESULT_OK){
+                    GetQuestionNaire();
+                }
+                break;
+            case IntentConstants.QUESTIONNAIRE:
+                if(resultCode == RESULT_OK) {
+                    CheckNeedOauth();
+                }
+                break;
+        }
     }
 }

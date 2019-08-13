@@ -1,16 +1,17 @@
 package sg.edu.nus.imovin.Retrofit.Response;
 
-import sg.edu.nus.imovin.Retrofit.Object.UserData;
+import sg.edu.nus.imovin.Retrofit.Object.LoginData;
+
 
 public class EmailLoginResponse {
-    private UserData data;
+    private LoginData data;
     private String message;
 
-    public UserData getData() {
+    public LoginData getData() {
         return data;
     }
 
-    public void setData(UserData data) {
+    public void setData(LoginData data) {
         this.data = data;
     }
 

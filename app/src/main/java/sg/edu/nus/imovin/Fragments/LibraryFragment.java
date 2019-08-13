@@ -25,7 +25,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Adapters.LibraryAdapter;
 import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.R;
+import sg.edu.nus.imovin.Retrofit.Object.ArticleData;
 import sg.edu.nus.imovin.Retrofit.Object.LibraryData;
+import sg.edu.nus.imovin.Retrofit.Response.ArticleResponse;
 import sg.edu.nus.imovin.Retrofit.Response.LessonResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.ImovinApplication;
@@ -60,22 +62,20 @@ public class LibraryFragment extends Fragment {
     }
 
     private void Init(){
-        getLibraryData();
+        getArticleData();
     }
 
-    private void SetupData(List<List<Object>> lessonDataList){
+    private void SetupData(List<ArticleData> articleDataList){
         libraryDataList = new ArrayList<>();
-        for(List<Object> lessonData : lessonDataList){
-            if(lessonData.size() == 5) {
-                LibraryData libraryData = new LibraryData(
-                        lessonData.get(2).toString(),
-                        lessonData.get(1).toString(),
-                        String.valueOf((int)Math.floor((double)lessonData.get(0))),
-                        lessonData.get(4).toString(),
-                        lessonData.get(3).toString()
-                );
-                libraryDataList.add(libraryData);
-            }
+        for(ArticleData articleData : articleDataList){
+            LibraryData libraryData = new LibraryData(
+                    articleData.getTitle(),
+                    articleData.getSource(),
+                    String.valueOf(articleData.getYear()),
+                    articleData.getPicture_url(),
+                    articleData.getUrl()
+            );
+            libraryDataList.add(libraryData);
         }
 
         LibraryAdapter libraryAdapter = new LibraryAdapter(libraryDataList);
@@ -92,7 +92,8 @@ public class LibraryFragment extends Fragment {
         }));
     }
 
-    private void getLibraryData(){
+
+    private void getArticleData(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -101,14 +102,14 @@ public class LibraryFragment extends Fragment {
 
         ImovinService service = retrofit.create(ImovinService.class);
 
-        Call<LessonResponse> call = service.getLesson();
+        Call<ArticleResponse> call = service.getArticles();
 
-        call.enqueue(new Callback<LessonResponse>() {
+        call.enqueue(new Callback<ArticleResponse>() {
             @Override
-            public void onResponse(Call<LessonResponse> call, Response<LessonResponse> response) {
+            public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
                 try {
-                    LessonResponse lessonResponse = response.body();
-                    SetupData(lessonResponse.getData());
+                    ArticleResponse articleResponse = response.body();
+                    SetupData(articleResponse.get_items());
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -118,7 +119,7 @@ public class LibraryFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<LessonResponse> call, Throwable t) {
+            public void onFailure(Call<ArticleResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure LibraryFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }

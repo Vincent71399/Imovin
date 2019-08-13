@@ -92,7 +92,8 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
 
     private void SetFunction(){
         navigator_right.setOnClickListener(this);
-        int profile = ImovinApplication.getUserData().getProfile();
+        int profile = 7;
+//        int profile = ImovinApplication.getUserData().getProfile();
         mTitles = FuncBlockConstants.getFunctionBlockTitles_by_profile(profile);
         mIconUnselectIds = FuncBlockConstants.getFunctionBlockUnselectIcons_by_profile(profile);
         mIconSelectIds = FuncBlockConstants.getFunctionBlockSelectIcons_by_profile(profile);
