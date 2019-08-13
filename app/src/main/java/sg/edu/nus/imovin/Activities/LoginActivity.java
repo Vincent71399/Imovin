@@ -395,6 +395,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         Intent intent = new Intent();
         intent.setClass(this, DashBoardActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void HideKeyboardAll(){

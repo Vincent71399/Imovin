@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -7,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -100,6 +102,8 @@ public class MCQFragment extends QuesFragment implements RadioGroup.OnCheckedCha
 
     @Override
     public AnswerData getAnswer() {
+        HideKeyboardAll();
+
         AnswerData answerData = new AnswerData();
         answerData.setAnswer(String.valueOf(selectedIndex));
         if(selectedIndex == questionData.getChoices().size()){
@@ -157,5 +161,10 @@ public class MCQFragment extends QuesFragment implements RadioGroup.OnCheckedCha
     @Override
     public void afterTextChanged(Editable editable) {
 
+    }
+
+    private void HideKeyboardAll(){
+        InputMethodManager inputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(other_input.getWindowToken(), 0);
     }
 }

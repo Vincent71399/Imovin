@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -9,6 +10,7 @@ import android.text.method.DigitsKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,6 +76,8 @@ public class TextQFragment extends QuesFragment implements TextWatcher {
 
     @Override
     public AnswerData getAnswer() {
+        HideKeyboardAll();
+
         AnswerData answerData = new AnswerData();
         answerData.setAnswer(question_input.getText().toString());
         answerData.setQuestion(questionData.get_id());
@@ -98,5 +102,10 @@ public class TextQFragment extends QuesFragment implements TextWatcher {
     @Override
     public void afterTextChanged(Editable editable) {
 
+    }
+
+    private void HideKeyboardAll(){
+        InputMethodManager inputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(question_input.getWindowToken(), 0);
     }
 }
