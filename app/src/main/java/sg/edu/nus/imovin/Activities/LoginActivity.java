@@ -247,7 +247,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onResponse(Call<QuestionnaireResponse> call, Response<QuestionnaireResponse> response) {
                 QuestionnaireResponse questionnaireResponse = response.body();
-                StartQuestionNaire(questionnaireResponse);
+                if(questionnaireResponse.getSections().size() > 0) {
+                    StartQuestionNaire(questionnaireResponse);
+                }else{
+                    CheckNeedOauth();
+                }
             }
             @Override
             public void onFailure(Call<QuestionnaireResponse> call, Throwable t) {
