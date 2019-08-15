@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.pusher.pushnotifications.PushNotifications;
+
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -374,6 +376,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     UserInfoResponse userInfoResponse = response.body();
                     ImovinApplication.setUserInfoResponse(userInfoResponse);
                     Log.d(LogConstants.LogTag, "success get userinfo");
+
+                    PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
+                    PushNotifications.subscribe(userInfoResponse.getEmail());
+
                     LaunchDashboard();
 
                 }catch (Exception e){

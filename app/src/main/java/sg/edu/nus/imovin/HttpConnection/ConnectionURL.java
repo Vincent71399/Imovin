@@ -27,15 +27,14 @@ public class ConnectionURL {
     public static final String REQUEST_GET_SOCIAL_POST_IMAGE = "/api/social/post/%s/image";
     public static final String REQUEST_CREATE_SOCIAL_COMMENT = "/api/social/post/comment";
     public static final String REQUEST_LIKE_SOCIAL_COMMENT = "/api/social/post/comment/%s/like";
-    public static final String REQUEST_GET_LESSON = "/api/lessons";
 
     public static final String REQUEST_RESET_PASSWORD = "/security/reset";
     public static final String REQUEST_GET_USER_INFO = "/api/users/me";
     public static final String REQUEST_GET_QUESTIONNAIRE = "/api/questionnaire/me";
-    public static final String REQUEST_GET_USER_ARTICLES = "/api/article";
     public static final String REQUEST_UPLOAD_USER_CONSENT_SIGNATURE = "/api/signature/me";
     public static final String REQUEST_UPLOAD_QUESTIONNAIRE = "/api/questionnaire-answer";
     public static final String REQUEST_GET_ARTICLES = "/api/article";
+    public static final String REQUEST_GET_USER_STATS_OVERVIEW = "/api/overview/me";
 
     public static final String PARAMETER_DAYS = "days";
     public static final String PARAMETER_PASSWORD = "password";

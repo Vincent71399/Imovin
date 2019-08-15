@@ -32,7 +32,6 @@ import sg.edu.nus.imovin.Retrofit.Response.AuthFitbitResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ChallengeResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
-import sg.edu.nus.imovin.Retrofit.Response.LessonResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Response.QuestionnaireResponse;
@@ -190,9 +189,6 @@ public interface ImovinService {
 
 
     //Library
-    @GET(ConnectionURL.REQUEST_GET_LESSON)
-    Call<LessonResponse> getLesson();
-
     @GET(ConnectionURL.REQUEST_GET_ARTICLES)
     Call<ArticleResponse> getArticles();
 }

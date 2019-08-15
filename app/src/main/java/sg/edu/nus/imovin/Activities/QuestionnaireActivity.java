@@ -1,7 +1,6 @@
 package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -23,7 +21,10 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +35,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Common.CustomViewPager;
 import sg.edu.nus.imovin.Event.EnableNextEvent;
-import sg.edu.nus.imovin.Event.EnableSkipEvent;
 import sg.edu.nus.imovin.Fragments.MCQFragment;
 import sg.edu.nus.imovin.Fragments.QuesFragment;
 import sg.edu.nus.imovin.Fragments.RateFragment;
@@ -61,7 +61,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     public static final String NUM = "NUM";
 
     @BindView(R.id.nextBtn) Button nextBtn;
-    @BindView(R.id.skipBtn) Button skipBtn;
+    @BindView(R.id.prevBtn) Button prevBtn;
 
     private View decorView;
     private CustomViewPager vp;
@@ -73,7 +73,9 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     private int currentFragmentIndex;
     private int currentSection;
     private List<SectionData> sectionDataList;
-    private List<AnswerData> answerDataList;
+    private HashMap<Integer, AnswerData> answerDataHashMap;
+
+    private Stack<Integer> questionOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,15 +103,17 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     }
 
     private void SetFunction(){
-        skipBtn.setOnClickListener(this);
+        prevBtn.setOnClickListener(this);
         nextBtn.setOnClickListener(this);
     }
 
     private void Init(){
+        questionOrder = new Stack<>();
+
         QuestionnaireResponse questionnaireResponse = (QuestionnaireResponse) getIntent().getSerializableExtra(IntentConstants.QUESTION_DATA);
         sectionDataList = questionnaireResponse.getSections();
 
-        answerDataList = new ArrayList<>();
+        answerDataHashMap = new HashMap<>();
 
         currentSection = 0;
 
@@ -121,8 +125,11 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             questionDataList.addAll(sectionData.getQuestions());
         }
 
+        prevBtn.setEnabled(false);
+
         ActionBar ab = getSupportActionBar();
         ab.setTitle(sectionDataList.get(currentSection).getDisplay_name());
+        ab.setBackgroundDrawable(getDrawable(R.color.theme_purple));
         SetSectionQuestion(questionDataList);
     }
 
@@ -181,11 +188,6 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(EnableSkipEvent event){
-        skipBtn.setEnabled(true);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(EnableNextEvent event){
         nextBtn.setEnabled(event.getEnable());
     }
@@ -195,21 +197,59 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         switch (view.getId()){
             case R.id.nextBtn:
                 AnswerData answerData = mFragments.get(currentFragmentIndex).getAnswer();
-                if(!answerDataList.contains(answerData)){
-                    answerDataList.add(answerData);
+
+                if(answerDataHashMap.containsKey(currentFragmentIndex)) {
+                    answerDataHashMap.replace(currentFragmentIndex, answerData);
+                }else{
+                    answerDataHashMap.put(currentFragmentIndex, answerData);
                 }
 
-                if(currentFragmentIndex < mFragments.size() - 1) {
-                    vp.setCurrentItem(vp.getCurrentItem() + 1);
-                    SetTitle(vp.getCurrentItem());
+                if(mFragments.get(currentFragmentIndex).getQuestionData().getIs_skippable()){
+                    if(answerData.getAnswer().equals("0")){
+                        if(currentFragmentIndex < mFragments.size() - 1) {
+                            questionOrder.push(vp.getCurrentItem());
+                            vp.setCurrentItem(vp.getCurrentItem() + 1);
+                            SetTitle(vp.getCurrentItem());
+                        }
+                        else{
+                            SubmitQuestionNaire();
+                        }
+                    }else{
+                        if(currentFragmentIndex < mFragments.size() - 2) {
+                            questionOrder.push(vp.getCurrentItem());
+                            vp.setCurrentItem(vp.getCurrentItem() + 2);
+                            SetTitle(vp.getCurrentItem());
+                        }
+                        else{
+                            SubmitQuestionNaire();
+                        }
+                    }
+                }else{
+                    if(currentFragmentIndex < mFragments.size() - 1) {
+                        questionOrder.push(vp.getCurrentItem());
+                        vp.setCurrentItem(vp.getCurrentItem() + 1);
+                        SetTitle(vp.getCurrentItem());
+                    }
+                    else{
+                        SubmitQuestionNaire();
+                    }
                 }
-                else{
-                    SubmitQuestionNaire();
-                }
-
                 break;
-            case R.id.skipBtn:
-                vp.setCurrentItem(vp.getCurrentItem() + 1);
+            case R.id.prevBtn:
+                if(nextBtn.isEnabled()) {
+                    AnswerData answerData2 = mFragments.get(currentFragmentIndex).getAnswer();
+
+                    if (answerDataHashMap.containsKey(currentFragmentIndex)) {
+                        answerDataHashMap.replace(currentFragmentIndex, answerData2);
+                    } else {
+                        answerDataHashMap.put(currentFragmentIndex, answerData2);
+                    }
+                }
+
+                Integer lastQuestionIndex = questionOrder.pop();
+                vp.setCurrentItem(lastQuestionIndex);
+                SetTitle(vp.getCurrentItem());
+
                 break;
         }
     }
@@ -222,6 +262,9 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                 .build();
 
         ImovinService service = retrofit.create(ImovinService.class);
+
+        Collection<AnswerData> values = answerDataHashMap.values();
+        List<AnswerData> answerDataList = new ArrayList<>(values);
 
         UploadQuestionRequest uploadQuestionRequest = new UploadQuestionRequest(answerDataList);
 
@@ -299,16 +342,30 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onPageSelected(int i) {
+
         currentFragmentIndex = i;
 
         QuesFragment quesFragment = mFragments.get(i);
         QuestionData questionData = quesFragment.getQuestionData();
-        skipBtn.setEnabled(questionData.getIs_skippable());
 
         if(questionData.getQuestion_type().equals(MCQ) && !questionData.getIs_custom()){
             nextBtn.setEnabled(true);
         }else {
-            nextBtn.setEnabled(false);
+            if(answerDataHashMap.containsKey(i)) {
+                nextBtn.setEnabled(true);
+            }else{
+                nextBtn.setEnabled(false);
+            }
+        }
+
+        if(answerDataHashMap.containsKey(i)){
+            quesFragment.setAnswer(answerDataHashMap.get(i));
+        }
+
+        if(currentFragmentIndex == 0){
+            prevBtn.setEnabled(false);
+        }else{
+            prevBtn.setEnabled(true);
         }
     }
 

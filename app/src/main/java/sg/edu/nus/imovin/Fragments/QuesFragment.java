@@ -12,4 +12,6 @@ public abstract class QuesFragment extends Fragment {
     public abstract QuestionData getQuestionData();
 
     public abstract AnswerData getAnswer();
+
+    public abstract void setAnswer(AnswerData answerData);
 }

@@ -63,4 +63,9 @@ public class RateFragment extends QuesFragment {
 
         return answerData;
     }
+
+    @Override
+    public void setAnswer(AnswerData answerData) {
+        rate_input.setProgress(Integer.parseInt(answerData.getAnswer()));
+    }
 }

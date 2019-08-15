@@ -28,7 +28,6 @@ import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.ArticleData;
 import sg.edu.nus.imovin.Retrofit.Object.LibraryData;
 import sg.edu.nus.imovin.Retrofit.Response.ArticleResponse;
-import sg.edu.nus.imovin.Retrofit.Response.LessonResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;

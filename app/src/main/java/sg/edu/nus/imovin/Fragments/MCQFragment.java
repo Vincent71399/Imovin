@@ -2,7 +2,6 @@ package sg.edu.nus.imovin.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import sg.edu.nus.imovin.Event.EnableNextEvent;
-import sg.edu.nus.imovin.Event.EnableSkipEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.AnswerData;
 import sg.edu.nus.imovin.Retrofit.Object.QuestionData;
@@ -39,6 +37,7 @@ public class MCQFragment extends QuesFragment implements RadioGroup.OnCheckedCha
     private View rootView;
     private QuestionData questionData;
 
+    private boolean hasAnswer;
     private int selectedIndex;
 
     public static MCQFragment getInstance(QuestionData questionData) {
@@ -86,13 +85,6 @@ public class MCQFragment extends QuesFragment implements RadioGroup.OnCheckedCha
 
     private void Init(){
         other_input.addTextChangedListener(this);
-
-        if(questionData.getIs_skippable()) {
-            EventBus.getDefault().post(new EnableSkipEvent());
-        }else{
-            EventBus.getDefault().post(new EnableSkipEvent(false));
-        }
-        EventBus.getDefault().post(new EnableNextEvent(false));
     }
 
     @Override
@@ -111,7 +103,23 @@ public class MCQFragment extends QuesFragment implements RadioGroup.OnCheckedCha
         }
         answerData.setQuestion(questionData.get_id());
 
+        hasAnswer = true;
+
         return answerData;
+    }
+
+    @Override
+    public void setAnswer(AnswerData answerData) {
+        int count = mcq.getChildCount();
+        for (int i=0;i<count;i++) {
+            View view = mcq.getChildAt(i);
+            if (view instanceof RadioButton) {
+                if(String.valueOf(i).equals(answerData.getAnswer())){
+                    ((RadioButton)view).setChecked(true);
+                }
+            }
+        }
+        other_input.setText(answerData.getOthers());
     }
 
     private int GetRadioBtnIndex(String radioBtnText){
@@ -151,10 +159,16 @@ public class MCQFragment extends QuesFragment implements RadioGroup.OnCheckedCha
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        if(!charSequence.toString().equals("")){
-            EventBus.getDefault().post(new EnableNextEvent());
-        }else{
-            EventBus.getDefault().post(new EnableNextEvent(false));
+        if(questionData.getQuestion_type().equals(MCQ_O)) {
+            if(hasAnswer){
+                hasAnswer = false;
+            }else {
+                if (!charSequence.toString().equals("")) {
+                    EventBus.getDefault().post(new EnableNextEvent());
+                } else {
+                    EventBus.getDefault().post(new EnableNextEvent(false));
+                }
+            }
         }
     }
 

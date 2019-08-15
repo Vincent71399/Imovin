@@ -2,7 +2,6 @@ package sg.edu.nus.imovin.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -13,14 +12,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import sg.edu.nus.imovin.Event.EnableNextEvent;
-import sg.edu.nus.imovin.Event.EnableSkipEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.AnswerData;
 import sg.edu.nus.imovin.Retrofit.Object.QuestionData;
@@ -83,6 +80,11 @@ public class TextQFragment extends QuesFragment implements TextWatcher {
         answerData.setQuestion(questionData.get_id());
 
         return answerData;
+    }
+
+    @Override
+    public void setAnswer(AnswerData answerData) {
+        question_input.setText(answerData.getAnswer());
     }
 
     @Override

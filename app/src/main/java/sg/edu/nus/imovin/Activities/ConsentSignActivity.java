@@ -56,6 +56,7 @@ public class ConsentSignActivity extends AppCompatActivity implements View.OnCli
 
     private void SetFunction(){
         ActionBar ab = getSupportActionBar();
+        ab.setBackgroundDrawable(getDrawable(R.color.theme_purple));
         ab.setTitle(getString(R.string.cf));
 
         nextBtn.setOnClickListener(this);

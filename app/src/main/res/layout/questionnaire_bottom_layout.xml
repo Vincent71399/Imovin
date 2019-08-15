@@ -12,8 +12,8 @@
     android:paddingEnd="10dp">
 
     <Button
-        android:id="@+id/skipBtn"
-        android:text="@string/skip"
+        android:id="@+id/prevBtn"
+        android:text="@string/prev"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

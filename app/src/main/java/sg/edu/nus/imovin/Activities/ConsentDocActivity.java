@@ -43,6 +43,7 @@ public class ConsentDocActivity extends AppCompatActivity implements View.OnClic
 
     private void SetFunction(){
         ActionBar ab = getSupportActionBar();
+        ab.setBackgroundDrawable(getDrawable(R.color.theme_purple));
         ab.setTitle(getString(R.string.cf));
 
         agreeBtn.setOnClickListener(this);
