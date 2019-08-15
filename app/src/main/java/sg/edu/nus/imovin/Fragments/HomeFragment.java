@@ -36,10 +36,13 @@ import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.Common.IntValueFormatter;
 import sg.edu.nus.imovin.Common.WeekdayAxisValueFormatter;
 import sg.edu.nus.imovin.R;
+import sg.edu.nus.imovin.Retrofit.Object.DailySummaryData;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
+import sg.edu.nus.imovin.Retrofit.Object.SelectedPlanData;
 import sg.edu.nus.imovin.Retrofit.Object.StatisticsData;
 import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Response.StatisticsResponse;
+import sg.edu.nus.imovin.Retrofit.Response.UserStatsResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
@@ -104,10 +107,48 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         dailyStepsHashMap = new HashMap<>();
         dailyCaloriesHashMap = new HashMap<>();
         dailyDurationsHashMap = new HashMap<>();
+
+        steps_btn.setOnClickListener(this);
+        calories_btn.setOnClickListener(this);
+        duration_btn.setOnClickListener(this);
     }
 
     private void Init(){
-        queryPlan(String.valueOf(ImovinApplication.getUserInfoResponse().getProfile()));
+        getUserStats();
+//        queryPlan(String.valueOf(ImovinApplication.getUserInfoResponse().getProfile()));
+    }
+
+    private void getUserStats(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        Call<UserStatsResponse> call = service.getUserStatsOverview();
+
+        call.enqueue(new Callback<UserStatsResponse>() {
+            @Override
+            public void onResponse(Call<UserStatsResponse> call, Response<UserStatsResponse> response) {
+                try {
+                    UserStatsResponse userStatsResponse = response.body();
+                    SetupDataNew(userStatsResponse);
+//                    SetupData(userStatsResponse.getData());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception HomeFragment : " + e.toString());
+                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserStatsResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure HomeFragment : " + t.toString());
+                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void queryStatistics(){
@@ -202,6 +243,443 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 updateBarChart(dailyDurationsHashMap);
                 break;
         }
+    }
+
+    private void SetupDataNew(UserStatsResponse userStatsResponse){
+        int step_threshold = 7500;
+        SelectedPlanData planData = userStatsResponse.getSelectedPlanData();
+
+        if(planData != null){
+            step_threshold = planData.getTarget();
+        }
+        daily_goal.setText(getString(R.string.daily_goal_text) + step_threshold);
+
+        barColors = new ArrayList<>();
+
+        int sumSteps = 0;
+        List<DailySummaryData> dailySummaryDataList = userStatsResponse.getDaily_summaries();
+
+        for(DailySummaryData dailySummaryData : dailySummaryDataList){
+            Log.d(LogConstants.LogTag, "Steps : " + dailySummaryData.getSteps()
+                    + "\nCalories : " + dailySummaryData.getCalories()
+                    + "\nDuration : " + dailySummaryData.getDuration()
+                    + "\nDistance : " + dailySummaryData.getDistance()
+            );
+            if(dailySummaryData.getSteps() == null){
+                dailySummaryData.setSteps(0);
+            }
+            if(dailySummaryData.getCalories() == null){
+                dailySummaryData.setCalories(0);
+            }
+            if(dailySummaryData.getDuration() == null){
+                dailySummaryData.setDuration(0);
+            }
+            if(dailySummaryData.getDistance() == null){
+                dailySummaryData.setDistance(0d);
+            }
+            sumSteps += dailySummaryData.getSteps();
+        }
+        int averageSteps = sumSteps / dailySummaryDataList.size();
+
+        if(averageSteps < step_threshold){
+            warning.setVisibility(View.VISIBLE);
+            ImovinApplication.setShowWarning(true);
+        }else{
+            warning.setVisibility(View.INVISIBLE);
+            ImovinApplication.setShowWarning(false);
+        }
+
+        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        switch (day){
+            case Calendar.SUNDAY:
+                dailyStepsHashMap.put(SUNDAY, dailySummaryDataList.get(0).getSteps());
+                dailyCaloriesHashMap.put(SUNDAY, dailySummaryDataList.get(0).getCalories());
+                dailyDurationsHashMap.put(SUNDAY, dailySummaryDataList.get(0).getDuration());
+
+                dailyStepsHashMap.put(MONDAY, 0);
+                dailyCaloriesHashMap.put(MONDAY, 0);
+                dailyDurationsHashMap.put(MONDAY, 0);
+
+                dailyStepsHashMap.put(TUESDAY, 0);
+                dailyCaloriesHashMap.put(TUESDAY, 0);
+                dailyDurationsHashMap.put(TUESDAY, 0);
+
+                dailyStepsHashMap.put(WEDNESDAY, 0);
+                dailyCaloriesHashMap.put(WEDNESDAY, 0);
+                dailyDurationsHashMap.put(WEDNESDAY, 0);
+
+                dailyStepsHashMap.put(THURSDAY, 0);
+                dailyCaloriesHashMap.put(THURSDAY, 0);
+                dailyDurationsHashMap.put(THURSDAY, 0);
+
+                dailyStepsHashMap.put(FRIDAY, 0);
+                dailyCaloriesHashMap.put(FRIDAY, 0);
+                dailyDurationsHashMap.put(FRIDAY, 0);
+
+                dailyStepsHashMap.put(SATURDAY, 0);
+                dailyCaloriesHashMap.put(SATURDAY, 0);
+                dailyDurationsHashMap.put(SATURDAY, 0);
+
+                if(dailySummaryDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+
+                break;
+            case Calendar.MONDAY:
+                dailyStepsHashMap.put(SUNDAY, dailySummaryDataList.get(1).getSteps());
+                dailyCaloriesHashMap.put(SUNDAY, dailySummaryDataList.get(1).getCalories());
+                dailyDurationsHashMap.put(SUNDAY, dailySummaryDataList.get(1).getDuration());
+
+                dailyStepsHashMap.put(MONDAY, dailySummaryDataList.get(0).getSteps());
+                dailyCaloriesHashMap.put(MONDAY, dailySummaryDataList.get(0).getCalories());
+                dailyDurationsHashMap.put(MONDAY, dailySummaryDataList.get(0).getDuration());
+
+                dailyStepsHashMap.put(TUESDAY, 0);
+                dailyCaloriesHashMap.put(TUESDAY, 0);
+                dailyDurationsHashMap.put(TUESDAY, 0);
+
+                dailyStepsHashMap.put(WEDNESDAY, 0);
+                dailyCaloriesHashMap.put(WEDNESDAY, 0);
+                dailyDurationsHashMap.put(WEDNESDAY, 0);
+
+                dailyStepsHashMap.put(THURSDAY, 0);
+                dailyCaloriesHashMap.put(THURSDAY, 0);
+                dailyDurationsHashMap.put(THURSDAY, 0);
+
+                dailyStepsHashMap.put(FRIDAY, 0);
+                dailyCaloriesHashMap.put(FRIDAY, 0);
+                dailyDurationsHashMap.put(FRIDAY, 0);
+
+                dailyStepsHashMap.put(SATURDAY, 0);
+                dailyCaloriesHashMap.put(SATURDAY, 0);
+                dailyDurationsHashMap.put(SATURDAY, 0);
+
+                if(dailySummaryDataList.get(1).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+
+                break;
+            case Calendar.TUESDAY:
+                dailyStepsHashMap.put(SUNDAY, dailySummaryDataList.get(2).getSteps());
+                dailyCaloriesHashMap.put(SUNDAY, dailySummaryDataList.get(2).getCalories());
+                dailyDurationsHashMap.put(SUNDAY, dailySummaryDataList.get(2).getDuration());
+
+                dailyStepsHashMap.put(MONDAY, dailySummaryDataList.get(1).getSteps());
+                dailyCaloriesHashMap.put(MONDAY, dailySummaryDataList.get(1).getCalories());
+                dailyDurationsHashMap.put(MONDAY, dailySummaryDataList.get(1).getDuration());
+
+                dailyStepsHashMap.put(TUESDAY, dailySummaryDataList.get(0).getSteps());
+                dailyCaloriesHashMap.put(TUESDAY, dailySummaryDataList.get(0).getCalories());
+                dailyDurationsHashMap.put(TUESDAY, dailySummaryDataList.get(0).getDuration());
+
+                dailyStepsHashMap.put(WEDNESDAY, 0);
+                dailyCaloriesHashMap.put(WEDNESDAY, 0);
+                dailyDurationsHashMap.put(WEDNESDAY, 0);
+
+                dailyStepsHashMap.put(THURSDAY, 0);
+                dailyCaloriesHashMap.put(THURSDAY, 0);
+                dailyDurationsHashMap.put(THURSDAY, 0);
+
+                dailyStepsHashMap.put(FRIDAY, 0);
+                dailyCaloriesHashMap.put(FRIDAY, 0);
+                dailyDurationsHashMap.put(FRIDAY, 0);
+
+                dailyStepsHashMap.put(SATURDAY, 0);
+                dailyCaloriesHashMap.put(SATURDAY, 0);
+                dailyDurationsHashMap.put(SATURDAY, 0);
+
+                if(dailySummaryDataList.get(2).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(1).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+
+                break;
+            case Calendar.WEDNESDAY:
+                dailyStepsHashMap.put(SUNDAY, dailySummaryDataList.get(3).getSteps());
+                dailyCaloriesHashMap.put(SUNDAY, dailySummaryDataList.get(3).getCalories());
+                dailyDurationsHashMap.put(SUNDAY, dailySummaryDataList.get(3).getDuration());
+
+                dailyStepsHashMap.put(MONDAY, dailySummaryDataList.get(2).getSteps());
+                dailyCaloriesHashMap.put(MONDAY, dailySummaryDataList.get(2).getCalories());
+                dailyDurationsHashMap.put(MONDAY, dailySummaryDataList.get(2).getDuration());
+
+                dailyStepsHashMap.put(TUESDAY, dailySummaryDataList.get(1).getSteps());
+                dailyCaloriesHashMap.put(TUESDAY, dailySummaryDataList.get(1).getCalories());
+                dailyDurationsHashMap.put(TUESDAY, dailySummaryDataList.get(1).getDuration());
+
+                dailyStepsHashMap.put(WEDNESDAY, dailySummaryDataList.get(0).getSteps());
+                dailyCaloriesHashMap.put(WEDNESDAY, dailySummaryDataList.get(0).getCalories());
+                dailyDurationsHashMap.put(WEDNESDAY, dailySummaryDataList.get(0).getDuration());
+
+                dailyStepsHashMap.put(THURSDAY, 0);
+                dailyCaloriesHashMap.put(THURSDAY, 0);
+                dailyDurationsHashMap.put(THURSDAY, 0);
+
+                dailyStepsHashMap.put(FRIDAY, 0);
+                dailyCaloriesHashMap.put(FRIDAY, 0);
+                dailyDurationsHashMap.put(FRIDAY, 0);
+
+                dailyStepsHashMap.put(SATURDAY, 0);
+                dailyCaloriesHashMap.put(SATURDAY, 0);
+                dailyDurationsHashMap.put(SATURDAY, 0);
+
+                if(dailySummaryDataList.get(3).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(2).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(1).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+
+                break;
+            case Calendar.THURSDAY:
+                dailyStepsHashMap.put(SUNDAY, dailySummaryDataList.get(4).getSteps());
+                dailyCaloriesHashMap.put(SUNDAY, dailySummaryDataList.get(4).getCalories());
+                dailyDurationsHashMap.put(SUNDAY, dailySummaryDataList.get(4).getDuration());
+
+                dailyStepsHashMap.put(MONDAY, dailySummaryDataList.get(3).getSteps());
+                dailyCaloriesHashMap.put(MONDAY, dailySummaryDataList.get(3).getCalories());
+                dailyDurationsHashMap.put(MONDAY, dailySummaryDataList.get(3).getDuration());
+
+                dailyStepsHashMap.put(TUESDAY, dailySummaryDataList.get(2).getSteps());
+                dailyCaloriesHashMap.put(TUESDAY, dailySummaryDataList.get(2).getCalories());
+                dailyDurationsHashMap.put(TUESDAY, dailySummaryDataList.get(2).getDuration());
+
+                dailyStepsHashMap.put(WEDNESDAY, dailySummaryDataList.get(1).getSteps());
+                dailyCaloriesHashMap.put(WEDNESDAY, dailySummaryDataList.get(1).getCalories());
+                dailyDurationsHashMap.put(WEDNESDAY, dailySummaryDataList.get(1).getDuration());
+
+                dailyStepsHashMap.put(THURSDAY, dailySummaryDataList.get(0).getSteps());
+                dailyCaloriesHashMap.put(THURSDAY, dailySummaryDataList.get(0).getCalories());
+                dailyDurationsHashMap.put(THURSDAY, dailySummaryDataList.get(0).getDuration());
+
+                dailyStepsHashMap.put(FRIDAY, 0);
+                dailyCaloriesHashMap.put(FRIDAY, 0);
+                dailyDurationsHashMap.put(FRIDAY, 0);
+
+                dailyStepsHashMap.put(SATURDAY, 0);
+                dailyCaloriesHashMap.put(SATURDAY, 0);
+                dailyDurationsHashMap.put(SATURDAY, 0);
+
+                if(dailySummaryDataList.get(4).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(3).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(2).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(1).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+
+                break;
+            case Calendar.FRIDAY:
+                dailyStepsHashMap.put(SUNDAY, dailySummaryDataList.get(5).getSteps());
+                dailyCaloriesHashMap.put(SUNDAY, dailySummaryDataList.get(5).getCalories());
+                dailyDurationsHashMap.put(SUNDAY, dailySummaryDataList.get(5).getDuration());
+
+                dailyStepsHashMap.put(MONDAY, dailySummaryDataList.get(4).getSteps());
+                dailyCaloriesHashMap.put(MONDAY, dailySummaryDataList.get(4).getCalories());
+                dailyDurationsHashMap.put(MONDAY, dailySummaryDataList.get(4).getDuration());
+
+                dailyStepsHashMap.put(TUESDAY, dailySummaryDataList.get(3).getSteps());
+                dailyCaloriesHashMap.put(TUESDAY, dailySummaryDataList.get(3).getCalories());
+                dailyDurationsHashMap.put(TUESDAY, dailySummaryDataList.get(3).getDuration());
+
+                dailyStepsHashMap.put(WEDNESDAY, dailySummaryDataList.get(2).getSteps());
+                dailyCaloriesHashMap.put(WEDNESDAY, dailySummaryDataList.get(2).getCalories());
+                dailyDurationsHashMap.put(WEDNESDAY, dailySummaryDataList.get(2).getDuration());
+
+                dailyStepsHashMap.put(THURSDAY, dailySummaryDataList.get(1).getSteps());
+                dailyCaloriesHashMap.put(THURSDAY, dailySummaryDataList.get(1).getCalories());
+                dailyDurationsHashMap.put(THURSDAY, dailySummaryDataList.get(1).getDuration());
+
+                dailyStepsHashMap.put(FRIDAY, dailySummaryDataList.get(0).getSteps());
+                dailyCaloriesHashMap.put(FRIDAY, dailySummaryDataList.get(0).getCalories());
+                dailyDurationsHashMap.put(FRIDAY, dailySummaryDataList.get(0).getDuration());
+
+                dailyStepsHashMap.put(SATURDAY, 0);
+                dailyCaloriesHashMap.put(SATURDAY, 0);
+                dailyDurationsHashMap.put(SATURDAY, 0);
+
+                if(dailySummaryDataList.get(5).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(4).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(3).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(2).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(1).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+
+                break;
+            case Calendar.SATURDAY:
+                dailyStepsHashMap.put(SUNDAY, dailySummaryDataList.get(6).getSteps());
+                dailyCaloriesHashMap.put(SUNDAY, dailySummaryDataList.get(6).getCalories());
+                dailyDurationsHashMap.put(SUNDAY, dailySummaryDataList.get(6).getDuration());
+
+                dailyStepsHashMap.put(MONDAY, dailySummaryDataList.get(5).getSteps());
+                dailyCaloriesHashMap.put(MONDAY, dailySummaryDataList.get(5).getCalories());
+                dailyDurationsHashMap.put(MONDAY, dailySummaryDataList.get(5).getDuration());
+
+                dailyStepsHashMap.put(TUESDAY, dailySummaryDataList.get(4).getSteps());
+                dailyCaloriesHashMap.put(TUESDAY, dailySummaryDataList.get(4).getCalories());
+                dailyDurationsHashMap.put(TUESDAY, dailySummaryDataList.get(4).getDuration());
+
+                dailyStepsHashMap.put(WEDNESDAY, dailySummaryDataList.get(3).getSteps());
+                dailyCaloriesHashMap.put(WEDNESDAY, dailySummaryDataList.get(3).getCalories());
+                dailyDurationsHashMap.put(WEDNESDAY, dailySummaryDataList.get(3).getDuration());
+
+                dailyStepsHashMap.put(THURSDAY, dailySummaryDataList.get(2).getSteps());
+                dailyCaloriesHashMap.put(THURSDAY, dailySummaryDataList.get(2).getCalories());
+                dailyDurationsHashMap.put(THURSDAY, dailySummaryDataList.get(2).getDuration());
+
+                dailyStepsHashMap.put(FRIDAY, dailySummaryDataList.get(1).getSteps());
+                dailyCaloriesHashMap.put(FRIDAY, dailySummaryDataList.get(1).getCalories());
+                dailyDurationsHashMap.put(FRIDAY, dailySummaryDataList.get(1).getDuration());
+
+                dailyStepsHashMap.put(SATURDAY, dailySummaryDataList.get(0).getSteps());
+                dailyCaloriesHashMap.put(SATURDAY, dailySummaryDataList.get(0).getCalories());
+                dailyDurationsHashMap.put(SATURDAY, dailySummaryDataList.get(0).getDuration());
+
+                if(dailySummaryDataList.get(6).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(5).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(4).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(3).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(2).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(1).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+                if(dailySummaryDataList.get(0).getSteps() >= step_threshold) {
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                }else{
+                    barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+
+                break;
+        }
+
+        DailySummaryData dataToday = dailySummaryDataList.get(0);
+        steps_value.setText(String.valueOf(dataToday.getSteps()));
+        cal_value.setText(String.valueOf(dataToday.getCalories()));
+        time_value.setText(CommonFunc.ConvertDuration2TimeFormat(dataToday.getDuration()));
+
+        createBarChart(dailyStepsHashMap);
+        steps_btn.setOnClickListener(this);
+        calories_btn.setOnClickListener(this);
+        duration_btn.setOnClickListener(this);
     }
 
     private void SetupData(List<StatisticsData> statisticsDataList){

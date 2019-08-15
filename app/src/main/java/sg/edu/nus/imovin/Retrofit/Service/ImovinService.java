@@ -47,6 +47,7 @@ import sg.edu.nus.imovin.Retrofit.Response.UploadConsentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UploadImageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UploadQuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UserInfoResponse;
+import sg.edu.nus.imovin.Retrofit.Response.UserStatsResponse;
 
 public interface ImovinService {
     //login
@@ -84,6 +85,9 @@ public interface ImovinService {
     );
 
     //home page
+    @GET(ConnectionURL.REQUEST_GET_USER_STATS_OVERVIEW)
+    Call<UserStatsResponse> getUserStatsOverview();
+
     @GET(ConnectionURL.REQUEST_GET_STATISTICS)
     Call<StatisticsResponse> getStatistics(
             @Query(ConnectionURL.PARAMETER_DAYS) int days
