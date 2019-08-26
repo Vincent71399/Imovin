@@ -5,7 +5,7 @@ public class DailySummaryData {
     private Integer calories;
     private String created_at;
     private String date;
-    private Double distance;
+    private Float distance;
     private Integer duration;
     private Integer steps;
     private String updated_at;
@@ -43,11 +43,11 @@ public class DailySummaryData {
         this.date = date;
     }
 
-    public Double getDistance() {
+    public Float getDistance() {
         return distance;
     }
 
-    public void setDistance(Double distance) {
+    public void setDistance(Float distance) {
         this.distance = distance;
     }
 

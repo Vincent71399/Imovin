@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,12 +30,13 @@ import sg.edu.nus.imovin.Retrofit.Object.ArticleData;
 import sg.edu.nus.imovin.Retrofit.Object.LibraryData;
 import sg.edu.nus.imovin.Retrofit.Response.ArticleResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
+import sg.edu.nus.imovin.System.BaseFragment;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
-public class LibraryFragment extends Fragment {
+public class LibraryFragment extends BaseFragment {
     private View rootView;
 
     @BindView(R.id.library_list) RecyclerView library_list;
@@ -103,17 +105,21 @@ public class LibraryFragment extends Fragment {
 
         Call<ArticleResponse> call = service.getArticles();
 
+        ShowConnectIndicator();
+
         call.enqueue(new Callback<ArticleResponse>() {
             @Override
             public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
                 try {
                     ArticleResponse articleResponse = response.body();
                     SetupData(articleResponse.get_items());
+                    HideConnectIndicator();
 
                 }catch (Exception e){
                     e.printStackTrace();
                     Log.d(LogConstants.LogTag, "Exception LibraryFragment : " + e.toString());
                     Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                    HideConnectIndicator();
                 }
             }
 
@@ -121,6 +127,7 @@ public class LibraryFragment extends Fragment {
             public void onFailure(Call<ArticleResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure LibraryFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                HideConnectIndicator();
             }
         });
     }

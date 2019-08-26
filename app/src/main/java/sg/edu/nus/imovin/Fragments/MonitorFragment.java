@@ -36,13 +36,14 @@ import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Object.StatisticsData;
 import sg.edu.nus.imovin.Retrofit.Response.StatisticsResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
+import sg.edu.nus.imovin.System.BaseFragment;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.Common.CommonFunc.GetCurrentMonthString;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
-public class MonitorFragment extends Fragment implements View.OnClickListener {
+public class MonitorFragment extends BaseFragment implements View.OnClickListener {
     private View rootView;
 
     @BindView(R.id.date_text) TextView date_text;

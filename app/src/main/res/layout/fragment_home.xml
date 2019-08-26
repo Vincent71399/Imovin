@@ -6,6 +6,7 @@
     tools:context="sg.edu.nus.imovin.Fragments.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -33,7 +34,7 @@
             android:layout_height="wrap_content" />
 
         <LinearLayout
-            android:weightSum="2"
+            android:weightSum="3"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,7 +73,7 @@
 
                 <TextView
                     android:id="@+id/time_value"
-                    android:text="00:00"
+                    android:text="0"
                     android:textColor="@color/black_color"
                     android:textSize="@dimen/textMid"
                     android:gravity="center"
@@ -80,7 +81,32 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:text="@string/time"
+                    android:text="@string/min"
+                    android:textColor="@color/black_color"
+                    android:textSize="@dimen/textSubMid"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/distance_value"
+                    android:text="0"
+                    android:textColor="@color/black_color"
+                    android:textSize="@dimen/textMid"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="@string/kilometer"
                     android:textColor="@color/black_color"
                     android:textSize="@dimen/textSubMid"
                     android:gravity="center"
@@ -123,7 +149,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:weightSum="3">
+            android:weightSum="4">
 
             <TextView
                 android:id="@+id/steps_btn"
@@ -141,7 +167,6 @@
                 android:id="@+id/calories_btn"
                 android:padding="10dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
                 android:text="@string/calories"
                 android:textSize="20sp"
                 android:gravity="center"
@@ -154,7 +179,21 @@
             <TextView
                 android:id="@+id/duration_btn"
                 android:padding="10dp"
+                android:layout_marginStart="20dp"
                 android:text="@string/duration"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@color/white_color"
+                android:background="@drawable/grey_background"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/distance_btn"
+                android:padding="10dp"
+                android:layout_marginStart="20dp"
+                android:text="@string/distance"
                 android:textSize="20sp"
                 android:gravity="center"
                 android:textColor="@color/white_color"

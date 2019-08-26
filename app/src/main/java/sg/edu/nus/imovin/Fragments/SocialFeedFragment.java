@@ -33,6 +33,7 @@ import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
 import sg.edu.nus.imovin.Retrofit.Response.SocialImageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
+import sg.edu.nus.imovin.System.BaseFragment;
 import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
@@ -42,7 +43,7 @@ import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_GET_SOCIAL_
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_SELECT_PLAN;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
-public class SocialFeedFragment extends Fragment {
+public class SocialFeedFragment extends BaseFragment {
     private View rootView;
     RecyclerView socialFeedListView;
     List<SocialFeedData> socialFeedList;

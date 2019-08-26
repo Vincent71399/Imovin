@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -96,6 +97,38 @@ public class CommonFunc {
                 addZero(date.get(Calendar.HOUR_OF_DAY))+":"+addZero(date.get(Calendar.MINUTE))+":"+addZero(date.get(Calendar.SECOND));
 
         return dateFormat;
+    }
+
+    public static String GetFullDateStringRevert(Calendar date){
+        String dateFormat = addZero(date.get(Calendar.DAY_OF_MONTH)) + "-" + convertInt2Month(date.get(Calendar.MONTH)) + "-" + date.get(Calendar.YEAR) + " " +
+                addZero(date.get(Calendar.HOUR_OF_DAY))+":"+addZero(date.get(Calendar.MINUTE))+":"+addZero(date.get(Calendar.SECOND));
+
+        return dateFormat;
+    }
+
+    public static Calendar RevertFullDateStringRevert(String dateString){
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:SS");
+
+        Calendar calendar  = Calendar.getInstance();
+        try {
+            calendar.setTime(df.parse(dateString));
+            return calendar;
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static boolean isSameDay(Calendar cal1, Calendar cal2){
+        if(cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
+                cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH)
+        ){
+            return true;
+        }
+
+        return false;
     }
 
     private static String convertInt2Month(Integer monthInt){

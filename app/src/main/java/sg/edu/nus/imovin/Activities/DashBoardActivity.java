@@ -29,6 +29,7 @@ import sg.edu.nus.imovin.Event.ForumEvent;
 import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.System.BaseActivity;
+import sg.edu.nus.imovin.System.BaseFragment;
 import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.FuncBlockConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;

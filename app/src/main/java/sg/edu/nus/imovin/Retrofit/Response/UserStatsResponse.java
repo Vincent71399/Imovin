@@ -3,7 +3,7 @@ package sg.edu.nus.imovin.Retrofit.Response;
 import java.util.List;
 
 import sg.edu.nus.imovin.Retrofit.Object.DailySummaryData;
-import sg.edu.nus.imovin.Retrofit.Object.SelectedPlanData;
+
 
 public class UserStatsResponse {
     private String _id;
@@ -15,7 +15,7 @@ public class UserStatsResponse {
     private String name;
     private Integer profile;
     private Integer riskLapse;
-    private SelectedPlanData selectedPlanData;
+    private Integer target;
     private String updated_at;
 
     public String get_id() {
@@ -90,12 +90,12 @@ public class UserStatsResponse {
         this.riskLapse = riskLapse;
     }
 
-    public SelectedPlanData getSelectedPlanData() {
-        return selectedPlanData;
+    public Integer getTarget() {
+        return target;
     }
 
-    public void setSelectedPlanData(SelectedPlanData selectedPlanData) {
-        this.selectedPlanData = selectedPlanData;
+    public void setTarget(Integer target) {
+        this.target = target;
     }
 
     public String getUpdated_at() {
