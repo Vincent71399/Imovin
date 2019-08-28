@@ -14,12 +14,14 @@
     <Button
         android:id="@+id/prevBtn"
         android:text="@string/prev"
+        android:enabled="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/nextBtn"
         android:text="@string/next"
+        android:enabled="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

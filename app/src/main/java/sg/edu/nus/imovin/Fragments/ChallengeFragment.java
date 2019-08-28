@@ -78,7 +78,7 @@ public class ChallengeFragment extends BaseFragment {
     }
 
     private void Init(){
-        getChallengeData();
+//        getChallengeData();
 
 //        List<ChallengeStar> challengeStarList1 = new ArrayList<>();
 //        challengeStarList1.add(new ChallengeStar(100, 15000, ChallengeStar.starColor.Gold));
@@ -153,36 +153,36 @@ public class ChallengeFragment extends BaseFragment {
         view.setAdapter(dailyStepAdapter);
     }
 
-    private void getChallengeData(){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(SERVER)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(ImovinApplication.getHttpClient().build())
-                .build();
-
-        ImovinService service = retrofit.create(ImovinService.class);
-
-        Call<ChallengeResponse> call = service.getChallenge();
-
-        call.enqueue(new Callback<ChallengeResponse>() {
-            @Override
-            public void onResponse(Call<ChallengeResponse> call, Response<ChallengeResponse> response) {
-                try {
-                    ChallengeResponse challengeResponse = response.body();
-                    SetupData(challengeResponse.getData());
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                    Log.d(LogConstants.LogTag, "Exception ChallengeFragment : " + e.toString());
-                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ChallengeResponse> call, Throwable t) {
-                Log.d(LogConstants.LogTag, "Failure ChallengeFragment : " + t.toString());
-                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void getChallengeData(){
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(SERVER)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .client(ImovinApplication.getHttpClient().build())
+//                .build();
+//
+//        ImovinService service = retrofit.create(ImovinService.class);
+//
+//        Call<ChallengeResponse> call = service.getChallenge();
+//
+//        call.enqueue(new Callback<ChallengeResponse>() {
+//            @Override
+//            public void onResponse(Call<ChallengeResponse> call, Response<ChallengeResponse> response) {
+//                try {
+//                    ChallengeResponse challengeResponse = response.body();
+//                    SetupData(challengeResponse.getData());
+//
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                    Log.d(LogConstants.LogTag, "Exception ChallengeFragment : " + e.toString());
+//                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ChallengeResponse> call, Throwable t) {
+//                Log.d(LogConstants.LogTag, "Failure ChallengeFragment : " + t.toString());
+//                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 }

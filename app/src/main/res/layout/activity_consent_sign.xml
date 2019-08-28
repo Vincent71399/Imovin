@@ -8,26 +8,6 @@
     android:padding="10dp"
     tools:context=".Activities.ConsentSignActivity">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/name_title"
-            android:text="@string/name"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/name_input"
-            android:layout_marginStart="30dp"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
     <TextView
         android:id="@+id/sign_title"
         android:text="@string/sign_title"

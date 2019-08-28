@@ -37,7 +37,6 @@ import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
 public class ConsentSignActivity extends AppCompatActivity implements View.OnClickListener {
 
-    @BindView(R.id.name_input) EditText name_input;
     @BindView(R.id.signature_box) FreeDrawView signature_box;
     @BindView(R.id.nextBtn) Button nextBtn;
 
@@ -63,26 +62,22 @@ public class ConsentSignActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void ProcessConsent(){
-        if(name_input.getText().toString().equals("")){
-            Toast.makeText(getApplicationContext(), getString(R.string.name_empty_alert), Toast.LENGTH_SHORT).show();
-        }else {
-            signature_box.getDrawScreenshot(new FreeDrawView.DrawCreatorListener() {
-                @Override
-                public void onDrawCreated(Bitmap draw) {
-                    String storeLocation = CommonFunc.saveToInternalStorage(getApplicationContext(), draw);
-                    File file = CommonFunc.loadImageFromStorage(storeLocation);
-                    SendConsent(name_input.getText().toString(), storeLocation, file);
-                }
+        signature_box.getDrawScreenshot(new FreeDrawView.DrawCreatorListener() {
+            @Override
+            public void onDrawCreated(Bitmap draw) {
+                String storeLocation = CommonFunc.saveToInternalStorage(getApplicationContext(), draw);
+                File file = CommonFunc.loadImageFromStorage(storeLocation);
+                SendConsent(storeLocation, file);
+            }
 
-                @Override
-                public void onDrawCreationError() {
-                    Toast.makeText(getApplicationContext(), getString(R.string.signature_empty_alert), Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+            @Override
+            public void onDrawCreationError() {
+                Toast.makeText(getApplicationContext(), getString(R.string.signature_empty_alert), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private void SendConsent(String name, String path, File file){
+    private void SendConsent(String path, File file){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -91,11 +86,10 @@ public class ConsentSignActivity extends AppCompatActivity implements View.OnCli
 
         ImovinService service = retrofit.create(ImovinService.class);
 
-        RequestBody nameBody = RequestBody.create(MediaType.parse("text/plain"), name);
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("form-data"), file);
         MultipartBody.Part part = MultipartBody.Part.createFormData("signature", file.getName(), fileReqBody);
 
-        Call<UploadConsentResponse> call = service.uploadConsent(nameBody, part);
+        Call<UploadConsentResponse> call = service.uploadConsent(part);
         call.enqueue(new Callback<UploadConsentResponse>() {
             @Override
             public void onResponse(Call<UploadConsentResponse> call, Response<UploadConsentResponse> response) {

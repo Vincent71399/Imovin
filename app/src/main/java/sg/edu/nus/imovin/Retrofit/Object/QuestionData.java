@@ -5,6 +5,8 @@ import java.util.List;
 
 public class QuestionData implements Serializable {
     private String _id;
+    private String error_text;
+    private String regex;
     private List<String> choices;
     private String created_at;
     private String detail;

@@ -188,10 +188,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                         ImovinApplication.setToken(emailLoginResponse.getData().getToken());
 
-//                        ImovinApplication.setUserData(emailLoginResponse.getData());
-//                        PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
-//                        PushNotifications.subscribe(emailLoginResponse.getData().getEmail());
-
                         SharedPreferences preferences = getApplicationContext().getSharedPreferences(SystemConstant.SHARE_PREFERENCE_LOCATION, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString(SystemConstant.USERNAME, email);
@@ -412,9 +408,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void openDialogBox(){
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-        builderSingle.setTitle("Email has been sent");
-        builderSingle.setMessage("Please check your email and click the link to reset password");
-        builderSingle.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+        builderSingle.setTitle(getString(R.string.reset_pwd_title));
+        builderSingle.setMessage(getString(R.string.reset_pwd_text));
+        builderSingle.setNeutralButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

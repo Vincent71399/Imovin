@@ -35,6 +35,7 @@ public class ConnectionURL {
     public static final String REQUEST_UPLOAD_QUESTIONNAIRE = "/api/questionnaire-answer";
     public static final String REQUEST_GET_ARTICLES = "/api/article";
     public static final String REQUEST_GET_USER_STATS_OVERVIEW = "/api/overview/me";
+    public static final String REQUEST_GET_USER_CHALLENGE = "/api/challenge/me";
 
     public static final String PARAMETER_DAYS = "days";
     public static final String PARAMETER_PASSWORD = "password";

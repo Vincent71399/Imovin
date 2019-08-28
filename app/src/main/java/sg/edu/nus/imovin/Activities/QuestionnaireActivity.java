@@ -1,17 +1,21 @@
 package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.flyco.tablayout.SlidingTabLayout;
@@ -63,6 +67,11 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     @BindView(R.id.nextBtn) Button nextBtn;
     @BindView(R.id.prevBtn) Button prevBtn;
 
+    private View customActionBar;
+    @BindView(R.id.navigator_title) TextView navigator_title;
+    @BindView(R.id.navigator_help) TextView navigator_help;
+    @BindView(R.id.navigator_right_text) TextView navigator_right_text;
+
     private View decorView;
     private CustomViewPager vp;
 
@@ -77,6 +86,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
     private Stack<Integer> questionOrder;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +94,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
         EventBus.getDefault().register(this);
 
+        SetActionBar();
         LinkUIbyId();
         SetFunction();
         Init();
@@ -93,6 +104,21 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+    private void SetActionBar(){
+        ActionBar actionBar = getSupportActionBar();
+        customActionBar = getLayoutInflater().inflate(R.layout.questionnaire_navigator, null);
+
+        if(actionBar != null){
+            actionBar.show();
+            actionBar.setCustomView(customActionBar);
+            actionBar.setDisplayShowCustomEnabled(true);
+        }
+
+        Toolbar parent =(Toolbar) customActionBar.getParent();
+        parent.setPadding(0,0,0,0);
+        parent.setContentInsetsAbsolute(0, 0);
     }
 
     private void LinkUIbyId(){
@@ -105,6 +131,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     private void SetFunction(){
         prevBtn.setOnClickListener(this);
         nextBtn.setOnClickListener(this);
+        navigator_help.setOnClickListener(this);
     }
 
     private void Init(){
@@ -127,9 +154,8 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
         prevBtn.setEnabled(false);
 
-        ActionBar ab = getSupportActionBar();
-        ab.setTitle(sectionDataList.get(currentSection).getDisplay_name());
-        ab.setBackgroundDrawable(getDrawable(R.color.theme_purple));
+        navigator_title.setText(sectionDataList.get(currentSection).getDisplay_name());
+        navigator_right_text.setText("1/" + sectionDataList.get(currentSection).getQuestions().size());
         SetSectionQuestion(questionDataList);
     }
 
@@ -173,18 +199,23 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         tabLayout.setViewPager(vp);
     }
 
-    private void SetTitle(int index){
+    private void SetTitleAndProgress(int index){
         String title = "";
+        int currentProgress = 0;
+        int totalQuestion = 0;
         for(SectionData sectionData : sectionDataList){
             if(title.equals("") && index < sectionData.getQuestions().size()){
                 title = sectionData.getDisplay_name();
+                currentProgress = index + 1;
+                totalQuestion = sectionData.getQuestions().size();
             }
             else{
                 index -= sectionData.getQuestions().size();
             }
         }
-        ActionBar ab = getSupportActionBar();
-        ab.setTitle(title);
+        navigator_title.setText(title);
+
+        navigator_right_text.setText(currentProgress + "/" + totalQuestion);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -209,7 +240,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                         if(currentFragmentIndex < mFragments.size() - 1) {
                             questionOrder.push(vp.getCurrentItem());
                             vp.setCurrentItem(vp.getCurrentItem() + 1);
-                            SetTitle(vp.getCurrentItem());
+                            SetTitleAndProgress(vp.getCurrentItem());
                         }
                         else{
                             SubmitQuestionNaire();
@@ -218,7 +249,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                         if(currentFragmentIndex < mFragments.size() - 2) {
                             questionOrder.push(vp.getCurrentItem());
                             vp.setCurrentItem(vp.getCurrentItem() + 2);
-                            SetTitle(vp.getCurrentItem());
+                            SetTitleAndProgress(vp.getCurrentItem());
                         }
                         else{
                             SubmitQuestionNaire();
@@ -228,7 +259,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                     if(currentFragmentIndex < mFragments.size() - 1) {
                         questionOrder.push(vp.getCurrentItem());
                         vp.setCurrentItem(vp.getCurrentItem() + 1);
-                        SetTitle(vp.getCurrentItem());
+                        SetTitleAndProgress(vp.getCurrentItem());
                     }
                     else{
                         SubmitQuestionNaire();
@@ -248,10 +279,36 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
                 Integer lastQuestionIndex = questionOrder.pop();
                 vp.setCurrentItem(lastQuestionIndex);
-                SetTitle(vp.getCurrentItem());
+                SetTitleAndProgress(vp.getCurrentItem());
 
                 break;
+            case R.id.navigator_help:
+                int index = vp.getCurrentItem();
+                SectionData currentSectionData = null;
+                for(SectionData sectionData : sectionDataList){
+                    if(currentSectionData == null && index < sectionData.getQuestions().size()){
+                        currentSectionData = sectionData;
+                    }
+                    else{
+                        index -= sectionData.getQuestions().size();
+                    }
+                }
+                openDialogBox(currentSectionData.getDisplay_name(), currentSectionData.getInstruction());
+                break;
         }
+    }
+
+    private void openDialogBox(String title, String text){
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        builderSingle.setTitle(title);
+        builderSingle.setMessage(text);
+        builderSingle.setNeutralButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builderSingle.show();
     }
 
     private void SubmitQuestionNaire(){

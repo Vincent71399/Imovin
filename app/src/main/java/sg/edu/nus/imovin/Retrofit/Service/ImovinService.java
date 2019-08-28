@@ -72,7 +72,6 @@ public interface ImovinService {
     @Multipart
     @PATCH(ConnectionURL.REQUEST_UPLOAD_USER_CONSENT_SIGNATURE)
     Call<UploadConsentResponse> uploadConsent(
-            @Part("name") RequestBody name,
             @Part MultipartBody.Part filename
     );
 
@@ -92,9 +91,6 @@ public interface ImovinService {
     Call<StatisticsResponse> getStatistics(
             @Query(ConnectionURL.PARAMETER_DAYS) int days
     );
-
-    @GET(ConnectionURL.REQUEST_UPDATE_STATISTICS)
-    Call<StatisticsResponse> updateStatistics();
 
     //Forum
     @POST(ConnectionURL.REQUEST_CREATE_THREAD)
@@ -188,9 +184,8 @@ public interface ImovinService {
     );
 
     //Challenge
-    @GET(ConnectionURL.REQUEST_UPDATE_CHALLENGE)
+    @GET(ConnectionURL.REQUEST_GET_USER_CHALLENGE)
     Call<ChallengeResponse> getChallenge();
-
 
     //Library
     @GET(ConnectionURL.REQUEST_GET_ARTICLES)

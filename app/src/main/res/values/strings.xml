@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Imovin</string>
 
+    <string name="ok">Ok</string>
+    <string name="reset_pwd_title">Email has been sent</string>
+    <string name="reset_pwd_text">Please check your email and click the link to reset password</string>
+
     <string name="login_email_title">Email</string>
     <string name="login_password_title">Password</string>
     <string name="login_btn_title">Login</string>
@@ -27,6 +31,8 @@
 
     <string name="name_empty_alert">name cannot be empty</string>
     <string name="signature_empty_alert">signature cannot be empty</string>
+
+    <string name="question_mark">\?</string>
 
     <string name="steps">Steps</string>
     <string name="cal">Cal</string>
