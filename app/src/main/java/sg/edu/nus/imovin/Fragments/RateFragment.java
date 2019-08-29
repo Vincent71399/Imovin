@@ -1,12 +1,12 @@
 package sg.edu.nus.imovin.Fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.warkiz.widget.IndicatorSeekBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +18,7 @@ import sg.edu.nus.imovin.Retrofit.Object.QuestionData;
 public class RateFragment extends QuesFragment {
 
     @BindView(R.id.question) TextView question;
-    @BindView(R.id.rate_input) SeekBar rate_input;
+    @BindView(R.id.rate_input) IndicatorSeekBar rate_input;
 
     private View rootView;
     private QuestionData questionData;
@@ -55,7 +55,7 @@ public class RateFragment extends QuesFragment {
 
     @Override
     public AnswerData getAnswer() {
-        int progress = rate_input.getProgress();
+        int progress = rate_input.getProgress() - 1;
 
         AnswerData answerData = new AnswerData();
         answerData.setAnswer(String.valueOf(progress));
@@ -66,6 +66,6 @@ public class RateFragment extends QuesFragment {
 
     @Override
     public void setAnswer(AnswerData answerData) {
-        rate_input.setProgress(Integer.parseInt(answerData.getAnswer()));
+        rate_input.setProgress(Integer.parseInt(answerData.getAnswer()) + 1);
     }
 }

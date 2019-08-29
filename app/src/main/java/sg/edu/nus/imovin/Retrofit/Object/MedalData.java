@@ -2,13 +2,13 @@ package sg.edu.nus.imovin.Retrofit.Object;
 
 public class MedalData {
     private String _id;
-    private String category;
+    private Integer category;
     private String description;
     private String name;
     private Integer obtained_count;
     private Integer points;
     private Integer threshold;
-    private String tier;
+    private Integer tier;
 
     public String get_id() {
         return _id;
@@ -18,11 +18,11 @@ public class MedalData {
         this._id = _id;
     }
 
-    public String getCategory() {
+    public Integer getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Integer category) {
         this.category = category;
     }
 
@@ -66,11 +66,11 @@ public class MedalData {
         this.threshold = threshold;
     }
 
-    public String getTier() {
+    public Integer getTier() {
         return tier;
     }
 
-    public void setTier(String tier) {
+    public void setTier(Integer tier) {
         this.tier = tier;
     }
 }

@@ -18,6 +18,7 @@
 
         <TextView
             android:id="@+id/navigator_title"
+            android:textStyle="bold"
             android:singleLine="true"
             android:gravity="start|center_vertical"
             android:layout_width="match_parent"

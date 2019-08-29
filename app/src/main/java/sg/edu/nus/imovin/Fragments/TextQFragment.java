@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.regex.Pattern;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import sg.edu.nus.imovin.Event.EnableNextEvent;
@@ -95,7 +97,11 @@ public class TextQFragment extends QuesFragment implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         if(!charSequence.toString().equals("")){
-            EventBus.getDefault().post(new EnableNextEvent());
+            if(questionData.getRegex().equals("") || Pattern.matches(questionData.getRegex(), charSequence.toString())) {
+                EventBus.getDefault().post(new EnableNextEvent());
+            }else{
+                EventBus.getDefault().post(new EnableNextEvent(false));
+            }
         }else{
             EventBus.getDefault().post(new EnableNextEvent(false));
         }

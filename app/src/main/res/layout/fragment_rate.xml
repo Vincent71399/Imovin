@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="sg.edu.nus.imovin.Fragments.RateFragment">
 
     <LinearLayout
@@ -40,62 +41,25 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
+        <com.warkiz.widget.IndicatorStayLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="5">
+            android:padding="20dp">
 
-            <TextView
-                android:text="@string/rate1"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
+            <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/rate_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isb_indicator_color="@color/theme_purple"
+                app:isb_tick_texts_color="@color/theme_purple"
+                app:isb_max="5"
+                app:isb_min="1"
+                app:isb_progress="3"
+                app:isb_show_tick_marks_type="oval"
+                app:isb_show_tick_texts="true"
+                app:isb_ticks_count="5" />
 
-            <TextView
-                android:text="@string/rate2"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:text="@string/rate3"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:text="@string/rate4"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:text="@string/rate5"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <SeekBar
-            android:layout_marginTop="30dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:paddingStart="60dp"
-            android:paddingEnd="60dp"
-            android:id="@+id/rate_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:max="4"
-            android:progress="2"/>
+        </com.warkiz.widget.IndicatorStayLayout>
 
     </LinearLayout>
 

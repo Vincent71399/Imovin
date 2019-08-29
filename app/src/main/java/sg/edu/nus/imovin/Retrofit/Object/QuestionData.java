@@ -27,6 +27,22 @@ public class QuestionData implements Serializable {
         this._id = _id;
     }
 
+    public String getError_text() {
+        return error_text;
+    }
+
+    public void setError_text(String error_text) {
+        this.error_text = error_text;
+    }
+
+    public String getRegex() {
+        return regex;
+    }
+
+    public void setRegex(String regex) {
+        this.regex = regex;
+    }
+
     public List<String> getChoices() {
         return choices;
     }

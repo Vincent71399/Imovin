@@ -16,8 +16,9 @@
             style="@style/questionnaire_text" />
 
         <EditText
-            android:layout_marginTop="10dp"
             android:id="@+id/question_input"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="100dp" />
 
