@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
@@ -69,24 +71,29 @@ public class TextQFragment extends QuesFragment implements TextWatcher {
     }
 
     @Override
-    public QuestionData getQuestionData() {
-        return questionData;
+    public List<QuestionData> getQuestionData() {
+        List<QuestionData> questionDataList = new ArrayList<>();
+        questionDataList.add(questionData);
+        return questionDataList;
     }
 
     @Override
-    public AnswerData getAnswer() {
+    public List<AnswerData> getAnswer() {
         HideKeyboardAll();
 
         AnswerData answerData = new AnswerData();
         answerData.setAnswer(question_input.getText().toString());
         answerData.setQuestion(questionData.get_id());
 
-        return answerData;
+        List<AnswerData> answerDataList = new ArrayList<>();
+        answerDataList.add(answerData);
+
+        return answerDataList;
     }
 
     @Override
-    public void setAnswer(AnswerData answerData) {
-        question_input.setText(answerData.getAnswer());
+    public void setAnswer(List<AnswerData> answerDataList) {
+        question_input.setText(answerDataList.get(0).getAnswer());
     }
 
     @Override

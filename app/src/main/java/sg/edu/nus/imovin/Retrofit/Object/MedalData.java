@@ -7,6 +7,7 @@ public class MedalData {
     private String name;
     private Integer obtained_count;
     private Integer points;
+    private String last_achieved_at;
     private Integer threshold;
     private Integer tier;
 
@@ -56,6 +57,14 @@ public class MedalData {
 
     public void setPoints(Integer points) {
         this.points = points;
+    }
+
+    public String getLast_achieved_at() {
+        return last_achieved_at;
+    }
+
+    public void setLast_achieved_at(String last_achieved_at) {
+        this.last_achieved_at = last_achieved_at;
     }
 
     public Integer getThreshold() {

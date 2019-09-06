@@ -5,6 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.ChallengeFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:gravity="top|center_horizontal"
         android:orientation="vertical"
@@ -47,10 +51,8 @@
 
         <TextView
             android:id="@+id/daily_steps_title"
-            android:visibility="gone"
             android:layout_marginTop="20dp"
             android:textColor="@color/black_color"
-            android:text="@string/daily_steps"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -61,65 +63,72 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/daily_distance_title"
-            android:visibility="gone"
+            android:id="@+id/active_days_for_the_week_title"
             android:layout_marginTop="20dp"
             android:textColor="@color/black_color"
-            android:text="@string/total_distance"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/daily_distance_list"
+            android:id="@+id/active_days_for_the_week_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/step_target_title"
-            android:visibility="gone"
+            android:id="@+id/daily_total_distance_title"
             android:layout_marginTop="20dp"
             android:textColor="@color/black_color"
-            android:text="@string/total_days_with_7500_steps"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/steps_target_list"
+            android:id="@+id/daily_total_distance_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/active_days_title"
-            android:visibility="gone"
+            android:id="@+id/weekly_exercise_duration_title"
             android:layout_marginTop="20dp"
             android:textColor="@color/black_color"
-            android:text="@string/active_days_for_week"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/active_days_list"
+            android:id="@+id/weekly_exercise_duration_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/weekly_ex_title"
-            android:visibility="gone"
+            android:id="@+id/total_days_with_steps_title"
             android:layout_marginTop="20dp"
             android:textColor="@color/black_color"
-            android:text="@string/weekly_exercise_duration"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/weekly_ex_list"
+            android:id="@+id/total_days_with_steps_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/active_weeks_in_a_row_title"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black_color"
+            android:textSize="@dimen/textSubMid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/active_weeks_in_a_row_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
+    </ScrollView>
 
 </android.support.v4.widget.NestedScrollView>

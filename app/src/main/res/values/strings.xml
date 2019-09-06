@@ -5,6 +5,11 @@
     <string name="reset_pwd_title">Email has been sent</string>
     <string name="reset_pwd_text">Please check your email and click the link to reset password</string>
 
+    <string name="submission_confirmed">Submission Confirmed</string>
+    <string name="submission_confirmed_text">
+        Thank you for completing the survey questionnaire!
+    </string>
+
     <string name="login_email_title">Email</string>
     <string name="login_password_title">Password</string>
     <string name="login_btn_title">Login</string>

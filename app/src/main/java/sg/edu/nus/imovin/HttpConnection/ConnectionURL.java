@@ -37,6 +37,13 @@ public class ConnectionURL {
     public static final String REQUEST_GET_USER_STATS_OVERVIEW = "/api/overview/me";
     public static final String REQUEST_GET_USER_CHALLENGE = "/api/challenge/me";
 
+    public static final String REQUEST_GET_ALL_PLANS_NEW = "/api/plans";
+    public static final String REQUEST_CREATE_PLAN_NEW = "/api/plans";
+    public static final String REQUEST_GET_PLAN_NEW = "/api/plans/%s";
+    public static final String REQUEST_UPDATE_PLAN_NEW = "/api/plans/%s";
+    public static final String REQUEST_DELETE_PLAN_NEW = "/api/plans/%s/delete";
+    public static final String REQUEST_SELECT_PLAN_NEW = "/api/plans/%s/select";
+
     public static final String PARAMETER_DAYS = "days";
     public static final String PARAMETER_PASSWORD = "password";
 }

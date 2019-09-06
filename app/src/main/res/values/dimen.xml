@@ -7,4 +7,5 @@
 
     <dimen name="textMid">40sp</dimen>
     <dimen name="textSubMid">25sp</dimen>
+    <dimen name="textSubSmall">20sp</dimen>
 </resources>

@@ -51,12 +51,14 @@ import sg.edu.nus.imovin.Retrofit.Request.UploadQuestionRequest;
 import sg.edu.nus.imovin.Retrofit.Response.QuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UploadQuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
+import sg.edu.nus.imovin.System.Config;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 import sg.edu.nus.imovin.utils.ViewFindUtils;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
+
 
 public class QuestionnaireActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener{
     public static final String MCQ = "MCQ";
@@ -82,7 +84,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     private int currentFragmentIndex;
     private int currentSection;
     private List<SectionData> sectionDataList;
-    private HashMap<Integer, AnswerData> answerDataHashMap;
+    private HashMap<Integer, List<AnswerData>> answerDataHashMap;
 
     private Stack<Integer> questionOrder;
 
@@ -146,10 +148,14 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
         vp.addOnPageChangeListener(this);
 
-        List<QuestionData> questionDataList = new ArrayList<>();
+        List<List<QuestionData>> questionDataList = new ArrayList<>();
 
         for(SectionData sectionData : sectionDataList){
-            questionDataList.addAll(sectionData.getQuestions());
+            if(sectionData.getName().equals(Config.FIRST_SECTION_NAME)){
+                questionDataList.addAll(splitQuestionData(sectionData.getQuestions(), 1));
+            }else{
+                questionDataList.addAll(splitQuestionData(sectionData.getQuestions(), Config.RATING_QUESTION_NUM_PER_PAGE));
+            }
         }
 
         prevBtn.setEnabled(false);
@@ -159,7 +165,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         SetSectionQuestion(questionDataList);
     }
 
-    private void SetSectionQuestion(List<QuestionData> questionDataList){
+    private void SetSectionQuestion(List<List<QuestionData>> questionDataMatrix){
         ClearPreviousFragments();
 
         List<String> titleList = new ArrayList<>();
@@ -169,24 +175,24 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             mFragments.clear();
         }
 
-        for(QuestionData questionData : questionDataList){
-            titleList.add(questionData.getName());
-            switch (questionData.getQuestion_type()){
+        for(List<QuestionData> questionDataList : questionDataMatrix){
+            titleList.add(questionDataList.get(0).getName());
+            switch (questionDataList.get(0).getQuestion_type()){
                 case TEXT:
-                    mFragments.add(TextQFragment.getInstance(questionData));
+                    mFragments.add(TextQFragment.getInstance(questionDataList.get(0)));
                     break;
                 case NUM:
-                    mFragments.add(TextQFragment.getInstance(questionData));
+                    mFragments.add(TextQFragment.getInstance(questionDataList.get(0)));
                     break;
                 case MCQ:
-                    if(questionData.getIs_custom()) {
-                        mFragments.add(MCQFragment.getInstance(questionData));
+                    if(questionDataList.get(0).getIs_custom()) {
+                        mFragments.add(MCQFragment.getInstance(questionDataList.get(0)));
                     }else{
-                        mFragments.add(RateFragment.getInstance(questionData));
+                        mFragments.add(RateFragment.getInstance(questionDataList));
                     }
                     break;
                 case MCQ_O:
-                    mFragments.add(MCQFragment.getInstance(questionData));
+                    mFragments.add(MCQFragment.getInstance(questionDataList.get(0)));
                     break;
             }
         }
@@ -204,18 +210,44 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         int currentProgress = 0;
         int totalQuestion = 0;
         for(SectionData sectionData : sectionDataList){
-            if(title.equals("") && index < sectionData.getQuestions().size()){
+            int totalPage = sectionData.getQuestions().size();
+            if(!sectionData.getName().equals(Config.FIRST_SECTION_NAME)){
+                if(totalPage % Config.RATING_QUESTION_NUM_PER_PAGE > 0){
+                    totalPage = totalPage/Config.RATING_QUESTION_NUM_PER_PAGE + 1;
+                }else{
+                    totalPage = totalPage/Config.RATING_QUESTION_NUM_PER_PAGE;
+                }
+            }
+
+            if(title.equals("") && index < totalPage){
                 title = sectionData.getDisplay_name();
                 currentProgress = index + 1;
-                totalQuestion = sectionData.getQuestions().size();
+                totalQuestion = totalPage;
             }
             else{
-                index -= sectionData.getQuestions().size();
+                index -= totalPage;
             }
         }
         navigator_title.setText(title);
 
         navigator_right_text.setText(currentProgress + "/" + totalQuestion);
+    }
+
+    private List<List<QuestionData>> splitQuestionData(List<QuestionData> questionDataList, int splitNum){
+        List<List<QuestionData>> questionDataSplitList = new ArrayList<>();
+
+        int totalSize = questionDataList.size();
+        int count = totalSize / splitNum;
+        for(int i=0; i<count; i++){
+            List<QuestionData> subQuestionDataList = questionDataList.subList(i*splitNum, (i+1)*splitNum);
+            questionDataSplitList.add(subQuestionDataList);
+        }
+        if(totalSize % splitNum > 0){
+            List<QuestionData> subQuestionDataList = questionDataList.subList(totalSize - totalSize % splitNum, totalSize);
+            questionDataSplitList.add(subQuestionDataList);
+        }
+
+        return questionDataSplitList;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -227,16 +259,16 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.nextBtn:
-                AnswerData answerData = mFragments.get(currentFragmentIndex).getAnswer();
+                List<AnswerData> answerDataList = mFragments.get(currentFragmentIndex).getAnswer();
 
                 if(answerDataHashMap.containsKey(currentFragmentIndex)) {
-                    answerDataHashMap.replace(currentFragmentIndex, answerData);
+                    answerDataHashMap.replace(currentFragmentIndex, answerDataList);
                 }else{
-                    answerDataHashMap.put(currentFragmentIndex, answerData);
+                    answerDataHashMap.put(currentFragmentIndex, answerDataList);
                 }
 
-                if(mFragments.get(currentFragmentIndex).getQuestionData().getIs_skippable()){
-                    if(answerData.getAnswer().equals("0")){
+                if(mFragments.get(currentFragmentIndex).getQuestionData().get(0).getIs_skippable()){
+                    if(answerDataList.get(0).getAnswer().equals("0")){
                         if(currentFragmentIndex < mFragments.size() - 1) {
                             questionOrder.push(vp.getCurrentItem());
                             vp.setCurrentItem(vp.getCurrentItem() + 1);
@@ -268,12 +300,12 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                 break;
             case R.id.prevBtn:
                 if(nextBtn.isEnabled()) {
-                    AnswerData answerData2 = mFragments.get(currentFragmentIndex).getAnswer();
+                    List<AnswerData> answerDataList2 = mFragments.get(currentFragmentIndex).getAnswer();
 
                     if (answerDataHashMap.containsKey(currentFragmentIndex)) {
-                        answerDataHashMap.replace(currentFragmentIndex, answerData2);
+                        answerDataHashMap.replace(currentFragmentIndex, answerDataList2);
                     } else {
-                        answerDataHashMap.put(currentFragmentIndex, answerData2);
+                        answerDataHashMap.put(currentFragmentIndex, answerDataList2);
                     }
                 }
 
@@ -286,11 +318,20 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                 int index = vp.getCurrentItem();
                 SectionData currentSectionData = null;
                 for(SectionData sectionData : sectionDataList){
-                    if(currentSectionData == null && index < sectionData.getQuestions().size()){
+                    int totalPage = sectionData.getQuestions().size();
+                    if(!sectionData.getName().equals(Config.FIRST_SECTION_NAME)){
+                        if(totalPage % Config.RATING_QUESTION_NUM_PER_PAGE > 0){
+                            totalPage = totalPage/Config.RATING_QUESTION_NUM_PER_PAGE + 1;
+                        }else{
+                            totalPage = totalPage/Config.RATING_QUESTION_NUM_PER_PAGE;
+                        }
+                    }
+
+                    if(currentSectionData == null && index < totalPage){
                         currentSectionData = sectionData;
                     }
                     else{
-                        index -= sectionData.getQuestions().size();
+                        index -= totalPage;
                     }
                 }
                 openDialogBox(currentSectionData.getDisplay_name(), currentSectionData.getInstruction());
@@ -320,8 +361,12 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
         ImovinService service = retrofit.create(ImovinService.class);
 
-        Collection<AnswerData> values = answerDataHashMap.values();
-        List<AnswerData> answerDataList = new ArrayList<>(values);
+        Collection<List<AnswerData>> values = answerDataHashMap.values();
+        List<List<AnswerData>> answerDataMatrix = new ArrayList<>(values);
+        List<AnswerData> answerDataList = new ArrayList<>();
+        for(List<AnswerData> answerDataSubList : answerDataMatrix){
+            answerDataList.addAll(answerDataSubList);
+        }
 
         UploadQuestionRequest uploadQuestionRequest = new UploadQuestionRequest(answerDataList);
 
@@ -403,9 +448,12 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         currentFragmentIndex = i;
 
         QuesFragment quesFragment = mFragments.get(i);
-        QuestionData questionData = quesFragment.getQuestionData();
+        List<QuestionData> questionDataList = quesFragment.getQuestionData();
 
-        if(questionData.getQuestion_type().equals(MCQ) && !questionData.getIs_custom()){
+
+        if(questionDataList.size() > 0
+                && questionDataList.get(0).getQuestion_type().equals(MCQ)
+                && !questionDataList.get(0).getIs_custom()){
             nextBtn.setEnabled(true);
         }else {
             if(answerDataHashMap.containsKey(i)) {

@@ -147,6 +147,9 @@ public interface ImovinService {
             @Url String url
     );
 
+    //Plans New
+
+
 
     //Social Feed
     @POST(ConnectionURL.REQUEST_CREATE_SOCIAL_POST)

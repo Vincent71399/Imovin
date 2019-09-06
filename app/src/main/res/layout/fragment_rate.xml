@@ -6,61 +6,299 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="sg.edu.nus.imovin.Fragments.RateFragment">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/question"
-            style="@style/questionnaire_text" />
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2">
+            android:padding="20dp"
+            android:gravity="center">
 
-            <TextView
-                android:text="@string/very_disagree"
-                android:gravity="start"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/container1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/question1"
+                    style="@style/questionnaire_text" />
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:text="@string/very_disagree"
+                        android:gravity="start"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
 
 
-            <TextView
-                android:text="@string/very_agree"
-                android:gravity="end"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
+                    <TextView
+                        android:text="@string/very_agree"
+                        android:gravity="end"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <com.warkiz.widget.IndicatorStayLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <com.warkiz.widget.IndicatorSeekBar
+                        android:id="@+id/rate_input1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isb_indicator_color="@color/theme_purple"
+                        app:isb_tick_texts_color="@color/theme_purple"
+                        app:isb_max="5"
+                        app:isb_min="1"
+                        app:isb_progress="3"
+                        app:isb_show_tick_marks_type="oval"
+                        app:isb_show_tick_texts="true"
+                        app:isb_ticks_count="5" />
+
+                </com.warkiz.widget.IndicatorStayLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/question2"
+                    style="@style/questionnaire_text" />
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:text="@string/very_disagree"
+                        android:gravity="start"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+
+                    <TextView
+                        android:text="@string/very_agree"
+                        android:gravity="end"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <com.warkiz.widget.IndicatorStayLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <com.warkiz.widget.IndicatorSeekBar
+                        android:id="@+id/rate_input2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isb_indicator_color="@color/theme_purple"
+                        app:isb_tick_texts_color="@color/theme_purple"
+                        app:isb_max="5"
+                        app:isb_min="1"
+                        app:isb_progress="3"
+                        app:isb_show_tick_marks_type="oval"
+                        app:isb_show_tick_texts="true"
+                        app:isb_ticks_count="5" />
+
+                </com.warkiz.widget.IndicatorStayLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/question3"
+                    style="@style/questionnaire_text" />
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:text="@string/very_disagree"
+                        android:gravity="start"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+
+                    <TextView
+                        android:text="@string/very_agree"
+                        android:gravity="end"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <com.warkiz.widget.IndicatorStayLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <com.warkiz.widget.IndicatorSeekBar
+                        android:id="@+id/rate_input3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isb_indicator_color="@color/theme_purple"
+                        app:isb_tick_texts_color="@color/theme_purple"
+                        app:isb_max="5"
+                        app:isb_min="1"
+                        app:isb_progress="3"
+                        app:isb_show_tick_marks_type="oval"
+                        app:isb_show_tick_texts="true"
+                        app:isb_ticks_count="5" />
+
+                </com.warkiz.widget.IndicatorStayLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/question4"
+                    style="@style/questionnaire_text" />
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:text="@string/very_disagree"
+                        android:gravity="start"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+
+                    <TextView
+                        android:text="@string/very_agree"
+                        android:gravity="end"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <com.warkiz.widget.IndicatorStayLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <com.warkiz.widget.IndicatorSeekBar
+                        android:id="@+id/rate_input4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isb_indicator_color="@color/theme_purple"
+                        app:isb_tick_texts_color="@color/theme_purple"
+                        app:isb_max="5"
+                        app:isb_min="1"
+                        app:isb_progress="3"
+                        app:isb_show_tick_marks_type="oval"
+                        app:isb_show_tick_texts="true"
+                        app:isb_ticks_count="5" />
+
+                </com.warkiz.widget.IndicatorStayLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/question5"
+                    style="@style/questionnaire_text" />
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:text="@string/very_disagree"
+                        android:gravity="start"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+
+                    <TextView
+                        android:text="@string/very_agree"
+                        android:gravity="end"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <com.warkiz.widget.IndicatorStayLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <com.warkiz.widget.IndicatorSeekBar
+                        android:id="@+id/rate_input5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isb_indicator_color="@color/theme_purple"
+                        app:isb_tick_texts_color="@color/theme_purple"
+                        app:isb_max="5"
+                        app:isb_min="1"
+                        app:isb_progress="3"
+                        app:isb_show_tick_marks_type="oval"
+                        app:isb_show_tick_texts="true"
+                        app:isb_ticks_count="5" />
+
+                </com.warkiz.widget.IndicatorStayLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <com.warkiz.widget.IndicatorStayLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp">
-
-            <com.warkiz.widget.IndicatorSeekBar
-                android:id="@+id/rate_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:isb_indicator_color="@color/theme_purple"
-                app:isb_tick_texts_color="@color/theme_purple"
-                app:isb_max="5"
-                app:isb_min="1"
-                app:isb_progress="3"
-                app:isb_show_tick_marks_type="oval"
-                app:isb_show_tick_texts="true"
-                app:isb_ticks_count="5" />
-
-        </com.warkiz.widget.IndicatorStayLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

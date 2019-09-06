@@ -19,5 +19,9 @@
     <color name="wheat_color">#FFF59F</color>
 
     <color name="theme_purple">#800080</color>
+    <color name="tier_0">#9FC986</color>
+    <color name="tier_1">#E1A777</color>
+    <color name="tier_2">#679799</color>
+    <color name="tier_3">#695870</color>
 
 </resources>

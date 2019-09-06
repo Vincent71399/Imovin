@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -88,12 +89,14 @@ public class MCQFragment extends QuesFragment implements RadioGroup.OnCheckedCha
     }
 
     @Override
-    public QuestionData getQuestionData() {
-        return questionData;
+    public List<QuestionData> getQuestionData() {
+        List<QuestionData> questionDataList = new ArrayList<>();
+        questionDataList.add(questionData);
+        return questionDataList;
     }
 
     @Override
-    public AnswerData getAnswer() {
+    public List<AnswerData> getAnswer() {
         HideKeyboardAll();
 
         AnswerData answerData = new AnswerData();
@@ -105,11 +108,15 @@ public class MCQFragment extends QuesFragment implements RadioGroup.OnCheckedCha
 
         hasAnswer = true;
 
-        return answerData;
+        List<AnswerData> answerDataList = new ArrayList<>();
+        answerDataList.add(answerData);
+
+        return answerDataList;
     }
 
     @Override
-    public void setAnswer(AnswerData answerData) {
+    public void setAnswer(List<AnswerData> answerDataList) {
+        AnswerData answerData = answerDataList.get(0);
         int count = mcq.getChildCount();
         for (int i=0;i<count;i++) {
             View view = mcq.getChildAt(i);
