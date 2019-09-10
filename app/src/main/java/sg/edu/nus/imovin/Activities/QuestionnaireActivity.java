@@ -275,7 +275,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                             SetTitleAndProgress(vp.getCurrentItem());
                         }
                         else{
-                            SubmitQuestionNaire();
+                            ConfirmSubmit();
                         }
                     }else{
                         if(currentFragmentIndex < mFragments.size() - 2) {
@@ -284,7 +284,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                             SetTitleAndProgress(vp.getCurrentItem());
                         }
                         else{
-                            SubmitQuestionNaire();
+                            ConfirmSubmit();
                         }
                     }
                 }else{
@@ -294,7 +294,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                         SetTitleAndProgress(vp.getCurrentItem());
                     }
                     else{
-                        SubmitQuestionNaire();
+                        ConfirmSubmit();
                     }
                 }
                 break;
@@ -350,6 +350,12 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             }
         });
         builderSingle.show();
+    }
+
+    private void ConfirmSubmit(){
+        Intent intent = new Intent();
+        intent.setClass(this, QuestionnaireSummaryActivity.class);
+        startActivityForResult(intent, IntentConstants.QUESTIONNAIRE_CONFIRM);
     }
 
     private void SubmitQuestionNaire(){
@@ -477,6 +483,17 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onPageScrollStateChanged(int i) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case IntentConstants.QUESTIONNAIRE_CONFIRM:
+                if(resultCode == RESULT_OK) {
+                    SubmitQuestionNaire();
+                }
+                break;
+        }
     }
 
 }

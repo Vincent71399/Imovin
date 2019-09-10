@@ -1,6 +1,8 @@
 package sg.edu.nus.imovin.Retrofit.Object;
 
-public class MedalData {
+import java.io.Serializable;
+
+public class MedalData implements Serializable {
     private String _id;
     private Integer category;
     private String description;

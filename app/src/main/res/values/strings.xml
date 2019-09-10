@@ -5,11 +5,6 @@
     <string name="reset_pwd_title">Email has been sent</string>
     <string name="reset_pwd_text">Please check your email and click the link to reset password</string>
 
-    <string name="submission_confirmed">Submission Confirmed</string>
-    <string name="submission_confirmed_text">
-        Thank you for completing the survey questionnaire!
-    </string>
-
     <string name="login_email_title">Email</string>
     <string name="login_password_title">Password</string>
     <string name="login_btn_title">Login</string>
@@ -24,6 +19,7 @@
     <string name="disagree">Disagree</string>
     <string name="next">Next</string>
     <string name="prev">Prev</string>
+    <string name="continue_text">Continue</string>
 
     <string name="very_disagree">Very Disagree</string>
     <string name="very_agree">Very Agree</string>
@@ -143,6 +139,17 @@
         6. I will be responsible for providing due care and security for any loaned devices(if applicable) until it is returned to the research team at the end of this study.
         If I damage/misplace the wireless activity tracker, a replace tracker will be issued to me and I will not receive reimbursement.
         I understand that for repeat damages/misplacements, I will be dropped from the study and I will forfeit all reimbursements.
+    </string>
+
+    <string name="submission_confirmed">Submission Confirmed</string>
+    <string name="submission_confirmed_text_1">
+        Thank you for completing the survey questionnaire!
+    </string>
+    <string name="submission_confirmed_text_2">
+        Kindly not that the features of iMovin\' may change depanding on your submitted reponse to this questionnaire.
+    </string>
+    <string name="submission_confirmed_text_3">
+        Let\'s move on to iMovin!
     </string>
 
 </resources>

@@ -154,6 +154,13 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="QS_content">
+        <item name="android:textColor">@color/black_color</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
     <style name="questionnaire_container">
         <item name="android:orientation">vertical</item>
         <item name="android:gravity">start</item>

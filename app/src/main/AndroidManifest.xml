@@ -44,7 +44,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.ChallengePopupActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" />
         <activity
             android:name=".Activities.ForumNewPostActivity"

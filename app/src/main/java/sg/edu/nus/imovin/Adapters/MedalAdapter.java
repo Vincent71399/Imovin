@@ -153,8 +153,6 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
         if(medalData.getObtained_count() <= 0){
             holder.medal_count.setVisibility(View.GONE);
             holder.medal_img.setColorFilter(colorFilter);
-        }else if(medalData.getObtained_count() == 1){
-            holder.medal_count.setVisibility(View.GONE);
         }else{
             holder.medal_count.setVisibility(View.VISIBLE);
             holder.medal_count.setText(String.valueOf(medalData.getObtained_count()));

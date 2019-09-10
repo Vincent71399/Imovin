@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,9 +22,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import sg.edu.nus.imovin.Activities.ChallengePopupActivity;
 import sg.edu.nus.imovin.Adapters.MedalAdapter;
 import sg.edu.nus.imovin.Adapters.StarAdapter;
 import sg.edu.nus.imovin.Common.CommonFunc;
+import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.MedalData;
 import sg.edu.nus.imovin.Retrofit.Response.ChallengeResponse;
@@ -34,6 +37,7 @@ import sg.edu.nus.imovin.System.LogConstants;
 import sg.edu.nus.imovin.System.ValueConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
+import static sg.edu.nus.imovin.System.IntentConstants.MEDAL_DATA;
 
 public class ChallengeFragment extends BaseFragment {
     private View rootView;
@@ -55,6 +59,12 @@ public class ChallengeFragment extends BaseFragment {
     @BindView(R.id.active_weeks_in_a_row_title) TextView active_weeks_in_a_row_title;
     @BindView(R.id.active_weeks_in_a_row_list) RecyclerView active_weeks_in_a_row_list;
 
+    private List<MedalData> dailyStepList;
+    private List<MedalData> activeDaysForTheWeekList;
+    private List<MedalData> dailyTotalDistanceList;
+    private List<MedalData> weeklyExerciseDurationList;
+    private List<MedalData> totalDaysWithStepsList;
+    private List<MedalData> activeWeeksInARowList;
 
     public static ChallengeFragment getInstance() {
         ChallengeFragment challengeFragment = new ChallengeFragment();
@@ -131,36 +141,108 @@ public class ChallengeFragment extends BaseFragment {
             dailyStepList.sort(compareByTier);
             daily_steps_title.setText(dailyStepList.get(0).getName());
             setMedalList(daily_step_list, dailyStepList);
+
+            this.dailyStepList = dailyStepList;
+            daily_step_list.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    MedalData medalData = ChallengeFragment.this.dailyStepList.get(position);
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), ChallengePopupActivity.class);
+                    intent.putExtra(MEDAL_DATA, medalData);
+                    startActivity(intent);
+                }
+            }));
         }
 
         if(activeDaysForTheWeekList.size() > 0) {
             activeDaysForTheWeekList.sort(compareByTier);
             active_days_for_the_week_title.setText(activeDaysForTheWeekList.get(0).getName());
             setMedalList(active_days_for_the_week_list, activeDaysForTheWeekList);
+
+            this.activeDaysForTheWeekList = activeDaysForTheWeekList;
+            active_days_for_the_week_list.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    MedalData medalData = ChallengeFragment.this.activeDaysForTheWeekList.get(position);
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), ChallengePopupActivity.class);
+                    intent.putExtra(MEDAL_DATA, medalData);
+                    startActivity(intent);
+                }
+            }));
         }
 
         if(dailyTotalDistanceList.size() > 0){
             dailyTotalDistanceList.sort(compareByTier);
             daily_total_distance_title.setText(dailyTotalDistanceList.get(0).getName());
             setMedalList(daily_total_distance_list, dailyTotalDistanceList);
+
+            this.dailyTotalDistanceList = dailyTotalDistanceList;
+            daily_total_distance_list.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    MedalData medalData = ChallengeFragment.this.dailyTotalDistanceList.get(position);
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), ChallengePopupActivity.class);
+                    intent.putExtra(MEDAL_DATA, medalData);
+                    startActivity(intent);
+                }
+            }));
         }
 
         if(weeklyExerciseDurationList.size() > 0){
             weeklyExerciseDurationList.sort(compareByTier);
             weekly_exercise_duration_title.setText(weeklyExerciseDurationList.get(0).getName());
             setMedalList(weekly_exercise_duration_list, weeklyExerciseDurationList);
+
+            this.weeklyExerciseDurationList = weeklyExerciseDurationList;
+            weekly_exercise_duration_list.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    MedalData medalData = ChallengeFragment.this.weeklyExerciseDurationList.get(position);
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), ChallengePopupActivity.class);
+                    intent.putExtra(MEDAL_DATA, medalData);
+                    startActivity(intent);
+                }
+            }));
         }
 
         if(totalDaysWithStepsList.size() > 0){
             totalDaysWithStepsList.sort(compareByTier);
             total_days_with_steps_title.setText(totalDaysWithStepsList.get(0).getName());
             setMedalList(total_days_with_steps_list, totalDaysWithStepsList);
+
+            this.totalDaysWithStepsList = totalDaysWithStepsList;
+            total_days_with_steps_list.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    MedalData medalData = ChallengeFragment.this.totalDaysWithStepsList.get(position);
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), ChallengePopupActivity.class);
+                    intent.putExtra(MEDAL_DATA, medalData);
+                    startActivity(intent);
+                }
+            }));
         }
 
         if(activeWeeksInARowList.size() > 0){
             activeWeeksInARowList.sort(compareByTier);
             active_weeks_in_a_row_title.setText(activeWeeksInARowList.get(0).getName());
             setMedalList(active_weeks_in_a_row_list, activeWeeksInARowList);
+
+            this.activeWeeksInARowList = activeWeeksInARowList;
+            active_weeks_in_a_row_list.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    MedalData medalData = ChallengeFragment.this.activeWeeksInARowList.get(position);
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), ChallengePopupActivity.class);
+                    intent.putExtra(MEDAL_DATA, medalData);
+                    startActivity(intent);
+                }
+            }));
         }
     }
 
