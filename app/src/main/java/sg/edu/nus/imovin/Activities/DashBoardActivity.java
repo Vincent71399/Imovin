@@ -1,7 +1,10 @@
 package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,9 +12,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.flyco.tablayout.CommonTabLayout;
@@ -29,20 +33,20 @@ import sg.edu.nus.imovin.Event.ForumEvent;
 import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.System.BaseActivity;
-import sg.edu.nus.imovin.System.BaseFragment;
 import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.FuncBlockConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
+import sg.edu.nus.imovin.System.SystemConstant;
 import sg.edu.nus.imovin.utils.TabEntity;
 import sg.edu.nus.imovin.utils.ViewFindUtils;
 
 public class DashBoardActivity extends BaseActivity implements View.OnClickListener {
 
     private View customActionBar;
-    @BindView(R.id.navigator_middle_title) TextView navigator_middle_title;
-    @BindView(R.id.navigator_right) RelativeLayout navigator_right;
-    @BindView(R.id.navigator_right_text) TextView navigator_right_text;
+    @BindView(R.id.navigator_title) TextView navigator_title;
+    @BindView(R.id.navigator_help) TextView navigator_help;
+    @BindView(R.id.navigator_logout) ImageView navigator_logout;
 
     private View decorView;
     private CommonTabLayout sub_tab_layout;
@@ -72,7 +76,7 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
 
     private void SetActionBar(){
         ActionBar actionBar = getSupportActionBar();
-        customActionBar = getLayoutInflater().inflate(R.layout.main_navigator, null);
+        customActionBar = getLayoutInflater().inflate(R.layout.main_navigator_new, null);
         ButterKnife.bind(this, customActionBar);
 
         if(actionBar != null){
@@ -92,7 +96,8 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void SetFunction(){
-        navigator_right.setOnClickListener(this);
+        navigator_help.setOnClickListener(this);
+        navigator_logout.setOnClickListener(this);
         int profile = ImovinApplication.getUserInfoResponse().getProfile();
         mTitles = FuncBlockConstants.getFunctionBlockTitles_by_profile(profile);
         mIconUnselectIds = FuncBlockConstants.getFunctionBlockUnselectIcons_by_profile(profile);
@@ -130,7 +135,7 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         sub_tab_layout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-                navigator_middle_title.setText(mTitles[position]);
+                navigator_title.setText(mTitles[position]);
                 SetTopNavFunc(mTitles[position]);
                 vp.setCurrentItem(position);
                 currentPagePosition = position;
@@ -151,7 +156,7 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onPageSelected(int position) {
                 sub_tab_layout.setCurrentTab(position);
-                navigator_middle_title.setText(mTitles[position]);
+                navigator_title.setText(mTitles[position]);
                 SetTopNavFunc(mTitles[position]);
                 currentPagePosition = position;
             }
@@ -162,15 +167,27 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
             }
         });
 
-        navigator_middle_title.setText(mTitles[defaultPagePosition]);
+        navigator_title.setText(mTitles[defaultPagePosition]);
         SetTopNavFunc(mTitles[defaultPagePosition]);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.navigator_right:
-                navRightClickFunc(currentPagePosition);
+            case R.id.navigator_help:
+                helpIconFunc(currentPagePosition);
+                break;
+            case R.id.navigator_logout:
+                SharedPreferences preferences = getApplicationContext().getSharedPreferences(SystemConstant.SHARE_PREFERENCE_LOCATION, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.remove(SystemConstant.USERNAME);
+                editor.remove(SystemConstant.PASSWORD);
+                editor.apply();
+
+                Intent intent = new Intent();
+                intent.setClass(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }
@@ -178,57 +195,79 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
     private void SetTopNavFunc(String title){
         switch (title){
             case FuncBlockConstants.HOME:
-                navigator_right.setEnabled(false);
-                navigator_right_text.setVisibility(View.INVISIBLE);
+//                navigator_right.setEnabled(false);
+//                navigator_right_text.setVisibility(View.INVISIBLE);
                 break;
             case FuncBlockConstants.LIBRARY:
-                navigator_right.setEnabled(false);
-                navigator_right_text.setVisibility(View.INVISIBLE);
+//                navigator_right.setEnabled(false);
+//                navigator_right_text.setVisibility(View.INVISIBLE);
                 break;
             case FuncBlockConstants.FORUM:
-                navigator_right.setEnabled(true);
-                navigator_right_text.setVisibility(View.VISIBLE);
-                navigator_right_text.setText("+");
+//                navigator_right.setEnabled(true);
+//                navigator_right_text.setVisibility(View.VISIBLE);
+//                navigator_right_text.setText("+");
                 break;
             case FuncBlockConstants.GOAL:
-                navigator_right.setEnabled(true);
-                navigator_right_text.setVisibility(View.VISIBLE);
-                navigator_right_text.setText("+");
+//                navigator_right.setEnabled(true);
+//                navigator_right_text.setVisibility(View.VISIBLE);
+//                navigator_right_text.setText("+");
                 break;
             case FuncBlockConstants.MONITOR:
-                navigator_right.setEnabled(false);
-                navigator_right_text.setVisibility(View.INVISIBLE);
+//                navigator_right.setEnabled(false);
+//                navigator_right_text.setVisibility(View.INVISIBLE);
                 break;
             case FuncBlockConstants.SOCIAL:
-                navigator_right.setEnabled(true);
-                navigator_right_text.setVisibility(View.VISIBLE);
-                navigator_right_text.setText("+");
+//                navigator_right.setEnabled(true);
+//                navigator_right_text.setVisibility(View.VISIBLE);
+//                navigator_right_text.setText("+");
                 break;
             case FuncBlockConstants.CHALLENGE:
-                navigator_right.setEnabled(false);
-                navigator_right_text.setVisibility(View.INVISIBLE);
+//                navigator_right.setEnabled(false);
+//                navigator_right_text.setVisibility(View.INVISIBLE);
                 break;
         }
     }
 
-    private void navRightClickFunc(int position){
+    private void helpIconFunc(int position){
+        String help_text = "";
         switch (mTitles[position]){
-            case FuncBlockConstants.FORUM:
-                Intent intentForum = new Intent();
-                intentForum.setClass(this, ForumNewPostActivity.class);
-                startActivityForResult(intentForum, IntentConstants.FORUM_NEW_POST);
+            case FuncBlockConstants.HOME:
+                help_text = getString(R.string.help_home);
                 break;
-            case FuncBlockConstants.GOAL:
-                Intent intentGoal = new Intent();
-                intentGoal.setClass(this, AddPlanActivity.class);
-                startActivityForResult(intentGoal, IntentConstants.GOAL_NEW_PLAN);
+            case FuncBlockConstants.CHALLENGE:
+                help_text = getString(R.string.help_challenge);
                 break;
             case FuncBlockConstants.SOCIAL:
-                Intent newSocialIntent = new Intent();
-                newSocialIntent.setClass(this, SocialNewPostActivity.class);
-                startActivityForResult(newSocialIntent, IntentConstants.SOCIAL_NEW_POST);
+                help_text = getString(R.string.help_social_feed);
+                break;
+            case FuncBlockConstants.LIBRARY:
+                help_text = getString(R.string.help_library);
+                break;
+            case FuncBlockConstants.GOAL:
+                help_text = getString(R.string.help_goal_plan);
+                break;
+            case FuncBlockConstants.MONITOR:
+                help_text = getString(R.string.help_monitor_plan);
+                break;
+            case FuncBlockConstants.FORUM:
+                help_text = getString(R.string.help_forum);
                 break;
         }
+
+        openDialogBox(mTitles[position], help_text);
+    }
+
+    private void openDialogBox(String title, String text){
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        builderSingle.setTitle(title);
+        builderSingle.setMessage(text);
+        builderSingle.setNeutralButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builderSingle.show();
     }
 
     private void ClearPreviousFragments(){

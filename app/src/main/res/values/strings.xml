@@ -152,4 +152,45 @@
         Let\'s move on to iMovin!
     </string>
 
+    <string name="help_home">
+        Use the dashboard to monitor your physical activity over time. Your daily statistics are shown on
+        the top portion of the page. The graph in the middle shows your physical activity for the past
+        week. A bar in the graph that is filled indicates that you have met your set plan for the day. Toggle
+        between data for steps, calories and duration using the buttons below the graph. Check out the
+        other functions of iMovin below.
+    </string>
+
+    <string name="help_challenge">
+        Earn points and badges for moving! You can receive badges for achieving specific milestones such
+        as steps or duration. Click on each badge to see its details such as the number of points it is worth
+        and the number of times you have earned it. Each challenge lasts for 30 days. You will be
+        participating in the challenge with other users, so try to aim for first place!
+    </string>
+
+    <string name="help_social_feed">
+        Interact with other users! Use the social feed to upload status and photos about your physical
+        activity. Share them with other users, like them or leave a comment on their posts.
+    </string>
+
+    <string name="help_library">
+        Check out new articles about exercising by clicking on each article. The articles will change
+        regularly, so come back for new articles!
+    </string>
+
+    <string name="help_goal_plan">
+        Create an exercise plan for your daily steps! Either set a default plan provided by iMovin, or create
+        a new personal plan by pressing ‘New Custom’. You can modify or delete all custom plans.
+    </string>
+
+    <string name="help_monitor_plan">
+        Check out how you are faring in your exercise plans for your daily steps! Each day in the calendar
+        shows how close you are to completing your set plan. Click on each day to see more details. You
+        can also change the plan you are monitoring by pressing ‘Change Plan’.
+    </string>
+
+    <string name="help_forum">
+        Interact with other users via the Forum! Start a new forum thread, like threads posted by other
+        users or post comments on the threads.
+    </string>
+
 </resources>
