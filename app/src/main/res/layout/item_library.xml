@@ -16,6 +16,10 @@
             style="@style/LinkHeaderStyle" />
 
         <TextView
+            android:id="@+id/link_subtitle"
+            style="@style/LinkInfoStyle" />
+
+        <TextView
             android:id="@+id/link_info"
             style="@style/LinkInfoStyle" />
 

@@ -71,6 +71,7 @@ public class LibraryFragment extends BaseFragment {
         for(ArticleData articleData : articleDataList){
             LibraryData libraryData = new LibraryData(
                     articleData.getTitle(),
+                    articleData.getSubtitle(),
                     articleData.getSource(),
                     String.valueOf(articleData.getYear()),
                     articleData.getPicture_url(),
@@ -105,21 +106,17 @@ public class LibraryFragment extends BaseFragment {
 
         Call<ArticleResponse> call = service.getArticles();
 
-        ShowConnectIndicator();
-
         call.enqueue(new Callback<ArticleResponse>() {
             @Override
             public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
                 try {
                     ArticleResponse articleResponse = response.body();
                     SetupData(articleResponse.get_items());
-                    HideConnectIndicator();
 
                 }catch (Exception e){
                     e.printStackTrace();
                     Log.d(LogConstants.LogTag, "Exception LibraryFragment : " + e.toString());
                     Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
-                    HideConnectIndicator();
                 }
             }
 
@@ -127,7 +124,6 @@ public class LibraryFragment extends BaseFragment {
             public void onFailure(Call<ArticleResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure LibraryFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
-                HideConnectIndicator();
             }
         });
     }

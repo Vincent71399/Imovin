@@ -10,6 +10,7 @@ public class ArticleData {
     private String picture_url;
     private String source;
     private String title;
+    private String subtitle;
     private String updated_at;
     private String url;
     private Integer year;
@@ -68,6 +69,14 @@ public class ArticleData {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 
     public String getUpdated_at() {

@@ -30,6 +30,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
     public final static class LibraryData_ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout link_container;
         TextView link_header;
+        TextView link_subtitle;
         TextView link_info;
         ImageView link_pic;
 
@@ -37,6 +38,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
             super(itemView);
             link_container = itemView.findViewById(R.id.link_container);
             link_header = itemView.findViewById(R.id.link_header);
+            link_subtitle = itemView.findViewById(R.id.link_subtitle);
             link_info = itemView.findViewById(R.id.link_info);
             link_pic = itemView.findViewById(R.id.link_pic);
         }
@@ -65,6 +67,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
         LibraryData libraryData = libraryDataList.get(position);
 
         holder.link_header.setText(libraryData.getTitle());
+        holder.link_subtitle.setText(libraryData.getSubtitle());
         holder.link_info.setText(libraryData.getPublish() + " " + libraryData.getYear());
         ImovinApplication.getImageLoader().displayImage(libraryData.getPic_url(), holder.link_pic);
 

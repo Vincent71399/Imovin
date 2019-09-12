@@ -2,13 +2,15 @@ package sg.edu.nus.imovin.Retrofit.Object;
 
 public class LibraryData {
     private String title;
+    private String subtitle;
     private String publish;
     private String year;
     private String pic_url;
     private String link_url;
 
-    public LibraryData(String title, String publish, String year, String pic_url, String link_url) {
+    public LibraryData(String title, String subtitle, String publish, String year, String pic_url, String link_url) {
         this.title = title;
+        this.subtitle = subtitle;
         this.publish = publish;
         this.year = year;
         this.pic_url = pic_url;
@@ -21,6 +23,14 @@ public class LibraryData {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 
     public String getPublish() {
