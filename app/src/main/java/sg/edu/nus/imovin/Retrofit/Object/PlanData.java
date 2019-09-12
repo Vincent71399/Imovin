@@ -1,23 +1,36 @@
 package sg.edu.nus.imovin.Retrofit.Object;
 
 public class PlanData{
-    private String id;
+    private String _id;
+    private String create_at;
+    private Boolean is_selected;
     private String name;
     private Integer planType;
     private Integer target;
-    private String owner;
-    private String createdAt;
+    private String updated_at;
 
-    public PlanData(String name) {
-        this.name = name;
+    public String get_id() {
+        return _id;
     }
 
-    public String getId() {
-        return id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getCreate_at() {
+        return create_at;
+    }
+
+    public void setCreate_at(String create_at) {
+        this.create_at = create_at;
+    }
+
+    public Boolean getIs_selected() {
+        return is_selected;
+    }
+
+    public void setIs_selected(Boolean is_selected) {
+        this.is_selected = is_selected;
     }
 
     public String getName() {
@@ -36,27 +49,19 @@ public class PlanData{
         this.planType = planType;
     }
 
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Integer getTarget() {
         return target;
     }
 
     public void setTarget(Integer target) {
         this.target = target;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 }

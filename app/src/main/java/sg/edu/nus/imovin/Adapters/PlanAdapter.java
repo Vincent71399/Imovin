@@ -48,6 +48,7 @@ public class PlanAdapter extends ExpandableRecyclerAdapter<PlanDataCategory, Pla
 
         public PlanDataCategoryViewHolder(View itemView) {
             super(itemView);
+            itemView.setEnabled(false);
             plan_category_title = itemView.findViewById(R.id.plan_category_title);
         }
 
@@ -104,12 +105,14 @@ public class PlanAdapter extends ExpandableRecyclerAdapter<PlanDataCategory, Pla
             childViewHolder.delete_plan_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new PlanEvent(EventConstants.DELETE, child.getId(), module));
+                    EventBus.getDefault().post(new PlanEvent(EventConstants.DELETE, child.get_id(), module));
                 }
             });
         }
 
-        if(child.getId().equals(ImovinApplication.getUserData().getSelectedPlan())){
+        PlanData planData = ImovinApplication.getPlanData();
+
+        if(child.get_id().equals(planData.get_id())){
             childViewHolder.plan_title.setTypeface(Typeface.DEFAULT_BOLD);
             childViewHolder.plan_title.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
             childViewHolder.delete_plan_btn.setVisibility(View.GONE);
@@ -117,7 +120,7 @@ public class PlanAdapter extends ExpandableRecyclerAdapter<PlanDataCategory, Pla
                 childViewHolder.plan_title.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EventBus.getDefault().post(new PlanEvent(EventConstants.UPDATE, child.getId(), module));
+                        EventBus.getDefault().post(new PlanEvent(EventConstants.UPDATE, child.get_id(), module));
                     }
                 });
             }
@@ -125,7 +128,7 @@ public class PlanAdapter extends ExpandableRecyclerAdapter<PlanDataCategory, Pla
             childViewHolder.plan_title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new PlanEvent(EventConstants.SELECT, child.getId(), module));
+                    EventBus.getDefault().post(new PlanEvent(EventConstants.SELECT, child.get_id(), module));
                 }
             });
         }

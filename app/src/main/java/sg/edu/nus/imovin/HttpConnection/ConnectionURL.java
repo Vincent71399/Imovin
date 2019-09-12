@@ -15,12 +15,12 @@ public class ConnectionURL {
     public static final String REQUEST_GET_ALL_THREADS = "/api/forum/threads";
     public static final String REQUEST_CREATE_COMMENT = "/api/forum/thread/comment";
     public static final String REQUEST_LIKE_COMMENT = "/api/forum/thread/comment/%s/like";
-    public static final String REQUEST_GET_ALL_PLANS = "/api/goal/plans";
-    public static final String REQUEST_CREATE_PLAN = "/api/goal/plan";
-    public static final String REQUEST_GET_PLAN = "/api/goal/plan/%s";
-    public static final String REQUEST_UPDATE_PLAN = "/api/goal/plan/%s";
-    public static final String REQUEST_DELETE_PLAN = "/api/goal/plan/%s";
-    public static final String REQUEST_SELECT_PLAN = "/api/goal/plan/%s/select";
+//    public static final String REQUEST_GET_ALL_PLANS = "/api/goal/plans";
+//    public static final String REQUEST_CREATE_PLAN = "/api/goal/plan";
+//    public static final String REQUEST_GET_PLAN = "/api/goal/plan/%s";
+//    public static final String REQUEST_UPDATE_PLAN = "/api/goal/plan/%s";
+//    public static final String REQUEST_DELETE_PLAN = "/api/goal/plan/%s";
+//    public static final String REQUEST_SELECT_PLAN = "/api/goal/plan/%s/select";
     public static final String REQUEST_CREATE_SOCIAL_POST = "/api/social/post";
     public static final String REQUEST_UPLOAD_IMAGE = "/api/social/post/upload-image";
     public static final String REQUEST_GET_ALL_SOCIAL_POSTS = "/api/social/posts";
@@ -37,12 +37,12 @@ public class ConnectionURL {
     public static final String REQUEST_GET_USER_STATS_OVERVIEW = "/api/overview/me";
     public static final String REQUEST_GET_USER_CHALLENGE = "/api/challenge/me";
 
-    public static final String REQUEST_GET_ALL_PLANS_NEW = "/api/plans";
-    public static final String REQUEST_CREATE_PLAN_NEW = "/api/plans";
-    public static final String REQUEST_GET_PLAN_NEW = "/api/plans/%s";
-    public static final String REQUEST_UPDATE_PLAN_NEW = "/api/plans/%s";
-    public static final String REQUEST_DELETE_PLAN_NEW = "/api/plans/%s/delete";
-    public static final String REQUEST_SELECT_PLAN_NEW = "/api/plans/%s/select";
+    public static final String REQUEST_GET_ALL_PLANS = "/api/plans";
+    public static final String REQUEST_CREATE_PLAN = "/api/plans";
+    public static final String REQUEST_GET_PLAN = "/api/plans/%s";
+    public static final String REQUEST_UPDATE_PLAN = "/api/plans/%s";
+    public static final String REQUEST_DELETE_PLAN = "/api/plans/%s/delete";
+    public static final String REQUEST_SELECT_PLAN = "/api/plans/%s/select";
 
     public static final String PARAMETER_DAYS = "days";
     public static final String PARAMETER_PASSWORD = "password";

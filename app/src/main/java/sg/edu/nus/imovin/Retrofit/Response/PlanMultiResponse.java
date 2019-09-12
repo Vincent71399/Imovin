@@ -2,25 +2,26 @@ package sg.edu.nus.imovin.Retrofit.Response;
 
 import java.util.List;
 
+import sg.edu.nus.imovin.Retrofit.Object.MetaPageData;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 
 public class PlanMultiResponse {
-    private List<PlanData> data;
-    private String message;
+    private List<PlanData> _items;
+    private MetaPageData _meta;
 
-    public List<PlanData> getData() {
-        return data;
+    public List<PlanData> get_items() {
+        return _items;
     }
 
-    public void setData(List<PlanData> data) {
-        this.data = data;
+    public void set_items(List<PlanData> _items) {
+        this._items = _items;
     }
 
-    public String getMessage() {
-        return message;
+    public MetaPageData get_meta() {
+        return _meta;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void set_meta(MetaPageData _meta) {
+        this._meta = _meta;
     }
 }

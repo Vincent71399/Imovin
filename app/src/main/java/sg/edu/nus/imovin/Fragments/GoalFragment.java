@@ -1,14 +1,15 @@
 package sg.edu.nus.imovin.Fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,9 +34,7 @@ import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.Objects.PlanDataCategory;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
-import sg.edu.nus.imovin.Retrofit.Object.UserData;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
-import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
 import sg.edu.nus.imovin.System.EventConstants;
@@ -48,7 +47,9 @@ import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_SELECT_PLAN
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 import static sg.edu.nus.imovin.System.ValueConstants.DefaultPlanType;
 
-public class GoalFragment extends BaseFragment {
+public class GoalFragment extends BaseFragment implements View.OnClickListener {
+    @BindView(R.id.newCustomBtn) Button newCustomBtn;
+
     private View rootView;
     private List<PlanData> planDataDefaultList;
     private List<PlanData> planDataCustomList;
@@ -67,6 +68,7 @@ public class GoalFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_goal, null);
 
         LinkUIById();
+        SetFunction();
         Init();
 
         return rootView;
@@ -91,6 +93,10 @@ public class GoalFragment extends BaseFragment {
         ButterKnife.bind(this, rootView);
     }
 
+    private void SetFunction(){
+        newCustomBtn.setOnClickListener(this);
+    }
+
     private void Init(){
         ImovinApplication.setNeedRefreshPlanGoal(false);
 
@@ -109,7 +115,7 @@ public class GoalFragment extends BaseFragment {
             public void onResponse(Call<PlanMultiResponse> call, Response<PlanMultiResponse> response) {
                 try {
                     PlanMultiResponse planMultiResponse = response.body();
-                    SetupData(planMultiResponse.getData());
+                    SetupData(planMultiResponse.get_items());
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -124,6 +130,17 @@ public class GoalFragment extends BaseFragment {
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.newCustomBtn:
+                Intent intentGoal = new Intent();
+                intentGoal.setClass(getActivity(), AddPlanActivity.class);
+                startActivityForResult(intentGoal, IntentConstants.GOAL_NEW_PLAN);
+                break;
+        }
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
@@ -151,7 +168,7 @@ public class GoalFragment extends BaseFragment {
                         intentGoal.putExtra(AddPlanActivity.Update_Plan_ID, event.getId());
                         PlanData pendingEditPlan = null;
                         for(PlanData planData : planDataCustomList){
-                            if(planData.getId().equals(event.getId())){
+                            if(planData.get_id().equals(event.getId())){
                                 pendingEditPlan = planData;
                             }
                         }
@@ -159,7 +176,7 @@ public class GoalFragment extends BaseFragment {
                             intentGoal.putExtra(AddPlanActivity.Default_Plan_Name, pendingEditPlan.getName());
                             intentGoal.putExtra(AddPlanActivity.Default_Plan_Target, pendingEditPlan.getTarget());
                         }
-                        getActivity().startActivityForResult(intentGoal, IntentConstants.GOAL_EDIT_PLAN);
+                        startActivityForResult(intentGoal, IntentConstants.GOAL_EDIT_PLAN);
                     }
                     break;
             }
@@ -176,6 +193,10 @@ public class GoalFragment extends BaseFragment {
             }else {
                 planDataCustomList.add(planData);
             }
+
+            if(planData.getIs_selected()){
+                ImovinApplication.setPlanData(planData);
+            }
         }
 
         PlanDataCategory defaultPlanCategory = new PlanDataCategory(getString(R.string.default_plans), planDataDefaultList);
@@ -185,6 +206,7 @@ public class GoalFragment extends BaseFragment {
 
         plan_list.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         plan_list.setAdapter(adapter);
+
     }
 
     private void SelectPlan(String plan_id){
@@ -199,17 +221,19 @@ public class GoalFragment extends BaseFragment {
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_SELECT_PLAN, plan_id);
 
-        Call<PlanResponse> call = service.selectPlan(url);
+        Call<PlanMultiResponse> call = service.selectPlan(url);
 
-        call.enqueue(new Callback<PlanResponse>() {
+        call.enqueue(new Callback<PlanMultiResponse>() {
             @Override
-            public void onResponse(Call<PlanResponse> call, Response<PlanResponse> response) {
+            public void onResponse(Call<PlanMultiResponse> call, Response<PlanMultiResponse> response) {
                 try {
-                    PlanResponse planResponse = response.body();
-                    if(planResponse != null) {
-                        UserData userData = ImovinApplication.getUserData();
-                        userData.setSelectedPlan(planResponse.getData().getId());
-                        ImovinApplication.setUserData(userData);
+                    PlanMultiResponse planMultiResponse = response.body();
+                    if(planMultiResponse != null) {
+                        for(PlanData planData : planMultiResponse.get_items()){
+                            if(planData.getIs_selected()){
+                                ImovinApplication.setPlanData(planData);
+                            }
+                        }
                         Init();
                     }
                 }catch (Exception e){
@@ -220,7 +244,7 @@ public class GoalFragment extends BaseFragment {
             }
 
             @Override
-            public void onFailure(Call<PlanResponse> call, Throwable t) {
+            public void onFailure(Call<PlanMultiResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure GoalFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
@@ -239,14 +263,19 @@ public class GoalFragment extends BaseFragment {
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_DELETE_PLAN, plan_id);
 
-        Call<PlanResponse> call = service.deletePlan(url);
+        Call<PlanMultiResponse> call = service.deletePlan(url);
 
-        call.enqueue(new Callback<PlanResponse>() {
+        call.enqueue(new Callback<PlanMultiResponse>() {
             @Override
-            public void onResponse(Call<PlanResponse> call, Response<PlanResponse> response) {
+            public void onResponse(Call<PlanMultiResponse> call, Response<PlanMultiResponse> response) {
                 try {
-                    PlanResponse planResponse = response.body();
-                    if(planResponse != null) {
+                    PlanMultiResponse planMultiResponse = response.body();
+                    if(planMultiResponse != null) {
+                        for(PlanData planData : planMultiResponse.get_items()){
+                            if(planData.getIs_selected()){
+                                ImovinApplication.setPlanData(planData);
+                            }
+                        }
                         Init();
                     }
                 }catch (Exception e){
@@ -257,10 +286,26 @@ public class GoalFragment extends BaseFragment {
             }
 
             @Override
-            public void onFailure(Call<PlanResponse> call, Throwable t) {
+            public void onFailure(Call<PlanMultiResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure GoalFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case IntentConstants.GOAL_NEW_PLAN:
+                if(resultCode == Activity.RESULT_OK) {
+                    Init();
+                }
+                break;
+            case IntentConstants.GOAL_EDIT_PLAN:
+                if(resultCode == Activity.RESULT_OK) {
+                    Init();
+                }
+                break;
+        }
     }
 }

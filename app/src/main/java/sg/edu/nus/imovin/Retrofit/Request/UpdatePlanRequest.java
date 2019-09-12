@@ -1,17 +1,17 @@
 package sg.edu.nus.imovin.Retrofit.Request;
 
 public class UpdatePlanRequest {
-    private CreatePlanRequest updatePayload;
+    private Integer target;
 
-    public UpdatePlanRequest(String name, Integer target) {
-        this.updatePayload = new CreatePlanRequest(name, target);
+    public UpdatePlanRequest(Integer target) {
+        this.target = target;
     }
 
-    public CreatePlanRequest getUpdatePayload() {
-        return updatePayload;
+    public Integer getTarget() {
+        return target;
     }
 
-    public void setUpdatePayload(CreatePlanRequest updatePayload) {
-        this.updatePayload = updatePayload;
+    public void setTarget(Integer target) {
+        this.target = target;
     }
 }

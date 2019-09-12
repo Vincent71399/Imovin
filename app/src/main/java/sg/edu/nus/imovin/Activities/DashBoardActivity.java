@@ -252,6 +252,22 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
             case FuncBlockConstants.FORUM:
                 help_text = getString(R.string.help_forum);
                 break;
+
+//            case FuncBlockConstants.FORUM:
+//                Intent intentForum = new Intent();
+//                intentForum.setClass(this, ForumNewPostActivity.class);
+//                startActivityForResult(intentForum, IntentConstants.FORUM_NEW_POST);
+//                break;
+//            case FuncBlockConstants.GOAL:
+//                Intent intentGoal = new Intent();
+//                intentGoal.setClass(this, AddPlanActivity.class);
+//                startActivityForResult(intentGoal, IntentConstants.GOAL_NEW_PLAN);
+//                break;
+//            case FuncBlockConstants.SOCIAL:
+//                Intent newSocialIntent = new Intent();
+//                newSocialIntent.setClass(this, SocialNewPostActivity.class);
+//                startActivityForResult(newSocialIntent, IntentConstants.SOCIAL_NEW_POST);
+//                break;
         }
 
         openDialogBox(mTitles[position], help_text);
@@ -311,6 +327,7 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case IntentConstants.FORUM_NEW_POST:
                 if(resultCode == Activity.RESULT_OK){
@@ -318,18 +335,18 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                     EventBus.getDefault().post(new ForumEvent(EventConstants.REFRESH));
                 }
                 break;
-            case IntentConstants.GOAL_NEW_PLAN:
-                if(resultCode == Activity.RESULT_OK){
-                    ImovinApplication.setNeedRefreshPlan(true);
-                    EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
-                }
-                break;
-            case IntentConstants.GOAL_EDIT_PLAN:
-                if(resultCode == Activity.RESULT_OK){
-                    ImovinApplication.setNeedRefreshPlan(true);
-                    EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
-                }
-                break;
+//            case IntentConstants.GOAL_NEW_PLAN:
+//                if(resultCode == Activity.RESULT_OK){
+//                    ImovinApplication.setNeedRefreshPlan(true);
+//                    EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
+//                }
+//                break;
+//            case IntentConstants.GOAL_EDIT_PLAN:
+//                if(resultCode == Activity.RESULT_OK){
+//                    ImovinApplication.setNeedRefreshPlan(true);
+//                    EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
+//                }
+//                break;
         }
     }
 }

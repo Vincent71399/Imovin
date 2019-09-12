@@ -34,7 +34,6 @@ import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Object.UserData;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
-import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseSimpleActivity;
 import sg.edu.nus.imovin.System.EventConstants;
@@ -103,7 +102,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
             public void onResponse(Call<PlanMultiResponse> call, Response<PlanMultiResponse> response) {
                 try {
                     PlanMultiResponse planMultiResponse = response.body();
-                    SetupData(planMultiResponse.getData());
+                    SetupData(planMultiResponse.get_items());
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -156,7 +155,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
                         intentGoal.putExtra(AddPlanActivity.Update_Plan_ID, event.getId());
                         PlanData pendingEditPlan = null;
                         for(PlanData planData : planDataCustomList){
-                            if(planData.getId().equals(event.getId())){
+                            if(planData.get_id().equals(event.getId())){
                                 pendingEditPlan = planData;
                             }
                         }
@@ -181,6 +180,10 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
             }else {
                 planDataCustomList.add(planData);
             }
+
+            if(planData.getIs_selected()){
+                ImovinApplication.setPlanData(planData);
+            }
         }
 
         PlanDataCategory defaultPlanCategory = new PlanDataCategory(getString(R.string.default_plans), planDataDefaultList);
@@ -192,7 +195,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
         plan_list.setAdapter(adapter);
     }
 
-    private void SelectPlan(String plan_id){
+    private void SelectPlan(final String plan_id){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -204,16 +207,16 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_SELECT_PLAN, plan_id);
 
-        Call<PlanResponse> call = service.selectPlan(url);
+        Call<PlanMultiResponse> call = service.selectPlan(url);
 
-        call.enqueue(new Callback<PlanResponse>() {
+        call.enqueue(new Callback<PlanMultiResponse>() {
             @Override
-            public void onResponse(Call<PlanResponse> call, Response<PlanResponse> response) {
+            public void onResponse(Call<PlanMultiResponse> call, Response<PlanMultiResponse> response) {
                 try {
-                    PlanResponse planResponse = response.body();
+                    PlanMultiResponse planResponse = response.body();
                     if(planResponse != null) {
                         UserData userData = ImovinApplication.getUserData();
-                        userData.setSelectedPlan(planResponse.getData().getId());
+                        userData.setSelectedPlan(plan_id);
                         ImovinApplication.setUserData(userData);
                         ImovinApplication.setNeedRefreshPlan(true);
                         EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
@@ -227,7 +230,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
             }
 
             @Override
-            public void onFailure(Call<PlanResponse> call, Throwable t) {
+            public void onFailure(Call<PlanMultiResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure MonitorChangePlanActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
@@ -246,13 +249,13 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_DELETE_PLAN, plan_id);
 
-        Call<PlanResponse> call = service.deletePlan(url);
+        Call<PlanMultiResponse> call = service.deletePlan(url);
 
-        call.enqueue(new Callback<PlanResponse>() {
+        call.enqueue(new Callback<PlanMultiResponse>() {
             @Override
-            public void onResponse(Call<PlanResponse> call, Response<PlanResponse> response) {
+            public void onResponse(Call<PlanMultiResponse> call, Response<PlanMultiResponse> response) {
                 try {
-                    PlanResponse planResponse = response.body();
+                    PlanMultiResponse planResponse = response.body();
                     if(planResponse != null) {
                         Init();
                         ImovinApplication.setNeedRefreshPlan(true);
@@ -266,7 +269,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
             }
 
             @Override
-            public void onFailure(Call<PlanResponse> call, Throwable t) {
+            public void onFailure(Call<PlanMultiResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure MonitorChangePlanActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }

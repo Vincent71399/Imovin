@@ -67,7 +67,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".Activities.AddPlanActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity

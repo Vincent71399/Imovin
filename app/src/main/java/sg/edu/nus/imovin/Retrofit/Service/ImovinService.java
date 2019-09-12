@@ -31,6 +31,7 @@ import sg.edu.nus.imovin.Retrofit.Response.ArticleResponse;
 import sg.edu.nus.imovin.Retrofit.Response.AuthFitbitResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ChallengeResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
+import sg.edu.nus.imovin.Retrofit.Response.CreateUpdatePlanResponse;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
@@ -122,18 +123,18 @@ public interface ImovinService {
     Call<PlanMultiResponse> getAllPlans();
 
     @POST(ConnectionURL.REQUEST_CREATE_PLAN)
-    Call<PlanResponse> createPlan(
+    Call<CreateUpdatePlanResponse> createPlan(
             @Body CreatePlanRequest createPlanRequest
     );
 
-    @PUT
-    Call<PlanResponse> updatePlan(
+    @PATCH
+    Call<CreateUpdatePlanResponse> updatePlan(
             @Url String url,
             @Body UpdatePlanRequest updatePlanRequest
     );
 
-    @PUT
-    Call<PlanResponse> selectPlan(
+    @GET
+    Call<PlanMultiResponse> selectPlan(
             @Url String url
     );
 
@@ -142,14 +143,10 @@ public interface ImovinService {
             @Url String url
     );
 
-    @DELETE
-    Call<PlanResponse> deletePlan(
+    @GET
+    Call<PlanMultiResponse> deletePlan(
             @Url String url
     );
-
-    //Plans New
-
-
 
     //Social Feed
     @POST(ConnectionURL.REQUEST_CREATE_SOCIAL_POST)
