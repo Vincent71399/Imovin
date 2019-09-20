@@ -33,10 +33,12 @@ import sg.edu.nus.imovin.Retrofit.Response.ChallengeResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CreateUpdatePlanResponse;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
+import sg.edu.nus.imovin.Retrofit.Response.MonitorDailySymmaryResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Response.QuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ResetPasswordResponse;
+import sg.edu.nus.imovin.Retrofit.Response.SelectDeletePlanResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialCommentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialImageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostMultiResponse;
@@ -88,10 +90,10 @@ public interface ImovinService {
     @GET(ConnectionURL.REQUEST_GET_USER_STATS_OVERVIEW)
     Call<UserStatsResponse> getUserStatsOverview();
 
-    @GET(ConnectionURL.REQUEST_GET_STATISTICS)
-    Call<StatisticsResponse> getStatistics(
-            @Query(ConnectionURL.PARAMETER_DAYS) int days
-    );
+//    @GET(ConnectionURL.REQUEST_GET_STATISTICS)
+//    Call<StatisticsResponse> getStatistics(
+//            @Query(ConnectionURL.PARAMETER_DAYS) int days
+//    );
 
     //Forum
     @POST(ConnectionURL.REQUEST_CREATE_THREAD)
@@ -133,19 +135,20 @@ public interface ImovinService {
             @Body UpdatePlanRequest updatePlanRequest
     );
 
-    @GET
-    Call<PlanMultiResponse> selectPlan(
+    @POST
+    Call<SelectDeletePlanResponse> selectPlan(
             @Url String url
     );
 
-    @GET
-    Call<PlanResponse> getPlan(
+    @POST
+    Call<SelectDeletePlanResponse> deletePlan(
             @Url String url
     );
 
-    @GET
-    Call<PlanMultiResponse> deletePlan(
-            @Url String url
+    //Monitor
+    @GET(ConnectionURL.REQUEST_GET_DAILY_SUMMARIES)
+    Call<MonitorDailySymmaryResponse> getMonitorDailySummary(
+            @Query("where") String where
     );
 
     //Social Feed

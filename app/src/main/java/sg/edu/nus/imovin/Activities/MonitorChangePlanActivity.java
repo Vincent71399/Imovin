@@ -2,6 +2,8 @@ package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +36,7 @@ import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Object.UserData;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
+import sg.edu.nus.imovin.Retrofit.Response.SelectDeletePlanResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseSimpleActivity;
 import sg.edu.nus.imovin.System.EventConstants;
@@ -81,6 +84,10 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
     }
 
     private void SetFunction(){
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         add_plan_btn.setOnClickListener(this);
     }
 
@@ -207,17 +214,14 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_SELECT_PLAN, plan_id);
 
-        Call<PlanMultiResponse> call = service.selectPlan(url);
+        Call<SelectDeletePlanResponse> call = service.selectPlan(url);
 
-        call.enqueue(new Callback<PlanMultiResponse>() {
+        call.enqueue(new Callback<SelectDeletePlanResponse>() {
             @Override
-            public void onResponse(Call<PlanMultiResponse> call, Response<PlanMultiResponse> response) {
+            public void onResponse(Call<SelectDeletePlanResponse> call, Response<SelectDeletePlanResponse> response) {
                 try {
-                    PlanMultiResponse planResponse = response.body();
-                    if(planResponse != null) {
-                        UserData userData = ImovinApplication.getUserData();
-                        userData.setSelectedPlan(plan_id);
-                        ImovinApplication.setUserData(userData);
+                    SelectDeletePlanResponse selectDeletePlanResponse = response.body();
+                    if(selectDeletePlanResponse != null && selectDeletePlanResponse.get_status().toLowerCase().equals(getString(R.string.ok).toLowerCase())) {
                         ImovinApplication.setNeedRefreshPlan(true);
                         EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                         Init();
@@ -230,7 +234,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
             }
 
             @Override
-            public void onFailure(Call<PlanMultiResponse> call, Throwable t) {
+            public void onFailure(Call<SelectDeletePlanResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure MonitorChangePlanActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
@@ -249,17 +253,17 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_DELETE_PLAN, plan_id);
 
-        Call<PlanMultiResponse> call = service.deletePlan(url);
+        Call<SelectDeletePlanResponse> call = service.deletePlan(url);
 
-        call.enqueue(new Callback<PlanMultiResponse>() {
+        call.enqueue(new Callback<SelectDeletePlanResponse>() {
             @Override
-            public void onResponse(Call<PlanMultiResponse> call, Response<PlanMultiResponse> response) {
+            public void onResponse(Call<SelectDeletePlanResponse> call, Response<SelectDeletePlanResponse> response) {
                 try {
-                    PlanMultiResponse planResponse = response.body();
-                    if(planResponse != null) {
-                        Init();
+                    SelectDeletePlanResponse selectDeletePlanResponse = response.body();
+                    if(selectDeletePlanResponse != null && selectDeletePlanResponse.get_status().toLowerCase().equals(getString(R.string.ok).toLowerCase())) {
                         ImovinApplication.setNeedRefreshPlan(true);
                         EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
+                        Init();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -269,7 +273,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
             }
 
             @Override
-            public void onFailure(Call<PlanMultiResponse> call, Throwable t) {
+            public void onFailure(Call<SelectDeletePlanResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure MonitorChangePlanActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }

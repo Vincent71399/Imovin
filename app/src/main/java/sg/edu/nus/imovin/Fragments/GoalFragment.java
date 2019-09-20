@@ -35,6 +35,7 @@ import sg.edu.nus.imovin.Objects.PlanDataCategory;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
+import sg.edu.nus.imovin.Retrofit.Response.SelectDeletePlanResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
 import sg.edu.nus.imovin.System.EventConstants;
@@ -209,7 +210,7 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
-    private void SelectPlan(String plan_id){
+    private void SelectPlan(final String plan_id){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -221,19 +222,14 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_SELECT_PLAN, plan_id);
 
-        Call<PlanMultiResponse> call = service.selectPlan(url);
+        Call<SelectDeletePlanResponse> call = service.selectPlan(url);
 
-        call.enqueue(new Callback<PlanMultiResponse>() {
+        call.enqueue(new Callback<SelectDeletePlanResponse>() {
             @Override
-            public void onResponse(Call<PlanMultiResponse> call, Response<PlanMultiResponse> response) {
+            public void onResponse(Call<SelectDeletePlanResponse> call, Response<SelectDeletePlanResponse> response) {
                 try {
-                    PlanMultiResponse planMultiResponse = response.body();
-                    if(planMultiResponse != null) {
-                        for(PlanData planData : planMultiResponse.get_items()){
-                            if(planData.getIs_selected()){
-                                ImovinApplication.setPlanData(planData);
-                            }
-                        }
+                    SelectDeletePlanResponse selectDeletePlanResponse = response.body();
+                    if(selectDeletePlanResponse != null && selectDeletePlanResponse.get_status().toLowerCase().equals(getString(R.string.ok).toLowerCase())) {
                         Init();
                     }
                 }catch (Exception e){
@@ -244,7 +240,7 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFailure(Call<PlanMultiResponse> call, Throwable t) {
+            public void onFailure(Call<SelectDeletePlanResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure GoalFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
@@ -263,19 +259,14 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_DELETE_PLAN, plan_id);
 
-        Call<PlanMultiResponse> call = service.deletePlan(url);
+        Call<SelectDeletePlanResponse> call = service.deletePlan(url);
 
-        call.enqueue(new Callback<PlanMultiResponse>() {
+        call.enqueue(new Callback<SelectDeletePlanResponse>() {
             @Override
-            public void onResponse(Call<PlanMultiResponse> call, Response<PlanMultiResponse> response) {
+            public void onResponse(Call<SelectDeletePlanResponse> call, Response<SelectDeletePlanResponse> response) {
                 try {
-                    PlanMultiResponse planMultiResponse = response.body();
-                    if(planMultiResponse != null) {
-                        for(PlanData planData : planMultiResponse.get_items()){
-                            if(planData.getIs_selected()){
-                                ImovinApplication.setPlanData(planData);
-                            }
-                        }
+                    SelectDeletePlanResponse selectDeletePlanResponse = response.body();
+                    if(selectDeletePlanResponse != null && selectDeletePlanResponse.get_status().toLowerCase().equals(getString(R.string.ok).toLowerCase())) {
                         Init();
                     }
                 }catch (Exception e){
@@ -286,7 +277,7 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFailure(Call<PlanMultiResponse> call, Throwable t) {
+            public void onFailure(Call<SelectDeletePlanResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure GoalFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }

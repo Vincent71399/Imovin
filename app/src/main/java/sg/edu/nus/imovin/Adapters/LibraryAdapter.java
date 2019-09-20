@@ -17,7 +17,8 @@ import sg.edu.nus.imovin.System.ImovinApplication;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryData_ViewHolder>{
     private static final int FirstView = 0;
-    private static final int RestView = 1;
+    private static final int PicView = 1;
+    private static final int NoPicView = 2;
 
     private List<LibraryData> libraryDataList;
     private SparseBooleanArray selectedItems;
@@ -51,6 +52,9 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
             case FirstView:
                 resource = R.layout.item_library_first;
                 break;
+            case NoPicView:
+                resource = R.layout.item_library_without_image;
+                break;
             default:
                 resource = R.layout.item_library;
                 break;
@@ -83,7 +87,9 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
     public int getItemViewType(int position) {
         if(position == 0) {
             return FirstView;
+        }else if(this.libraryDataList.get(position).getPic_url().equals("")){
+            return NoPicView;
         }
-        return RestView;
+        return PicView;
     }
 }

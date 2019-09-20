@@ -71,11 +71,9 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".Activities.MonitorChangePlanActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" />
         <activity
             android:name=".Activities.MonitorDetailActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" />
         <activity
             android:name=".Activities.ConsentDocActivity"

@@ -196,6 +196,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private void SetupDataNew(UserStatsResponse userStatsResponse){
         int step_target = userStatsResponse.getTarget();
 
+        ImovinApplication.setTarget(step_target);
+
         daily_goal.setText(getString(R.string.daily_goal_text) + step_target);
 
         barColors = new ArrayList<>();
@@ -234,10 +236,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         if(userStatsResponse.getRiskLapse() != 0){
             warning.setVisibility(View.VISIBLE);
-            ImovinApplication.setShowWarning(true);
         }else{
             warning.setVisibility(View.INVISIBLE);
-            ImovinApplication.setShowWarning(false);
         }
 
         createBarChart(dailyStepsHashMap);

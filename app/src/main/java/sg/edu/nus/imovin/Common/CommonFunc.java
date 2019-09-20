@@ -106,6 +106,13 @@ public class CommonFunc {
         return dateFormat;
     }
 
+    public static String GetQueryDateStringRevert(Calendar date){
+        String dateFormat = addZero(date.get(Calendar.DAY_OF_MONTH)) + "/" + addZero(date.get(Calendar.MONTH)+1) + "/" + date.get(Calendar.YEAR) + " " +
+                addZero(date.get(Calendar.HOUR_OF_DAY))+":"+addZero(date.get(Calendar.MINUTE))+":"+addZero(date.get(Calendar.SECOND));
+
+        return dateFormat;
+    }
+
     public static Calendar RevertFullDateStringRevert(String dateString){
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:SS");
 

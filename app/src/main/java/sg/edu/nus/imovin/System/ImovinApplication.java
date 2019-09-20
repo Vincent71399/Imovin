@@ -26,7 +26,7 @@ public class ImovinApplication extends Application {
     private static UserData userData;
     private static UserInfoResponse userInfoResponse;
     private static PlanData planData;
-    private static Boolean showWarning = false;
+    private static Integer target;
     private static ImageLoader imageLoader;
     private static OkHttpClient.Builder httpClient;
 
@@ -94,12 +94,12 @@ public class ImovinApplication extends Application {
         ImovinApplication.planData = planData;
     }
 
-    public static Boolean getShowWarning() {
-        return showWarning;
+    public static Integer getTarget() {
+        return target;
     }
 
-    public static void setShowWarning(Boolean showWarning) {
-        ImovinApplication.showWarning = showWarning;
+    public static void setTarget(Integer target) {
+        ImovinApplication.target = target;
     }
 
     public static ImageLoader getImageLoader() {

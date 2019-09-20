@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/link_subtitle"
-        style="@style/LinkInfoStyle" />
+        style="@style/LinkSubtitleStyle" />
 
     <TextView
         android:id="@+id/link_info"

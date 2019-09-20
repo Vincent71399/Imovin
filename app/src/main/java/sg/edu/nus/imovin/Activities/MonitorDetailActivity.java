@@ -1,5 +1,7 @@
 package sg.edu.nus.imovin.Activities;
 
+import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +40,10 @@ public class MonitorDetailActivity extends BaseSimpleActivity implements View.On
     }
 
     private void SetFunction(){
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         button_close.setOnClickListener(this);
     }
 

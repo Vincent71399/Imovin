@@ -7,9 +7,8 @@
     <LinearLayout
         android:gravity="top|start"
         android:orientation="vertical"
-        android:layout_width="0dp"
-        android:layout_weight="40"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/link_header"
@@ -23,14 +22,13 @@
             android:id="@+id/link_subtitle"
             style="@style/LinkSubtitleStyle" />
 
+        <ImageView
+            android:id="@+id/link_pic"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/LinkPicStyle"/>
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/link_pic"
-        android:layout_width="0dp"
-        android:layout_weight="60"
-        android:layout_height="wrap_content"
-        style="@style/LinkPicStyle"/>
 
 </LinearLayout>

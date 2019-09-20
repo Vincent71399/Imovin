@@ -17,7 +17,9 @@ import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,10 +32,14 @@ import sg.edu.nus.imovin.Activities.MonitorChangePlanActivity;
 import sg.edu.nus.imovin.Activities.MonitorDetailActivity;
 import sg.edu.nus.imovin.Adapters.CalendarAdapter;
 import sg.edu.nus.imovin.Common.CommonFunc;
+import sg.edu.nus.imovin.HttpConnection.ConnectionURL;
 import sg.edu.nus.imovin.Objects.Goal;
 import sg.edu.nus.imovin.R;
+import sg.edu.nus.imovin.Retrofit.Object.DailySummaryData;
+import sg.edu.nus.imovin.Retrofit.Object.MedalData;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Object.StatisticsData;
+import sg.edu.nus.imovin.Retrofit.Response.MonitorDailySymmaryResponse;
 import sg.edu.nus.imovin.Retrofit.Response.StatisticsResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
@@ -55,7 +61,7 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
     @BindView(R.id.calendar_next_arrow) ImageView calendar_next_arrow;
 
     private List<Goal> goalList;
-    private List<StatisticsData> statisticsDataList;
+    private List<DailySummaryData> dailySummaryDataList;
     private Calendar calendarShownDay, calendarStartDay, calendarEndDay;
 
     public static MonitorFragment getInstance() {
@@ -93,32 +99,42 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
         calendarShownDay.set(Calendar.HOUR, 0);
         calendarShownDay.set(Calendar.HOUR_OF_DAY, 0);
 
+        getDataAndDisplay();
+    }
+
+    private void getDataAndDisplay(){
         calendarEndDay = Calendar.getInstance();
         calendarEndDay.set(Calendar.MILLISECOND, 0);
+        calendarEndDay.set(Calendar.SECOND, 0);
         calendarEndDay.set(Calendar.MINUTE, 0);
         calendarEndDay.set(Calendar.HOUR, 0);
         calendarEndDay.set(Calendar.HOUR_OF_DAY, 0);
+        calendarEndDay.set(Calendar.DAY_OF_MONTH, 1);
+        calendarEndDay.set(Calendar.MONTH, calendarShownDay.get(Calendar.MONTH));
+        calendarEndDay.add(Calendar.MONTH, 1);
+        calendarEndDay.add(Calendar.DAY_OF_MONTH, -1);
 
         calendarStartDay = Calendar.getInstance();
         calendarStartDay.set(Calendar.MILLISECOND, 0);
+        calendarStartDay.set(Calendar.SECOND, 0);
         calendarStartDay.set(Calendar.MINUTE, 0);
         calendarStartDay.set(Calendar.HOUR, 0);
         calendarStartDay.set(Calendar.HOUR_OF_DAY, 0);
+        calendarStartDay.set(Calendar.MONTH, calendarShownDay.get(Calendar.MONTH));
         calendarStartDay.set(Calendar.DAY_OF_MONTH, 1);
-        calendarStartDay.add(Calendar.YEAR, -1);
 
-        int dayDiff = CommonFunc.dayDiffBetweenCalendar(calendarStartDay, calendarEndDay);
+        String startDateStr = CommonFunc.GetQueryDateStringRevert(calendarStartDay);
+        String endDateStr = CommonFunc.GetQueryDateStringRevert(calendarEndDay);
+        getDailySummary(startDateStr, endDateStr);
 
-        getStatistics(dayDiff + 1);
-
-        if(ImovinApplication.getShowWarning()){
+        if(ImovinApplication.getUserInfoResponse().getRiskLapse() != 0){
             warning.setVisibility(View.VISIBLE);
         }else {
             warning.setVisibility(View.INVISIBLE);
         }
     }
 
-    private void getStatistics(int numOfDays){
+    private void getDailySummary(String startDateStr, String endDateStr){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -127,14 +143,17 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
 
         ImovinService service = retrofit.create(ImovinService.class);
 
-        Call<StatisticsResponse> call = service.getStatistics(numOfDays);
+        String queryFormat = String.format(
+                Locale.ENGLISH, ConnectionURL.PARAMETER_DAILY_SUMMARY, startDateStr, endDateStr);
 
-        call.enqueue(new Callback<StatisticsResponse>() {
+        Call<MonitorDailySymmaryResponse> call = service.getMonitorDailySummary(queryFormat);
+
+        call.enqueue(new Callback<MonitorDailySymmaryResponse>() {
             @Override
-            public void onResponse(Call<StatisticsResponse> call, Response<StatisticsResponse> response) {
+            public void onResponse(Call<MonitorDailySymmaryResponse> call, Response<MonitorDailySymmaryResponse> response) {
                 try {
-                    StatisticsResponse statisticsResponse = response.body();
-                    statisticsDataList = statisticsResponse.getData();
+                    MonitorDailySymmaryResponse monitorDailySymmaryResponse = response.body();
+                    dailySummaryDataList = monitorDailySymmaryResponse.get_items();
                     DisplayCalendar();
                 }catch (Exception e){
                     e.printStackTrace();
@@ -144,7 +163,7 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
             }
 
             @Override
-            public void onFailure(Call<StatisticsResponse> call, Throwable t) {
+            public void onFailure(Call<MonitorDailySymmaryResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure HomeFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
@@ -154,21 +173,12 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
     private void DisplayCalendar(){
         date_text.setText(GetCurrentMonthString(calendarShownDay));
 
-        int dayOfMonth = calendarShownDay.get(Calendar.DAY_OF_MONTH);
+        SetupData();
 
-        int index = CommonFunc.dayDiffBetweenCalendar(calendarShownDay, calendarEndDay);
+        calendar_prev_arrow.setVisibility(View.VISIBLE);
+        calendar_prev_arrow.setEnabled(true);
 
-        SetupData(statisticsDataList.subList(index, dayOfMonth + index));
-
-        if(CommonFunc.isSameMonth(calendarShownDay, calendarStartDay)){
-            calendar_prev_arrow.setVisibility(View.INVISIBLE);
-            calendar_prev_arrow.setEnabled(false);
-        }else {
-            calendar_prev_arrow.setVisibility(View.VISIBLE);
-            calendar_prev_arrow.setEnabled(true);
-        }
-
-        if(CommonFunc.isSameMonth(calendarShownDay, calendarEndDay)){
+        if(CommonFunc.isSameMonth(calendarShownDay, Calendar.getInstance())){
             calendar_next_arrow.setVisibility(View.INVISIBLE);
             calendar_next_arrow.setEnabled(false);
         }else{
@@ -179,24 +189,21 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
     }
 
     public boolean getPrevMonthCalendar(){
-        if(!CommonFunc.isSameMonth(calendarShownDay, calendarStartDay)){
-            calendarShownDay.set(Calendar.DAY_OF_MONTH, 1);
-            calendarShownDay.add(Calendar.DAY_OF_MONTH, -1);
-            return true;
-        }
-        return false;
+        calendarShownDay.set(Calendar.DAY_OF_MONTH, 1);
+        calendarShownDay.add(Calendar.DAY_OF_MONTH, -1);
+        return true;
     }
 
     public boolean getNextMonthCalendar(){
-        if(!CommonFunc.isSameMonth(calendarShownDay, calendarEndDay)){
+        if(!CommonFunc.isSameMonth(calendarShownDay, Calendar.getInstance())){
             calendarShownDay.add(Calendar.MONTH, 1);
             return true;
         }
         return false;
     }
 
-    private void SetupData(List<StatisticsData> statisticsDataList){
-        goalList = generateCalendar(Lists.reverse(statisticsDataList));
+    private void SetupData(){
+        goalList = generateCalendar(dailySummaryDataList);
         CalendarAdapter calendarAdapter = new CalendarAdapter(ImovinApplication.getInstance(),  goalList);
         calendar_gridview.setAdapter(calendarAdapter);
         calendar_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -223,18 +230,18 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.calendar_prev_arrow:
                 if(getPrevMonthCalendar()){
-                    DisplayCalendar();
+                    getDataAndDisplay();
                 }
                 break;
             case R.id.calendar_next_arrow:
                 if(getNextMonthCalendar()){
-                    DisplayCalendar();
+                    getDataAndDisplay();
                 }
                 break;
         }
     }
 
-    private List<Goal> generateCalendar(List<StatisticsData> statisticsDataList){
+    private List<Goal> generateCalendar(List<DailySummaryData> dailySummaryDataList){
         List<Goal> goalList = new ArrayList<>();
 
         Calendar firstDay = Calendar.getInstance();
@@ -258,23 +265,33 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
             goalList.add(new Goal(false));
         }
 
-        int step_threshold = 7500;
+        int step_threshold = 0;
         PlanData planData = ImovinApplication.getPlanData();
-        if(planData != null){
+        if(planData != null) {
             step_threshold = planData.getTarget();
+        }else{
+            step_threshold = ImovinApplication.getTarget();
         }
 
-        for(int i=0; i<numDays; i++){
-            if(i < statisticsDataList.size()){
-                StatisticsData statisticsData = statisticsDataList.get(i);
-                int step = statisticsData.getSteps();
-                if(step >= step_threshold){
-                    goalList.add(new Goal(step_threshold, step_threshold, String.valueOf(i + 1)));
-                }else {
-                    goalList.add(new Goal(step, step_threshold, String.valueOf(i + 1)));
+        int dailySummaryIndex = 0;
+
+        for(int i=1; i<=numDays; i++){
+            if(dailySummaryIndex < dailySummaryDataList.size()) {
+                DailySummaryData dailySummaryData = dailySummaryDataList.get(dailySummaryIndex);
+                Calendar calendar = CommonFunc.RevertFullDateStringRevert(dailySummaryData.getDate());
+                if (i == calendar.get(Calendar.DAY_OF_MONTH)) {
+                    int step = dailySummaryData.getSteps();
+                    if (step >= step_threshold) {
+                        goalList.add(new Goal(step_threshold, step_threshold, String.valueOf(i)));
+                    } else {
+                        goalList.add(new Goal(step, step_threshold, String.valueOf(i)));
+                    }
+                    dailySummaryIndex++;
+                } else if (i < calendar.get(Calendar.DAY_OF_MONTH)) {
+                    goalList.add(new Goal(0, step_threshold, String.valueOf(i)));
                 }
-            }else {
-                goalList.add(new Goal(0, step_threshold, String.valueOf(i + 1)));
+            }else{
+                goalList.add(new Goal(0, step_threshold, String.valueOf(i)));
             }
         }
 
