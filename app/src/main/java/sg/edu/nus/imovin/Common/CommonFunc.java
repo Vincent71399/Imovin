@@ -113,6 +113,12 @@ public class CommonFunc {
         return dateFormat;
     }
 
+    public static String GetDisplayDate(Calendar date){
+        String dateFormat = ordinal(date.get(Calendar.DAY_OF_MONTH)) + "-" + convertInt2Month(date.get(Calendar.MONTH)) + "-" + date.get(Calendar.YEAR);
+
+        return dateFormat;
+    }
+
     public static Calendar RevertFullDateStringRevert(String dateString){
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:SS");
 

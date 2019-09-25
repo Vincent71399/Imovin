@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin.Fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,6 +27,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Activities.ForumCommentActivity;
+import sg.edu.nus.imovin.Activities.ForumNewPostActivity;
 import sg.edu.nus.imovin.Adapters.ThreadAdapter;
 import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.Event.ForumEvent;
@@ -40,10 +43,11 @@ import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
-public class ForumFragment extends BaseFragment {
+public class ForumFragment extends BaseFragment implements View.OnClickListener{
     private View rootView;
     private List<ThreadData> threadDataList;
 
+    @BindView(R.id.newPostBtn) Button newPostBtn;
     @BindView(R.id.thread_list) RecyclerView thread_list;
 
     public static ForumFragment getInstance() {
@@ -82,6 +86,8 @@ public class ForumFragment extends BaseFragment {
     }
 
     private void SetFunction(){
+        newPostBtn.setOnClickListener(this);
+
         thread_list.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -129,6 +135,17 @@ public class ForumFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.newPostBtn:
+                Intent intentForum = new Intent();
+                intentForum.setClass(getActivity(), ForumNewPostActivity.class);
+                startActivityForResult(intentForum, IntentConstants.FORUM_NEW_POST);
+                break;
+        }
+    }
+
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(ForumEvent event) {
         Toast.makeText(ImovinApplication.getInstance(), event.getMessage(), Toast.LENGTH_SHORT).show();
@@ -146,4 +163,14 @@ public class ForumFragment extends BaseFragment {
         thread_list.setAdapter(threadAdapter);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case IntentConstants.FORUM_NEW_POST:
+                if(resultCode == Activity.RESULT_OK){
+                    Init();
+                }
+                break;
+        }
+    }
 }

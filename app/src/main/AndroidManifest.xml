@@ -51,7 +51,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".Activities.ForumNewCommentActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Activities.ForumCommentActivity" />
@@ -62,7 +61,6 @@
         <activity android:name=".Activities.SocialContentActivity" />
         <activity
             android:name=".Activities.SocialNewCommentActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity

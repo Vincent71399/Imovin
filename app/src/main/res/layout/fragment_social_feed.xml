@@ -4,9 +4,19 @@
     android:layout_height="match_parent"
     tools:context="sg.edu.nus.imovin.Fragments.SocialFeedFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/socialFeedList"
+    <LinearLayout
+        android:gravity="top"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/socialFeedList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <include layout="@layout/forum_bottom_layout"/>
+
+    </LinearLayout>
 
 </FrameLayout>

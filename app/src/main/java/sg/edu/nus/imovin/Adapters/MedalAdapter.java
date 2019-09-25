@@ -27,11 +27,13 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
     public final static class MedalData_ViewHolder extends RecyclerView.ViewHolder {
         ImageView medal_img;
         TextView medal_count;
+        TextView earned_count;
 
         public MedalData_ViewHolder(@NonNull View itemView) {
             super(itemView);
             medal_img = itemView.findViewById(R.id.medal_img);
             medal_count = itemView.findViewById(R.id.medal_count);
+            earned_count = itemView.findViewById(R.id.earned_count);
         }
     }
 
@@ -156,6 +158,12 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
         }else{
             holder.medal_count.setVisibility(View.VISIBLE);
             holder.medal_count.setText(String.valueOf(medalData.getObtained_count()));
+        }
+
+        if(medalData.getObtained_count() <= 1) {
+            holder.earned_count.setText(medalData.getObtained_count() + " time");
+        }else{
+            holder.earned_count.setText(medalData.getObtained_count() + " times");
         }
     }
 

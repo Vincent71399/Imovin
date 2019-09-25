@@ -49,12 +49,11 @@ import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 import static sg.edu.nus.imovin.System.ValueConstants.DefaultPlanType;
 
 public class GoalFragment extends BaseFragment implements View.OnClickListener {
-    @BindView(R.id.newCustomBtn) Button newCustomBtn;
-
     private View rootView;
     private List<PlanData> planDataDefaultList;
     private List<PlanData> planDataCustomList;
 
+    @BindView(R.id.newCustomBtn) Button newCustomBtn;
     @BindView(R.id.plan_list) RecyclerView plan_list;
 
     public static GoalFragment getInstance() {

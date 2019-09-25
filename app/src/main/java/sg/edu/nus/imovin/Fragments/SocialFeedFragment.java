@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -19,12 +20,15 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Activities.SocialContentActivity;
+import sg.edu.nus.imovin.Activities.SocialNewPostActivity;
 import sg.edu.nus.imovin.Adapters.SocialFeedAdapter;
 import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.Event.ForumEvent;
@@ -43,10 +47,12 @@ import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_GET_SOCIAL_
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_SELECT_PLAN;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
-public class SocialFeedFragment extends BaseFragment {
+public class SocialFeedFragment extends BaseFragment implements View.OnClickListener {
     private View rootView;
-    RecyclerView socialFeedListView;
     List<SocialFeedData> socialFeedList;
+
+    @BindView(R.id.newPostBtn) Button newPostBtn;
+    @BindView(R.id.socialFeedList) RecyclerView socialFeedListView;
 
     public static SocialFeedFragment getInstance() {
         SocialFeedFragment socialFeedFragment = new SocialFeedFragment();
@@ -81,11 +87,12 @@ public class SocialFeedFragment extends BaseFragment {
     }
 
     private void LinkUIById() {
-        socialFeedListView = rootView.findViewById(R.id.socialFeedList);
-
+        ButterKnife.bind(this, rootView);
     }
 
     private void SetFunction() {
+        newPostBtn.setOnClickListener(this);
+
         socialFeedListView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -99,6 +106,17 @@ public class SocialFeedFragment extends BaseFragment {
 
     private void Init(){
         GetSocialData();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.newPostBtn:
+                Intent newSocialIntent = new Intent();
+                newSocialIntent.setClass(getActivity(), SocialNewPostActivity.class);
+                startActivity(newSocialIntent);
+                break;
+        }
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)

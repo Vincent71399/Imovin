@@ -1,6 +1,8 @@
 package sg.edu.nus.imovin.Activities;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -48,6 +50,10 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
     }
 
     private void SetFunction(){
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         button_post.setOnClickListener(this);
         button_cancel.setOnClickListener(this);
 

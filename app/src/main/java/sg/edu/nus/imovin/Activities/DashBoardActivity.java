@@ -328,12 +328,12 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
-            case IntentConstants.FORUM_NEW_POST:
-                if(resultCode == Activity.RESULT_OK){
-                    ImovinApplication.setNeedRefreshForum(true);
-                    EventBus.getDefault().post(new ForumEvent(EventConstants.REFRESH));
-                }
-                break;
+//            case IntentConstants.FORUM_NEW_POST:
+//                if(resultCode == Activity.RESULT_OK){
+//                    ImovinApplication.setNeedRefreshForum(true);
+//                    EventBus.getDefault().post(new ForumEvent(EventConstants.REFRESH));
+//                }
+//                break;
 //            case IntentConstants.GOAL_NEW_PLAN:
 //                if(resultCode == Activity.RESULT_OK){
 //                    ImovinApplication.setNeedRefreshPlan(true);

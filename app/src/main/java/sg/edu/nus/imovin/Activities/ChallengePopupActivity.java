@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.MedalData;
 import sg.edu.nus.imovin.System.ValueConstants;
@@ -156,7 +157,7 @@ public class ChallengePopupActivity extends Activity implements View.OnClickList
         }
 
         medal_desc.setText(medalData.getDescription() + " - Point : " + medalData.getPoints());
-        medal_last_updated.setText(medalData.getLast_achieved_at());
+        medal_last_updated.setText("Last Acheived: " + CommonFunc.GetDisplayDate(CommonFunc.RevertFullDateStringRevert(medalData.getLast_achieved_at())));
     }
 
     @Override

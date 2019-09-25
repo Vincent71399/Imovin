@@ -24,7 +24,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Activities.ChallengePopupActivity;
 import sg.edu.nus.imovin.Adapters.MedalAdapter;
-import sg.edu.nus.imovin.Adapters.StarAdapter;
 import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.R;
@@ -42,6 +41,8 @@ import static sg.edu.nus.imovin.System.IntentConstants.MEDAL_DATA;
 public class ChallengeFragment extends BaseFragment {
     private View rootView;
 
+    @BindView(R.id.challenge_season_text) TextView challenge_season_text;
+    @BindView(R.id.challenge_season_end_date) TextView challenge_season_end_date;
     @BindView(R.id.points_title) TextView points_title;
     @BindView(R.id.points_number) TextView points_number;
     @BindView(R.id.rank_text) TextView rank_text;
@@ -94,7 +95,18 @@ public class ChallengeFragment extends BaseFragment {
         getChallengeData();
     }
 
+    private void SetupPreSeasonData(ChallengeResponse challengeResponse){
+        challenge_season_text.setText(getString(R.string.challenge) + " " + challengeResponse.getSeason().getName());
+        challenge_season_end_date.setText(getString(R.string.next_season) + " " + CommonFunc.GetDisplayDate(CommonFunc.RevertFullDateStringRevert(challengeResponse.getSeason().getStart_date())));
+
+        points_number.setText(" 0");
+        rank_text.setText("RANK: N/A");
+    }
+
     private void SetupData(ChallengeResponse challengeResponse){
+        challenge_season_text.setText(getString(R.string.challenge) + " " + challengeResponse.getSeason().getName());
+        challenge_season_end_date.setText(getString(R.string.ending) + " " + CommonFunc.GetDisplayDate(CommonFunc.RevertFullDateStringRevert(challengeResponse.getSeason().getEnd_date())));
+
         points_number.setText(" " + challengeResponse.getPoints());
         rank_text.setText("RANK: " + CommonFunc.ordinal(challengeResponse.getRank()) + " of " + challengeResponse.getTotal());
 
@@ -268,8 +280,11 @@ public class ChallengeFragment extends BaseFragment {
             public void onResponse(Call<ChallengeResponse> call, Response<ChallengeResponse> response) {
                 try {
                     ChallengeResponse challengeResponse = response.body();
-                    SetupData(challengeResponse);
-
+                    if(challengeResponse.getMedals() == null){
+                        SetupPreSeasonData(challengeResponse);
+                    }else {
+                        SetupData(challengeResponse);
+                    }
                 }catch (Exception e){
                     e.printStackTrace();
                     Log.d(LogConstants.LogTag, "Exception ChallengeFragment : " + e.toString());

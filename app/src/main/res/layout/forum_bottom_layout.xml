@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:gravity="start"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp">
+
+    <Button
+        android:id="@+id/newPostBtn"
+        android:text="@string/new_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
