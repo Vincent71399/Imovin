@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -180,11 +180,7 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                     final byte[] bytes = byteArrayOutputStream.toByteArray();
-                    try {
-                        imageString = new String(Base64.encode(bytes, 0), "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
+                    imageString = new String(Base64.encode(bytes, 0), StandardCharsets.UTF_8);
                 }
                 break;
         }

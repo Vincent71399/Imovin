@@ -3,7 +3,6 @@ package sg.edu.nus.imovin.Common;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,10 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -134,14 +130,9 @@ public class CommonFunc {
     }
 
     public static boolean isSameDay(Calendar cal1, Calendar cal2){
-        if(cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
                 cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
-                cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH)
-        ){
-            return true;
-        }
-
-        return false;
+                cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH);
     }
 
     private static String convertInt2Month(Integer monthInt){
@@ -189,7 +180,7 @@ public class CommonFunc {
 
     private static String addZero(Integer value){
         if(value < 10){
-            return "0" + String.valueOf(value);
+            return "0" + value;
         }else{
             return String.valueOf(value);
         }

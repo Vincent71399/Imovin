@@ -125,7 +125,7 @@ public class ImovinApplication extends Application {
                 }
             });
         }else{
-            httpClient = new OkHttpClient.Builder();;
+            httpClient = new OkHttpClient.Builder();
         }
     }
 

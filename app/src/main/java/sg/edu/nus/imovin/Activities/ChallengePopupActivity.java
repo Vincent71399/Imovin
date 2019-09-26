@@ -157,7 +157,11 @@ public class ChallengePopupActivity extends Activity implements View.OnClickList
         }
 
         medal_desc.setText(medalData.getDescription() + " - Point : " + medalData.getPoints());
-        medal_last_updated.setText("Last Acheived: " + CommonFunc.GetDisplayDate(CommonFunc.RevertFullDateStringRevert(medalData.getLast_achieved_at())));
+        if(medalData.getLast_achieved_at() != null){
+            medal_last_updated.setText("Last Acheived: " + CommonFunc.GetDisplayDate(CommonFunc.RevertFullDateStringRevert(medalData.getLast_achieved_at())));
+        }else{
+            medal_last_updated.setText("Not Acheived Yet");
+        }
     }
 
     @Override

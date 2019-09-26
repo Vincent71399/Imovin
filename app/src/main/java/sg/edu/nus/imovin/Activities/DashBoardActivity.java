@@ -1,6 +1,5 @@
 package sg.edu.nus.imovin.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,20 +21,15 @@ import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import sg.edu.nus.imovin.Event.ForumEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.System.BaseActivity;
-import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.FuncBlockConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
-import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.SystemConstant;
 import sg.edu.nus.imovin.utils.TabEntity;
 import sg.edu.nus.imovin.utils.ViewFindUtils;

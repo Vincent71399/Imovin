@@ -1,7 +1,7 @@
 package sg.edu.nus.imovin.Objects;
 
 public class ChallengeStar {
-    public static enum starColor {Gold, Silver, Bronze}
+    public enum starColor {Gold, Silver, Bronze}
 
     private int points;
     private int steps;

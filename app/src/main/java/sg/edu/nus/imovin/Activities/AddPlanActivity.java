@@ -25,7 +25,6 @@ import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Request.CreatePlanRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UpdatePlanRequest;
 import sg.edu.nus.imovin.Retrofit.Response.CreateUpdatePlanResponse;
-import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseSimpleActivity;
 import sg.edu.nus.imovin.System.ImovinApplication;

@@ -1,10 +1,8 @@
 package sg.edu.nus.imovin.Retrofit.Service;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
@@ -35,7 +33,6 @@ import sg.edu.nus.imovin.Retrofit.Response.CreateUpdatePlanResponse;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
 import sg.edu.nus.imovin.Retrofit.Response.MonitorDailySymmaryResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
-import sg.edu.nus.imovin.Retrofit.Response.PlanResponse;
 import sg.edu.nus.imovin.Retrofit.Response.QuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ResetPasswordResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SelectDeletePlanResponse;
@@ -43,7 +40,6 @@ import sg.edu.nus.imovin.Retrofit.Response.SocialCommentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialImageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostResponse;
-import sg.edu.nus.imovin.Retrofit.Response.StatisticsResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UploadConsentResponse;
@@ -89,11 +85,6 @@ public interface ImovinService {
     //home page
     @GET(ConnectionURL.REQUEST_GET_USER_STATS_OVERVIEW)
     Call<UserStatsResponse> getUserStatsOverview();
-
-//    @GET(ConnectionURL.REQUEST_GET_STATISTICS)
-//    Call<StatisticsResponse> getStatistics(
-//            @Query(ConnectionURL.PARAMETER_DAYS) int days
-//    );
 
     //Forum
     @POST(ConnectionURL.REQUEST_CREATE_THREAD)

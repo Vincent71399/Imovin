@@ -95,20 +95,18 @@ public class ChallengeFragment extends BaseFragment {
         getChallengeData();
     }
 
-    private void SetupPreSeasonData(ChallengeResponse challengeResponse){
-        challenge_season_text.setText(getString(R.string.challenge) + " " + challengeResponse.getSeason().getName());
-        challenge_season_end_date.setText(getString(R.string.next_season) + " " + CommonFunc.GetDisplayDate(CommonFunc.RevertFullDateStringRevert(challengeResponse.getSeason().getStart_date())));
-
-        points_number.setText(" 0");
-        rank_text.setText("RANK: N/A");
-    }
-
     private void SetupData(ChallengeResponse challengeResponse){
         challenge_season_text.setText(getString(R.string.challenge) + " " + challengeResponse.getSeason().getName());
-        challenge_season_end_date.setText(getString(R.string.ending) + " " + CommonFunc.GetDisplayDate(CommonFunc.RevertFullDateStringRevert(challengeResponse.getSeason().getEnd_date())));
 
-        points_number.setText(" " + challengeResponse.getPoints());
-        rank_text.setText("RANK: " + CommonFunc.ordinal(challengeResponse.getRank()) + " of " + challengeResponse.getTotal());
+        if(challengeResponse.getSeason().getName().equals(getString(R.string.pre_season))) {
+            challenge_season_end_date.setText(getString(R.string.next_season) + " " + CommonFunc.GetDisplayDate(CommonFunc.RevertFullDateStringRevert(challengeResponse.getSeason().getStart_date())));
+            points_number.setText(" 0");
+            rank_text.setText("RANK: N/A");
+        }else{
+            challenge_season_end_date.setText(getString(R.string.ending) + " " + CommonFunc.GetDisplayDate(CommonFunc.RevertFullDateStringRevert(challengeResponse.getSeason().getEnd_date())));
+            points_number.setText(" " + challengeResponse.getPoints());
+            rank_text.setText("RANK: " + CommonFunc.ordinal(challengeResponse.getRank()) + " of " + challengeResponse.getTotal());
+        }
 
         List<MedalData> medalDataList = challengeResponse.getMedals();
 
@@ -280,11 +278,7 @@ public class ChallengeFragment extends BaseFragment {
             public void onResponse(Call<ChallengeResponse> call, Response<ChallengeResponse> response) {
                 try {
                     ChallengeResponse challengeResponse = response.body();
-                    if(challengeResponse.getMedals() == null){
-                        SetupPreSeasonData(challengeResponse);
-                    }else {
-                        SetupData(challengeResponse);
-                    }
+                    SetupData(challengeResponse);
                 }catch (Exception e){
                     e.printStackTrace();
                     Log.d(LogConstants.LogTag, "Exception ChallengeFragment : " + e.toString());

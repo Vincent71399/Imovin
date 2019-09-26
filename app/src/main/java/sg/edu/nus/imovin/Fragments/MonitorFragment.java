@@ -2,7 +2,6 @@ package sg.edu.nus.imovin.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.common.collect.Lists;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -36,11 +32,8 @@ import sg.edu.nus.imovin.HttpConnection.ConnectionURL;
 import sg.edu.nus.imovin.Objects.Goal;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.DailySummaryData;
-import sg.edu.nus.imovin.Retrofit.Object.MedalData;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
-import sg.edu.nus.imovin.Retrofit.Object.StatisticsData;
 import sg.edu.nus.imovin.Retrofit.Response.MonitorDailySymmaryResponse;
-import sg.edu.nus.imovin.Retrofit.Response.StatisticsResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
 import sg.edu.nus.imovin.System.ImovinApplication;

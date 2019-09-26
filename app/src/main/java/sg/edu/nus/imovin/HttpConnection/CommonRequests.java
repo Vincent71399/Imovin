@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class CommonRequests {
     private static final Integer connect_timeout = 10000;
@@ -28,9 +29,9 @@ public class CommonRequests {
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     connection.getInputStream()));
             String lines;
-            StringBuffer sb = new StringBuffer("");
+            StringBuffer sb = new StringBuffer();
             while ((lines = reader.readLine()) != null) {
-                lines = new String(lines.getBytes(), "utf-8");
+                lines = new String(lines.getBytes(), StandardCharsets.UTF_8);
                 sb.append(lines);
             }
 
@@ -66,18 +67,18 @@ public class CommonRequests {
             connection.connect();
 
             OutputStream os = connection.getOutputStream();
-            OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
+            OutputStreamWriter osw = new OutputStreamWriter(os, StandardCharsets.UTF_8);
 
-            osw.write(postObject.toString());
+            osw.write(postObject);
             osw.flush();
             osw.close();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     connection.getInputStream()));
             String lines;
-            StringBuffer sb = new StringBuffer("");
+            StringBuffer sb = new StringBuffer();
             while ((lines = reader.readLine()) != null) {
-                lines = new String(lines.getBytes(), "utf-8");
+                lines = new String(lines.getBytes(), StandardCharsets.UTF_8);
                 sb.append(lines);
             }
 
@@ -113,7 +114,7 @@ public class CommonRequests {
             connection.connect();
 
             OutputStream os = connection.getOutputStream();
-            OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
+            OutputStreamWriter osw = new OutputStreamWriter(os, StandardCharsets.UTF_8);
 
             osw.write(postObject.toString());
             osw.flush();
@@ -122,9 +123,9 @@ public class CommonRequests {
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     connection.getInputStream()));
             String lines;
-            StringBuffer sb = new StringBuffer("");
+            StringBuffer sb = new StringBuffer();
             while ((lines = reader.readLine()) != null) {
-                lines = new String(lines.getBytes(), "utf-8");
+                lines = new String(lines.getBytes(), StandardCharsets.UTF_8);
                 sb.append(lines);
             }
 
@@ -160,7 +161,7 @@ public class CommonRequests {
             connection.connect();
 
             OutputStream os = connection.getOutputStream();
-            OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
+            OutputStreamWriter osw = new OutputStreamWriter(os, StandardCharsets.UTF_8);
 
             osw.write(postForm);
             osw.flush();
@@ -169,9 +170,9 @@ public class CommonRequests {
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     connection.getInputStream()));
             String lines;
-            StringBuffer sb = new StringBuffer("");
+            StringBuffer sb = new StringBuffer();
             while ((lines = reader.readLine()) != null) {
-                lines = new String(lines.getBytes(), "utf-8");
+                lines = new String(lines.getBytes(), StandardCharsets.UTF_8);
                 sb.append(lines);
             }
 

@@ -61,7 +61,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
             if (childView != null && mListener != null && mGestureDetector.onTouchEvent(e)) {
                 mListener.onItemClick(childView, view.getChildAdapterPosition(childView));
                 previousClickTime = currentClickTime;
-                Log.d("Time Test", String.valueOf(previousClickTime) + "-" + String.valueOf(currentClickTime));
+                Log.d("Time Test", previousClickTime + "-" + currentClickTime);
             }
 
         }

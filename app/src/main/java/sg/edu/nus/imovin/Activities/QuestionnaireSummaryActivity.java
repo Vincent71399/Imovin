@@ -9,7 +9,6 @@ import android.widget.Button;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.System.BaseActivity;
 
