@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,7 +13,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.flyco.tablayout.CommonTabLayout;
@@ -34,17 +36,23 @@ import sg.edu.nus.imovin.System.SystemConstant;
 import sg.edu.nus.imovin.utils.TabEntity;
 import sg.edu.nus.imovin.utils.ViewFindUtils;
 
-public class DashBoardActivity extends BaseActivity implements View.OnClickListener {
+import static sg.edu.nus.imovin.System.FuncBlockConstants.MORE;
+
+public class DashBoardActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+
+    private boolean spinner_init = true;
 
     private View customActionBar;
     @BindView(R.id.navigator_title) TextView navigator_title;
     @BindView(R.id.navigator_help) TextView navigator_help;
     @BindView(R.id.navigator_logout) ImageView navigator_logout;
+    @BindView(R.id.more_spinner) Spinner more_spinner;
 
     private View decorView;
     private CommonTabLayout sub_tab_layout;
     private ViewPager vp;
     private String[] mTitles;
+    private String[] moreTitles;
 
     private final int defaultPagePosition = 0;
     private int currentPagePosition = 0;
@@ -70,7 +78,6 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
     private void SetActionBar(){
         ActionBar actionBar = getSupportActionBar();
         customActionBar = getLayoutInflater().inflate(R.layout.main_navigator_new, null);
-        ButterKnife.bind(this, customActionBar);
 
         if(actionBar != null){
             actionBar.show();
@@ -84,6 +91,8 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void LinkUIbyId(){
+        ButterKnife.bind(this);
+
         decorView = getWindow().getDecorView();
         vp = ViewFindUtils.find(decorView, R.id.vp);
     }
@@ -93,8 +102,14 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         navigator_logout.setOnClickListener(this);
         int profile = ImovinApplication.getUserInfoResponse().getProfile();
         mTitles = FuncBlockConstants.getFunctionBlockTitles_by_profile(profile);
+        moreTitles = FuncBlockConstants.getFunctionBlockMoreTitles_by_profile(profile);
         mIconUnselectIds = FuncBlockConstants.getFunctionBlockUnselectIcons_by_profile(profile);
         mIconSelectIds = FuncBlockConstants.getFunctionBlockSelectIcons_by_profile(profile);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, moreTitles);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        more_spinner.setAdapter(adapter);
+        more_spinner.setOnItemSelectedListener(this);
     }
 
     private void Init(){
@@ -106,6 +121,13 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         }
 
         for (String title : mTitles) {
+            Fragment fragment = FuncBlockConstants.getFunctionFragment(title);
+            if(fragment != null) {
+                mFragments.add(fragment);
+            }
+        }
+
+        for (String title : moreTitles){
             Fragment fragment = FuncBlockConstants.getFunctionFragment(title);
             if(fragment != null) {
                 mFragments.add(fragment);
@@ -128,15 +150,22 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         sub_tab_layout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-                navigator_title.setText(mTitles[position]);
-                SetTopNavFunc(mTitles[position]);
-                vp.setCurrentItem(position);
-                currentPagePosition = position;
+
+                if(mTitles[position].equals(MORE)){
+                    more_spinner.performClick();
+                }else {
+                    sub_tab_layout.setCurrentTab(position);
+                    setTitleText(position);
+                    vp.setCurrentItem(position);
+                    currentPagePosition = position;
+                }
             }
 
             @Override
             public void onTabReselect(int position) {
-
+                if(mTitles[position].equals(MORE)){
+                    more_spinner.performClick();
+                }
             }
         });
 
@@ -148,9 +177,12 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onPageSelected(int position) {
-                sub_tab_layout.setCurrentTab(position);
-                navigator_title.setText(mTitles[position]);
-                SetTopNavFunc(mTitles[position]);
+                if(position >= mTitles.length){
+                    sub_tab_layout.setCurrentTab(mTitles.length - 1);
+                }else {
+                    sub_tab_layout.setCurrentTab(position);
+                }
+                setTitleText(position);
                 currentPagePosition = position;
             }
 
@@ -161,7 +193,6 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         });
 
         navigator_title.setText(mTitles[defaultPagePosition]);
-        SetTopNavFunc(mTitles[defaultPagePosition]);
     }
 
     @Override
@@ -185,45 +216,51 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-    private void SetTopNavFunc(String title){
-        switch (title){
-            case FuncBlockConstants.HOME:
-//                navigator_right.setEnabled(false);
-//                navigator_right_text.setVisibility(View.INVISIBLE);
-                break;
-            case FuncBlockConstants.LIBRARY:
-//                navigator_right.setEnabled(false);
-//                navigator_right_text.setVisibility(View.INVISIBLE);
-                break;
-            case FuncBlockConstants.FORUM:
-//                navigator_right.setEnabled(true);
-//                navigator_right_text.setVisibility(View.VISIBLE);
-//                navigator_right_text.setText("+");
-                break;
-            case FuncBlockConstants.GOAL:
-//                navigator_right.setEnabled(true);
-//                navigator_right_text.setVisibility(View.VISIBLE);
-//                navigator_right_text.setText("+");
-                break;
-            case FuncBlockConstants.MONITOR:
-//                navigator_right.setEnabled(false);
-//                navigator_right_text.setVisibility(View.INVISIBLE);
-                break;
-            case FuncBlockConstants.SOCIAL:
-//                navigator_right.setEnabled(true);
-//                navigator_right_text.setVisibility(View.VISIBLE);
-//                navigator_right_text.setText("+");
-                break;
-            case FuncBlockConstants.CHALLENGE:
-//                navigator_right.setEnabled(false);
-//                navigator_right_text.setVisibility(View.INVISIBLE);
-                break;
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+        if(spinner_init){
+            spinner_init = false;
+        }else {
+            vp.setCurrentItem(mTitles.length - 1 + position);
+            sub_tab_layout.setCurrentTab(mTitles.length - 1);
         }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    private void setTitleText(int position){
+        String title = "";
+        if(moreTitles.length > 0){
+            if(position >= mTitles.length - 1){
+                title = moreTitles[position - mTitles.length + 1];
+            }else{
+                title = mTitles[position];
+            }
+        }else{
+            title = mTitles[position];
+        }
+
+        navigator_title.setText(title);
     }
 
     private void helpIconFunc(int position){
         String help_text = "";
-        switch (mTitles[position]){
+
+        String title = "";
+        if(moreTitles.length > 0){
+            if(position >= mTitles.length - 1){
+                title = moreTitles[position - mTitles.length + 1];
+            }else{
+                title = mTitles[position];
+            }
+        }else{
+            title = mTitles[position];
+        }
+
+        switch (title){
             case FuncBlockConstants.HOME:
                 help_text = getString(R.string.help_home);
                 break;
@@ -245,25 +282,9 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
             case FuncBlockConstants.FORUM:
                 help_text = getString(R.string.help_forum);
                 break;
-
-//            case FuncBlockConstants.FORUM:
-//                Intent intentForum = new Intent();
-//                intentForum.setClass(this, ForumNewPostActivity.class);
-//                startActivityForResult(intentForum, IntentConstants.FORUM_NEW_POST);
-//                break;
-//            case FuncBlockConstants.GOAL:
-//                Intent intentGoal = new Intent();
-//                intentGoal.setClass(this, AddPlanActivity.class);
-//                startActivityForResult(intentGoal, IntentConstants.GOAL_NEW_PLAN);
-//                break;
-//            case FuncBlockConstants.SOCIAL:
-//                Intent newSocialIntent = new Intent();
-//                newSocialIntent.setClass(this, SocialNewPostActivity.class);
-//                startActivityForResult(newSocialIntent, IntentConstants.SOCIAL_NEW_POST);
-//                break;
         }
 
-        openDialogBox(mTitles[position], help_text);
+        openDialogBox(title, help_text);
     }
 
     private void openDialogBox(String title, String text){
@@ -318,28 +339,5 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
-//            case IntentConstants.FORUM_NEW_POST:
-//                if(resultCode == Activity.RESULT_OK){
-//                    ImovinApplication.setNeedRefreshForum(true);
-//                    EventBus.getDefault().post(new ForumEvent(EventConstants.REFRESH));
-//                }
-//                break;
-//            case IntentConstants.GOAL_NEW_PLAN:
-//                if(resultCode == Activity.RESULT_OK){
-//                    ImovinApplication.setNeedRefreshPlan(true);
-//                    EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
-//                }
-//                break;
-//            case IntentConstants.GOAL_EDIT_PLAN:
-//                if(resultCode == Activity.RESULT_OK){
-//                    ImovinApplication.setNeedRefreshPlan(true);
-//                    EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
-//                }
-//                break;
-        }
-    }
+
 }

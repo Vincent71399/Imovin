@@ -21,13 +21,6 @@ public class ConsentDocActivity extends AppCompatActivity implements View.OnClic
     @BindView(R.id.agreeBtn) Button agreeBtn;
     @BindView(R.id.disagreeBtn) Button disagreeBtn;
 
-    private static final int REQUEST_CONSENT = 100;
-
-    public static final  String SIGNATURE_FORM_STEP       = "form_step";
-    public static final  String SIGNATURE                 = "signature";
-    public static final  String NAME                      = "name";
-    public static final  String CONSENT                   = "consent";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
