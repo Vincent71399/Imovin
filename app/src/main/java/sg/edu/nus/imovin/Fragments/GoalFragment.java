@@ -30,6 +30,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Activities.AddPlanActivity;
 import sg.edu.nus.imovin.Adapters.PlanAdapter;
+import sg.edu.nus.imovin.Event.ChangePlanEvent;
 import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.Objects.PlanDataCategory;
 import sg.edu.nus.imovin.R;
@@ -196,6 +197,7 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
 
             if(planData.getIs_selected()){
                 ImovinApplication.setPlanData(planData);
+                EventBus.getDefault().post(new ChangePlanEvent());
             }
         }
 

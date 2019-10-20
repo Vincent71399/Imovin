@@ -2,7 +2,7 @@ package sg.edu.nus.imovin.Event;
 
 public class PlanEvent {
     public static final int MODULE_GOAL = 1;
-    public static final int MODULE_MONITOR = 2;
+    public static final int MODULE_MONITOR_CHANGE = 2;
 
     private int module;
     private String message;

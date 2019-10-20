@@ -30,6 +30,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Adapters.PlanAdapter;
+import sg.edu.nus.imovin.Event.ChangePlanEvent;
 import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.Objects.PlanDataCategory;
 import sg.edu.nus.imovin.R;
@@ -138,7 +139,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(PlanEvent event) {
-        if(event.getModule() == PlanEvent.MODULE_MONITOR) {
+        if(event.getModule() == PlanEvent.MODULE_MONITOR_CHANGE) {
             Toast.makeText(ImovinApplication.getInstance(), event.getMessage(), Toast.LENGTH_SHORT).show();
             switch (event.getMessage()) {
                 case EventConstants.REFRESH:
@@ -189,13 +190,14 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
 
             if(planData.getIs_selected()){
                 ImovinApplication.setPlanData(planData);
+                EventBus.getDefault().post(new ChangePlanEvent());
             }
         }
 
         PlanDataCategory defaultPlanCategory = new PlanDataCategory(getString(R.string.default_plans), planDataDefaultList);
         PlanDataCategory customPlanCategory = new PlanDataCategory(getString(R.string.custom_plans), planDataCustomList);
 
-        PlanAdapter adapter = new PlanAdapter(this, Arrays.asList(defaultPlanCategory, customPlanCategory), PlanEvent.MODULE_MONITOR);
+        PlanAdapter adapter = new PlanAdapter(this, Arrays.asList(defaultPlanCategory, customPlanCategory), PlanEvent.MODULE_MONITOR_CHANGE);
 
         plan_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         plan_list.setAdapter(adapter);

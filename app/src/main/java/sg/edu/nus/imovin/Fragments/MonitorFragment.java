@@ -12,6 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -28,6 +32,8 @@ import sg.edu.nus.imovin.Activities.MonitorChangePlanActivity;
 import sg.edu.nus.imovin.Activities.MonitorDetailActivity;
 import sg.edu.nus.imovin.Adapters.CalendarAdapter;
 import sg.edu.nus.imovin.Common.CommonFunc;
+import sg.edu.nus.imovin.Event.ChangePlanEvent;
+import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.HttpConnection.ConnectionURL;
 import sg.edu.nus.imovin.Objects.Goal;
 import sg.edu.nus.imovin.R;
@@ -36,6 +42,7 @@ import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Response.MonitorDailySymmaryResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
+import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
 
@@ -75,6 +82,18 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
         return rootView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
     private void LinkUIById(){
         ButterKnife.bind(this, rootView);
     }
@@ -83,6 +102,7 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
         change_plan_btn.setOnClickListener(this);
         calendar_prev_arrow.setOnClickListener(this);
         calendar_next_arrow.setOnClickListener(this);
+        date_text.setOnClickListener(this);
     }
 
     private void Init(){
@@ -231,7 +251,15 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
                     getDataAndDisplay();
                 }
                 break;
+            case R.id.date_text:
+                getDataAndDisplay();
+                break;
         }
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEvent(ChangePlanEvent event) {
+        getDataAndDisplay();
     }
 
     private List<Goal> generateCalendar(List<DailySummaryData> dailySummaryDataList){
