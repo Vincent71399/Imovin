@@ -146,6 +146,41 @@
         I understand that for repeat damages/misplacements, I will be dropped from the study and I will forfeit all reimbursements.
     </string>
 
+    <string name="qn">Questionnaire</string>
+    <string name="qn_title">
+        Study on Physical Activity Mobile App
+    </string>
+    <string name="qn_content_1">
+        Dear participant,
+    </string>
+    <string name="qn_content_2">
+        Thank you for your informed consent to participate in the study involving the use of the physical activity mobile app.
+    </string>
+    <string name="qn_content_3">
+        We estimate that the following survey questionnaire will require 30 minutes to complete. There are no known risks of completing the survey. To receive reimbursement, you need to complete this questionnaire (i.e. all questions must be answered). Please answer all questions as honestly as possible.
+    </string>
+    <string name="qn_content_4">
+        Your identity and responses for this questionnaire will remain confidential and anonymous. We have taken all reasonable measures to protect your identity and responses. The questions in the questionnaire do not ask you to reveal any personally identifying information aside from your email address (ideally your NUSNET email) and matriculation number. Your email address will be kept for matching purposes only, and your matriculation number is obtained for administrative purposes as we will loan you a physical activity tracker. Additionally, your responses will be digitally coded and stored in a private password-protected server hosted at NUS School of Computing. It will be accessed by only authorized research staff. Personal data will be discarded upon completion of this research. Aggregated data collected from this questionnaire will be used to help us understand the effect of the mobile app that is used in this study.
+    </string>
+    <string name="qn_content_5">
+        If you require additional information or have questions, feel free to contact us using the emails listed in your Participant Information Sheet (PIS).
+    </string>
+    <string name="qn_content_6">
+        If you are not satisfied with the conduct of the study, you may report (anonymously if you wish) to a staff member of the National University of Singapore Institutional Review Board (IRB) (Attn: Dr. Chan Tuck Wai, at telephone 6516 1234 or email at irb@nus.edu.sg).
+    </string>
+    <string name="qn_content_7">
+        Thank you.
+    </string>
+    <string name="qn_content_8">
+        Sincerely Yours
+    </string>
+    <string name="qn_content_9">
+        PRINCIPAL INVESTIGATOR
+    </string>
+    <string name="qn_content_10">
+        CO-INVESTIGATORS
+    </string>
+
     <string name="submission_confirmed">Submission Confirmed</string>
     <string name="submission_confirmed_text_1">
         Thank you for completing the survey questionnaire!

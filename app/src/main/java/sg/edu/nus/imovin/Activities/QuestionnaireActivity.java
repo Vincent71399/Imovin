@@ -163,6 +163,10 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         navigator_title.setText(sectionDataList.get(currentSection).getDisplay_name());
         navigator_right_text.setText("1/" + sectionDataList.get(currentSection).getQuestions().size());
         SetSectionQuestion(questionDataList);
+
+        Intent intent = new Intent();
+        intent.setClass(this, QuestionnaireDocActivity.class);
+        startActivityForResult(intent, IntentConstants.QUESTIONNAIRE);
     }
 
     private void SetSectionQuestion(List<List<QuestionData>> questionDataMatrix){
@@ -488,6 +492,11 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
+            case IntentConstants.QUESTIONNAIRE:
+                if(resultCode != RESULT_OK){
+                    finish();
+                }
+                break;
             case IntentConstants.QUESTIONNAIRE_CONFIRM:
                 if(resultCode == RESULT_OK) {
                     SubmitQuestionNaire();
