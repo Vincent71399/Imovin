@@ -12,6 +12,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.warkiz.widget.IndicatorSeekBar;
+import com.warkiz.widget.OnSeekChangeListener;
+import com.warkiz.widget.SeekParams;
+
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -33,11 +37,11 @@ import sg.edu.nus.imovin.System.LogConstants;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_UPDATE_PLAN;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
-public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickListener {
 
     @BindView(R.id.plan_title_input) EditText plan_title_input;
     @BindView(R.id.steps_value) TextView steps_value;
-    @BindView(R.id.planStepsBar) SeekBar planStepsBar;
+    @BindView(R.id.planStepsBar) IndicatorSeekBar planStepsBar;
     @BindView(R.id.button_add_plan) Button button_add_plan;
     @BindView(R.id.button_cancel) Button button_cancel;
 
@@ -69,7 +73,23 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
         button_add_plan.setOnClickListener(this);
         button_cancel.setOnClickListener(this);
 
-        planStepsBar.setOnSeekBarChangeListener(this);
+        planStepsBar.setOnSeekChangeListener(new OnSeekChangeListener() {
+            @Override
+            public void onSeeking(SeekParams seekParams) {
+                int steps = seekParams.progress;
+                steps_value.setText(String.valueOf(steps));
+            }
+
+            @Override
+            public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+
+            }
+        });
     }
 
     private void Init(){
@@ -80,8 +100,7 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
         if(update_plan_id != null){
             button_add_plan.setText(getString(R.string.edit));
             plan_title_input.setText(default_plan_name);
-            int progress = 100 * (default_plan_target - 5000) / 10000;
-            planStepsBar.setProgress(progress);
+            planStepsBar.setProgress(default_plan_target);
         }
     }
 
@@ -103,22 +122,6 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
                 finish();
                 break;
         }
-    }
-
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        int steps = 5000 + 10000 * progress / 100;
-        steps_value.setText(String.valueOf(steps));
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
     }
 
     private void AddPlan(CreatePlanRequest createPlanRequest){
