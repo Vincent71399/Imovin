@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin.Adapters;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
 
     public final static class LibraryData_ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout link_container;
+        ConstraintLayout pic_container;
         TextView link_header;
         TextView link_subtitle;
         TextView link_info;
@@ -38,6 +40,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
         public LibraryData_ViewHolder(View itemView){
             super(itemView);
             link_container = itemView.findViewById(R.id.link_container);
+            pic_container = itemView.findViewById(R.id.pic_container);
             link_header = itemView.findViewById(R.id.link_header);
             link_subtitle = itemView.findViewById(R.id.link_subtitle);
             link_info = itemView.findViewById(R.id.link_info);
@@ -73,7 +76,12 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
         holder.link_header.setText(libraryData.getTitle());
         holder.link_subtitle.setText(libraryData.getSubtitle());
         holder.link_info.setText(libraryData.getPublish() + " " + libraryData.getYear());
-        ImovinApplication.getImageLoader().displayImage(libraryData.getPic_url(), holder.link_pic);
+        if(libraryData.getPic_url() != null && !libraryData.getPic_url().equals("")) {
+            holder.pic_container.setVisibility(View.VISIBLE);
+            ImovinApplication.getImageLoader().displayImage(libraryData.getPic_url(), holder.link_pic);
+        }else{
+            holder.pic_container.setVisibility(View.GONE);
+        }
 
         holder.itemView.setActivated(selectedItems.get(position, false));
     }

@@ -16,6 +16,10 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -33,6 +37,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.Common.IntValueFormatter;
 import sg.edu.nus.imovin.Common.WeekdayAxisValueFormatter;
+import sg.edu.nus.imovin.Event.ChangePlanEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.DailySummaryData;
 import sg.edu.nus.imovin.Retrofit.Response.UserStatsResponse;
@@ -93,6 +98,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
+        EventBus.getDefault().register(this);
+        if(ImovinApplication.isNeedRefreshPlanGoal()){
+            Init();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -191,6 +206,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 updateBarChartFloat(dailyDistanceHashMap);
                 break;
         }
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEvent(ChangePlanEvent event) {
+        Init();
     }
 
     private void SetupDataNew(UserStatsResponse userStatsResponse){
