@@ -22,6 +22,7 @@ public class FuncBlockConstants {
     public static final String MONITOR = "Monitor";
     public static final String SOCIAL = "Social";
     public static final String CHALLENGE = "Challenge";
+    public static final String MORE = "More";
 
     public static Fragment getFunctionFragment(String title){
         Fragment fragment = null;
@@ -75,6 +76,9 @@ public class FuncBlockConstants {
             case CHALLENGE:
                 icon = R.drawable.icon_challenge_unselect;
                 break;
+            case MORE:
+                icon = R.drawable.icons_more_unselect;
+                break;
         }
         return icon;
     }
@@ -103,6 +107,9 @@ public class FuncBlockConstants {
             case CHALLENGE:
                 icon = R.drawable.icon_challenge_select;
                 break;
+            case MORE:
+                icon = R.drawable.icons_more_select;
+                break;
         }
         return icon;
     }
@@ -113,34 +120,41 @@ public class FuncBlockConstants {
             case 0:
                 mTitleList.add(HOME);
                 mTitleList.add(CHALLENGE);
+                mTitleList.add(MORE);
                 break;
             case 1:
                 mTitleList.add(HOME);
                 mTitleList.add(SOCIAL);
+                mTitleList.add(MORE);
                 break;
             case 2:
                 mTitleList.add(HOME);
                 mTitleList.add(LIBRARY);
+                mTitleList.add(MORE);
                 break;
             case 3:
                 mTitleList.add(HOME);
                 mTitleList.add(GOAL);
                 mTitleList.add(LIBRARY);
+                mTitleList.add(MORE);
                 break;
             case 4:
                 mTitleList.add(HOME);
                 mTitleList.add(GOAL);
                 mTitleList.add(MONITOR);
+                mTitleList.add(MORE);
                 break;
             case 5:
                 mTitleList.add(HOME);
                 mTitleList.add(GOAL);
                 mTitleList.add(MONITOR);
+                mTitleList.add(MORE);
                 break;
             case 6:
                 mTitleList.add(HOME);
                 mTitleList.add(LIBRARY);
                 mTitleList.add(FORUM);
+                mTitleList.add(MORE);
                 break;
             default:
                 mTitleList.add(HOME);
@@ -152,6 +166,61 @@ public class FuncBlockConstants {
                 mTitleList.add(CHALLENGE);
                 break;
 
+        }
+
+        String[] mTitles = new String[mTitleList.size()];
+        mTitles = mTitleList.toArray(mTitles);
+        return mTitles;
+    }
+
+    public static String[] getFunctionBlockMoreTitles_by_profile(int profile){
+        List<String> mTitleList = new ArrayList<>();
+        switch (profile){
+            case 0:
+                mTitleList.add(LIBRARY);
+                mTitleList.add(FORUM);
+                mTitleList.add(GOAL);
+                mTitleList.add(MONITOR);
+                mTitleList.add(SOCIAL);
+                break;
+            case 1:
+                mTitleList.add(LIBRARY);
+                mTitleList.add(FORUM);
+                mTitleList.add(GOAL);
+                mTitleList.add(MONITOR);
+                mTitleList.add(CHALLENGE);
+                break;
+            case 2:
+                mTitleList.add(FORUM);
+                mTitleList.add(GOAL);
+                mTitleList.add(MONITOR);
+                mTitleList.add(SOCIAL);
+                mTitleList.add(CHALLENGE);
+                break;
+            case 3:
+                mTitleList.add(FORUM);
+                mTitleList.add(MONITOR);
+                mTitleList.add(SOCIAL);
+                mTitleList.add(CHALLENGE);
+                break;
+            case 4:
+                mTitleList.add(LIBRARY);
+                mTitleList.add(FORUM);
+                mTitleList.add(SOCIAL);
+                mTitleList.add(CHALLENGE);
+                break;
+            case 5:
+                mTitleList.add(LIBRARY);
+                mTitleList.add(FORUM);
+                mTitleList.add(SOCIAL);
+                mTitleList.add(CHALLENGE);
+                break;
+            case 6:
+                mTitleList.add(GOAL);
+                mTitleList.add(MONITOR);
+                mTitleList.add(SOCIAL);
+                mTitleList.add(CHALLENGE);
+                break;
         }
 
         String[] mTitles = new String[mTitleList.size()];
