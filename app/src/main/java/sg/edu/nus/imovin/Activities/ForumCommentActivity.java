@@ -38,6 +38,7 @@ import sg.edu.nus.imovin.Retrofit.Object.CommentData;
 import sg.edu.nus.imovin.Retrofit.Object.ThreadData;
 import sg.edu.nus.imovin.Retrofit.Request.LikeCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
+import sg.edu.nus.imovin.Retrofit.Response.LikeResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.ImovinApplication;
@@ -112,8 +113,8 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         threadData = (ThreadData) getIntent().getSerializableExtra(IntentConstants.THREAD_DATA);
 
         title_text.setText(threadData.getTitle());
-        owner_text.setText(threadData.getOwnerName());
-        post_time.setText(threadData.getCreatedAt());
+        owner_text.setText(threadData.getUser_name());
+        post_time.setText(threadData.getCreated_at());
         message.setText(threadData.getMessage());
     }
 
@@ -146,7 +147,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
             case R.id.navigator_right:
                 Intent intent = new Intent();
                 intent.setClass(this, ForumNewCommentActivity.class);
-                intent.putExtra(IntentConstants.THREAD_ID, threadData.getId());
+                intent.putExtra(IntentConstants.THREAD_ID, threadData.get_id());
                 startActivityForResult(intent, IntentConstants.FORUM_NEW_COMMENT);
                 break;
         }
@@ -154,7 +155,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LikeCommentEvent event) {
-        likeComment(event.getComment_id(), new LikeCommentRequest(threadData.getId(), event.getIs_like()));
+        likeComment(event.getComment_id(), new LikeCommentRequest(threadData.get_id(), event.getIs_like()));
     }
 
     @Override
@@ -185,24 +186,25 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_LIKE_COMMENT, comment_id);
 
-        Call<CommentResponse> call = service.likeComment(url, likeCommentRequest);
+        Call<LikeResponse> call = service.likeComment(url, likeCommentRequest);
 
-        call.enqueue(new Callback<CommentResponse>() {
+        call.enqueue(new Callback<LikeResponse>() {
             @Override
-            public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
+            public void onResponse(Call<LikeResponse> call, Response<LikeResponse> response) {
                 try {
-                    CommentResponse commentResponse = response.body();
-                    CommentData resultData = commentResponse.getData();
-                    List<CommentData> commentDataList = threadData.getComments();
-                    for(int i=0; i<commentDataList.size(); i++){
-                        CommentData commentData = commentDataList.get(i);
-                        if(commentData.getId().equals(resultData.getId())){
-                            commentDataList.set(i, resultData);
-                        }
-                    }
-                    threadData.setComments(commentDataList);
-                    Init();
-                    ImovinApplication.setNeedRefreshForum(true);
+                    LikeResponse likeResponse = response.body();
+                    //todo
+//                    CommentData resultData = commentResponse.getData();
+//                    List<CommentData> commentDataList = threadData.getComments();
+//                    for(int i=0; i<commentDataList.size(); i++){
+//                        CommentData commentData = commentDataList.get(i);
+//                        if(commentData.get_id().equals(resultData.get_id())){
+//                            commentDataList.set(i, resultData);
+//                        }
+//                    }
+//                    threadData.setComments(commentDataList);
+//                    Init();
+//                    ImovinApplication.setNeedRefreshForum(true);
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -212,7 +214,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
             }
 
             @Override
-            public void onFailure(Call<CommentResponse> call, Throwable t) {
+            public void onFailure(Call<LikeResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure ForumComment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), ImovinApplication.getInstance().getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }

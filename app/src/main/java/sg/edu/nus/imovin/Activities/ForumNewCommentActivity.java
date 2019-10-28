@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -26,6 +28,8 @@ import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_COMMENT_WITH_ID;
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_CREATE_COMMENT;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
 public class ForumNewCommentActivity extends BaseSimpleActivity implements View.OnClickListener {
@@ -67,7 +71,7 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
                 if(comment_input.getText().toString().equals("")){
                     Toast.makeText(this, "Comment cannot be empty", Toast.LENGTH_SHORT).show();
                 }else {
-                    PostComment(new CreateCommentRequest(thread_id, comment_input.getText().toString()));
+                    PostComment(thread_id, new CreateCommentRequest(comment_input.getText().toString()));
                 }
                 break;
             case R.id.button_cancel:
@@ -76,7 +80,7 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
         }
     }
 
-    private void PostComment(CreateCommentRequest createCommentRequest){
+    private void PostComment(String thread_id, CreateCommentRequest createCommentRequest){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -85,7 +89,10 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
 
         ImovinService service = retrofit.create(ImovinService.class);
 
-        Call<CommentResponse> call = service.createComment(createCommentRequest);
+        String url = SERVER + String.format(
+                Locale.ENGLISH,REQUEST_CREATE_COMMENT, thread_id);
+
+        Call<CommentResponse> call = service.createComment(url, createCommentRequest);
 
         call.enqueue(new Callback<CommentResponse>() {
             @Override

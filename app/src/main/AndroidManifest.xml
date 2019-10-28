@@ -15,6 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <service
+            android:name=".Services.MonitorConnectionService"
+            android:enabled="true"
+            android:exported="false"/>
+
         <activity
             android:name=".Activities.LoginActivity"
             android:screenOrientation="portrait"
@@ -90,7 +95,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.QuestionnaireDocActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

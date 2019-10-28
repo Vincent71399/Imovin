@@ -1,11 +1,7 @@
-package sg.edu.nus.imovin.Retrofit.Request;
+package sg.edu.nus.imovin.Retrofit.Response;
 
-public class CreateCommentRequest {
+public class MessageResponse {
     private String message;
-
-    public CreateCommentRequest(String message) {
-        this.message = message;
-    }
 
     public String getMessage() {
         return message;

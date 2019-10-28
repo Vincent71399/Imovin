@@ -3,6 +3,7 @@ package sg.edu.nus.imovin.Retrofit.Service;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
@@ -18,6 +19,7 @@ import sg.edu.nus.imovin.Retrofit.Request.CreatePlanRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreateSocialCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreateSocialPostRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreateThreadRequest;
+import sg.edu.nus.imovin.Retrofit.Request.DailyLogRequest;
 import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeSocialCommentRequest;
@@ -30,7 +32,10 @@ import sg.edu.nus.imovin.Retrofit.Response.AuthFitbitResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ChallengeResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CreateUpdatePlanResponse;
+import sg.edu.nus.imovin.Retrofit.Response.DailyLogResponse;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
+import sg.edu.nus.imovin.Retrofit.Response.LikeResponse;
+import sg.edu.nus.imovin.Retrofit.Response.MessageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.MonitorDailySymmaryResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.QuestionnaireResponse;
@@ -86,31 +91,6 @@ public interface ImovinService {
     @GET(ConnectionURL.REQUEST_GET_USER_STATS_OVERVIEW)
     Call<UserStatsResponse> getUserStatsOverview();
 
-    //Forum
-    @POST(ConnectionURL.REQUEST_CREATE_THREAD)
-    Call<ThreadResponse> createThread(
-            @Body CreateThreadRequest createThreadRequest
-    );
-
-    @GET
-    Call<ThreadResponse> getThread(
-            @Url String url
-    );
-
-    @GET(ConnectionURL.REQUEST_GET_ALL_THREADS)
-    Call<ThreadMultiResponse> getAllThreads();
-
-    @POST(ConnectionURL.REQUEST_CREATE_COMMENT)
-    Call<CommentResponse> createComment(
-            @Body CreateCommentRequest createCommentRequest
-    );
-
-    @PUT
-    Call<CommentResponse> likeComment(
-            @Url String url,
-            @Body LikeCommentRequest likeCommentRequest
-    );
-
     //Plans
     @GET(ConnectionURL.REQUEST_GET_ALL_PLANS)
     Call<PlanMultiResponse> getAllPlans();
@@ -140,6 +120,57 @@ public interface ImovinService {
     @GET(ConnectionURL.REQUEST_GET_DAILY_SUMMARIES)
     Call<MonitorDailySymmaryResponse> getMonitorDailySummary(
             @Query("where") String where
+    );
+
+    //Forum
+    @POST(ConnectionURL.REQUEST_CREATE_THREAD)
+    Call<ThreadResponse> createThread(
+            @Body CreateThreadRequest createThreadRequest
+    );
+
+    @PATCH
+    Call<ThreadResponse> editThread(
+            @Url String url,
+            @Body CreateThreadRequest createThreadRequest
+    );
+
+    @DELETE
+    Call<MessageResponse> deleteThread(
+            @Url String url
+    );
+
+    @GET(ConnectionURL.REQUEST_GET_ALL_THREADS)
+    Call<ThreadMultiResponse> getAllThreads(
+            @Query("page") Integer page
+    );
+
+    @POST
+    Call<LikeResponse> likeThread(
+            @Url String url,
+            @Body CreateThreadRequest createThreadRequest
+    );
+
+    @POST
+    Call<CommentResponse> createComment(
+            @Url String url,
+            @Body CreateCommentRequest createCommentRequest
+    );
+
+    @POST
+    Call<LikeResponse> likeComment(
+            @Url String url,
+            @Body LikeCommentRequest likeCommentRequest
+    );
+
+    @PATCH
+    Call<CommentResponse> editComment(
+            @Url String url,
+            @Body CreateCommentRequest createCommentRequest
+    );
+
+    @DELETE
+    Call<MessageResponse> deleteComment(
+            @Url String url
     );
 
     //Social Feed
@@ -184,4 +215,12 @@ public interface ImovinService {
     //Library
     @GET(ConnectionURL.REQUEST_GET_ARTICLES)
     Call<ArticleResponse> getArticles();
+
+    //Log
+    @POST(ConnectionURL.REQUEST_POST_DAILY_LOG)
+    Call<DailyLogResponse> postDailyLog(
+            @Body DailyLogRequest dailyLogRequest
+    );
+
+
 }

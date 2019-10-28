@@ -1,6 +1,7 @@
 package sg.edu.nus.imovin.System;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -12,6 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.io.IOException;
+import java.lang.ref.SoftReference;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -34,6 +36,8 @@ public class ImovinApplication extends Application {
     private static boolean NeedRefreshSocialFeed = false;
     private static boolean NeedRefreshPlanGoal = false;
     private static boolean NeedRefreshPlanMonitor = false;
+
+    private SoftReference<SQLiteDatabase> databaseSoftReference;
 
     public static ImovinApplication getInstance(){
         return instance;
@@ -165,4 +169,18 @@ public class ImovinApplication extends Application {
         NeedRefreshPlanGoal = needRefreshPlan;
         NeedRefreshPlanMonitor = needRefreshPlan;
     }
+
+    public SQLiteDatabase getDatabase() {
+        if(databaseSoftReference != null) {
+            return databaseSoftReference.get();
+        }else{
+            return null;
+        }
+    }
+
+    public void setDatabase(SQLiteDatabase database) {
+        SoftReference<SQLiteDatabase> databaseSoftReference = new SoftReference<>(database);
+        this.databaseSoftReference = databaseSoftReference;
+    }
+
 }

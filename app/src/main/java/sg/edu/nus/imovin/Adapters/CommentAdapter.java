@@ -62,11 +62,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentD
     public void onBindViewHolder(@NonNull CommentData_ViewHolder holder, int position) {
         final CommentData commentData = commentDataList.get(position);
 
-        holder.usernameText.setText(commentData.getOwnerName());
-        holder.postTimeText.setText(ConvertDateString2DisplayFormat(commentData.getCreatedAt()));
+        holder.usernameText.setText(commentData.getUser_name());
+        holder.postTimeText.setText(ConvertDateString2DisplayFormat(commentData.getCreated_at()));
         holder.commentContentText.setText(commentData.getMessage());
-        holder.numberLikesText.setText(String.valueOf(commentData.getLikes().size()));
-        boolean hasLiked = commentData.getLikes().contains(ImovinApplication.getUserData().getUid());
+        holder.numberLikesText.setText(String.valueOf(commentData.getLikes()));
+        boolean hasLiked = commentData.getLiked_by_me();
         if(hasLiked){
             holder.thumbsUpImage.setImageDrawable(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.icon_thumb_colored_small));
         }else {
@@ -75,8 +75,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentD
         holder.thumbs_up_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean like = !commentData.getLikes().contains(ImovinApplication.getUserData().getUid());
-                EventBus.getDefault().post(new LikeCommentEvent(commentData.getId(), like));
+                boolean like = !commentData.getLiked_by_me();
+                EventBus.getDefault().post(new LikeCommentEvent(commentData.get_id(), like));
             }
         });
     }

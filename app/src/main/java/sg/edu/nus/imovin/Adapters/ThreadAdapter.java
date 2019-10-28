@@ -55,9 +55,9 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ThreadData
         ThreadData threadData = threadDataList.get(position);
 
         holder.title_text.setText(threadData.getTitle());
-        holder.owner_text.setText(threadData.getOwnerName());
+        holder.owner_text.setText(threadData.getUser_name());
         holder.comment_count.setText(String.valueOf(threadData.getComments().size()));
-        holder.post_time.setText(ConvertDateString2DisplayFormat(threadData.getCreatedAt()));
+        holder.post_time.setText(ConvertDateString2DisplayFormat(threadData.getCreated_at()));
 
         holder.itemView.setActivated(selectedItems.get(position, false));
     }

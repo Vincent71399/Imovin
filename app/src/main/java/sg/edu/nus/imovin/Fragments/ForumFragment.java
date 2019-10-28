@@ -109,7 +109,7 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
 
         ImovinService service = retrofit.create(ImovinService.class);
 
-        Call<ThreadMultiResponse> call = service.getAllThreads();
+        Call<ThreadMultiResponse> call = service.getAllThreads(1);
 
         call.enqueue(new Callback<ThreadMultiResponse>() {
             @Override

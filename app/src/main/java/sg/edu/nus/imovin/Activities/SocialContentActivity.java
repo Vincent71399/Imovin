@@ -204,7 +204,7 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
                     List<CommentData> commentDataList = socialFeedData.getComments();
                     for(int i=0; i<commentDataList.size(); i++){
                         CommentData commentData = commentDataList.get(i);
-                        if(commentData.getId().equals(resultData.getId())){
+                        if(commentData.get_id().equals(resultData.get_id())){
                             commentDataList.set(i, resultData);
                         }
                     }

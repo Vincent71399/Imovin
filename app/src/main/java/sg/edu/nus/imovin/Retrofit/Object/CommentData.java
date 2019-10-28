@@ -4,44 +4,45 @@ import java.io.Serializable;
 import java.util.List;
 
 public class CommentData implements Serializable {
-    private String id;
-    private String threadId;
-    private String ownerId;
-    private String ownerName;
+    private String _id;
+    private String created_at;
+    private Boolean liked_by_me;
+    private Integer likes;
     private String message;
-    private List<String> likes;
-    private String createdAt;
+    private String parent_node;
+    private String updated_at;
+    private String user_name;
 
-    public String getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
-    public String getThreadId() {
-        return threadId;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setThreadId(String threadId) {
-        this.threadId = threadId;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public String getOwnerId() {
-        return ownerId;
+    public Boolean getLiked_by_me() {
+        return liked_by_me;
     }
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public void setLiked_by_me(Boolean liked_by_me) {
+        this.liked_by_me = liked_by_me;
     }
 
-    public String getOwnerName() {
-        return ownerName;
+    public Integer getLikes() {
+        return likes;
     }
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
+    public void setLikes(Integer likes) {
+        this.likes = likes;
     }
 
     public String getMessage() {
@@ -52,19 +53,27 @@ public class CommentData implements Serializable {
         this.message = message;
     }
 
-    public List<String> getLikes() {
-        return likes;
+    public String getParent_node() {
+        return parent_node;
     }
 
-    public void setLikes(List<String> likes) {
-        this.likes = likes;
+    public void setParent_node(String parent_node) {
+        this.parent_node = parent_node;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getUpdated_at() {
+        return updated_at;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 }
