@@ -24,10 +24,12 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import sg.edu.nus.imovin.Adapters.TabAdapter;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.FuncBlockConstants;
@@ -106,8 +108,7 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         mIconUnselectIds = FuncBlockConstants.getFunctionBlockUnselectIcons_by_profile(profile);
         mIconSelectIds = FuncBlockConstants.getFunctionBlockSelectIcons_by_profile(profile);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, moreTitles);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        TabAdapter adapter = new TabAdapter(getApplicationContext(), Arrays.asList(moreTitles));
         more_spinner.setAdapter(adapter);
         more_spinner.setOnItemSelectedListener(this);
     }
@@ -177,10 +178,12 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onPageSelected(int position) {
-                if(position >= mTitles.length){
+                if(position >= mTitles.length - 1){
                     sub_tab_layout.setCurrentTab(mTitles.length - 1);
+                    ((TabAdapter)more_spinner.getAdapter()).setSelection(position - mTitles.length + 1);
                 }else {
                     sub_tab_layout.setCurrentTab(position);
+                    ((TabAdapter)more_spinner.getAdapter()).setSelection(-1);
                 }
                 setTitleText(position);
                 currentPagePosition = position;
@@ -223,6 +226,7 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         }else {
             vp.setCurrentItem(mTitles.length - 1 + position);
             sub_tab_layout.setCurrentTab(mTitles.length - 1);
+            ((TabAdapter)more_spinner.getAdapter()).setSelection(position);
         }
     }
 

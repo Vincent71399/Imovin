@@ -52,7 +52,7 @@ public class FuncBlockConstants {
         return fragment;
     }
 
-    private static int getUnselectIcon_by_title(String title){
+    public static int getUnselectIcon_by_title(String title){
         int icon = 0;
         switch (title){
             case HOME:
@@ -83,7 +83,7 @@ public class FuncBlockConstants {
         return icon;
     }
 
-    private static int getSelectIcon_by_title(String title){
+    public static int getSelectIcon_by_title(String title){
         int icon = 0;
         switch (title){
             case HOME:
