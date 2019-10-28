@@ -99,7 +99,11 @@ public class ChallengeFragment extends BaseFragment {
         challenge_season_text.setText(getString(R.string.challenge) + " " + challengeResponse.getSeason().getName());
 
         if(challengeResponse.getSeason().getName().equals(getString(R.string.pre_season))) {
-            challenge_season_end_date.setText(getString(R.string.next_season) + " " + CommonFunc.GetDisplayDate(CommonFunc.RevertFullDateStringRevert(challengeResponse.getSeason().getStart_date())));
+            if(challengeResponse.getSeason().getEnd_date() == null){
+                challenge_season_end_date.setText(getString(R.string.next_season) + " N/A");
+            }else {
+                challenge_season_end_date.setText(getString(R.string.next_season) + " " + CommonFunc.GetDisplayDate(CommonFunc.RevertFullDateStringRevert(challengeResponse.getSeason().getStart_date())));
+            }
             points_number.setText(" 0");
             rank_text.setText("RANK: N/A");
         }else{
