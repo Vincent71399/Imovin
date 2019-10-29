@@ -201,6 +201,12 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         });
 
         navigator_title.setText(mTitles[defaultPagePosition]);
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        OtherFunc.GetDBFunction().addHomeCount(year, month, day);
     }
 
     @Override
