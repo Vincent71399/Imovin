@@ -10,7 +10,6 @@ import android.net.NetworkInfo;
 import android.os.IBinder;
 import android.util.Log;
 
-import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,7 +20,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.Common.OtherFunc;
 import sg.edu.nus.imovin.GreenDAO.LogFuncClick;
-import sg.edu.nus.imovin.HttpConnection.UploadRequests;
 import sg.edu.nus.imovin.Retrofit.Request.DailyLogRequest;
 import sg.edu.nus.imovin.Retrofit.Response.DailyLogResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
