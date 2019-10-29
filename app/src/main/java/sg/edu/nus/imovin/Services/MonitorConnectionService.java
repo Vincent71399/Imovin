@@ -10,11 +10,25 @@ import android.net.NetworkInfo;
 import android.os.IBinder;
 import android.util.Log;
 
+import java.util.Calendar;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.Common.OtherFunc;
 import sg.edu.nus.imovin.GreenDAO.LogFuncClick;
 import sg.edu.nus.imovin.HttpConnection.UploadRequests;
+import sg.edu.nus.imovin.Retrofit.Request.DailyLogRequest;
+import sg.edu.nus.imovin.Retrofit.Response.DailyLogResponse;
+import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
+import sg.edu.nus.imovin.System.ImovinApplication;
+import sg.edu.nus.imovin.System.LogConstants;
+
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
 public class MonitorConnectionService extends Service {
     private static final String TAG = "Monitoring";
@@ -75,7 +89,7 @@ public class MonitorConnectionService extends Service {
                     }else{
                         keepRunning = false;
                     }
-                    Thread.sleep(10000);
+                    Thread.sleep(3600000);
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -90,17 +104,62 @@ public class MonitorConnectionService extends Service {
         List<LogFuncClick> pendingUploadLogs = OtherFunc.GetDBFunction().queryLogFuncClick_need_upload();
         for(LogFuncClick logFuncClick : pendingUploadLogs){
             Log.d("Monitoring", String.valueOf(logFuncClick.getId()));
-
-//            String return_id = UploadRequests.UploadVasCogTestResult(vasCogRecord.getPostData());
-//            if(return_id != null){
-//                vasCogRecord.setIsPendingUpload(false);
-//                OtherFunc.GetDBFunction().updateVasCogRecordStatus(vasCogRecord);
-//                OtherFunc.GetDBFunction().updateOnlineRecordId_by_Id(vasCogRecord.getId(), return_id);
-//            }
+            UploadSinglePendingLog(logFuncClick);
         }
-//        OtherFunc.GetDBFunction().removeUpdatedVasCogRecord();
-//        UploadRequests.UploadVasEditResult();
     }
+
+    private void UploadSinglePendingLog(LogFuncClick logFuncClick){
+        String dateString = CommonFunc.GetDisplayDate(logFuncClick.getRecordDateYear(), logFuncClick.getRecordDateMonth(), logFuncClick.getRecordDateDay()) ;
+
+        DailyLogRequest dailyLogRequest = new DailyLogRequest(
+                dateString,
+                logFuncClick.getHomeCount(),
+                logFuncClick.getChallengeCount(),
+                logFuncClick.getLibraryCount(),
+                logFuncClick.getSocialCount(),
+                logFuncClick.getForumCount(),
+                logFuncClick.getMonitorCount(),
+                logFuncClick.getGoalCount()
+        );
+
+        UploadDailyLogRequest(dailyLogRequest, logFuncClick);
+    }
+
+    private void UploadDailyLogRequest(DailyLogRequest dailyLogRequest, final LogFuncClick logFuncClick){
+        OtherFunc.GetDBFunction().updateLogFuncClickFlag_to_IsUploading(logFuncClick);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        Call<DailyLogResponse> call = service.postDailyLog(dailyLogRequest);
+        call.enqueue(new Callback<DailyLogResponse>() {
+            @Override
+            public void onResponse(Call<DailyLogResponse> call, Response<DailyLogResponse> response) {
+                try {
+                    DailyLogResponse dailyLogResponse = response.body();
+                    String result = dailyLogResponse.get_status();
+                    Log.d(LogConstants.LogTag, result);
+                    if(result.equals("OK")){
+                        OtherFunc.GetDBFunction().updateLogFuncClickFlag_to_UploadFinished(logFuncClick);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception upload daily log : " + e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DailyLogResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure upload daily log : " + t.toString());
+            }
+        });
+    }
+
 
     private boolean HavePendingLogs(){
         List<LogFuncClick> logFuncClickList = OtherFunc.GetDBFunction().queryLogFuncClick_need_upload();

@@ -134,7 +134,7 @@ public class DBFunctions_LogFuncClick {
         }
     }
 
-    private void updateLogFuncClickFlag_to_IsUploading(LogFuncClick logFuncClick){
+    public void updateLogFuncClickFlag_to_IsUploading(LogFuncClick logFuncClick){
         Query query = logFuncClickDao.queryBuilder()
                 .where(LogFuncClickDao.Properties.Id.eq(logFuncClick.getId()))
                 .where(LogFuncClickDao.Properties.UpdateFlag.eq(FlagConstant.PendingUpload))
@@ -146,13 +146,7 @@ public class DBFunctions_LogFuncClick {
         }
     }
 
-    public void updateLogFuncClickFlag_to_IsUploading(List<LogFuncClick> logFuncClickList){
-        for(LogFuncClick logFuncClick : logFuncClickList){
-            updateLogFuncClickFlag_to_IsUploading(logFuncClick);
-        }
-    }
-
-    private void updateLogFuncClickFlag_to_UploadFinished(LogFuncClick logFuncClick){
+    public void updateLogFuncClickFlag_to_UploadFinished(LogFuncClick logFuncClick){
         Query query = logFuncClickDao.queryBuilder()
                 .where(LogFuncClickDao.Properties.Id.eq(logFuncClick.getId()))
                 .where(LogFuncClickDao.Properties.UpdateFlag.eq(FlagConstant.IsUploading))
@@ -161,12 +155,6 @@ public class DBFunctions_LogFuncClick {
         if(queryLogFuncClick != null) {
             queryLogFuncClick.setUpdateFlag(FlagConstant.UploadFinished);
             insertLogFuncClick(queryLogFuncClick);
-        }
-    }
-
-    public void updateLogFuncClickFlag_to_UploadFinished(List<LogFuncClick> logFuncClickList){
-        for(LogFuncClick logFuncClick : logFuncClickList){
-            updateLogFuncClickFlag_to_UploadFinished(logFuncClick);
         }
     }
 

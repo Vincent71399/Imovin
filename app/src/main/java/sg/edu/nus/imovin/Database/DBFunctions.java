@@ -53,12 +53,12 @@ public class DBFunctions {
         dbFunctions_logFuncClick.updateLogFuncClick(logFuncClick);
     }
 
-    public void updateLogFuncClickFlag_to_IsUploading(List<LogFuncClick> logFuncClickList){
-        dbFunctions_logFuncClick.updateLogFuncClickFlag_to_IsUploading(logFuncClickList);
+    public void updateLogFuncClickFlag_to_IsUploading(LogFuncClick logFuncClick){
+        dbFunctions_logFuncClick.updateLogFuncClickFlag_to_IsUploading(logFuncClick);
     }
 
-    public void updateLogFuncClickFlag_to_UploadFinished(List<LogFuncClick> logFuncClickList){
-        dbFunctions_logFuncClick.updateLogFuncClickFlag_to_UploadFinished(logFuncClickList);
+    public void updateLogFuncClickFlag_to_UploadFinished(LogFuncClick logFuncClick){
+        dbFunctions_logFuncClick.updateLogFuncClickFlag_to_UploadFinished(logFuncClick);
     }
 
     public LogFuncClick queryLogFuncClick_by_Date(int year, int month, int day){

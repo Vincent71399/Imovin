@@ -115,6 +115,12 @@ public class CommonFunc {
         return dateFormat;
     }
 
+    public static String GetDisplayDate(int year, int month, int day){
+        String dateFormat = addZero(day) + "/" + addZero(month + 1) + "/" + year + " 00:00:00";
+
+        return dateFormat;
+    }
+
     public static Calendar RevertFullDateStringRevert(String dateString){
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:SS");
 

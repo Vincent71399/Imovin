@@ -1,6 +1,7 @@
 package sg.edu.nus.imovin.System;
 
 import android.app.Application;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -21,6 +22,7 @@ import okhttp3.Request;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Object.UserData;
 import sg.edu.nus.imovin.Retrofit.Response.UserInfoResponse;
+import sg.edu.nus.imovin.Services.MonitorConnectionService;
 
 public class ImovinApplication extends Application {
     private static ImovinApplication instance;
@@ -38,6 +40,8 @@ public class ImovinApplication extends Application {
     private static boolean NeedRefreshPlanMonitor = false;
 
     private SoftReference<SQLiteDatabase> databaseSoftReference;
+
+    private Intent monitor_connection_service_intent;
 
     public static ImovinApplication getInstance(){
         return instance;
@@ -64,6 +68,19 @@ public class ImovinApplication extends Application {
                 Log.d("fcm_test", token);
             }
         });
+
+        StartPendingUploadService();
+    }
+
+    @Override
+    public void onTerminate() {
+        stopService(monitor_connection_service_intent);
+        super.onTerminate();
+    }
+
+    public void StartPendingUploadService(){
+        monitor_connection_service_intent = new Intent(getApplicationContext(), MonitorConnectionService.class);
+        startService(monitor_connection_service_intent);
     }
 
     public static String getToken() {
