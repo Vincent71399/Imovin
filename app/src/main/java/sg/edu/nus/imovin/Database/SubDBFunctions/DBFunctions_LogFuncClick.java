@@ -27,6 +27,113 @@ public class DBFunctions_LogFuncClick {
         logFuncClickDao.insertOrReplace(logFuncClick);
     }
 
+    private LogFuncClick GenerateLogFuncClick(int year, int month, int day){
+        LogFuncClick logFuncClick = new LogFuncClick();
+        logFuncClick.setRecordDateYear(year);
+        logFuncClick.setRecordDateMonth(month);
+        logFuncClick.setRecordDateDay(day);
+        logFuncClick.setUpdateFlag(FlagConstant.PendingUpload);
+        logFuncClick.setHomeCount(0);
+        logFuncClick.setChallengeCount(0);
+        logFuncClick.setLibraryCount(0);
+        logFuncClick.setSocialCount(0);
+        logFuncClick.setForumCount(0);
+        logFuncClick.setMonitorCount(0);
+        logFuncClick.setGoalCount(0);
+        return logFuncClick;
+    }
+
+    public void addHomeCount(int year, int month, int day){
+        LogFuncClick logFuncClick = queryLogFuncClick_by_Date(year, month, day);
+        if(logFuncClick == null){
+            logFuncClick = GenerateLogFuncClick(year, month, day);
+            logFuncClick.setHomeCount(1);
+            insertLogFuncClick(logFuncClick);
+        }else{
+            int count = logFuncClick.getHomeCount() + 1;
+            logFuncClick.setHomeCount(count);
+            insertLogFuncClick(logFuncClick);
+        }
+    }
+
+    public void addChallengeCount(int year, int month, int day){
+        LogFuncClick logFuncClick = queryLogFuncClick_by_Date(year, month, day);
+        if(logFuncClick == null){
+            logFuncClick = GenerateLogFuncClick(year, month, day);
+            logFuncClick.setChallengeCount(1);
+            insertLogFuncClick(logFuncClick);
+        }else{
+            int count = logFuncClick.getChallengeCount() + 1;
+            logFuncClick.setChallengeCount(count);
+            insertLogFuncClick(logFuncClick);
+        }
+    }
+
+    public void addLibraryCount(int year, int month, int day){
+        LogFuncClick logFuncClick = queryLogFuncClick_by_Date(year, month, day);
+        if(logFuncClick == null){
+            logFuncClick = GenerateLogFuncClick(year, month, day);
+            logFuncClick.setLibraryCount(1);
+            insertLogFuncClick(logFuncClick);
+        }else{
+            int count = logFuncClick.getLibraryCount() + 1;
+            logFuncClick.setLibraryCount(count);
+            insertLogFuncClick(logFuncClick);
+        }
+    }
+
+    public void addSocialCount(int year, int month, int day){
+        LogFuncClick logFuncClick = queryLogFuncClick_by_Date(year, month, day);
+        if(logFuncClick == null){
+            logFuncClick = GenerateLogFuncClick(year, month, day);
+            logFuncClick.setSocialCount(1);
+            insertLogFuncClick(logFuncClick);
+        }else{
+            int count = logFuncClick.getSocialCount() + 1;
+            logFuncClick.setSocialCount(count);
+            insertLogFuncClick(logFuncClick);
+        }
+    }
+
+    public void addForumCount(int year, int month, int day){
+        LogFuncClick logFuncClick = queryLogFuncClick_by_Date(year, month, day);
+        if(logFuncClick == null){
+            logFuncClick = GenerateLogFuncClick(year, month, day);
+            logFuncClick.setForumCount(1);
+            insertLogFuncClick(logFuncClick);
+        }else{
+            int count = logFuncClick.getForumCount() + 1;
+            logFuncClick.setForumCount(count);
+            insertLogFuncClick(logFuncClick);
+        }
+    }
+
+    public void addMonitorCount(int year, int month, int day){
+        LogFuncClick logFuncClick = queryLogFuncClick_by_Date(year, month, day);
+        if(logFuncClick == null){
+            logFuncClick = GenerateLogFuncClick(year, month, day);
+            logFuncClick.setMonitorCount(1);
+            insertLogFuncClick(logFuncClick);
+        }else{
+            int count = logFuncClick.getMonitorCount() + 1;
+            logFuncClick.setMonitorCount(count);
+            insertLogFuncClick(logFuncClick);
+        }
+    }
+
+    public void addGoalCount(int year, int month, int day){
+        LogFuncClick logFuncClick = queryLogFuncClick_by_Date(year, month, day);
+        if(logFuncClick == null){
+            logFuncClick = GenerateLogFuncClick(year, month, day);
+            logFuncClick.setGoalCount(1);
+            insertLogFuncClick(logFuncClick);
+        }else{
+            int count = logFuncClick.getGoalCount() + 1;
+            logFuncClick.setGoalCount(count);
+            insertLogFuncClick(logFuncClick);
+        }
+    }
+
     private void updateLogFuncClickFlag_to_IsUploading(LogFuncClick logFuncClick){
         Query query = logFuncClickDao.queryBuilder()
                 .where(LogFuncClickDao.Properties.Id.eq(logFuncClick.getId()))

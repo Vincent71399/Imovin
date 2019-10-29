@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -25,11 +26,14 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import sg.edu.nus.imovin.Adapters.TabAdapter;
+import sg.edu.nus.imovin.Common.OtherFunc;
+import sg.edu.nus.imovin.GreenDAO.LogFuncClick;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.FuncBlockConstants;
@@ -178,6 +182,7 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onPageSelected(int position) {
+                logFunc(position);
                 if(position >= mTitles.length - 1){
                     sub_tab_layout.setCurrentTab(mTitles.length - 1);
                     ((TabAdapter)more_spinner.getAdapter()).setSelection(position - mTitles.length + 1);
@@ -343,5 +348,43 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
+    private void logFunc(int position){
+        String funcBlockName = "";
+        if(position < mTitles.length - 1){
+            funcBlockName = mTitles[position];
+        }else if(position - mTitles.length + 1 < moreTitles.length){
+            funcBlockName = moreTitles[position - mTitles.length + 1];
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        switch (funcBlockName){
+            case FuncBlockConstants.HOME:
+                OtherFunc.GetDBFunction().addHomeCount(year, month, day);
+                break;
+            case FuncBlockConstants.LIBRARY:
+                OtherFunc.GetDBFunction().addLibraryCount(year, month, day);
+                break;
+            case FuncBlockConstants.FORUM:
+                OtherFunc.GetDBFunction().addForumCount(year, month, day);
+                break;
+            case FuncBlockConstants.GOAL:
+                OtherFunc.GetDBFunction().addGoalCount(year, month, day);
+                break;
+            case FuncBlockConstants.MONITOR:
+                OtherFunc.GetDBFunction().addMonitorCount(year, month, day);
+                break;
+            case FuncBlockConstants.SOCIAL:
+                OtherFunc.GetDBFunction().addSocialCount(year, month, day);
+                break;
+            case FuncBlockConstants.CHALLENGE:
+                OtherFunc.GetDBFunction().addChallengeCount(year, month, day);
+                break;
+        }
+
+    }
 
 }

@@ -21,6 +21,34 @@ public class DBFunctions {
         dbFunctions_logFuncClick.insertLogFuncClick(logFuncClick);
     }
 
+    public void addHomeCount(int year, int month, int day){
+        dbFunctions_logFuncClick.addHomeCount(year, month, day);
+    }
+
+    public void addChallengeCount(int year, int month, int day){
+        dbFunctions_logFuncClick.addChallengeCount(year, month, day);
+    }
+
+    public void addLibraryCount(int year, int month, int day){
+        dbFunctions_logFuncClick.addLibraryCount(year, month, day);
+    }
+
+    public void addSocialCount(int year, int month, int day){
+        dbFunctions_logFuncClick.addSocialCount(year, month, day);
+    }
+
+    public void addForumCount(int year, int month, int day){
+        dbFunctions_logFuncClick.addForumCount(year, month, day);
+    }
+
+    public void addMonitorCount(int year, int month, int day){
+        dbFunctions_logFuncClick.addMonitorCount(year, month, day);
+    }
+
+    public void addGoalCount(int year, int month, int day){
+        dbFunctions_logFuncClick.addGoalCount(year, month, day);
+    }
+
     public void updateLogFuncClick(LogFuncClick logFuncClick){
         dbFunctions_logFuncClick.updateLogFuncClick(logFuncClick);
     }
