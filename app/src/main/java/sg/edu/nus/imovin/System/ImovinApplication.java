@@ -20,14 +20,12 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
-import sg.edu.nus.imovin.Retrofit.Object.UserData;
 import sg.edu.nus.imovin.Retrofit.Response.UserInfoResponse;
 import sg.edu.nus.imovin.Services.MonitorConnectionService;
 
 public class ImovinApplication extends Application {
     private static ImovinApplication instance;
     private static String token;
-    private static UserData userData;
     private static UserInfoResponse userInfoResponse;
     private static PlanData planData;
     private static Integer target;
@@ -89,14 +87,6 @@ public class ImovinApplication extends Application {
 
     public static void setToken(String token) {
         ImovinApplication.token = token;
-    }
-
-    public static UserData getUserData() {
-        return userData;
-    }
-
-    public static void setUserData(UserData userData) {
-        ImovinApplication.userData = userData;
     }
 
     public static UserInfoResponse getUserInfoResponse() {

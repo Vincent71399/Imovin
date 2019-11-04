@@ -80,29 +80,24 @@ public class MonitorConnectionService extends Service {
                 try {
                     if(getApplicationContext() != null){
                         UploadPendingLogs();
-                        if(!HavePendingLogs()){
-                            Log.d(TAG, "No Pending Record Found, Stop Service");
-                            keepRunning = false;
-                        }
-                    }else{
-                        keepRunning = false;
                     }
-                    Thread.sleep(3600000);
+                    Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                     keepRunning = false;
                 }
             }
-//            stopSelf();
         }
     }
 
     private void UploadPendingLogs(){
-        List<LogFuncClick> pendingUploadLogs = OtherFunc.GetDBFunction().queryLogFuncClick_need_upload();
-        for(LogFuncClick logFuncClick : pendingUploadLogs){
-            Log.d("Monitoring", String.valueOf(logFuncClick.getId()));
-            UploadSinglePendingLog(logFuncClick);
+        if(OtherFunc.GetDBFunction() != null) {
+            List<LogFuncClick> pendingUploadLogs = OtherFunc.GetDBFunction().queryLogFuncClick_need_upload();
+            for (LogFuncClick logFuncClick : pendingUploadLogs) {
+                Log.d("Monitoring", String.valueOf(logFuncClick.getId()));
+                UploadSinglePendingLog(logFuncClick);
+            }
         }
     }
 
@@ -148,20 +143,16 @@ public class MonitorConnectionService extends Service {
                 }catch (Exception e){
                     e.printStackTrace();
                     Log.d(LogConstants.LogTag, "Exception upload daily log : " + e.toString());
+                    OtherFunc.GetDBFunction().updateLogFuncClickFlag_to_PendingUpdate(logFuncClick);
                 }
             }
 
             @Override
             public void onFailure(Call<DailyLogResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure upload daily log : " + t.toString());
+                OtherFunc.GetDBFunction().updateLogFuncClickFlag_to_PendingUpdate(logFuncClick);
             }
         });
-    }
-
-
-    private boolean HavePendingLogs(){
-        List<LogFuncClick> logFuncClickList = OtherFunc.GetDBFunction().queryLogFuncClick_need_upload();
-        return logFuncClickList.size() != 0;
     }
 
 }

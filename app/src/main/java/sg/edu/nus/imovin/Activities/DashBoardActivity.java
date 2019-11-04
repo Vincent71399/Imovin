@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,6 +39,7 @@ import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.FuncBlockConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
+import sg.edu.nus.imovin.System.LogConstants;
 import sg.edu.nus.imovin.System.SystemConstant;
 import sg.edu.nus.imovin.utils.TabEntity;
 import sg.edu.nus.imovin.utils.ViewFindUtils;
@@ -207,6 +209,8 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         OtherFunc.GetDBFunction().addHomeCount(year, month, day);
+        LogFuncClick logFuncClick1 = OtherFunc.GetDBFunction().queryLogFuncClick_by_Date(year, month, day);
+        Log.d(LogConstants.DailyLogTag, "Home Count : " + logFuncClick1.getHomeCount());
     }
 
     @Override
@@ -370,24 +374,38 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         switch (funcBlockName){
             case FuncBlockConstants.HOME:
                 OtherFunc.GetDBFunction().addHomeCount(year, month, day);
+                LogFuncClick logFuncClick1 = OtherFunc.GetDBFunction().queryLogFuncClick_by_Date(year, month, day);
+                Log.d(LogConstants.DailyLogTag, "Home Count : " + logFuncClick1.getHomeCount());
                 break;
             case FuncBlockConstants.LIBRARY:
                 OtherFunc.GetDBFunction().addLibraryCount(year, month, day);
+                LogFuncClick logFuncClick2 = OtherFunc.GetDBFunction().queryLogFuncClick_by_Date(year, month, day);
+                Log.d(LogConstants.DailyLogTag, "Library Count : " + logFuncClick2.getLibraryCount());
                 break;
             case FuncBlockConstants.FORUM:
                 OtherFunc.GetDBFunction().addForumCount(year, month, day);
+                LogFuncClick logFuncClick3 = OtherFunc.GetDBFunction().queryLogFuncClick_by_Date(year, month, day);
+                Log.d(LogConstants.DailyLogTag, "Forum Count : " + logFuncClick3.getForumCount());
                 break;
             case FuncBlockConstants.GOAL:
                 OtherFunc.GetDBFunction().addGoalCount(year, month, day);
+                LogFuncClick logFuncClick4 = OtherFunc.GetDBFunction().queryLogFuncClick_by_Date(year, month, day);
+                Log.d(LogConstants.DailyLogTag, "Goal Count : " + logFuncClick4.getGoalCount());
                 break;
             case FuncBlockConstants.MONITOR:
                 OtherFunc.GetDBFunction().addMonitorCount(year, month, day);
+                LogFuncClick logFuncClick5 = OtherFunc.GetDBFunction().queryLogFuncClick_by_Date(year, month, day);
+                Log.d(LogConstants.DailyLogTag, "Monitor Count : " + logFuncClick5.getMonitorCount());
                 break;
             case FuncBlockConstants.SOCIAL:
                 OtherFunc.GetDBFunction().addSocialCount(year, month, day);
+                LogFuncClick logFuncClick6 = OtherFunc.GetDBFunction().queryLogFuncClick_by_Date(year, month, day);
+                Log.d(LogConstants.DailyLogTag, "Social Count : " + logFuncClick6.getSocialCount());
                 break;
             case FuncBlockConstants.CHALLENGE:
                 OtherFunc.GetDBFunction().addChallengeCount(year, month, day);
+                LogFuncClick logFuncClick7 = OtherFunc.GetDBFunction().queryLogFuncClick_by_Date(year, month, day);
+                Log.d(LogConstants.DailyLogTag, "Challenge Count : " + logFuncClick7.getChallengeCount());
                 break;
         }
 

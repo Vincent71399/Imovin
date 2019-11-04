@@ -30,8 +30,10 @@ import sg.edu.nus.imovin.Activities.ForumNewPostActivity;
 import sg.edu.nus.imovin.Adapters.ThreadAdapter;
 import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.Event.ForumEvent;
+import sg.edu.nus.imovin.Event.LikeThreadEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.ThreadData;
+import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
@@ -153,6 +155,11 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
                 Init();
                 break;
         }
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEvent(LikeThreadEvent event) {
+
     }
 
     private void SetupData(){

@@ -36,8 +36,7 @@ import sg.edu.nus.imovin.Event.LikeCommentEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.CommentData;
 import sg.edu.nus.imovin.Retrofit.Object.ThreadData;
-import sg.edu.nus.imovin.Retrofit.Request.LikeCommentRequest;
-import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
+import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
 import sg.edu.nus.imovin.Retrofit.Response.LikeResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseActivity;
@@ -155,7 +154,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LikeCommentEvent event) {
-        likeComment(event.getComment_id(), new LikeCommentRequest(threadData.get_id(), event.getIs_like()));
+        likeComment(event.getComment_id(), new LikeRequest());
     }
 
     @Override
@@ -174,7 +173,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    public void likeComment(String comment_id, LikeCommentRequest likeCommentRequest){
+    public void likeComment(String comment_id, LikeRequest likeRequest){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -186,7 +185,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_LIKE_COMMENT, comment_id);
 
-        Call<LikeResponse> call = service.likeComment(url, likeCommentRequest);
+        Call<LikeResponse> call = service.likeComment(url, likeRequest);
 
         call.enqueue(new Callback<LikeResponse>() {
             @Override

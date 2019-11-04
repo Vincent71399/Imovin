@@ -52,6 +52,7 @@ public class DBFunctions_LogFuncClick {
         }else{
             int count = logFuncClick.getHomeCount() + 1;
             logFuncClick.setHomeCount(count);
+            logFuncClick.setUpdateFlag(FlagConstant.PendingUpload);
             insertLogFuncClick(logFuncClick);
         }
     }
@@ -65,6 +66,7 @@ public class DBFunctions_LogFuncClick {
         }else{
             int count = logFuncClick.getChallengeCount() + 1;
             logFuncClick.setChallengeCount(count);
+            logFuncClick.setUpdateFlag(FlagConstant.PendingUpload);
             insertLogFuncClick(logFuncClick);
         }
     }
@@ -78,6 +80,7 @@ public class DBFunctions_LogFuncClick {
         }else{
             int count = logFuncClick.getLibraryCount() + 1;
             logFuncClick.setLibraryCount(count);
+            logFuncClick.setUpdateFlag(FlagConstant.PendingUpload);
             insertLogFuncClick(logFuncClick);
         }
     }
@@ -91,6 +94,7 @@ public class DBFunctions_LogFuncClick {
         }else{
             int count = logFuncClick.getSocialCount() + 1;
             logFuncClick.setSocialCount(count);
+            logFuncClick.setUpdateFlag(FlagConstant.PendingUpload);
             insertLogFuncClick(logFuncClick);
         }
     }
@@ -104,6 +108,7 @@ public class DBFunctions_LogFuncClick {
         }else{
             int count = logFuncClick.getForumCount() + 1;
             logFuncClick.setForumCount(count);
+            logFuncClick.setUpdateFlag(FlagConstant.PendingUpload);
             insertLogFuncClick(logFuncClick);
         }
     }
@@ -117,6 +122,7 @@ public class DBFunctions_LogFuncClick {
         }else{
             int count = logFuncClick.getMonitorCount() + 1;
             logFuncClick.setMonitorCount(count);
+            logFuncClick.setUpdateFlag(FlagConstant.PendingUpload);
             insertLogFuncClick(logFuncClick);
         }
     }
@@ -130,6 +136,7 @@ public class DBFunctions_LogFuncClick {
         }else{
             int count = logFuncClick.getGoalCount() + 1;
             logFuncClick.setGoalCount(count);
+            logFuncClick.setUpdateFlag(FlagConstant.PendingUpload);
             insertLogFuncClick(logFuncClick);
         }
     }
@@ -154,6 +161,17 @@ public class DBFunctions_LogFuncClick {
         LogFuncClick queryLogFuncClick = (LogFuncClick) query.unique();
         if(queryLogFuncClick != null) {
             queryLogFuncClick.setUpdateFlag(FlagConstant.UploadFinished);
+            insertLogFuncClick(queryLogFuncClick);
+        }
+    }
+
+    public void updateLogFuncClickFlag_to_PendingUpdate(LogFuncClick logFuncClick){
+        Query query = logFuncClickDao.queryBuilder()
+                .where(LogFuncClickDao.Properties.Id.eq(logFuncClick.getId()))
+                .build();
+        LogFuncClick queryLogFuncClick = (LogFuncClick) query.unique();
+        if(queryLogFuncClick != null) {
+            queryLogFuncClick.setUpdateFlag(FlagConstant.PendingUpload);
             insertLogFuncClick(queryLogFuncClick);
         }
     }

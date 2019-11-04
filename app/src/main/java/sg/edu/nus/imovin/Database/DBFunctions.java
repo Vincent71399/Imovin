@@ -61,6 +61,10 @@ public class DBFunctions {
         dbFunctions_logFuncClick.updateLogFuncClickFlag_to_UploadFinished(logFuncClick);
     }
 
+    public void updateLogFuncClickFlag_to_PendingUpdate(LogFuncClick logFuncClick){
+        dbFunctions_logFuncClick.updateLogFuncClickFlag_to_PendingUpdate(logFuncClick);
+    }
+
     public LogFuncClick queryLogFuncClick_by_Date(int year, int month, int day){
         return dbFunctions_logFuncClick.queryLogFuncClick_by_Date(year, month, day);
     }

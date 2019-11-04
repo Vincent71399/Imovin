@@ -10,7 +10,7 @@ import sg.edu.nus.imovin.System.ImovinApplication;
 
 public class OtherFunc {
     public static DBFunctions GetDBFunction(){
-        SQLiteDatabase db = GetDatabase(ImovinApplication.getInstance());
+        SQLiteDatabase db = GetDatabase();
         if(db != null) {
             return new DBFunctions(db);
         }else{
@@ -19,12 +19,14 @@ public class OtherFunc {
         }
     }
 
-    public static SQLiteDatabase GetDatabase(Context context){
-        SQLiteDatabase database = ((ImovinApplication) context.getApplicationContext()).getDatabase();
+    public static SQLiteDatabase GetDatabase(){
+        SQLiteDatabase database = ImovinApplication.getInstance().getDatabase();
         if (database == null || !database.isOpen()) {
-            DataBaseHelper dbHelper = new DataBaseHelper(context);
-            database = dbHelper.getWritableDatabase();
-            ((ImovinApplication) context.getApplicationContext()).setDatabase(database);
+            if(ImovinApplication.getInstance().getUserInfoResponse() != null) {
+                DataBaseHelper dbHelper = new DataBaseHelper(ImovinApplication.getInstance(), ImovinApplication.getInstance().getUserInfoResponse().get_id());
+                database = dbHelper.getWritableDatabase();
+                ImovinApplication.getInstance().setDatabase(database);
+            }
         }
         return database;
     }

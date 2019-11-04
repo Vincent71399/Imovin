@@ -21,7 +21,7 @@ import sg.edu.nus.imovin.Retrofit.Request.CreateSocialPostRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreateThreadRequest;
 import sg.edu.nus.imovin.Retrofit.Request.DailyLogRequest;
 import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
-import sg.edu.nus.imovin.Retrofit.Request.LikeCommentRequest;
+import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeSocialCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.ResetPasswordRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UpdatePlanRequest;
@@ -159,7 +159,7 @@ public interface ImovinService {
     @POST
     Call<LikeResponse> likeComment(
             @Url String url,
-            @Body LikeCommentRequest likeCommentRequest
+            @Body LikeRequest likeRequest
     );
 
     @PATCH
