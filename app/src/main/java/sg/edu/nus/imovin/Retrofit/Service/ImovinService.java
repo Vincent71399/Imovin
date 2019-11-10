@@ -147,7 +147,7 @@ public interface ImovinService {
     @POST
     Call<LikeResponse> likeThread(
             @Url String url,
-            @Body CreateThreadRequest createThreadRequest
+            @Body LikeRequest createThreadRequest
     );
 
     @POST

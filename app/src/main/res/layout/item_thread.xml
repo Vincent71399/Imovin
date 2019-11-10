@@ -7,6 +7,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/body_container"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,6 +32,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|start"/>
 
+            <TextView
+                android:id="@+id/body_text"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:maxLines="3"
+                android:ellipsize="end"/>
+
         </LinearLayout>
 
         <TextView
@@ -51,30 +61,44 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:padding="10dp"
-        android:weightSum="5">
+        android:weightSum="3">
 
         <LinearLayout
+            android:id="@+id/thumbs_up_container"
             android:orientation="horizontal"
-            android:gravity="center_vertical|start"
+            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:layout_weight="4"
-            android:layout_height="wrap_content">
+            android:layout_weight="1"
+            android:gravity="center_vertical|start"
+            android:padding="10dp">
 
             <ImageView
-                android:src="@drawable/icon_speech_small"
+                android:id="@+id/thumbs_up_image"
+                android:src="@drawable/icon_thumb_small"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"/>
 
             <TextView
-                android:id="@+id/comment_count"
+                android:id="@+id/likes_text"
                 android:textSize="18sp"
                 android:textColor="@color/black_color"
                 android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical|start"/>
+                android:gravity="center_vertical|end"/>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/comment_count"
+            android:textSize="18sp"
+            android:textColor="@color/black_color"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/post_time"
@@ -83,33 +107,6 @@
             android:padding="10dp"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|end"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/thumbs_up_container"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:padding="10dp"
-        android:weightSum="5">
-
-        <ImageView
-            android:id="@+id/thumbs_up_image"
-            android:src="@drawable/icon_thumb_small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"/>
-
-        <TextView
-            android:id="@+id/likes_text"
-            android:textSize="18sp"
-            android:textColor="@color/black_color"
-            android:padding="10dp"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|end"/>
 

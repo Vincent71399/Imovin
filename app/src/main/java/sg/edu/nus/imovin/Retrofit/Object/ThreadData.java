@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ThreadData implements Serializable {
     private String _id;
-    private List<CommentData> comments;
+    private Integer comments;
     private String created_at;
     private Boolean liked_by_me;
     private Integer likes;
@@ -23,11 +23,11 @@ public class ThreadData implements Serializable {
         this._id = _id;
     }
 
-    public List<CommentData> getComments() {
+    public Integer getComments() {
         return comments;
     }
 
-    public void setComments(List<CommentData> comments) {
+    public void setComments(Integer comments) {
         this.comments = comments;
     }
 

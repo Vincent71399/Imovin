@@ -23,12 +23,12 @@
                 style="@style/LinkHeaderMinorStyle" />
 
             <TextView
-                android:id="@+id/link_info"
-                style="@style/LinkInfoMinorStyle" />
-
-            <TextView
                 android:id="@+id/link_subtitle"
                 style="@style/LinkSubtitleMinorStyle" />
+
+            <TextView
+                android:id="@+id/link_info"
+                style="@style/LinkInfoMinorStyle" />
 
         </LinearLayout>
 

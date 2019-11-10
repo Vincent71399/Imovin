@@ -22,12 +22,12 @@
                 style="@style/LinkHeaderMinorStyle" />
 
             <TextView
-                android:id="@+id/link_info"
-                style="@style/LinkInfoMinorStyle" />
-
-            <TextView
                 android:id="@+id/link_subtitle"
                 style="@style/LinkSubtitleMinorStyle" />
+
+            <TextView
+                android:id="@+id/link_info"
+                style="@style/LinkInfoMinorStyle" />
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/pic_container"

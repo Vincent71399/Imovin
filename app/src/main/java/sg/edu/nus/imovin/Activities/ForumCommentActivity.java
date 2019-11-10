@@ -58,9 +58,15 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.navigator_right_image) ImageView navigator_right_image;
 
     @BindView(R.id.title_text) TextView title_text;
+    @BindView(R.id.body_text) TextView body_text;
     @BindView(R.id.owner_text) TextView owner_text;
-    @BindView(R.id.post_time) TextView post_time;
-    @BindView(R.id.message) TextView message;
+    @BindView(R.id.thumbs_up_container) LinearLayout thumbs_up_container;
+    @BindView(R.id.thumbs_up_image) ImageView thumbs_up_image;
+    @BindView(R.id.likes_text) TextView likes_text;
+    @BindView(R.id.edit_container) LinearLayout edit_container;
+    @BindView(R.id.delete_container) LinearLayout delete_container;
+
+    @BindView(R.id.comment_count) TextView comment_count;
     @BindView(R.id.comment_list) RecyclerView comment_list;
 
     private ThreadData threadData;
@@ -110,11 +116,18 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
     private void SetupData(){
         threadData = (ThreadData) getIntent().getSerializableExtra(IntentConstants.THREAD_DATA);
-
         title_text.setText(threadData.getTitle());
+        body_text.setText(threadData.getMessage());
         owner_text.setText(threadData.getUser_name());
-        post_time.setText(threadData.getCreated_at());
-        message.setText(threadData.getMessage());
+
+        if(threadData.getLiked_by_me()) {
+            thumbs_up_image.setImageDrawable(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.icon_thumb_colored_small));
+        }else{
+            thumbs_up_image.setImageDrawable(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.icon_thumb_small));
+        }
+        likes_text.setText(String.valueOf(threadData.getLikes()));
+
+        comment_count.setText(getString(R.string.comments_topics) + "(" + threadData.getComments() + ")");
     }
 
     private void SetFunction(){
@@ -132,9 +145,10 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void Init(){
-        CommentAdapter commentAdapter = new CommentAdapter(threadData.getComments());
-        comment_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        comment_list.setAdapter(commentAdapter);
+        //todo
+//        CommentAdapter commentAdapter = new CommentAdapter(threadData.getComments());
+//        comment_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+//        comment_list.setAdapter(commentAdapter);
     }
 
     @Override
@@ -154,7 +168,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LikeCommentEvent event) {
-        likeComment(event.getComment_id(), new LikeRequest());
+        likeComment(event.getComment_id(), new LikeRequest(event.getIs_like()));
     }
 
     @Override
@@ -162,12 +176,13 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         switch (requestCode){
             case IntentConstants.FORUM_NEW_COMMENT:
                 if(resultCode == Activity.RESULT_OK){
-                    CommentData commentData = (CommentData) data.getSerializableExtra(IntentConstants.COMMENT_DATA);
-                    List<CommentData> commentDataList = threadData.getComments();
-                    commentDataList.add(commentData);
-                    threadData.setComments(commentDataList);
-                    Init();
-                    ImovinApplication.setNeedRefreshForum(true);
+                    //todo
+//                    CommentData commentData = (CommentData) data.getSerializableExtra(IntentConstants.COMMENT_DATA);
+//                    List<CommentData> commentDataList = threadData.getComments();
+//                    commentDataList.add(commentData);
+//                    threadData.setComments(commentDataList);
+//                    Init();
+//                    ImovinApplication.setNeedRefreshForum(true);
                 }
                 break;
         }

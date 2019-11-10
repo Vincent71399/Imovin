@@ -11,6 +11,7 @@ public class CommentData implements Serializable {
     private String message;
     private String parent_node;
     private String updated_at;
+    private String user_id;
     private String user_name;
 
     public String get_id() {
@@ -67,6 +68,14 @@ public class CommentData implements Serializable {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getUser_name() {

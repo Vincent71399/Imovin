@@ -55,16 +55,14 @@ public class CommonFunc {
     }
 
     public static String ConvertDateString2DisplayFormat(String dateString){
-        String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:SS");
 
-        Date now = new Date();
-
-        String result = "0d";
-
+        Calendar now = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
+        String dateText = "";
         try {
-            Date date = simpleDateFormat.parse(dateString);
-            long diffInMillies = now.getTime() - date.getTime();
+            calendar.setTime(df.parse(dateString));
+            long diffInMillies = now.getTimeInMillis() - calendar.getTimeInMillis();
             long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
             long diffInHours = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
             long diffInMinutes = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
@@ -75,11 +73,11 @@ public class CommonFunc {
             else
                 return String.format("%dm", diffInMinutes);
 
-        } catch (ParseException e) {
+        }catch (ParseException e){
             e.printStackTrace();
         }
 
-        return result;
+        return dateText;
     }
 
     public static String GetCurrentMonthString(Calendar calendar){
