@@ -30,6 +30,7 @@ public class ConnectionURL {
     public static final String REQUEST_THREAD_WITH_ID = "/api/forum/thread/%s";
     public static final String REQUEST_GET_ALL_THREADS = "/api/forum/threads";
     public static final String REQUEST_LIKE_THREAD = "/api/forum/thread/%s/like";
+    public static final String REQUEST_GET_THREAD_COMMENT = "/api/forum/thread/%s/comments";
     public static final String REQUEST_CREATE_COMMENT = "/api/forum/thread/%s/comment";
     public static final String REQUEST_LIKE_COMMENT = "/api/forum/thread/comment/%s/like";
     public static final String REQUEST_COMMENT_WITH_ID = "/api/forum/comment/%s";

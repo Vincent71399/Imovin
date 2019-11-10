@@ -21,6 +21,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,6 +38,7 @@ import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.CommentData;
 import sg.edu.nus.imovin.Retrofit.Object.ThreadData;
 import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
+import sg.edu.nus.imovin.Retrofit.Response.CommentMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.LikeResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseActivity;
@@ -44,6 +46,7 @@ import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_GET_THREAD_COMMENT;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_LIKE_COMMENT;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
@@ -70,6 +73,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.comment_list) RecyclerView comment_list;
 
     private ThreadData threadData;
+    private List<CommentData> commentDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +132,12 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         likes_text.setText(String.valueOf(threadData.getLikes()));
 
         comment_count.setText(getString(R.string.comments_topics) + "(" + threadData.getComments() + ")");
+
+        commentDataList = new ArrayList<>();
+
+        CommentAdapter commentAdapter = new CommentAdapter(commentDataList);
+        comment_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        comment_list.setAdapter(commentAdapter);
     }
 
     private void SetFunction(){
@@ -145,10 +155,57 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void Init(){
-        //todo
-//        CommentAdapter commentAdapter = new CommentAdapter(threadData.getComments());
-//        comment_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-//        comment_list.setAdapter(commentAdapter);
+        if(commentDataList == null){
+            commentDataList = new ArrayList<>();
+        }else{
+            commentDataList.clear();
+        }
+        
+    }
+
+    private void loadData(){
+        ImovinApplication.setNeedRefreshForum(false);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        String url = SERVER + String.format(
+                Locale.ENGLISH,REQUEST_GET_THREAD_COMMENT, threadData.get_id());
+
+        Call<CommentMultiResponse> call = service.getThreadComment(url);
+
+        ShowConnectIndicator();
+
+        call.enqueue(new Callback<CommentMultiResponse>() {
+            @Override
+            public void onResponse(Call<CommentMultiResponse> call, Response<CommentMultiResponse> response) {
+                try {
+                    CommentMultiResponse commentMultiResponse = response.body();
+
+                    commentDataList.addAll(commentMultiResponse.getData());
+                    comment_list.getAdapter().notifyDataSetChanged();
+                    HideConnectIndicator();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception ForumFragment : " + e.toString());
+                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                    HideConnectIndicator();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommentMultiResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure ForumFragment : " + t.toString());
+                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                HideConnectIndicator();
+            }
+        });
     }
 
     @Override

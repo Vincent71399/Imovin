@@ -30,6 +30,7 @@ import sg.edu.nus.imovin.Retrofit.Request.UploadQuestionRequest;
 import sg.edu.nus.imovin.Retrofit.Response.ArticleResponse;
 import sg.edu.nus.imovin.Retrofit.Response.AuthFitbitResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ChallengeResponse;
+import sg.edu.nus.imovin.Retrofit.Response.CommentMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CreateUpdatePlanResponse;
 import sg.edu.nus.imovin.Retrofit.Response.DailyLogResponse;
@@ -148,6 +149,11 @@ public interface ImovinService {
     Call<LikeResponse> likeThread(
             @Url String url,
             @Body LikeRequest createThreadRequest
+    );
+
+    @GET
+    Call<CommentMultiResponse> getThreadComment(
+            @Url String url
     );
 
     @POST
