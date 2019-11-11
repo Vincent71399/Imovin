@@ -63,6 +63,8 @@ public class CommonFunc {
         String dateText = "";
         try {
             calendar.setTime(df.parse(dateString));
+            int offset = calendar.getTimeZone().getRawOffset();
+            calendar.add(Calendar.MILLISECOND, offset);
 
             long diffInMillies = now.getTimeInMillis() - calendar.getTimeInMillis();
             long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
