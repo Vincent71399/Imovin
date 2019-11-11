@@ -185,13 +185,10 @@ public interface ImovinService {
             @Body CreateSocialPostRequest createSocialPostRequest
     );
 
-    @GET
-    Call<SocialPostResponse> getSocialPost(
-            @Url String url
-    );
-
     @GET(ConnectionURL.REQUEST_GET_ALL_SOCIAL_POSTS)
-    Call<SocialPostMultiResponse> getAllSocialPosts();
+    Call<SocialPostMultiResponse> getAllSocialPosts(
+            @Query("page") Integer page
+    );
 
     @GET
     Call<SocialImageResponse> getSocialImage_by_Id(

@@ -146,7 +146,7 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
 
         ImovinService service = retrofit.create(ImovinService.class);
 
-        Call<SocialPostMultiResponse> call = service.getAllSocialPosts();
+        Call<SocialPostMultiResponse> call = service.getAllSocialPosts(1);
 
         call.enqueue(new Callback<SocialPostMultiResponse>() {
             @Override

@@ -5,6 +5,7 @@ public class CreateUpdatePlanResponse {
     private String _status;
     private String created_at;
     private String updated_at;
+    private String message;
 
     public String get_id() {
         return _id;
@@ -36,5 +37,13 @@ public class CreateUpdatePlanResponse {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
