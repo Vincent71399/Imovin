@@ -81,7 +81,7 @@ public class MonitorConnectionService extends Service {
                     if(getApplicationContext() != null){
                         UploadPendingLogs();
                     }
-                    Thread.sleep(10000);
+                    Thread.sleep(3600000);
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
