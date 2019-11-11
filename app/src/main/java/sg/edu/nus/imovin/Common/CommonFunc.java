@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import sg.edu.nus.imovin.R;
@@ -62,6 +63,7 @@ public class CommonFunc {
         String dateText = "";
         try {
             calendar.setTime(df.parse(dateString));
+
             long diffInMillies = now.getTimeInMillis() - calendar.getTimeInMillis();
             long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
             long diffInHours = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);

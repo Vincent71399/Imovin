@@ -33,6 +33,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Adapters.CommentAdapter;
+import sg.edu.nus.imovin.Event.DeleteCommentEvent;
+import sg.edu.nus.imovin.Event.EditCommentEvent;
 import sg.edu.nus.imovin.Event.LikeCommentEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.CommentData;
@@ -40,6 +42,7 @@ import sg.edu.nus.imovin.Retrofit.Object.ThreadData;
 import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
 import sg.edu.nus.imovin.Retrofit.Response.CommentMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.LikeResponse;
+import sg.edu.nus.imovin.Retrofit.Response.MessageResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.ImovinApplication;
@@ -48,11 +51,15 @@ import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_GET_THREAD_COMMENT;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_LIKE_COMMENT;
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_THREAD_WITH_ID;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
 public class ForumCommentActivity extends BaseActivity implements View.OnClickListener {
 
     private View customActionBar;
+
+    @BindView(R.id.mainView) RelativeLayout mainView;
+
     @BindView(R.id.navigator_middle_title) TextView navigator_middle_title;
     @BindView(R.id.navigator_left) LinearLayout navigator_left;
     @BindView(R.id.navigator_left_image) ImageView navigator_left_image;
@@ -141,6 +148,8 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void SetFunction(){
+        SetMainView(mainView);
+
         navigator_middle_title.setText("");
 
         navigator_left_text.setText(getString(R.string.forum));
@@ -160,10 +169,11 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         }else{
             commentDataList.clear();
         }
-        
+
+        loadCommentData();
     }
 
-    private void loadData(){
+    private void loadCommentData(){
         ImovinApplication.setNeedRefreshForum(false);
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -208,6 +218,51 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
+    private void deleteThread(){
+        ImovinApplication.setNeedRefreshForum(false);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        String url = SERVER + String.format(
+                Locale.ENGLISH,REQUEST_THREAD_WITH_ID, threadData.get_id());
+
+        Call<MessageResponse> call = service.deleteThread(url);
+
+        ShowConnectIndicator();
+
+        call.enqueue(new Callback<MessageResponse>() {
+            @Override
+            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+                try {
+                    MessageResponse messageResponse = response.body();
+                    if(messageResponse.getMessage().equals(getString(R.string.operation_success))){
+                        //todo
+                    }
+                    HideConnectIndicator();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception ForumFragment : " + e.toString());
+                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                    HideConnectIndicator();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MessageResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure ForumFragment : " + t.toString());
+                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                HideConnectIndicator();
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -215,11 +270,28 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.navigator_right:
+                NewComment();
+                break;
+        }
+    }
+
+    private void NewComment(){
+        Intent intent = new Intent();
+        intent.setClass(this, ForumNewCommentActivity.class);
+        intent.putExtra(IntentConstants.THREAD_ID, threadData.get_id());
+        startActivityForResult(intent, IntentConstants.FORUM_NEW_COMMENT);
+    }
+
+    private void EditComment(String comment_id){
+        for(CommentData commentData : commentDataList){
+            if(commentData.get_id().equals(comment_id)){
                 Intent intent = new Intent();
                 intent.setClass(this, ForumNewCommentActivity.class);
                 intent.putExtra(IntentConstants.THREAD_ID, threadData.get_id());
-                startActivityForResult(intent, IntentConstants.FORUM_NEW_COMMENT);
+                intent.putExtra(IntentConstants.COMMENT_DATA, commentData);
+                startActivityForResult(intent, IntentConstants.FORUM_EDIT_COMMENT);
                 break;
+            }
         }
     }
 
@@ -228,18 +300,24 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         likeComment(event.getComment_id(), new LikeRequest(event.getIs_like()));
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EditCommentEvent event) {
+        EditComment(event.getComment_id());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(DeleteCommentEvent event) {
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode){
             case IntentConstants.FORUM_NEW_COMMENT:
                 if(resultCode == Activity.RESULT_OK){
-                    //todo
-//                    CommentData commentData = (CommentData) data.getSerializableExtra(IntentConstants.COMMENT_DATA);
-//                    List<CommentData> commentDataList = threadData.getComments();
-//                    commentDataList.add(commentData);
-//                    threadData.setComments(commentDataList);
-//                    Init();
-//                    ImovinApplication.setNeedRefreshForum(true);
+                    CommentData commentData = (CommentData) data.getSerializableExtra(IntentConstants.COMMENT_DATA);
+                    commentDataList.add(0, commentData);
+                    comment_list.getAdapter().notifyDataSetChanged();
                 }
                 break;
         }

@@ -1,147 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.ForumCommentActivity">
+    android:id="@+id/mainView">
 
     <LinearLayout
-        android:id="@+id/body_container"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:weightSum="5">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center_vertical|start"
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/title_text"
-                android:textSize="20sp"
-                android:textColor="@color/black_color"
-                android:textStyle="bold"
-                android:padding="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|start"/>
-
-            <TextView
-                android:id="@+id/body_text"
-                android:textSize="18sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:maxLines="3"
-                android:ellipsize="end"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/owner_text"
-            android:textSize="18sp"
-            android:textColor="@color/theme_purple"
-            android:padding="10dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|end"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:orientation="vertical"
         android:padding="10dp"
-        android:weightSum="6">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activities.ForumCommentActivity">
 
         <LinearLayout
-            android:id="@+id/thumbs_up_container"
+            android:id="@+id/body_container"
             android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:gravity="center_vertical|start"
-            android:padding="10dp">
+            android:gravity="center_vertical"
+            android:weightSum="5">
 
-            <ImageView
-                android:id="@+id/thumbs_up_image"
-                android:src="@drawable/icon_thumb_small"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center_vertical|start"
+                android:layout_width="0dp"
+                android:layout_weight="4"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"/>
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/title_text"
+                    android:textSize="20sp"
+                    android:textColor="@color/black_color"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"/>
+
+                <TextView
+                    android:id="@+id/body_text"
+                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:maxLines="3"
+                    android:ellipsize="end"/>
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/likes_text"
+                android:id="@+id/owner_text"
                 android:textSize="18sp"
-                android:textColor="@color/black_color"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:layout_width="wrap_content"
+                android:textColor="@color/theme_purple"
+                android:padding="10dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|end"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/edit_container"
             android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="10dp">
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:weightSum="6">
 
-            <ImageView
-                android:src="@drawable/icon_pen_small"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/thumbs_up_container"
+                android:orientation="horizontal"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"/>
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:gravity="center_vertical|start"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/thumbs_up_image"
+                    android:src="@drawable/icon_thumb_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/likes_text"
+                    android:textSize="18sp"
+                    android:textColor="@color/black_color"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|end"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_container"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp">
+
+                <ImageView
+                    android:src="@drawable/icon_pen_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/delete_container"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp">
+
+                <ImageView
+                    android:src="@drawable/icon_cross_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/delete_container"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="10dp">
+        <TextView
+            android:id="@+id/comment_count"
+            android:text="@string/comments_topics"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:background="@color/light_grey_color"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-            <ImageView
-                android:src="@drawable/icon_cross_small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"/>
-
-        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comment_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/comment_count"
-        android:text="@string/comments_topics"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:background="@color/light_grey_color"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/comment_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</LinearLayout>
+</RelativeLayout>

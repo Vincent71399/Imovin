@@ -47,29 +47,72 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/thumbs_up_container"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end"
+        android:gravity="center_vertical"
         android:padding="10dp"
-        android:weightSum="5">
+        android:weightSum="6">
 
-        <ImageView
-            android:id="@+id/thumbs_up_image"
-            android:src="@drawable/icon_thumb_small"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/thumbs_up_container"
+            android:orientation="horizontal"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"/>
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:padding="10dp">
 
-        <TextView
-            android:id="@+id/likes_text"
-            android:textSize="18sp"
-            android:textColor="@color/black_color"
-            android:padding="10dp"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/thumbs_up_image"
+                android:src="@drawable/icon_thumb_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/likes_text"
+                android:textSize="18sp"
+                android:textColor="@color/black_color"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/edit_container"
+            android:orientation="horizontal"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical|end"/>
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp">
+
+            <ImageView
+                android:src="@drawable/icon_pen_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/delete_container"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp">
+
+            <ImageView
+                android:src="@drawable/icon_cross_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
