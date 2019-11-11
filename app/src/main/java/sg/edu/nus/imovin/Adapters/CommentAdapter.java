@@ -14,6 +14,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
+import sg.edu.nus.imovin.Event.DeleteCommentEvent;
+import sg.edu.nus.imovin.Event.EditCommentEvent;
 import sg.edu.nus.imovin.Event.LikeCommentEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.CommentData;
@@ -36,6 +38,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentD
         TextView numberLikesText;
         ImageView thumbsUpImage;
         LinearLayout thumbs_up_container;
+        LinearLayout edit_container;
+        LinearLayout delete_container;
+
         public CommentData_ViewHolder(@NonNull View itemView) {
             super(itemView);
             container = itemView.findViewById(R.id.container);
@@ -45,6 +50,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentD
             numberLikesText = itemView.findViewById(R.id.likes_text);
             thumbsUpImage = itemView.findViewById(R.id.thumbs_up_image);
             thumbs_up_container = itemView.findViewById(R.id.thumbs_up_container);
+            edit_container = itemView.findViewById(R.id.edit_container);
+            delete_container = itemView.findViewById(R.id.delete_container);
         }
     }
 
@@ -77,6 +84,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentD
             public void onClick(View view) {
                 boolean like = !commentData.getLiked_by_me();
                 EventBus.getDefault().post(new LikeCommentEvent(commentData.get_id(), like));
+            }
+        });
+        holder.edit_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new EditCommentEvent(commentData.get_id()));
+            }
+        });
+        holder.delete_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new DeleteCommentEvent(commentData.get_id()));
             }
         });
     }

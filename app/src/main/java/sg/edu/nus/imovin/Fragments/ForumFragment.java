@@ -275,6 +275,11 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
                     Init();
                 }
                 break;
+            case IntentConstants.FORUM_COMMENT:
+                if(resultCode == Activity.RESULT_OK){
+                    Init();
+                }
+                break;
         }
     }
 }

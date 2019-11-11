@@ -1,11 +1,13 @@
 package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -36,8 +38,10 @@ import sg.edu.nus.imovin.Adapters.CommentAdapter;
 import sg.edu.nus.imovin.Event.DeleteCommentEvent;
 import sg.edu.nus.imovin.Event.EditCommentEvent;
 import sg.edu.nus.imovin.Event.LikeCommentEvent;
+import sg.edu.nus.imovin.Event.LikeThreadEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.CommentData;
+import sg.edu.nus.imovin.Retrofit.Object.LikeData;
 import sg.edu.nus.imovin.Retrofit.Object.ThreadData;
 import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
 import sg.edu.nus.imovin.Retrofit.Response.CommentMultiResponse;
@@ -49,8 +53,10 @@ import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_COMMENT_WITH_ID;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_GET_THREAD_COMMENT;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_LIKE_COMMENT;
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_LIKE_THREAD;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_THREAD_WITH_ID;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
@@ -82,6 +88,8 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
     private ThreadData threadData;
     private List<CommentData> commentDataList;
 
+    private boolean hasEdit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +114,15 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         super.onStop();
     }
 
+    @Override
+    public void onBackPressed() {
+        if(hasEdit){
+            Intent resultIntent = new Intent();
+            setResult(RESULT_OK, resultIntent);
+        }
+        super.onBackPressed();
+    }
+
     private void SetActionBar(){
         ActionBar actionBar = getSupportActionBar();
         customActionBar = getLayoutInflater().inflate(R.layout.main_navigator, null);
@@ -126,6 +143,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void SetupData(){
+        hasEdit = false;
         threadData = (ThreadData) getIntent().getSerializableExtra(IntentConstants.THREAD_DATA);
         title_text.setText(threadData.getTitle());
         body_text.setText(threadData.getMessage());
@@ -161,6 +179,10 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
         navigator_left.setOnClickListener(this);
         navigator_right.setOnClickListener(this);
+
+        thumbs_up_container.setOnClickListener(this);
+        edit_container.setOnClickListener(this);
+        delete_container.setOnClickListener(this);
     }
 
     private void Init(){
@@ -172,6 +194,20 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
         loadCommentData();
     }
+
+    private void updateLikeFlag(String id, LikeData likeData){
+        int index = 0;
+        for(CommentData commentData : commentDataList){
+            if(commentData.get_id().equals(id)){
+                commentDataList.get(index).setLiked_by_me(likeData.getLiked_by_me());
+                commentDataList.get(index).setLikes(likeData.getLikes());
+            }
+            index++;
+        }
+
+        comment_list.getAdapter().notifyDataSetChanged();
+    }
+
 
     private void loadCommentData(){
         ImovinApplication.setNeedRefreshForum(false);
@@ -218,6 +254,51 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
+    private void LikeThread(final LikeThreadEvent likeThreadEvent){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        String url = SERVER + String.format(
+                Locale.ENGLISH,REQUEST_LIKE_THREAD, likeThreadEvent.getThread_id());
+
+        Call<LikeResponse> call = service.likeThread(url, new LikeRequest(likeThreadEvent.getIs_like()));
+
+        call.enqueue(new Callback<LikeResponse>() {
+            @Override
+            public void onResponse(Call<LikeResponse> call, Response<LikeResponse> response) {
+                try {
+                    LikeResponse likeResponse = response.body();
+                    if(likeResponse.getMessage().equals(getString(R.string.operation_success))){
+                        threadData.setLikes(likeResponse.getData().getLikes());
+                        threadData.setLiked_by_me(likeResponse.getData().getLiked_by_me());
+                        if(threadData.getLiked_by_me()) {
+                            thumbs_up_image.setImageDrawable(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.icon_thumb_colored_small));
+                        }else{
+                            thumbs_up_image.setImageDrawable(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.icon_thumb_small));
+                        }
+                        likes_text.setText(String.valueOf(threadData.getLikes()));
+                        hasEdit = true;
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception ForumFragment Like: " + e.toString());
+                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LikeResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure ForumFragment Like: " + t.toString());
+                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void deleteThread(){
         ImovinApplication.setNeedRefreshForum(false);
 
@@ -242,7 +323,9 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
                 try {
                     MessageResponse messageResponse = response.body();
                     if(messageResponse.getMessage().equals(getString(R.string.operation_success))){
-                        //todo
+                        Intent resultIntent = new Intent();
+                        setResult(RESULT_OK, resultIntent);
+                        finish();
                     }
                     HideConnectIndicator();
 
@@ -263,14 +346,87 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
+    private void deleteComment(final String comment_id){
+        ImovinApplication.setNeedRefreshForum(false);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        String url = SERVER + String.format(
+                Locale.ENGLISH,REQUEST_COMMENT_WITH_ID, comment_id);
+
+        Call<MessageResponse> call = service.deleteComment(url);
+
+        ShowConnectIndicator();
+
+        call.enqueue(new Callback<MessageResponse>() {
+            @Override
+            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+                try {
+                    MessageResponse messageResponse = response.body();
+                    if(messageResponse.getMessage().equals(getString(R.string.operation_success))){
+                        int index = 0;
+                        for(CommentData commentData : commentDataList){
+                            if(commentData.get_id().equals(comment_id)){
+                                break;
+                            }
+                            index ++;
+                        }
+                        commentDataList.remove(index);
+                        comment_list.getAdapter().notifyDataSetChanged();
+                        threadData.setComments(commentDataList.size());
+                        comment_count.setText(getString(R.string.comments_topics) + "(" + threadData.getComments() + ")");
+                        hasEdit = true;
+                    }
+                    HideConnectIndicator();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception ForumFragment : " + e.toString());
+                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                    HideConnectIndicator();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MessageResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure ForumFragment : " + t.toString());
+                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                HideConnectIndicator();
+            }
+        });
+    }
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.navigator_left:
+                if(hasEdit){
+                    Intent resultIntent = new Intent();
+                    setResult(RESULT_OK, resultIntent);
+                }
                 finish();
                 break;
             case R.id.navigator_right:
                 NewComment();
+                break;
+            case R.id.thumbs_up_container:
+                LikeThread(new LikeThreadEvent(threadData.get_id(), !threadData.getLiked_by_me()));
+                break;
+            case R.id.edit_container:
+                Intent intentForum = new Intent();
+                intentForum.setClass(this, ForumNewPostActivity.class);
+                intentForum.putExtra(IntentConstants.THREAD_DATA, threadData);
+                startActivityForResult(intentForum, IntentConstants.FORUM_EDIT_POST);
+                break;
+            case R.id.delete_container:
+                openThreadDeleteDialogBox();
                 break;
         }
     }
@@ -307,23 +463,88 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(DeleteCommentEvent event) {
+        openCommentDeleteDialogBox(event.getComment_id());
+    }
 
+    private void openThreadDeleteDialogBox(){
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        builderSingle.setTitle(getString(R.string.thread_delete_title));
+        builderSingle.setMessage(getString(R.string.thread_delete_confirmation));
+        builderSingle.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                deleteThread();
+            }
+        });
+        builderSingle.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builderSingle.show();
+    }
+
+    private void openCommentDeleteDialogBox(final String comment_id){
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        builderSingle.setTitle(getString(R.string.comment_delete_title));
+        builderSingle.setMessage(getString(R.string.comment_delete_confirmation));
+        builderSingle.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                deleteComment(comment_id);
+            }
+        });
+        builderSingle.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builderSingle.show();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode){
+            case IntentConstants.FORUM_EDIT_POST:
+                if(resultCode == Activity.RESULT_OK){
+                    ThreadData threadData = (ThreadData)data.getSerializableExtra(IntentConstants.THREAD_DATA);
+                    title_text.setText(threadData.getTitle());
+                    body_text.setText(threadData.getMessage());
+                    hasEdit = true;
+                }
+                break;
             case IntentConstants.FORUM_NEW_COMMENT:
                 if(resultCode == Activity.RESULT_OK){
-                    CommentData commentData = (CommentData) data.getSerializableExtra(IntentConstants.COMMENT_DATA);
-                    commentDataList.add(0, commentData);
+                    CommentData commentDataReturn = (CommentData) data.getSerializableExtra(IntentConstants.COMMENT_DATA);
+                    commentDataList.add(0, commentDataReturn);
+
+                    comment_list.getAdapter().notifyDataSetChanged();
+                    threadData.setComments(commentDataList.size());
+                    comment_count.setText(getString(R.string.comments_topics) + "(" + threadData.getComments() + ")");
+                    hasEdit = true;
+                }
+                break;
+            case IntentConstants.FORUM_EDIT_COMMENT:
+                if(resultCode == Activity.RESULT_OK){
+                    int index = 0;
+                    CommentData commentDataReturn = (CommentData) data.getSerializableExtra(IntentConstants.COMMENT_DATA);
+                    for(CommentData commentData : commentDataList){
+                        if(commentData.get_id().equals(commentDataReturn.get_id())){
+                            commentDataList.set(index, commentDataReturn);
+                        }
+                        index++;
+                    }
                     comment_list.getAdapter().notifyDataSetChanged();
                 }
                 break;
         }
     }
 
-    public void likeComment(String comment_id, LikeRequest likeRequest){
+    public void likeComment(final String comment_id, LikeRequest likeRequest){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -342,18 +563,9 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
             public void onResponse(Call<LikeResponse> call, Response<LikeResponse> response) {
                 try {
                     LikeResponse likeResponse = response.body();
-                    //todo
-//                    CommentData resultData = commentResponse.getData();
-//                    List<CommentData> commentDataList = threadData.getComments();
-//                    for(int i=0; i<commentDataList.size(); i++){
-//                        CommentData commentData = commentDataList.get(i);
-//                        if(commentData.get_id().equals(resultData.get_id())){
-//                            commentDataList.set(i, resultData);
-//                        }
-//                    }
-//                    threadData.setComments(commentDataList);
-//                    Init();
-//                    ImovinApplication.setNeedRefreshForum(true);
+                    if(likeResponse.getMessage().equals(getString(R.string.operation_success))){
+                        updateLikeFlag(comment_id, likeResponse.getData());
+                    }
 
                 }catch (Exception e){
                     e.printStackTrace();

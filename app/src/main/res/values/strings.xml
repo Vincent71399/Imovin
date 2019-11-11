@@ -2,6 +2,8 @@
     <string name="app_name">Imovin</string>
 
     <string name="ok">Ok</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="reset_pwd_title">Email has been sent</string>
     <string name="reset_pwd_text">Please check your email and click the link to reset password</string>
 
@@ -61,10 +63,14 @@
 
     <string name="new_thread_title_hint">Enter thread title...</string>
     <string name="new_thread_message_hint">Enter thread message...</string>
+    <string name="thread_delete_title">Delete Thread</string>
+    <string name="thread_delete_confirmation">Confirm Deletion?</string>
 
     <string name="post_a_comment">Post a comment</string>
     <string name="cancel">Cancel</string>
     <string name="enter_comment_here">Enter comment here...</string>
+    <string name="comment_delete_title">Delete Comment</string>
+    <string name="comment_delete_confirmation">Confirm Deletion?</string>
 
     <string name="default_plans">Default Plans</string>
     <string name="custom_plans">Custom Plans</string>

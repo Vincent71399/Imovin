@@ -1,7 +1,8 @@
 package sg.edu.nus.imovin.System;
 
 public class IntentConstants {
-    public static final int FORUM_NEW_POST = 101;
+    public static final int FORUM_NEW_POST = 100;
+    public static final int FORUM_EDIT_POST = 101;
     public static final int FORUM_COMMENT = 102;
     public static final int FORUM_NEW_COMMENT = 103;
     public static final int FORUM_EDIT_COMMENT = 104;
