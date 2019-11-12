@@ -81,9 +81,6 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        if(ImovinApplication.isNeedRefreshPlanGoal()){
-            Init();
-        }
     }
 
     @Override
@@ -101,8 +98,6 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void Init(){
-        ImovinApplication.setNeedRefreshPlanGoal(false);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())

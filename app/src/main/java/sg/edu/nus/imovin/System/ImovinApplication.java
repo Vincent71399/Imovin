@@ -33,10 +33,7 @@ public class ImovinApplication extends Application {
     private static ImageLoader imageLoader;
     private static OkHttpClient.Builder httpClient;
 
-    private static boolean NeedRefreshForum = false;
     private static boolean NeedRefreshSocialFeed = false;
-    private static boolean NeedRefreshPlanGoal = false;
-    private static boolean NeedRefreshPlanMonitor = false;
 
     private SoftReference<SQLiteDatabase> databaseSoftReference;
 
@@ -141,41 +138,12 @@ public class ImovinApplication extends Application {
         }
     }
 
-    public static boolean isNeedRefreshForum() {
-        return NeedRefreshForum;
-    }
-
-    public static void setNeedRefreshForum(boolean needRefreshForum) {
-        NeedRefreshForum = needRefreshForum;
-    }
-
     public static boolean isNeedRefreshSocialFeed(){
         return NeedRefreshSocialFeed;
     }
 
     public static void setNeedRefreshSocialNeed(boolean needRefreshSocialFeed){
         NeedRefreshSocialFeed = needRefreshSocialFeed;
-    }
-
-    public static boolean isNeedRefreshPlanGoal() {
-        return NeedRefreshPlanGoal;
-    }
-
-    public static void setNeedRefreshPlanGoal(boolean needRefreshPlanGoal) {
-        NeedRefreshPlanGoal = needRefreshPlanGoal;
-    }
-
-    public static boolean isNeedRefreshPlanMonitor() {
-        return NeedRefreshPlanMonitor;
-    }
-
-    public static void setNeedRefreshPlanMonitor(boolean needRefreshPlanMonitor) {
-        NeedRefreshPlanMonitor = needRefreshPlanMonitor;
-    }
-
-    public static void setNeedRefreshPlan(boolean needRefreshPlan){
-        NeedRefreshPlanGoal = needRefreshPlan;
-        NeedRefreshPlanMonitor = needRefreshPlan;
     }
 
     public SQLiteDatabase getDatabase() {

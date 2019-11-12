@@ -94,8 +94,6 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
     }
 
     private void Init(){
-        ImovinApplication.setNeedRefreshPlanMonitor(false);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -224,7 +222,6 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
                 try {
                     MessageResponse messageResponse = response.body();
                     if(messageResponse != null && messageResponse.getMessage().equals(getString(R.string.operation_success))) {
-                        ImovinApplication.setNeedRefreshPlan(true);
                         EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                         Init();
                     }else{
@@ -267,7 +264,6 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
                 try {
                     MessageResponse messageResponse = response.body();
                     if(messageResponse != null && messageResponse.getMessage().equals(getString(R.string.operation_success))) {
-                        ImovinApplication.setNeedRefreshPlan(true);
                         EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                         Init();
                     }else{
@@ -301,7 +297,6 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
                 break;
             case IntentConstants.GOAL_EDIT_PLAN:
                 if(resultCode == Activity.RESULT_OK){
-                    ImovinApplication.setNeedRefreshPlan(true);
                     Init();
                     EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                 }

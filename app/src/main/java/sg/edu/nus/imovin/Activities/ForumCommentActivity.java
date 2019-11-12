@@ -210,8 +210,6 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
 
     private void loadCommentData(){
-        ImovinApplication.setNeedRefreshForum(false);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -300,8 +298,6 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void deleteThread(){
-        ImovinApplication.setNeedRefreshForum(false);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -347,8 +343,6 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void deleteComment(final String comment_id){
-        ImovinApplication.setNeedRefreshForum(false);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())

@@ -91,7 +91,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         LinkUIById();
         SetFunction();
-
+        Init();
         return rootView;
     }
 
@@ -99,21 +99,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        if(ImovinApplication.isNeedRefreshPlanGoal()){
-            Init();
-        }
     }
 
     @Override
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Init();
     }
 
     private void LinkUIById() {

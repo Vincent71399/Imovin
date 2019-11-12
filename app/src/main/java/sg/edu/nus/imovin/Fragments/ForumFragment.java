@@ -84,9 +84,6 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        if(ImovinApplication.isNeedRefreshForum()){
-            Init();
-        }
     }
 
     @Override
@@ -128,8 +125,6 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
     }
 
     private void loadPageData(int page){
-        ImovinApplication.setNeedRefreshForum(false);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
