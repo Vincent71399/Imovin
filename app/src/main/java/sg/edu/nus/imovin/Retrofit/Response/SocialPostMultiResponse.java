@@ -10,6 +10,8 @@ import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
 
 public class SocialPostMultiResponse {
     private List<SocialFeedData> data;
+    private Integer page;
+    private Integer total;
     private String message;
 
     public List<SocialFeedData> getData() {
@@ -18,6 +20,22 @@ public class SocialPostMultiResponse {
 
     public void setData(List<SocialFeedData> data) {
         this.data = data;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 
     public String getMessage() {

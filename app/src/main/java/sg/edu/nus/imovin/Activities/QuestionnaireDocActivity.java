@@ -2,9 +2,9 @@ package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -13,7 +13,6 @@ import android.widget.ScrollView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import sg.edu.nus.imovin.R;
-import sg.edu.nus.imovin.System.IntentConstants;
 
 public class QuestionnaireDocActivity extends AppCompatActivity implements View.OnClickListener, ViewTreeObserver.OnScrollChangedListener{
 

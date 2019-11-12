@@ -150,7 +150,6 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
                     Log.d(LogConstants.LogTag, "SocialNewSocialFeedActivity : " + socialPostResponse.getMessage());
                     Intent resultIntent = new Intent();
                     setResult(RESULT_OK, resultIntent);
-                    ImovinApplication.setNeedRefreshSocialNeed(true);
                     finish();
 
                 }catch (Exception e){

@@ -1,6 +1,5 @@
 package sg.edu.nus.imovin.Adapters;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -41,7 +40,7 @@ import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.SocialFeedData_ViewHolder> {
     private List<SocialFeedData> socialFeedDataList;
 
-    public SocialFeedAdapter(Activity context, List<SocialFeedData> socialFeedDataList){
+    public SocialFeedAdapter(List<SocialFeedData> socialFeedDataList){
         this.socialFeedDataList = socialFeedDataList;
     }
 

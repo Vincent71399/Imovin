@@ -33,7 +33,6 @@ import sg.edu.nus.imovin.Activities.MonitorDetailActivity;
 import sg.edu.nus.imovin.Adapters.CalendarAdapter;
 import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.Event.ChangePlanEvent;
-import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.HttpConnection.ConnectionURL;
 import sg.edu.nus.imovin.Objects.Goal;
 import sg.edu.nus.imovin.R;
@@ -42,7 +41,6 @@ import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Response.MonitorDailySymmaryResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
-import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
 

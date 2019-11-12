@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -32,7 +31,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Activities.ForumCommentActivity;
 import sg.edu.nus.imovin.Activities.ForumNewPostActivity;
 import sg.edu.nus.imovin.Adapters.ThreadAdapter;
-import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.Event.ForumEvent;
 import sg.edu.nus.imovin.Event.LaunchThreadDetailEvent;
 import sg.edu.nus.imovin.Event.LikeThreadEvent;
@@ -49,7 +47,6 @@ import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
-import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_LIKE_COMMENT;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_LIKE_THREAD;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
@@ -74,6 +71,7 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
         rootView = inflater.inflate(R.layout.fragment_forum, null);
 
         LinkUIById();
+        SetupData();
         SetFunction();
         Init();
 
@@ -96,10 +94,21 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
         ButterKnife.bind(this, rootView);
     }
 
+    private void SetupData(){
+        if(threadDataList == null){
+            threadDataList = new ArrayList<>();
+        }else{
+            threadDataList.clear();
+        }
+        ThreadAdapter threadAdapter = new ThreadAdapter(threadDataList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        thread_list.setLayoutManager(layoutManager);
+        thread_list.setAdapter(threadAdapter);
+    }
+
     private void SetFunction(){
         SetMainView(mainView);
         newPostBtn.setOnClickListener(this);
-        SetupData();
 
         thread_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -251,15 +260,6 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
                 startActivityForResult(intent, IntentConstants.FORUM_COMMENT);
             }
         }
-    }
-
-    private void SetupData(){
-        if(threadDataList == null){
-            threadDataList = new ArrayList<>();
-        }
-        ThreadAdapter threadAdapter = new ThreadAdapter(threadDataList);
-        thread_list.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        thread_list.setAdapter(threadAdapter);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package sg.edu.nus.imovin.Retrofit.Object;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class ThreadData implements Serializable {
     private String _id;

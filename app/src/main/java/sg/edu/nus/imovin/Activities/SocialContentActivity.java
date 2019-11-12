@@ -175,7 +175,6 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
                     commentDataList.add(commentData);
                     socialFeedData.setComments(commentDataList);
                     Init();
-                    ImovinApplication.setNeedRefreshSocialNeed(true);
                 }
                 break;
         }
@@ -210,7 +209,6 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
                     }
                     socialFeedData.setComments(commentDataList);
                     Init();
-                    ImovinApplication.setNeedRefreshSocialNeed(true);
 
                 }catch (Exception e){
                     e.printStackTrace();

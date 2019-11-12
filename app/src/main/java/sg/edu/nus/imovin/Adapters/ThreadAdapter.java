@@ -15,7 +15,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 
 import sg.edu.nus.imovin.Event.LaunchThreadDetailEvent;
-import sg.edu.nus.imovin.Event.LikeCommentEvent;
 import sg.edu.nus.imovin.Event.LikeThreadEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.ThreadData;

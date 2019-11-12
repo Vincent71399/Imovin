@@ -16,6 +16,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,10 +26,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import sg.edu.nus.imovin.Activities.SocialContentActivity;
 import sg.edu.nus.imovin.Activities.SocialNewPostActivity;
 import sg.edu.nus.imovin.Adapters.SocialFeedAdapter;
-import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.Event.ForumEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
@@ -37,7 +36,6 @@ import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
 import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
-import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
@@ -45,6 +43,9 @@ import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 public class SocialFeedFragment extends BaseFragment implements View.OnClickListener {
     private View rootView;
     List<SocialFeedData> socialFeedList;
+
+    private int request_page;
+    private int total_page;
 
     @BindView(R.id.newPostBtn) Button newPostBtn;
     @BindView(R.id.socialFeedList) RecyclerView socialFeedListView;
@@ -59,8 +60,9 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
         rootView = inflater.inflate(R.layout.fragment_social_feed, null);
 
         LinkUIById();
+        SetupData();
         SetFunction();
-        ImovinApplication.setNeedRefreshSocialNeed(true);
+        Init();
 
         return rootView;
     }
@@ -69,10 +71,6 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        if(ImovinApplication.isNeedRefreshSocialFeed()){
-            ImovinApplication.setNeedRefreshSocialNeed(false);
-            Init();
-        }
     }
 
     @Override
@@ -85,22 +83,54 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
         ButterKnife.bind(this, rootView);
     }
 
+    private void SetupData(){
+        if(socialFeedList == null){
+            socialFeedList = new ArrayList<>();
+        }else{
+            socialFeedList.clear();
+        }
+        SocialFeedAdapter socialFeedAdapter = new SocialFeedAdapter(socialFeedList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        socialFeedListView.setLayoutManager(layoutManager);
+        socialFeedListView.setAdapter(socialFeedAdapter);
+
+        // add divider line between posts
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(socialFeedListView.getContext(),
+                layoutManager.getOrientation());
+        socialFeedListView.addItemDecoration(dividerItemDecoration);
+    }
+
     private void SetFunction() {
         newPostBtn.setOnClickListener(this);
 
-        socialFeedListView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+        socialFeedListView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), SocialContentActivity.class);
-                intent.putExtra(IntentConstants.SOCIAL_POST_DATA, socialFeedList.get(position));
-                startActivityForResult(intent, IntentConstants.SOCIAL_POST_CONTENT);
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    Log.d("Scroll", "Scroll to Bottom");
+                    if(request_page < total_page){
+                        request_page ++;
+                        loadPageData(request_page);
+                    }
+                }
             }
-        }));
+        });
+//        socialFeedListView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                Intent intent = new Intent();
+//                intent.setClass(getActivity(), SocialContentActivity.class);
+//                intent.putExtra(IntentConstants.SOCIAL_POST_DATA, socialFeedList.get(position));
+//                startActivityForResult(intent, IntentConstants.SOCIAL_POST_CONTENT);
+//            }
+//        }));
     }
 
     private void Init(){
-        GetSocialData();
+        request_page = 1;
+        loadPageData(request_page);
     }
 
     @Override
@@ -124,20 +154,7 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
         }
     }
 
-    private void SetupData(){
-        SocialFeedAdapter socialFeedAdapter = new SocialFeedAdapter(getActivity(), socialFeedList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-
-        socialFeedListView.setLayoutManager(layoutManager);
-        socialFeedListView.setAdapter(socialFeedAdapter);
-
-        // add divider line between posts
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(socialFeedListView.getContext(),
-                layoutManager.getOrientation());
-        socialFeedListView.addItemDecoration(dividerItemDecoration);
-    }
-
-    private void GetSocialData(){
+    private void loadPageData(int page){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -146,15 +163,17 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
 
         ImovinService service = retrofit.create(ImovinService.class);
 
-        Call<SocialPostMultiResponse> call = service.getAllSocialPosts(1);
+        Call<SocialPostMultiResponse> call = service.getAllSocialPosts(page);
 
         call.enqueue(new Callback<SocialPostMultiResponse>() {
             @Override
             public void onResponse(Call<SocialPostMultiResponse> call, Response<SocialPostMultiResponse> response) {
                 try {
                     SocialPostMultiResponse socialPostMultiResponse = response.body();
-                    socialFeedList = socialPostMultiResponse.getData();
-                    SetupData();
+                    request_page = socialPostMultiResponse.getPage();
+                    total_page = socialPostMultiResponse.getTotal();
+                    socialFeedList.addAll(socialPostMultiResponse.getData());
+                    socialFeedListView.getAdapter().notifyDataSetChanged();
 
                 }catch (Exception e){
                     e.printStackTrace();

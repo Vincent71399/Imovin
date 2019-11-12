@@ -3,7 +3,6 @@ package sg.edu.nus.imovin.System;
 import android.app.Application;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -32,8 +31,6 @@ public class ImovinApplication extends Application {
     private static Integer target;
     private static ImageLoader imageLoader;
     private static OkHttpClient.Builder httpClient;
-
-    private static boolean NeedRefreshSocialFeed = false;
 
     private SoftReference<SQLiteDatabase> databaseSoftReference;
 
@@ -136,14 +133,6 @@ public class ImovinApplication extends Application {
         }else{
             httpClient = new OkHttpClient.Builder();
         }
-    }
-
-    public static boolean isNeedRefreshSocialFeed(){
-        return NeedRefreshSocialFeed;
-    }
-
-    public static void setNeedRefreshSocialNeed(boolean needRefreshSocialFeed){
-        NeedRefreshSocialFeed = needRefreshSocialFeed;
     }
 
     public SQLiteDatabase getDatabase() {
