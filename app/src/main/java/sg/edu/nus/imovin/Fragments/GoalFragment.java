@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -35,8 +37,8 @@ import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.Objects.PlanDataCategory;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
+import sg.edu.nus.imovin.Retrofit.Response.MessageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
-import sg.edu.nus.imovin.Retrofit.Response.SelectDeletePlanResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
 import sg.edu.nus.imovin.System.EventConstants;
@@ -147,7 +149,6 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(PlanEvent event) {
         if(event.getModule() == PlanEvent.MODULE_GOAL) {
-            Toast.makeText(ImovinApplication.getInstance(), event.getMessage(), Toast.LENGTH_SHORT).show();
             switch (event.getMessage()) {
                 case EventConstants.REFRESH:
                     Init();
@@ -223,15 +224,19 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_SELECT_PLAN, plan_id);
 
-        Call<SelectDeletePlanResponse> call = service.selectPlan(url);
+        Call<MessageResponse> call = service.selectPlan(url);
 
-        call.enqueue(new Callback<SelectDeletePlanResponse>() {
+        call.enqueue(new Callback<MessageResponse>() {
             @Override
-            public void onResponse(Call<SelectDeletePlanResponse> call, Response<SelectDeletePlanResponse> response) {
+            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                 try {
-                    SelectDeletePlanResponse selectDeletePlanResponse = response.body();
-                    if(selectDeletePlanResponse != null && selectDeletePlanResponse.get_status().toLowerCase().equals(getString(R.string.ok).toLowerCase())) {
+                    MessageResponse messageResponse = response.body();
+                    if(messageResponse != null && messageResponse.getMessage().equals(getString(R.string.operation_success))) {
                         Init();
+                    }else{
+                        Gson g = new Gson();
+                        messageResponse = g.fromJson(response.errorBody().string(), MessageResponse.class);
+                        Toast.makeText(getActivity(), messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -241,7 +246,7 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFailure(Call<SelectDeletePlanResponse> call, Throwable t) {
+            public void onFailure(Call<MessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure GoalFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
@@ -260,15 +265,19 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_DELETE_PLAN, plan_id);
 
-        Call<SelectDeletePlanResponse> call = service.deletePlan(url);
+        Call<MessageResponse> call = service.deletePlan(url);
 
-        call.enqueue(new Callback<SelectDeletePlanResponse>() {
+        call.enqueue(new Callback<MessageResponse>() {
             @Override
-            public void onResponse(Call<SelectDeletePlanResponse> call, Response<SelectDeletePlanResponse> response) {
+            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                 try {
-                    SelectDeletePlanResponse selectDeletePlanResponse = response.body();
-                    if(selectDeletePlanResponse != null && selectDeletePlanResponse.get_status().toLowerCase().equals(getString(R.string.ok).toLowerCase())) {
+                    MessageResponse messageResponse = response.body();
+                    if(messageResponse != null && messageResponse.getMessage().equals(getString(R.string.operation_success))) {
                         Init();
+                    }else{
+                        Gson g = new Gson();
+                        messageResponse = g.fromJson(response.errorBody().string(), MessageResponse.class);
+                        Toast.makeText(getActivity(), messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -278,7 +287,7 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFailure(Call<SelectDeletePlanResponse> call, Throwable t) {
+            public void onFailure(Call<MessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure GoalFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }

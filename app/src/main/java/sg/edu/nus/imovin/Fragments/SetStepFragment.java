@@ -65,19 +65,20 @@ public class SetStepFragment extends QuesFragment {
 
     private void SetFunction(){
         question.setText(questionData.getQuestion());
-        value.setText(String.valueOf(10000));
         unit.setText(questionData.getUnit());
 
         List<String> stepData = questionData.getChoices();
-        if(stepData.size() >= 3) {
+        if(stepData.size() >= 4) {
             int min = Integer.parseInt(stepData.get(0));
             int max = Integer.parseInt(stepData.get(1));
             int step = Integer.parseInt(stepData.get(2));
+            int default_value = Integer.parseInt(stepData.get(3));
             int tickCount = (max - min)/step + 1;
             planStepsBar.setMin(min);
             planStepsBar.setMax(max);
             planStepsBar.setTickCount(tickCount);
-            planStepsBar.setProgress(10000);
+            value.setText(String.valueOf(default_value));
+            planStepsBar.setProgress(default_value);
         }
 
         planStepsBar.setOnSeekChangeListener(new OnSeekChangeListener() {

@@ -12,9 +12,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.OnSeekChangeListener;
 import com.warkiz.widget.SeekParams;
+
+import org.json.JSONObject;
 
 import java.util.Locale;
 
@@ -28,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Request.CreatePlanRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UpdatePlanRequest;
-import sg.edu.nus.imovin.Retrofit.Response.CreateUpdatePlanResponse;
+import sg.edu.nus.imovin.Retrofit.Response.MessageResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseSimpleActivity;
 import sg.edu.nus.imovin.System.ImovinApplication;
@@ -133,18 +136,22 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
 
         ImovinService service = retrofit.create(ImovinService.class);
 
-        Call<CreateUpdatePlanResponse> call = service.createPlan(createPlanRequest);
+        Call<MessageResponse> call = service.createPlan(createPlanRequest);
 
-        call.enqueue(new Callback<CreateUpdatePlanResponse>() {
+        call.enqueue(new Callback<MessageResponse>() {
             @Override
-            public void onResponse(Call<CreateUpdatePlanResponse> call, Response<CreateUpdatePlanResponse> response) {
+            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                 try {
-                    CreateUpdatePlanResponse planResponse = response.body();
-                    Log.d(LogConstants.LogTag, "NewPlanActivity : " + planResponse.get_status());
-                    Intent resultIntent = new Intent();
-                    setResult(RESULT_OK, resultIntent);
-                    finish();
-
+                    MessageResponse messageResponse = response.body();
+                    if(messageResponse != null && messageResponse.getMessage().equals(getString(R.string.operation_success))) {
+                        Intent resultIntent = new Intent();
+                        setResult(RESULT_OK, resultIntent);
+                        finish();
+                    }else{
+                        Gson g = new Gson();
+                        messageResponse = g.fromJson(response.errorBody().string(), MessageResponse.class);
+                        Toast.makeText(getApplicationContext(), messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }catch (Exception e){
                     e.printStackTrace();
                     Log.d(LogConstants.LogTag, "Exception NewPlanActivity : " + e.toString());
@@ -153,7 +160,7 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
             }
 
             @Override
-            public void onFailure(Call<CreateUpdatePlanResponse> call, Throwable t) {
+            public void onFailure(Call<MessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure NewPlanActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
@@ -172,16 +179,21 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_UPDATE_PLAN, plan_id);
 
-        Call<CreateUpdatePlanResponse> call = service.updatePlan(url, updatePlanRequest);
+        Call<MessageResponse> call = service.updatePlan(url, updatePlanRequest);
 
-        call.enqueue(new Callback<CreateUpdatePlanResponse>() {
+        call.enqueue(new Callback<MessageResponse>() {
             @Override
-            public void onResponse(Call<CreateUpdatePlanResponse> call, Response<CreateUpdatePlanResponse> response) {
+            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                 try {
-                    CreateUpdatePlanResponse planResponse = response.body();
-                    if(planResponse != null) {
+                    MessageResponse messageResponse = response.body();
+                    if(messageResponse != null && messageResponse.getMessage().equals(getString(R.string.operation_success))) {
                         Intent resultIntent = new Intent();
                         setResult(RESULT_OK, resultIntent);
+                        finish();
+                    }else{
+                        Gson g = new Gson();
+                        messageResponse = g.fromJson(response.errorBody().string(), MessageResponse.class);
+                        Toast.makeText(getApplicationContext(),  messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }catch (Exception e){
@@ -192,7 +204,7 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
             }
 
             @Override
-            public void onFailure(Call<CreateUpdatePlanResponse> call, Throwable t) {
+            public void onFailure(Call<MessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure NewPlanActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }

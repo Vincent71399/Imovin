@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -35,8 +37,8 @@ import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.Objects.PlanDataCategory;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
+import sg.edu.nus.imovin.Retrofit.Response.MessageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
-import sg.edu.nus.imovin.Retrofit.Response.SelectDeletePlanResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseSimpleActivity;
 import sg.edu.nus.imovin.System.EventConstants;
@@ -140,7 +142,6 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(PlanEvent event) {
         if(event.getModule() == PlanEvent.MODULE_MONITOR_CHANGE) {
-            Toast.makeText(ImovinApplication.getInstance(), event.getMessage(), Toast.LENGTH_SHORT).show();
             switch (event.getMessage()) {
                 case EventConstants.REFRESH:
                     Init();
@@ -215,17 +216,21 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_SELECT_PLAN, plan_id);
 
-        Call<SelectDeletePlanResponse> call = service.selectPlan(url);
+        Call<MessageResponse> call = service.selectPlan(url);
 
-        call.enqueue(new Callback<SelectDeletePlanResponse>() {
+        call.enqueue(new Callback<MessageResponse>() {
             @Override
-            public void onResponse(Call<SelectDeletePlanResponse> call, Response<SelectDeletePlanResponse> response) {
+            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                 try {
-                    SelectDeletePlanResponse selectDeletePlanResponse = response.body();
-                    if(selectDeletePlanResponse != null && selectDeletePlanResponse.get_status().toLowerCase().equals(getString(R.string.ok).toLowerCase())) {
+                    MessageResponse messageResponse = response.body();
+                    if(messageResponse != null && messageResponse.getMessage().equals(getString(R.string.operation_success))) {
                         ImovinApplication.setNeedRefreshPlan(true);
                         EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                         Init();
+                    }else{
+                        Gson g = new Gson();
+                        messageResponse = g.fromJson(response.errorBody().string(), MessageResponse.class);
+                        Toast.makeText(getApplicationContext(), messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -235,7 +240,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
             }
 
             @Override
-            public void onFailure(Call<SelectDeletePlanResponse> call, Throwable t) {
+            public void onFailure(Call<MessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure MonitorChangePlanActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
@@ -254,17 +259,21 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_DELETE_PLAN, plan_id);
 
-        Call<SelectDeletePlanResponse> call = service.deletePlan(url);
+        Call<MessageResponse> call = service.deletePlan(url);
 
-        call.enqueue(new Callback<SelectDeletePlanResponse>() {
+        call.enqueue(new Callback<MessageResponse>() {
             @Override
-            public void onResponse(Call<SelectDeletePlanResponse> call, Response<SelectDeletePlanResponse> response) {
+            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                 try {
-                    SelectDeletePlanResponse selectDeletePlanResponse = response.body();
-                    if(selectDeletePlanResponse != null && selectDeletePlanResponse.get_status().toLowerCase().equals(getString(R.string.ok).toLowerCase())) {
+                    MessageResponse messageResponse = response.body();
+                    if(messageResponse != null && messageResponse.getMessage().equals(getString(R.string.operation_success))) {
                         ImovinApplication.setNeedRefreshPlan(true);
                         EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                         Init();
+                    }else{
+                        Gson g = new Gson();
+                        messageResponse = g.fromJson(response.errorBody().string(), MessageResponse.class);
+                        Toast.makeText(getApplicationContext(), messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -274,7 +283,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
             }
 
             @Override
-            public void onFailure(Call<SelectDeletePlanResponse> call, Throwable t) {
+            public void onFailure(Call<MessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure MonitorChangePlanActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }

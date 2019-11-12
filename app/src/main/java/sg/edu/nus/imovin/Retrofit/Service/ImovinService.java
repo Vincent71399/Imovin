@@ -32,7 +32,6 @@ import sg.edu.nus.imovin.Retrofit.Response.AuthFitbitResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ChallengeResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CommentMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
-import sg.edu.nus.imovin.Retrofit.Response.CreateUpdatePlanResponse;
 import sg.edu.nus.imovin.Retrofit.Response.DailyLogResponse;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
 import sg.edu.nus.imovin.Retrofit.Response.LikeResponse;
@@ -41,7 +40,6 @@ import sg.edu.nus.imovin.Retrofit.Response.MonitorDailySymmaryResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.QuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ResetPasswordResponse;
-import sg.edu.nus.imovin.Retrofit.Response.SelectDeletePlanResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialCommentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialImageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostMultiResponse;
@@ -97,23 +95,23 @@ public interface ImovinService {
     Call<PlanMultiResponse> getAllPlans();
 
     @POST(ConnectionURL.REQUEST_CREATE_PLAN)
-    Call<CreateUpdatePlanResponse> createPlan(
+    Call<MessageResponse> createPlan(
             @Body CreatePlanRequest createPlanRequest
     );
 
     @PATCH
-    Call<CreateUpdatePlanResponse> updatePlan(
+    Call<MessageResponse> updatePlan(
             @Url String url,
             @Body UpdatePlanRequest updatePlanRequest
     );
 
     @POST
-    Call<SelectDeletePlanResponse> selectPlan(
+    Call<MessageResponse> selectPlan(
             @Url String url
     );
 
     @POST
-    Call<SelectDeletePlanResponse> deletePlan(
+    Call<MessageResponse> deletePlan(
             @Url String url
     );
 
