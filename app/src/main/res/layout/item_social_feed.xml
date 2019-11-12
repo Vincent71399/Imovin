@@ -1,56 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_height="wrap_content">
+
     <LinearLayout
+        android:id="@+id/body_container"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:weightSum="5">
-        <TextView
-            android:id="@+id/username"
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center_vertical|start"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="4"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/body_text"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:maxLines="3"
+                android:ellipsize="end"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/owner_text"
+            android:textSize="18sp"
             android:textColor="@color/theme_purple"
-            android:text="debauer"/>
-        <TextView
-            android:id="@+id/post_since"
+            android:padding="10dp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/lesser_grey_color"
-            android:text="1d"
-            android:textAlignment="textEnd"/>
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|end"/>
+
     </LinearLayout>
-    <TextView
-        android:id="@+id/feedContentText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Check out my brand new rig!"/>
+
     <ImageView
-        android:id="@+id/feedImage"
+        android:id="@+id/social_image"
+        android:scaleType="centerCrop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintDimensionRatio="H,1:1"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="Feed Image"/>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/commentIcon"
-            android:layout_width="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:id="@+id/thumbs_up_container"
+            android:orientation="horizontal"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_speech_small"
-            android:contentDescription="CommentIcon"
-            android:layout_gravity="center"/>
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical|start"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/thumbs_up_image"
+                android:src="@drawable/icon_thumb_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/likes_text"
+                android:textSize="18sp"
+                android:textColor="@color/black_color"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"/>
+
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/numberCommentsText"
-            android:layout_width="wrap_content"
+            android:id="@+id/comment_count"
+            android:textSize="18sp"
+            android:textColor="@color/black_color"
+            android:padding="10dp"
             android:layout_height="wrap_content"
-            android:text="1"
-            android:layout_gravity="center"/>
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/post_time"
+            android:textSize="18sp"
+            android:textColor="@color/lesser_grey_color"
+            android:padding="10dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|end"/>
+
     </LinearLayout>
+
 </LinearLayout>

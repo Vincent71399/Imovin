@@ -97,8 +97,8 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
         SetActionBar();
         LinkUIById();
-        SetFunction();
         SetupData();
+        SetFunction();
         Init();
     }
 
@@ -181,8 +181,16 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         navigator_right.setOnClickListener(this);
 
         thumbs_up_container.setOnClickListener(this);
-        edit_container.setOnClickListener(this);
-        delete_container.setOnClickListener(this);
+
+        if(threadData.getUser_id().equals(ImovinApplication.getUserInfoResponse().get_id())) {
+            edit_container.setVisibility(View.VISIBLE);
+            delete_container.setVisibility(View.VISIBLE);
+            edit_container.setOnClickListener(this);
+            delete_container.setOnClickListener(this);
+        }else{
+            edit_container.setVisibility(View.GONE);
+            delete_container.setVisibility(View.GONE);
+        }
     }
 
     private void Init(){

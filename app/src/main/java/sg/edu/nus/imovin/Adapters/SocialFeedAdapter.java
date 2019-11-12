@@ -33,15 +33,40 @@ import static sg.edu.nus.imovin.Common.CommonFunc.ConvertDateString2DisplayForma
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_GET_SOCIAL_POST_IMAGE;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
-/**
- * Created by wcafricanus on 19/12/18.
- */
 
 public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.SocialFeedData_ViewHolder> {
     private List<SocialFeedData> socialFeedDataList;
 
     public SocialFeedAdapter(List<SocialFeedData> socialFeedDataList){
         this.socialFeedDataList = socialFeedDataList;
+    }
+
+    public final static class SocialFeedData_ViewHolder extends RecyclerView.ViewHolder {
+
+        LinearLayout container;
+        LinearLayout body_container;
+        TextView owner_text;
+        TextView body_text;
+        ImageView social_image;
+        LinearLayout thumbs_up_container;
+        ImageView thumbs_up_image;
+        TextView likes_text;
+        TextView comment_count;
+        TextView post_time;
+
+        public SocialFeedData_ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            container = itemView.findViewById(R.id.container);
+            body_container = itemView.findViewById(R.id.body_container);
+            owner_text = itemView.findViewById(R.id.owner_text);
+            body_text = itemView.findViewById(R.id.body_text);
+            social_image = itemView.findViewById(R.id.social_image);
+            thumbs_up_container = itemView.findViewById(R.id.thumbs_up_container);
+            thumbs_up_image = itemView.findViewById(R.id.thumbs_up_image);
+            likes_text = itemView.findViewById(R.id.likes_text);
+            comment_count = itemView.findViewById(R.id.comment_count);
+            post_time = itemView.findViewById(R.id.post_time);
+        }
     }
 
     @NonNull
@@ -58,42 +83,15 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.So
     public void onBindViewHolder(@NonNull SocialFeedData_ViewHolder holder, int i) {
         final SocialFeedData socialFeedData = socialFeedDataList.get(i);
 
-        holder.usernameText.setText(socialFeedData.getOwnerName());
-        holder.postTimeText.setText(ConvertDateString2DisplayFormat(socialFeedData.getCreatedAt()));
-        holder.feedContentText.setText(socialFeedData.getMessage());
-        GetSocialImageById(socialFeedData.getId(), holder.imageView);
+        holder.body_text.setText(socialFeedData.getMessage());
+        holder.owner_text.setText(socialFeedData.getUser_name());
 
-        holder.commentsImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-        holder.numberCommentsText.setText(String.valueOf(socialFeedData.getComments().size()));
+
     }
 
     @Override
     public int getItemCount() {
         return socialFeedDataList.size();
-    }
-
-    public final static class SocialFeedData_ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout container;
-        TextView usernameText;
-        TextView postTimeText;
-        TextView feedContentText;
-        ImageView imageView;
-        ImageView commentsImageView;
-        TextView numberCommentsText;
-        public SocialFeedData_ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            container = itemView.findViewById(R.id.container);
-            usernameText = itemView.findViewById(R.id.username);
-            postTimeText = itemView.findViewById(R.id.post_since);
-            feedContentText = itemView.findViewById(R.id.feedContentText);
-            imageView = itemView.findViewById(R.id.feedImage);
-            commentsImageView = itemView.findViewById(R.id.commentIcon);
-            numberCommentsText = itemView.findViewById(R.id.numberCommentsText);
-        }
     }
 
     private void GetSocialImageById(String image_id, final ImageView imageView){

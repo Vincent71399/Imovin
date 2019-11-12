@@ -119,12 +119,12 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
     private void SetupData(){
         socialFeedData = (SocialFeedData) getIntent().getSerializableExtra(IntentConstants.SOCIAL_POST_DATA);
 
-        username.setText(socialFeedData.getOwnerName());
-        post_since.setText(ConvertDateString2DisplayFormat(socialFeedData.getCreatedAt()));
-        feed_content_text.setText(socialFeedData.getMessage());
-        byte[] decodedString = Base64.decode(socialFeedData.getImageString(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        feed_image.setImageBitmap(decodedByte);
+//        username.setText(socialFeedData.getOwnerName());
+//        post_since.setText(ConvertDateString2DisplayFormat(socialFeedData.getCreatedAt()));
+//        feed_content_text.setText(socialFeedData.getMessage());
+//        byte[] decodedString = Base64.decode(socialFeedData.getImageString(), Base64.DEFAULT);
+//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//        feed_image.setImageBitmap(decodedByte);
     }
 
     private void SetFunction(){
@@ -140,9 +140,9 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
     }
 
     private void Init(){
-        CommentAdapter commentAdapter = new CommentAdapter(socialFeedData.getComments());
-        comment_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        comment_list.setAdapter(commentAdapter);
+//        CommentAdapter commentAdapter = new CommentAdapter(socialFeedData.getComments());
+//        comment_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+//        comment_list.setAdapter(commentAdapter);
     }
 
     @Override
@@ -154,7 +154,7 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
             case R.id.navigator_right:
                 Intent intent = new Intent();
                 intent.setClass(this, SocialNewCommentActivity.class);
-                intent.putExtra(IntentConstants.THREAD_ID, socialFeedData.getId());
+//                intent.putExtra(IntentConstants.THREAD_ID, socialFeedData.getId());
                 startActivityForResult(intent, IntentConstants.FORUM_NEW_COMMENT);
                 break;
         }
@@ -162,7 +162,7 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LikeCommentEvent event) {
-        likeComment(event.getComment_id(), new LikeSocialCommentRequest(socialFeedData.getId(), event.getIs_like()));
+//        likeComment(event.getComment_id(), new LikeSocialCommentRequest(socialFeedData.getId(), event.getIs_like()));
     }
 
     @Override
@@ -170,11 +170,11 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
         switch (requestCode){
             case IntentConstants.FORUM_NEW_COMMENT:
                 if(resultCode == Activity.RESULT_OK){
-                    CommentData commentData = (CommentData) data.getSerializableExtra(IntentConstants.COMMENT_DATA);
-                    List<CommentData> commentDataList = socialFeedData.getComments();
-                    commentDataList.add(commentData);
-                    socialFeedData.setComments(commentDataList);
-                    Init();
+//                    CommentData commentData = (CommentData) data.getSerializableExtra(IntentConstants.COMMENT_DATA);
+//                    List<CommentData> commentDataList = socialFeedData.getComments();
+//                    commentDataList.add(commentData);
+//                    socialFeedData.setComments(commentDataList);
+//                    Init();
                 }
                 break;
         }
@@ -198,17 +198,17 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
                 try {
-                    CommentResponse commentResponse = response.body();
-                    CommentData resultData = commentResponse.getData();
-                    List<CommentData> commentDataList = socialFeedData.getComments();
-                    for(int i=0; i<commentDataList.size(); i++){
-                        CommentData commentData = commentDataList.get(i);
-                        if(commentData.get_id().equals(resultData.get_id())){
-                            commentDataList.set(i, resultData);
-                        }
-                    }
-                    socialFeedData.setComments(commentDataList);
-                    Init();
+//                    CommentResponse commentResponse = response.body();
+//                    CommentData resultData = commentResponse.getData();
+//                    List<CommentData> commentDataList = socialFeedData.getComments();
+//                    for(int i=0; i<commentDataList.size(); i++){
+//                        CommentData commentData = commentDataList.get(i);
+//                        if(commentData.get_id().equals(resultData.get_id())){
+//                            commentDataList.set(i, resultData);
+//                        }
+//                    }
+//                    socialFeedData.setComments(commentDataList);
+//                    Init();
 
                 }catch (Exception e){
                     e.printStackTrace();

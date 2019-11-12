@@ -86,18 +86,25 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentD
                 EventBus.getDefault().post(new LikeCommentEvent(commentData.get_id(), like));
             }
         });
-        holder.edit_container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBus.getDefault().post(new EditCommentEvent(commentData.get_id()));
-            }
-        });
-        holder.delete_container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBus.getDefault().post(new DeleteCommentEvent(commentData.get_id()));
-            }
-        });
+        if(commentData.getUser_id().equals(ImovinApplication.getUserInfoResponse().get_id())) {
+            holder.edit_container.setVisibility(View.VISIBLE);
+            holder.delete_container.setVisibility(View.VISIBLE);
+            holder.edit_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EventBus.getDefault().post(new EditCommentEvent(commentData.get_id()));
+                }
+            });
+            holder.delete_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EventBus.getDefault().post(new DeleteCommentEvent(commentData.get_id()));
+                }
+            });
+        }else{
+            holder.edit_container.setVisibility(View.GONE);
+            holder.delete_container.setVisibility(View.GONE);
+        }
     }
 
     @Override
