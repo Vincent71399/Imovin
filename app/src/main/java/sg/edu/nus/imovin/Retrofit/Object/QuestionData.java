@@ -11,7 +11,6 @@ public class QuestionData implements Serializable {
     private String created_at;
     private String detail;
     private Boolean is_custom;
-    private Boolean is_reverse;
     private Boolean is_skippable;
     private String name;
     private String question;
@@ -73,14 +72,6 @@ public class QuestionData implements Serializable {
 
     public void setIs_custom(Boolean is_custom) {
         this.is_custom = is_custom;
-    }
-
-    public Boolean getIs_reverse() {
-        return is_reverse;
-    }
-
-    public void setIs_reverse(Boolean is_reverse) {
-        this.is_reverse = is_reverse;
     }
 
     public Boolean getIs_skippable() {

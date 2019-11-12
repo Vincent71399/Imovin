@@ -42,6 +42,7 @@ import sg.edu.nus.imovin.Event.EnableNextEvent;
 import sg.edu.nus.imovin.Fragments.MCQFragment;
 import sg.edu.nus.imovin.Fragments.QuesFragment;
 import sg.edu.nus.imovin.Fragments.RateFragment;
+import sg.edu.nus.imovin.Fragments.SetStepFragment;
 import sg.edu.nus.imovin.Fragments.TextQFragment;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.AnswerData;
@@ -65,6 +66,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     public static final String MCQ_O = "MCQ_O";
     public static final String TEXT = "TEXT";
     public static final String NUM = "NUM";
+    public static final String NUM_S = "NUM_S";
 
     @BindView(R.id.nextBtn) Button nextBtn;
     @BindView(R.id.prevBtn) Button prevBtn;
@@ -197,6 +199,9 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                     break;
                 case MCQ_O:
                     mFragments.add(MCQFragment.getInstance(questionDataList.get(0)));
+                    break;
+                case NUM_S:
+                    mFragments.add(SetStepFragment.getInstance(questionDataList.get(0)));
                     break;
             }
         }
@@ -465,7 +470,10 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                 && questionDataList.get(0).getQuestion_type().equals(MCQ)
                 && !questionDataList.get(0).getIs_custom()){
             nextBtn.setEnabled(true);
-        }else {
+        }else if(questionDataList.size() > 0
+                && questionDataList.get(0).getQuestion_type().equals(NUM_S)){
+            nextBtn.setEnabled(true);
+        } else {
             if(answerDataHashMap.containsKey(i)) {
                 nextBtn.setEnabled(true);
             }else{
