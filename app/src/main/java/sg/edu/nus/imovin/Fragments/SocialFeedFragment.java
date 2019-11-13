@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin.Fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -36,6 +37,7 @@ import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
 import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
+import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
@@ -129,6 +131,7 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
     }
 
     private void Init(){
+        socialFeedList.clear();
         request_page = 1;
         loadPageData(request_page);
     }
@@ -139,7 +142,7 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
             case R.id.newPostBtn:
                 Intent newSocialIntent = new Intent();
                 newSocialIntent.setClass(getActivity(), SocialNewPostActivity.class);
-                startActivity(newSocialIntent);
+                startActivityForResult(newSocialIntent, IntentConstants.SOCIAL_NEW_POST);
                 break;
         }
     }
@@ -188,5 +191,16 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case IntentConstants.SOCIAL_NEW_POST:
+                if(resultCode == Activity.RESULT_OK){
+                    Init();
+                }
+                break;
+        }
     }
 }

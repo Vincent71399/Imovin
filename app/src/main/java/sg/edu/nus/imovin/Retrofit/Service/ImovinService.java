@@ -1,6 +1,7 @@
 package sg.edu.nus.imovin.Retrofit.Service;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -17,7 +18,6 @@ import sg.edu.nus.imovin.Retrofit.Request.AuthFitbitRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreateCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreatePlanRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreateSocialCommentRequest;
-import sg.edu.nus.imovin.Retrofit.Request.CreateSocialPostRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreateThreadRequest;
 import sg.edu.nus.imovin.Retrofit.Request.DailyLogRequest;
 import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
@@ -178,9 +178,11 @@ public interface ImovinService {
     );
 
     //Social Feed
+    @Multipart
     @POST(ConnectionURL.REQUEST_CREATE_SOCIAL_POST)
     Call<SocialPostResponse> createSocialPost(
-            @Body CreateSocialPostRequest createSocialPostRequest
+            @Part("message") RequestBody requestBody,
+            @Part MultipartBody.Part filename
     );
 
     @GET(ConnectionURL.REQUEST_GET_ALL_SOCIAL_POSTS)

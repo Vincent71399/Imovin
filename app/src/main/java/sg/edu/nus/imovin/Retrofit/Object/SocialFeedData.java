@@ -1,16 +1,13 @@
 package sg.edu.nus.imovin.Retrofit.Object;
 
-/**
- * Created by wcafricanus on 18/12/18.
- */
 
 import java.io.Serializable;
-import java.util.List;
 
 public class SocialFeedData implements Serializable{
     private String _id;
     private Integer comments;
     private String created_at;
+    private String image;
     private Boolean liked_by_me;
     private Integer likes;
     private String message;
@@ -40,6 +37,14 @@ public class SocialFeedData implements Serializable{
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Boolean getLiked_by_me() {

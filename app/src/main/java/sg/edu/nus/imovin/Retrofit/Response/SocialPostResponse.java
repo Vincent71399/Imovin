@@ -2,9 +2,6 @@ package sg.edu.nus.imovin.Retrofit.Response;
 
 import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
 
-/**
- * Created by wcafricanus on 19/12/18.
- */
 
 public class SocialPostResponse {
     private SocialFeedData data;

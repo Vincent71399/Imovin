@@ -11,6 +11,10 @@ public class IntentConstants {
     public static final int GOAL_NEW_PLAN = 107;
     public static final int GOAL_EDIT_PLAN = 108;
     public static final int MONITOR_NEW_PLAN = 109;
+    public static final int SOCIAL_NEW_POST = 110;
+    public static final int SOCIAL_EDIT_POST = 111;
+    public static final int SOCIAL_NEW_COMMENT = 112;
+    public static final int SOCIAL_EDIT_COMMENT = 113;
 
     public static final int CONSENT = 201;
     public static final int QUESTIONNAIRE = 202;

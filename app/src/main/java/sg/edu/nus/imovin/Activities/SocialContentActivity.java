@@ -2,16 +2,12 @@ package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,7 +20,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -34,10 +29,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import sg.edu.nus.imovin.Adapters.CommentAdapter;
 import sg.edu.nus.imovin.Event.LikeCommentEvent;
 import sg.edu.nus.imovin.R;
-import sg.edu.nus.imovin.Retrofit.Object.CommentData;
 import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
 import sg.edu.nus.imovin.Retrofit.Request.LikeSocialCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
@@ -47,7 +40,6 @@ import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
-import static sg.edu.nus.imovin.Common.CommonFunc.ConvertDateString2DisplayFormat;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_LIKE_SOCIAL_COMMENT;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
