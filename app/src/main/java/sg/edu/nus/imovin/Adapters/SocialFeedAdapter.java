@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -41,6 +42,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.So
         LinearLayout body_container;
         TextView owner_text;
         TextView body_text;
+        LinearLayout image_container;
         ImageView social_image;
         LinearLayout thumbs_up_container;
         ImageView thumbs_up_image;
@@ -54,6 +56,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.So
             body_container = itemView.findViewById(R.id.body_container);
             owner_text = itemView.findViewById(R.id.owner_text);
             body_text = itemView.findViewById(R.id.body_text);
+            image_container = itemView.findViewById(R.id.image_container);
             social_image = itemView.findViewById(R.id.social_image);
             thumbs_up_container = itemView.findViewById(R.id.thumbs_up_container);
             thumbs_up_image = itemView.findViewById(R.id.thumbs_up_image);
@@ -96,9 +99,12 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.So
         holder.likes_text.setText(String.valueOf(socialFeedData.getLikes()));
 
         if(socialFeedData.getImage() != null){
+            holder.image_container.setVisibility(View.VISIBLE);
             String imageUrl = SERVER + String.format(
                     Locale.ENGLISH,REQUEST_GET_SOCIAL_POST_IMAGE, socialFeedData.get_id());
             ImageLoader.getInstance().displayImage(imageUrl, holder.social_image);
+        }else{
+            holder.image_container.setVisibility(View.GONE);
         }
 
         holder.thumbs_up_container.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +112,12 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.So
             public void onClick(View view) {
                 boolean like = !socialFeedData.getLiked_by_me();
                 EventBus.getDefault().post(new LikeSocialPostEvent(socialFeedData.get_id(), like));
+            }
+        });
+        holder.image_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new LaunchSocialPostDetailEvent(socialFeedData.get_id()));
             }
         });
         holder.body_container.setOnClickListener(new View.OnClickListener() {

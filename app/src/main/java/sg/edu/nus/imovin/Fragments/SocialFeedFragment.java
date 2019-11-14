@@ -131,7 +131,11 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
     }
 
     private void Init(){
-        socialFeedList.clear();
+        if(socialFeedList != null) {
+            socialFeedList.clear();
+        }else{
+            socialFeedList = new ArrayList<>();
+        }
         request_page = 1;
         loadPageData(request_page);
     }
@@ -264,6 +268,11 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case IntentConstants.SOCIAL_NEW_POST:
+                if(resultCode == Activity.RESULT_OK){
+                    Init();
+                }
+                break;
+            case IntentConstants.SOCIAL_POST_CONTENT:
                 if(resultCode == Activity.RESULT_OK){
                     Init();
                 }

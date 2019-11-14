@@ -8,7 +8,7 @@
     android:background="#88222222"
     android:gravity="center"
     android:id="@+id/mainView"
-    tools:context=".Activities.ForumNewCommentActivity">
+    tools:context=".Activities.NewCommentActivity">
 
     <LinearLayout
         android:orientation="vertical"

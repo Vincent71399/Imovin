@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/mainView">
+    android:id="@+id/mainView"
+    tools:context=".Activities.ForumCommentActivity">
 
     <LinearLayout
         android:orientation="vertical"
         android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".Activities.ForumCommentActivity">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/body_container"

@@ -17,15 +17,12 @@ import sg.edu.nus.imovin.HttpConnection.ConnectionURL;
 import sg.edu.nus.imovin.Retrofit.Request.AuthFitbitRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreateCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreatePlanRequest;
-import sg.edu.nus.imovin.Retrofit.Request.CreateSocialCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreateThreadRequest;
 import sg.edu.nus.imovin.Retrofit.Request.DailyLogRequest;
 import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
-import sg.edu.nus.imovin.Retrofit.Request.LikeSocialCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.ResetPasswordRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UpdatePlanRequest;
-import sg.edu.nus.imovin.Retrofit.Request.UploadImageRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UploadQuestionRequest;
 import sg.edu.nus.imovin.Retrofit.Response.ArticleResponse;
 import sg.edu.nus.imovin.Retrofit.Response.AuthFitbitResponse;
@@ -40,14 +37,11 @@ import sg.edu.nus.imovin.Retrofit.Response.MonitorDailySymmaryResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.QuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ResetPasswordResponse;
-import sg.edu.nus.imovin.Retrofit.Response.SocialCommentResponse;
-import sg.edu.nus.imovin.Retrofit.Response.SocialImageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UploadConsentResponse;
-import sg.edu.nus.imovin.Retrofit.Response.UploadImageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UploadQuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UserInfoResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UserStatsResponse;
@@ -154,8 +148,9 @@ public interface ImovinService {
             @Body LikeRequest createThreadRequest
     );
 
+    //comment
     @GET
-    Call<CommentMultiResponse> getThreadComment(
+    Call<CommentMultiResponse> getAllComment(
             @Url String url
     );
 
@@ -213,18 +208,6 @@ public interface ImovinService {
             @Url String url,
             @Body LikeRequest createThreadRequest
     );
-
-    @POST(ConnectionURL.REQUEST_CREATE_SOCIAL_COMMENT)
-    Call<SocialCommentResponse> createSocialComment(
-            @Body CreateSocialCommentRequest createSocialCommentRequest
-    );
-
-    @PUT
-    Call<CommentResponse> likeComment(
-            @Url String url,
-            @Body LikeSocialCommentRequest likeSocialCommentRequest
-    );
-
 
     //Challenge
     @GET(ConnectionURL.REQUEST_GET_USER_CHALLENGE)

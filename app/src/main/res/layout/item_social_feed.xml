@@ -46,6 +46,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/image_container"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,8 +55,8 @@
         <ImageView
             android:id="@+id/social_image"
             android:scaleType="centerCrop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:adjustViewBounds="true" />
 
     </LinearLayout>

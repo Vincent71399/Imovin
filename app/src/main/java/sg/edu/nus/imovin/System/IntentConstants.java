@@ -20,10 +20,12 @@ public class IntentConstants {
     public static final int QUESTIONNAIRE = 202;
     public static final int QUESTIONNAIRE_CONFIRM = 203;
 
+    public static final String PARENT_ID = "PARENT_ID";
     public static final String THREAD_DATA = "THREAD_DATA";
-    public static final String THREAD_ID = "THREAD_ID";
     public static final String COMMENT_DATA = "COMMENT_DATA";
     public static final String SOCIAL_POST_DATA = "SOCIAL_POST_DATA";
+    public static final String THREAD_COMMENT = "THREAD_COMMENT";
+    public static final String SOCIAL_POST_COMMENT = "SOCIAL_POST_COMMENT";
 
     public static final String QUESTION_DATA = "QUESTION_DATA";
     public static final String MEDAL_DATA = "MEDAL_DATA";
