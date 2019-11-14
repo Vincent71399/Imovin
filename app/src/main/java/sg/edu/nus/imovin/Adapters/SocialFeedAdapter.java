@@ -1,38 +1,29 @@
 package sg.edu.nus.imovin.Adapters;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Locale;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import sg.edu.nus.imovin.HttpConnection.ConnectionURL;
+import sg.edu.nus.imovin.Event.LaunchSocialPostDetailEvent;
+import sg.edu.nus.imovin.Event.LikeSocialPostEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
-import sg.edu.nus.imovin.Retrofit.Response.SocialImageResponse;
-import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.ImovinApplication;
-import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.Common.CommonFunc.ConvertDateString2DisplayFormat;
-import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_COMMENT_WITH_ID;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_GET_SOCIAL_POST_IMAGE;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
@@ -106,9 +97,29 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.So
 
         if(socialFeedData.getImage() != null){
             String imageUrl = SERVER + String.format(
-                    Locale.ENGLISH,REQUEST_GET_SOCIAL_POST_IMAGE, socialFeedData.getImage());
-            ImovinApplication.getImageLoader().displayImage(imageUrl, holder.social_image);
+                    Locale.ENGLISH,REQUEST_GET_SOCIAL_POST_IMAGE, socialFeedData.get_id());
+            ImageLoader.getInstance().displayImage(imageUrl, holder.social_image);
         }
+
+        holder.thumbs_up_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean like = !socialFeedData.getLiked_by_me();
+                EventBus.getDefault().post(new LikeSocialPostEvent(socialFeedData.get_id(), like));
+            }
+        });
+        holder.body_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new LaunchSocialPostDetailEvent(socialFeedData.get_id()));
+            }
+        });
+        holder.comment_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new LaunchSocialPostDetailEvent(socialFeedData.get_id()));
+            }
+        });
     }
 
     @Override

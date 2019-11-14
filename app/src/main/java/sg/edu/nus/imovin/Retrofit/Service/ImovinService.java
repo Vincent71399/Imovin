@@ -53,6 +53,11 @@ import sg.edu.nus.imovin.Retrofit.Response.UserInfoResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UserStatsResponse;
 
 public interface ImovinService {
+
+    static final String WHERE = "where";
+    static final String PAGE = "page";
+    static final String MESSAGE = "message";
+
     //login
     @POST(ConnectionURL.REQUEST_EMAIL_LOGIN)
     Call<EmailLoginResponse> emailLogin(
@@ -118,7 +123,7 @@ public interface ImovinService {
     //Monitor
     @GET(ConnectionURL.REQUEST_GET_DAILY_SUMMARIES)
     Call<MonitorDailySymmaryResponse> getMonitorDailySummary(
-            @Query("where") String where
+            @Query(WHERE) String where
     );
 
     //Forum
@@ -140,7 +145,7 @@ public interface ImovinService {
 
     @GET(ConnectionURL.REQUEST_GET_ALL_THREADS)
     Call<ThreadMultiResponse> getAllThreads(
-            @Query("page") Integer page
+            @Query(PAGE) Integer page
     );
 
     @POST
@@ -181,18 +186,32 @@ public interface ImovinService {
     @Multipart
     @POST(ConnectionURL.REQUEST_CREATE_SOCIAL_POST)
     Call<SocialPostResponse> createSocialPost(
-            @Part("message") RequestBody requestBody,
+            @Part(MESSAGE) RequestBody requestBody,
             @Part MultipartBody.Part filename
     );
 
     @GET(ConnectionURL.REQUEST_GET_ALL_SOCIAL_POSTS)
     Call<SocialPostMultiResponse> getAllSocialPosts(
-            @Query("page") Integer page
+            @Query(PAGE) Integer page
     );
 
-    @GET
-    Call<SocialImageResponse> getSocialImage_by_Id(
+    @Multipart
+    @PATCH
+    Call<SocialPostResponse> editSocialPost(
+            @Url String url,
+            @Part(MESSAGE) RequestBody requestBody,
+            @Part MultipartBody.Part filename
+    );
+
+    @DELETE
+    Call<MessageResponse> deleteSocialPost(
             @Url String url
+    );
+
+    @POST
+    Call<LikeResponse> likeSocialPost(
+            @Url String url,
+            @Body LikeRequest createThreadRequest
     );
 
     @POST(ConnectionURL.REQUEST_CREATE_SOCIAL_COMMENT)
@@ -206,10 +225,6 @@ public interface ImovinService {
             @Body LikeSocialCommentRequest likeSocialCommentRequest
     );
 
-    @POST(ConnectionURL.REQUEST_UPLOAD_IMAGE)
-    Call<UploadImageResponse> uploadImage(
-            @Body UploadImageRequest uploadImageRequest
-    );
 
     //Challenge
     @GET(ConnectionURL.REQUEST_GET_USER_CHALLENGE)

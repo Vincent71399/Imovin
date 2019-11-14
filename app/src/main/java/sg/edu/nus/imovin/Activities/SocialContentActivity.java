@@ -46,15 +46,12 @@ import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 public class SocialContentActivity extends BaseActivity implements View.OnClickListener {
 
     private View customActionBar;
-    @BindView(R.id.navigator_middle_title)
-    TextView navigator_middle_title;
-    @BindView(R.id.navigator_left)
-    LinearLayout navigator_left;
-    @BindView(R.id.navigator_left_image)
-    ImageView navigator_left_image;
+
+    @BindView(R.id.navigator_middle_title) TextView navigator_middle_title;
+    @BindView(R.id.navigator_left) LinearLayout navigator_left;
+    @BindView(R.id.navigator_left_image) ImageView navigator_left_image;
     @BindView(R.id.navigator_left_text) TextView navigator_left_text;
-    @BindView(R.id.navigator_right)
-    RelativeLayout navigator_right;
+    @BindView(R.id.navigator_right) RelativeLayout navigator_right;
     @BindView(R.id.navigator_right_image) ImageView navigator_right_image;
 
     @BindView(R.id.username) TextView username;
@@ -72,8 +69,8 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
 
         SetActionBar();
         LinkUIById();
-        SetFunction();
         SetupData();
+        SetFunction();
         Init();
     }
 

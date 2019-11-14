@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import java.util.List;
 
 import sg.edu.nus.imovin.R;
@@ -78,7 +80,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
         holder.link_info.setText(libraryData.getPublish() + " " + libraryData.getYear());
         if(libraryData.getPic_url() != null && !libraryData.getPic_url().equals("")) {
             holder.pic_container.setVisibility(View.VISIBLE);
-            ImovinApplication.getImageLoader().displayImage(libraryData.getPic_url(), holder.link_pic);
+            ImageLoader.getInstance().displayImage(libraryData.getPic_url(), holder.link_pic);
         }else{
             holder.pic_container.setVisibility(View.GONE);
         }
