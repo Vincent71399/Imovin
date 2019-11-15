@@ -29,7 +29,6 @@ import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
 
-import static sg.edu.nus.imovin.Common.CommonFunc.ConvertDateString2DisplayFormat;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_GET_SOCIAL_POST_IMAGE;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 

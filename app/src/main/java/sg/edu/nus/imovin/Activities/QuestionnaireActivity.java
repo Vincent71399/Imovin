@@ -40,6 +40,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Common.CustomViewPager;
 import sg.edu.nus.imovin.Event.EnableNextEvent;
 import sg.edu.nus.imovin.Fragments.MCQFragment;
+import sg.edu.nus.imovin.Fragments.MCQMOFragment;
 import sg.edu.nus.imovin.Fragments.QuesFragment;
 import sg.edu.nus.imovin.Fragments.RateFragment;
 import sg.edu.nus.imovin.Fragments.SetStepFragment;
@@ -67,6 +68,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     public static final String TEXT = "TEXT";
     public static final String NUM = "NUM";
     public static final String NUM_S = "NUM_S";
+    public static final String MCQ_MO = "MCQ_MO";
 
     @BindView(R.id.nextBtn) Button nextBtn;
     @BindView(R.id.prevBtn) Button prevBtn;
@@ -202,6 +204,9 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                     break;
                 case NUM_S:
                     mFragments.add(SetStepFragment.getInstance(questionDataList.get(0)));
+                    break;
+                case MCQ_MO:
+                    mFragments.add(MCQMOFragment.getInstance(questionDataList.get(0)));
                     break;
             }
         }
