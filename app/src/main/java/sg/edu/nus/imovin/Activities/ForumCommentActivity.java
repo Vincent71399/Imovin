@@ -160,7 +160,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
         commentDataList = new ArrayList<>();
 
-        CommentAdapter commentAdapter = new CommentAdapter(commentDataList);
+        CommentAdapter commentAdapter = new CommentAdapter(commentDataList, IntentConstants.THREAD_COMMENT);
         comment_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         comment_list.setAdapter(commentAdapter);
     }
@@ -229,7 +229,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_GET_THREAD_COMMENT, threadData.get_id());
 
-        Call<CommentMultiResponse> call = service.getThreadComment(url);
+        Call<CommentMultiResponse> call = service.getAllComment(url);
 
         ShowConnectIndicator();
 
@@ -350,6 +350,44 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
+    public void likeComment(final String comment_id, LikeRequest likeRequest){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        String url = SERVER + String.format(
+                Locale.ENGLISH,REQUEST_LIKE_COMMENT, comment_id);
+
+        Call<LikeResponse> call = service.likeComment(url, likeRequest);
+
+        call.enqueue(new Callback<LikeResponse>() {
+            @Override
+            public void onResponse(Call<LikeResponse> call, Response<LikeResponse> response) {
+                try {
+                    LikeResponse likeResponse = response.body();
+                    if(likeResponse.getMessage().equals(getString(R.string.operation_success))){
+                        updateLikeFlag(comment_id, likeResponse.getData());
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception ForumComment : " + e.toString());
+                    Toast.makeText(ImovinApplication.getInstance(), ImovinApplication.getInstance().getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LikeResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure ForumComment : " + t.toString());
+                Toast.makeText(ImovinApplication.getInstance(), ImovinApplication.getInstance().getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void deleteComment(final String comment_id){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
@@ -404,7 +442,6 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -435,8 +472,8 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
     private void NewComment(){
         Intent intent = new Intent();
-        intent.setClass(this, ForumNewCommentActivity.class);
-        intent.putExtra(IntentConstants.THREAD_ID, threadData.get_id());
+        intent.setClass(this, NewCommentActivity.class);
+        intent.putExtra(IntentConstants.PARENT_ID, threadData.get_id());
         startActivityForResult(intent, IntentConstants.FORUM_NEW_COMMENT);
     }
 
@@ -444,8 +481,8 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         for(CommentData commentData : commentDataList){
             if(commentData.get_id().equals(comment_id)){
                 Intent intent = new Intent();
-                intent.setClass(this, ForumNewCommentActivity.class);
-                intent.putExtra(IntentConstants.THREAD_ID, threadData.get_id());
+                intent.setClass(this, NewCommentActivity.class);
+                intent.putExtra(IntentConstants.PARENT_ID, threadData.get_id());
                 intent.putExtra(IntentConstants.COMMENT_DATA, commentData);
                 startActivityForResult(intent, IntentConstants.FORUM_EDIT_COMMENT);
                 break;
@@ -544,44 +581,6 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
         }
-    }
-
-    public void likeComment(final String comment_id, LikeRequest likeRequest){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(SERVER)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(ImovinApplication.getHttpClient().build())
-                .build();
-
-        ImovinService service = retrofit.create(ImovinService.class);
-
-        String url = SERVER + String.format(
-                Locale.ENGLISH,REQUEST_LIKE_COMMENT, comment_id);
-
-        Call<LikeResponse> call = service.likeComment(url, likeRequest);
-
-        call.enqueue(new Callback<LikeResponse>() {
-            @Override
-            public void onResponse(Call<LikeResponse> call, Response<LikeResponse> response) {
-                try {
-                    LikeResponse likeResponse = response.body();
-                    if(likeResponse.getMessage().equals(getString(R.string.operation_success))){
-                        updateLikeFlag(comment_id, likeResponse.getData());
-                    }
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                    Log.d(LogConstants.LogTag, "Exception ForumComment : " + e.toString());
-                    Toast.makeText(ImovinApplication.getInstance(), ImovinApplication.getInstance().getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LikeResponse> call, Throwable t) {
-                Log.d(LogConstants.LogTag, "Failure ForumComment : " + t.toString());
-                Toast.makeText(ImovinApplication.getInstance(), ImovinApplication.getInstance().getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 }

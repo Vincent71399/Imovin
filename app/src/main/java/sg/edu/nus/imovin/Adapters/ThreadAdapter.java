@@ -81,8 +81,6 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ThreadData
         }
         holder.post_time.setText(ConvertDateString2DisplayFormat(threadData.getCreated_at()));
 
-        holder.itemView.setActivated(selectedItems.get(position, false));
-
         boolean hasLiked = threadData.getLiked_by_me();
         if(hasLiked){
             holder.thumbs_up_image.setImageDrawable(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.icon_thumb_colored_small));

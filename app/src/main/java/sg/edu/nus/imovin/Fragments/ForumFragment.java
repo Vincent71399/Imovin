@@ -128,7 +128,11 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
     }
 
     private void Init(){
-        threadDataList.clear();
+        if(threadDataList != null) {
+            threadDataList.clear();
+        }else{
+            threadDataList = new ArrayList<>();
+        }
         request_page = 1;
         loadPageData(request_page);
     }

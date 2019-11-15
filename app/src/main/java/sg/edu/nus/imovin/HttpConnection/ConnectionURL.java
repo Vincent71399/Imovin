@@ -1,13 +1,10 @@
 package sg.edu.nus.imovin.HttpConnection;
 
 public class ConnectionURL {
-//    public static final String SERVER = "http://3.0.200.147";
     public static final String SERVER = "http://18.139.138.129";
-//    public static final String SERVER = "http://172.25.122.136:5000";
 
     public static final String REQUEST_EMAIL_LOGIN = "/api/auth/email-login";
     public static final String REQUEST_AUTH_FITBIT = "/api/user/auth-fitbit";
-    public static final String REQUEST_GET_STATISTICS = "/api/user/stats";
 
     //below is in imovin-flask
     public static final String REQUEST_RESET_PASSWORD = "/security/reset";
@@ -36,16 +33,16 @@ public class ConnectionURL {
     public static final String REQUEST_COMMENT_WITH_ID = "/api/forum/comment/%s";
 
     public static final String REQUEST_CREATE_SOCIAL_POST = "/api/social/post";
-    public static final String REQUEST_UPLOAD_IMAGE = "/api/social/post/upload-image";
     public static final String REQUEST_GET_ALL_SOCIAL_POSTS = "/api/social/posts";
     public static final String REQUEST_GET_SOCIAL_POST_IMAGE = "/api/social/post/%s/image";
-    public static final String REQUEST_CREATE_SOCIAL_COMMENT = "/api/social/post/comment";
-    public static final String REQUEST_LIKE_SOCIAL_COMMENT = "/api/social/post/comment/%s/like";
+    public static final String REQUEST_SOCIAL_POST_WITH_ID = "/api/social/post/%s";
+    public static final String REQUEST_LIKE_SOCIAL_POST = "/api/social/post/%s/like";
+    public static final String REQUEST_CREATE_SOCIAL_COMMENT = "/api/social/post/%s/comment";
+    public static final String REQUEST_GET_SOCIAL_COMMENT = "/api/social/post/%s/comments";
+    public static final String REQUEST_LIKE_SOCIAL_COMMENT = "/api/social/comment/%s/like";
+    public static final String REQUEST_SOCIAL_COMMENT_WITH_ID = "/api/social/comment/%s";
 
     public static final String REQUEST_POST_DAILY_LOG = "/api/daily-log";
-
-    public static final String PARAMETER_DAYS = "days";
-    public static final String PARAMETER_PASSWORD = "password";
 
     public static final String PARAMETER_DAILY_SUMMARY = "{\"$and\": [{\"date\":{\"$gte\":\"%s\"}}, {\"date\":{\"$lte\":\"%s\"}}]}";
 }

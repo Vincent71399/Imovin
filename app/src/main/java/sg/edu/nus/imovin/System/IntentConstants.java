@@ -11,15 +11,21 @@ public class IntentConstants {
     public static final int GOAL_NEW_PLAN = 107;
     public static final int GOAL_EDIT_PLAN = 108;
     public static final int MONITOR_NEW_PLAN = 109;
+    public static final int SOCIAL_NEW_POST = 110;
+    public static final int SOCIAL_EDIT_POST = 111;
+    public static final int SOCIAL_NEW_COMMENT = 112;
+    public static final int SOCIAL_EDIT_COMMENT = 113;
 
     public static final int CONSENT = 201;
     public static final int QUESTIONNAIRE = 202;
     public static final int QUESTIONNAIRE_CONFIRM = 203;
 
+    public static final String PARENT_ID = "PARENT_ID";
     public static final String THREAD_DATA = "THREAD_DATA";
-    public static final String THREAD_ID = "THREAD_ID";
     public static final String COMMENT_DATA = "COMMENT_DATA";
     public static final String SOCIAL_POST_DATA = "SOCIAL_POST_DATA";
+    public static final String THREAD_COMMENT = "THREAD_COMMENT";
+    public static final String SOCIAL_POST_COMMENT = "SOCIAL_POST_COMMENT";
 
     public static final String QUESTION_DATA = "QUESTION_DATA";
     public static final String MEDAL_DATA = "MEDAL_DATA";

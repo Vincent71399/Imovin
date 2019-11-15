@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin.Fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -18,6 +19,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,18 +28,26 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import sg.edu.nus.imovin.Activities.SocialContentActivity;
 import sg.edu.nus.imovin.Activities.SocialNewPostActivity;
 import sg.edu.nus.imovin.Adapters.SocialFeedAdapter;
 import sg.edu.nus.imovin.Event.ForumEvent;
+import sg.edu.nus.imovin.Event.LaunchSocialPostDetailEvent;
+import sg.edu.nus.imovin.Event.LikeSocialPostEvent;
 import sg.edu.nus.imovin.R;
+import sg.edu.nus.imovin.Retrofit.Object.LikeData;
 import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
+import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
+import sg.edu.nus.imovin.Retrofit.Response.LikeResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
 import sg.edu.nus.imovin.System.EventConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
+import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
+import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_LIKE_SOCIAL_POST;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
 public class SocialFeedFragment extends BaseFragment implements View.OnClickListener {
@@ -117,18 +127,15 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
                 }
             }
         });
-//        socialFeedListView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                Intent intent = new Intent();
-//                intent.setClass(getActivity(), SocialContentActivity.class);
-//                intent.putExtra(IntentConstants.SOCIAL_POST_DATA, socialFeedList.get(position));
-//                startActivityForResult(intent, IntentConstants.SOCIAL_POST_CONTENT);
-//            }
-//        }));
+
     }
 
     private void Init(){
+        if(socialFeedList != null) {
+            socialFeedList.clear();
+        }else{
+            socialFeedList = new ArrayList<>();
+        }
         request_page = 1;
         loadPageData(request_page);
     }
@@ -139,7 +146,7 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
             case R.id.newPostBtn:
                 Intent newSocialIntent = new Intent();
                 newSocialIntent.setClass(getActivity(), SocialNewPostActivity.class);
-                startActivity(newSocialIntent);
+                startActivityForResult(newSocialIntent, IntentConstants.SOCIAL_NEW_POST);
                 break;
         }
     }
@@ -151,6 +158,23 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
             case EventConstants.REFRESH:
                 Init();
                 break;
+        }
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEvent(LikeSocialPostEvent event) {
+        LikeSocialPost(event);
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEvent(LaunchSocialPostDetailEvent event) {
+        for(SocialFeedData socialFeedData : socialFeedList){
+            if(event.getPost_id().equals(socialFeedData.get_id())){
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SocialContentActivity.class);
+                intent.putExtra(IntentConstants.SOCIAL_POST_DATA, socialFeedData);
+                startActivityForResult(intent, IntentConstants.SOCIAL_POST_CONTENT);
+            }
         }
     }
 
@@ -188,5 +212,71 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void LikeSocialPost(final LikeSocialPostEvent likeSocialPostEvent){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        String url = SERVER + String.format(
+                Locale.ENGLISH, REQUEST_LIKE_SOCIAL_POST, likeSocialPostEvent.getPost_id());
+
+        Call<LikeResponse> call = service.likeSocialPost(url, new LikeRequest(likeSocialPostEvent.getIs_like()));
+
+        call.enqueue(new Callback<LikeResponse>() {
+            @Override
+            public void onResponse(Call<LikeResponse> call, Response<LikeResponse> response) {
+                try {
+                    LikeResponse likeResponse = response.body();
+                    if(likeResponse.getMessage().equals(getString(R.string.operation_success))){
+                        updateLikeFlag(likeSocialPostEvent.getPost_id(), likeResponse.getData());
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception ForumFragment Like: " + e.toString());
+                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LikeResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure ForumFragment Like: " + t.toString());
+                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateLikeFlag(String id, LikeData likeData){
+        int index = 0;
+        for(SocialFeedData socialFeedData : socialFeedList){
+            if(socialFeedData.get_id().equals(id)){
+                socialFeedList.get(index).setLiked_by_me(likeData.getLiked_by_me());
+                socialFeedList.get(index).setLikes(likeData.getLikes());
+            }
+            index++;
+        }
+
+        socialFeedListView.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case IntentConstants.SOCIAL_NEW_POST:
+                if(resultCode == Activity.RESULT_OK){
+                    Init();
+                }
+                break;
+            case IntentConstants.SOCIAL_POST_CONTENT:
+                if(resultCode == Activity.RESULT_OK){
+                    Init();
+                }
+                break;
+        }
     }
 }

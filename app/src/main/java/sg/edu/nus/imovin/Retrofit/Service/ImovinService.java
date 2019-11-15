@@ -1,6 +1,7 @@
 package sg.edu.nus.imovin.Retrofit.Service;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -16,16 +17,12 @@ import sg.edu.nus.imovin.HttpConnection.ConnectionURL;
 import sg.edu.nus.imovin.Retrofit.Request.AuthFitbitRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreateCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreatePlanRequest;
-import sg.edu.nus.imovin.Retrofit.Request.CreateSocialCommentRequest;
-import sg.edu.nus.imovin.Retrofit.Request.CreateSocialPostRequest;
 import sg.edu.nus.imovin.Retrofit.Request.CreateThreadRequest;
 import sg.edu.nus.imovin.Retrofit.Request.DailyLogRequest;
 import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
-import sg.edu.nus.imovin.Retrofit.Request.LikeSocialCommentRequest;
 import sg.edu.nus.imovin.Retrofit.Request.ResetPasswordRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UpdatePlanRequest;
-import sg.edu.nus.imovin.Retrofit.Request.UploadImageRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UploadQuestionRequest;
 import sg.edu.nus.imovin.Retrofit.Response.ArticleResponse;
 import sg.edu.nus.imovin.Retrofit.Response.AuthFitbitResponse;
@@ -40,19 +37,21 @@ import sg.edu.nus.imovin.Retrofit.Response.MonitorDailySymmaryResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.QuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ResetPasswordResponse;
-import sg.edu.nus.imovin.Retrofit.Response.SocialCommentResponse;
-import sg.edu.nus.imovin.Retrofit.Response.SocialImageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UploadConsentResponse;
-import sg.edu.nus.imovin.Retrofit.Response.UploadImageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UploadQuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UserInfoResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UserStatsResponse;
 
 public interface ImovinService {
+
+    static final String WHERE = "where";
+    static final String PAGE = "page";
+    static final String MESSAGE = "message";
+
     //login
     @POST(ConnectionURL.REQUEST_EMAIL_LOGIN)
     Call<EmailLoginResponse> emailLogin(
@@ -118,7 +117,7 @@ public interface ImovinService {
     //Monitor
     @GET(ConnectionURL.REQUEST_GET_DAILY_SUMMARIES)
     Call<MonitorDailySymmaryResponse> getMonitorDailySummary(
-            @Query("where") String where
+            @Query(WHERE) String where
     );
 
     //Forum
@@ -140,7 +139,7 @@ public interface ImovinService {
 
     @GET(ConnectionURL.REQUEST_GET_ALL_THREADS)
     Call<ThreadMultiResponse> getAllThreads(
-            @Query("page") Integer page
+            @Query(PAGE) Integer page
     );
 
     @POST
@@ -149,8 +148,9 @@ public interface ImovinService {
             @Body LikeRequest createThreadRequest
     );
 
+    //comment
     @GET
-    Call<CommentMultiResponse> getThreadComment(
+    Call<CommentMultiResponse> getAllComment(
             @Url String url
     );
 
@@ -178,35 +178,35 @@ public interface ImovinService {
     );
 
     //Social Feed
+    @Multipart
     @POST(ConnectionURL.REQUEST_CREATE_SOCIAL_POST)
     Call<SocialPostResponse> createSocialPost(
-            @Body CreateSocialPostRequest createSocialPostRequest
+            @Part(MESSAGE) RequestBody requestBody,
+            @Part MultipartBody.Part filename
     );
 
     @GET(ConnectionURL.REQUEST_GET_ALL_SOCIAL_POSTS)
     Call<SocialPostMultiResponse> getAllSocialPosts(
-            @Query("page") Integer page
+            @Query(PAGE) Integer page
     );
 
-    @GET
-    Call<SocialImageResponse> getSocialImage_by_Id(
+    @Multipart
+    @PATCH
+    Call<SocialPostResponse> editSocialPost(
+            @Url String url,
+            @Part(MESSAGE) RequestBody requestBody,
+            @Part MultipartBody.Part filename
+    );
+
+    @DELETE
+    Call<MessageResponse> deleteSocialPost(
             @Url String url
     );
 
-    @POST(ConnectionURL.REQUEST_CREATE_SOCIAL_COMMENT)
-    Call<SocialCommentResponse> createSocialComment(
-            @Body CreateSocialCommentRequest createSocialCommentRequest
-    );
-
-    @PUT
-    Call<CommentResponse> likeComment(
+    @POST
+    Call<LikeResponse> likeSocialPost(
             @Url String url,
-            @Body LikeSocialCommentRequest likeSocialCommentRequest
-    );
-
-    @POST(ConnectionURL.REQUEST_UPLOAD_IMAGE)
-    Call<UploadImageResponse> uploadImage(
-            @Body UploadImageRequest uploadImageRequest
+            @Body LikeRequest createThreadRequest
     );
 
     //Challenge

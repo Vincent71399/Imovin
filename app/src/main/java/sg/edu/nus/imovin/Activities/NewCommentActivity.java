@@ -33,15 +33,18 @@ import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_COMMENT_WIT
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_CREATE_COMMENT;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
-public class ForumNewCommentActivity extends BaseSimpleActivity implements View.OnClickListener {
+public class NewCommentActivity extends BaseSimpleActivity implements View.OnClickListener {
 
     @BindView(R.id.comment_input) EditText comment_input;
     @BindView(R.id.button_post) Button button_post;
     @BindView(R.id.button_cancel) Button button_cancel;
 
-    protected String thread_id;
+    protected String parent_id;
     private CommentData commentData;
     private boolean isNewComment;
+
+    protected static String CREATE_COMMENT_STRING;
+    protected static String EDIT_COMMENT_STRING;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
 
         LinkUIById();
         SetFunction();
+        SetData();
     }
 
     private void LinkUIById(){
@@ -64,7 +68,7 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
         button_post.setOnClickListener(this);
         button_cancel.setOnClickListener(this);
 
-        thread_id = getIntent().getStringExtra(IntentConstants.THREAD_ID);
+        parent_id = getIntent().getStringExtra(IntentConstants.PARENT_ID);
         commentData = (CommentData) getIntent().getSerializableExtra(IntentConstants.COMMENT_DATA);
         if(commentData == null){
             isNewComment = true;
@@ -72,6 +76,11 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
             isNewComment = false;
             comment_input.setText(commentData.getMessage());
         }
+    }
+
+    protected void SetData(){
+        CREATE_COMMENT_STRING = REQUEST_CREATE_COMMENT;
+        EDIT_COMMENT_STRING = REQUEST_COMMENT_WITH_ID;
     }
 
     @Override
@@ -82,7 +91,7 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
                     Toast.makeText(this, "Comment cannot be empty", Toast.LENGTH_SHORT).show();
                 }else {
                     if(isNewComment) {
-                        PostComment(thread_id, new CreateCommentRequest(comment_input.getText().toString()));
+                        PostComment(parent_id, new CreateCommentRequest(comment_input.getText().toString()));
                     }else{
                         EditComment(commentData.get_id(), new CreateCommentRequest(comment_input.getText().toString()));
                     }
@@ -104,7 +113,7 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
         ImovinService service = retrofit.create(ImovinService.class);
 
         String url = SERVER + String.format(
-                Locale.ENGLISH,REQUEST_CREATE_COMMENT, thread_id);
+                Locale.ENGLISH,CREATE_COMMENT_STRING, thread_id);
 
         Call<CommentResponse> call = service.createComment(url, createCommentRequest);
 
@@ -113,7 +122,7 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
             public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
                 try {
                     CommentResponse commentResponse = response.body();
-                    Log.d(LogConstants.LogTag, "ForumNewCommentActivity : " + commentResponse.getMessage());
+                    Log.d(LogConstants.LogTag, "NewCommentActivity : " + commentResponse.getMessage());
 
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra(IntentConstants.COMMENT_DATA, commentResponse.getData());
@@ -122,14 +131,14 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
 
                 }catch (Exception e){
                     e.printStackTrace();
-                    Log.d(LogConstants.LogTag, "Exception ForumNewCommentActivity : " + e.toString());
+                    Log.d(LogConstants.LogTag, "Exception NewCommentActivity : " + e.toString());
                     Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<CommentResponse> call, Throwable t) {
-                Log.d(LogConstants.LogTag, "Failure ForumNewCommentActivity : " + t.toString());
+                Log.d(LogConstants.LogTag, "Failure NewCommentActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
         });
@@ -145,7 +154,7 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
         ImovinService service = retrofit.create(ImovinService.class);
 
         String url = SERVER + String.format(
-                Locale.ENGLISH,REQUEST_COMMENT_WITH_ID, comment_id);
+                Locale.ENGLISH,EDIT_COMMENT_STRING, comment_id);
 
         Call<CommentResponse> call = service.editComment(url, createCommentRequest);
 
@@ -154,7 +163,7 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
             public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
                 try {
                     CommentResponse commentResponse = response.body();
-                    Log.d(LogConstants.LogTag, "ForumNewCommentActivity : " + commentResponse.getMessage());
+                    Log.d(LogConstants.LogTag, "NewCommentActivity : " + commentResponse.getMessage());
 
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra(IntentConstants.COMMENT_DATA, commentResponse.getData());
@@ -163,14 +172,14 @@ public class ForumNewCommentActivity extends BaseSimpleActivity implements View.
 
                 }catch (Exception e){
                     e.printStackTrace();
-                    Log.d(LogConstants.LogTag, "Exception ForumNewCommentActivity : " + e.toString());
+                    Log.d(LogConstants.LogTag, "Exception NewCommentActivity : " + e.toString());
                     Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<CommentResponse> call, Throwable t) {
-                Log.d(LogConstants.LogTag, "Failure ForumNewCommentActivity : " + t.toString());
+                Log.d(LogConstants.LogTag, "Failure NewCommentActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
         });

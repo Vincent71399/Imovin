@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context="sg.edu.nus.imovin.Activities.SocialNewPostActivity">
-<EditText
-    android:id="@+id/socialPostMessageInput"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:hint="Enter message..."
-    android:textSize="20sp"
-    android:gravity="top|start"/>
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sg.edu.nus.imovin.Activities.SocialNewPostActivity">
 
-<ImageView
-    android:id="@+id/socialPostUploadImage"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:src="@drawable/icons_upload_image"
-    />
-    <TextView
-        android:id="@+id/uploadingText"
+    <EditText
+        android:id="@+id/socialPostMessageInput"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="100dp"
+        android:hint="Enter message..."
+        android:textSize="20sp"
+        android:gravity="top|start"/>
+
+        <ImageView
+            android:id="@+id/socialPostUploadImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icons_upload_image" />
+
+        <TextView
+            android:id="@+id/uploadingText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
 </LinearLayout>
