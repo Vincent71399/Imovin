@@ -153,7 +153,7 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
 
         body_text.setText(socialFeedData.getMessage());
         owner_text.setText(socialFeedData.getUser_name());
-        post_time.setText(ConvertDateString2DisplayFormat(socialFeedData.getCreated_at()));
+        post_time.setText(ConvertDateString2DisplayFormat(socialFeedData.getUpdated_at()));
 
         boolean hasLiked = socialFeedData.getLiked_by_me();
         if(hasLiked){

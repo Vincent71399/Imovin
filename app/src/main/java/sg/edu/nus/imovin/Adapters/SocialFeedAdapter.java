@@ -87,7 +87,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.So
         }else {
             holder.comment_count.setText(socialFeedData.getComments() + " " + ImovinApplication.getInstance().getString(R.string.comments_topics));
         }
-        holder.post_time.setText(ConvertDateString2DisplayFormat(socialFeedData.getCreated_at()));
+        holder.post_time.setText(ConvertDateString2DisplayFormat(socialFeedData.getUpdated_at()));
 
         boolean hasLiked = socialFeedData.getLiked_by_me();
         if(hasLiked){

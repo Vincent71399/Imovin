@@ -76,7 +76,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentD
         final CommentData commentData = commentDataList.get(position);
 
         holder.usernameText.setText(commentData.getUser_name());
-        holder.postTimeText.setText(ConvertDateString2DisplayFormat(commentData.getCreated_at()));
+        holder.postTimeText.setText(ConvertDateString2DisplayFormat(commentData.getUpdated_at()));
         holder.commentContentText.setText(commentData.getMessage());
         holder.numberLikesText.setText(String.valueOf(commentData.getLikes()));
         boolean hasLiked = commentData.getLiked_by_me();

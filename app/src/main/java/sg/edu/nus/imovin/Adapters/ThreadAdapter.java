@@ -79,7 +79,7 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ThreadData
         }else {
             holder.comment_count.setText(threadData.getComments() + " " + ImovinApplication.getInstance().getString(R.string.comments_topics));
         }
-        holder.post_time.setText(ConvertDateString2DisplayFormat(threadData.getCreated_at()));
+        holder.post_time.setText(ConvertDateString2DisplayFormat(threadData.getUpdated_at()));
 
         boolean hasLiked = threadData.getLiked_by_me();
         if(hasLiked){
