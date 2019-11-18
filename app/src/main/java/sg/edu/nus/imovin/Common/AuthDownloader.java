@@ -6,7 +6,6 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.Map;
 
 public class AuthDownloader extends BaseImageDownloader {
 

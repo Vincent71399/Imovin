@@ -10,9 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,13 +23,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import sg.edu.nus.imovin.Adapters.CheckboxAdapter;
 import sg.edu.nus.imovin.Event.ChangeCheckEvent;
-import sg.edu.nus.imovin.Event.EnableNextEvent;
 import sg.edu.nus.imovin.Objects.CheckboxOption;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.AnswerData;
 import sg.edu.nus.imovin.Retrofit.Object.QuestionData;
-
-import static sg.edu.nus.imovin.Activities.QuestionnaireActivity.MCQ_O;
 
 
 public class MCQMOFragment extends QuesFragment implements TextWatcher {

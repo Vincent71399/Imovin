@@ -16,7 +16,6 @@ import java.util.List;
 
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.LibraryData;
-import sg.edu.nus.imovin.System.ImovinApplication;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryData_ViewHolder>{
     private static final int FirstView = 0;

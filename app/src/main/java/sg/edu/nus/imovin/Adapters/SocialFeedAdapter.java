@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -24,6 +23,7 @@ import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
 import sg.edu.nus.imovin.System.ImovinApplication;
 
+import static sg.edu.nus.imovin.Common.CommonFunc.ConvertDateString2DisplayFormat;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.REQUEST_GET_SOCIAL_POST_IMAGE;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
