@@ -136,6 +136,11 @@ public interface ImovinService {
             @Url String url
     );
 
+    @GET
+    Call<ThreadResponse> getThread(
+            @Url String url
+    );
+
     @GET(ConnectionURL.REQUEST_GET_ALL_THREADS)
     Call<ThreadMultiResponse> getAllThreads(
             @Query(PAGE) Integer page
@@ -199,6 +204,11 @@ public interface ImovinService {
 
     @DELETE
     Call<MessageResponse> deleteSocialPost(
+            @Url String url
+    );
+
+    @GET
+    Call<SocialPostResponse> getSocialPost(
             @Url String url
     );
 

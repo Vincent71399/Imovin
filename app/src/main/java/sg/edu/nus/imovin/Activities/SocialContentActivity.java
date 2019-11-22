@@ -49,6 +49,7 @@ import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
 import sg.edu.nus.imovin.Retrofit.Response.CommentMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.LikeResponse;
 import sg.edu.nus.imovin.Retrofit.Response.MessageResponse;
+import sg.edu.nus.imovin.Retrofit.Response.SocialPostResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.ImovinApplication;
@@ -151,6 +152,27 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
 
         socialFeedData = (SocialFeedData) getIntent().getSerializableExtra(IntentConstants.SOCIAL_POST_DATA);
 
+        getSocialPost(socialFeedData.get_id());
+
+        commentDataList = new ArrayList<>();
+
+        CommentAdapter commentAdapter = new CommentAdapter(commentDataList, IntentConstants.SOCIAL_POST_COMMENT);
+        comment_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        comment_list.setAdapter(commentAdapter);
+
+        thumbs_up_container.setOnClickListener(this);
+        if(socialFeedData.getUser_id().equals(ImovinApplication.getUserInfoResponse().get_id())) {
+            edit_container.setVisibility(View.VISIBLE);
+            delete_container.setVisibility(View.VISIBLE);
+            edit_container.setOnClickListener(this);
+            delete_container.setOnClickListener(this);
+        }else{
+            edit_container.setVisibility(View.GONE);
+            delete_container.setVisibility(View.GONE);
+        }
+    }
+
+    private void SetPostData(){
         body_text.setText(socialFeedData.getMessage());
         owner_text.setText(socialFeedData.getUser_name());
         post_time.setText(ConvertDateString2DisplayFormat(socialFeedData.getUpdated_at()));
@@ -172,23 +194,6 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
             ImageLoader.getInstance().displayImage(imageUrl, social_image);
         }else{
             image_container.setVisibility(View.GONE);
-        }
-
-        commentDataList = new ArrayList<>();
-
-        CommentAdapter commentAdapter = new CommentAdapter(commentDataList, IntentConstants.SOCIAL_POST_COMMENT);
-        comment_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        comment_list.setAdapter(commentAdapter);
-
-        thumbs_up_container.setOnClickListener(this);
-        if(socialFeedData.getUser_id().equals(ImovinApplication.getUserInfoResponse().get_id())) {
-            edit_container.setVisibility(View.VISIBLE);
-            delete_container.setVisibility(View.VISIBLE);
-            edit_container.setOnClickListener(this);
-            delete_container.setOnClickListener(this);
-        }else{
-            edit_container.setVisibility(View.GONE);
-            delete_container.setVisibility(View.GONE);
         }
     }
 
@@ -272,6 +277,44 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
         });
     }
 
+    private void getSocialPost(String post_id){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        String url = SERVER + String.format(
+                Locale.ENGLISH, REQUEST_SOCIAL_POST_WITH_ID, post_id);
+
+        Call<SocialPostResponse> call = service.getSocialPost(url);
+
+        call.enqueue(new Callback<SocialPostResponse>() {
+            @Override
+            public void onResponse(Call<SocialPostResponse> call, Response<SocialPostResponse> response) {
+                try {
+                    SocialPostResponse socialPostResponse = response.body();
+                    socialFeedData = socialPostResponse.getData();
+                    SetPostData();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception ForumFragment Like: " + e.toString());
+                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                    SetPostData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SocialPostResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure ForumFragment Like: " + t.toString());
+                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                SetPostData();
+            }
+        });
+    }
+
     private void LikeSocialPost(final LikeSocialPostEvent likeSocialPostEvent){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
@@ -329,7 +372,7 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_SOCIAL_POST_WITH_ID, socialFeedData.get_id());
 
-        Call<MessageResponse> call = service.deleteThread(url);
+        Call<MessageResponse> call = service.deleteSocialPost(url);
 
         ShowConnectIndicator();
 

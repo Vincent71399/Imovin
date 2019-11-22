@@ -47,6 +47,7 @@ import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
 import sg.edu.nus.imovin.Retrofit.Response.CommentMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.LikeResponse;
 import sg.edu.nus.imovin.Retrofit.Response.MessageResponse;
+import sg.edu.nus.imovin.Retrofit.Response.ThreadResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.ImovinApplication;
@@ -145,6 +146,17 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
     private void SetupData(){
         hasEdit = false;
         threadData = (ThreadData) getIntent().getSerializableExtra(IntentConstants.THREAD_DATA);
+
+        getThread(threadData.get_id());
+
+        commentDataList = new ArrayList<>();
+
+        CommentAdapter commentAdapter = new CommentAdapter(commentDataList, IntentConstants.THREAD_COMMENT);
+        comment_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        comment_list.setAdapter(commentAdapter);
+    }
+
+    private void setThreadData(){
         title_text.setText(threadData.getTitle());
         body_text.setText(threadData.getMessage());
         owner_text.setText(threadData.getUser_name());
@@ -157,12 +169,6 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         likes_text.setText(String.valueOf(threadData.getLikes()));
 
         comment_count.setText(getString(R.string.comments_topics) + "(" + threadData.getComments() + ")");
-
-        commentDataList = new ArrayList<>();
-
-        CommentAdapter commentAdapter = new CommentAdapter(commentDataList, IntentConstants.THREAD_COMMENT);
-        comment_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        comment_list.setAdapter(commentAdapter);
     }
 
     private void SetFunction(){
@@ -256,6 +262,44 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
                 Log.d(LogConstants.LogTag, "Failure ForumFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
                 HideConnectIndicator();
+            }
+        });
+    }
+
+    private void getThread(String thread_id){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ImovinApplication.getHttpClient().build())
+                .build();
+
+        ImovinService service = retrofit.create(ImovinService.class);
+
+        String url = SERVER + String.format(
+                Locale.ENGLISH,REQUEST_THREAD_WITH_ID, thread_id);
+
+        Call<ThreadResponse> call = service.getThread(url);
+
+        call.enqueue(new Callback<ThreadResponse>() {
+            @Override
+            public void onResponse(Call<ThreadResponse> call, Response<ThreadResponse> response) {
+                try {
+                    ThreadResponse threadResponse = response.body();
+                    threadData = threadResponse.getData();
+                    setThreadData();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d(LogConstants.LogTag, "Exception ForumFragment Like: " + e.toString());
+                    Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                    setThreadData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ThreadResponse> call, Throwable t) {
+                Log.d(LogConstants.LogTag, "Failure ForumFragment Like: " + t.toString());
+                Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                setThreadData();
             }
         });
     }
