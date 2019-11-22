@@ -297,6 +297,7 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
                 try {
                     SocialPostResponse socialPostResponse = response.body();
                     socialFeedData = socialPostResponse.getData();
+                    hasEdit = true;
                     SetPostData();
                 }catch (Exception e){
                     e.printStackTrace();

@@ -286,6 +286,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
                 try {
                     ThreadResponse threadResponse = response.body();
                     threadData = threadResponse.getData();
+                    hasEdit = true;
                     setThreadData();
                 }catch (Exception e){
                     e.printStackTrace();
