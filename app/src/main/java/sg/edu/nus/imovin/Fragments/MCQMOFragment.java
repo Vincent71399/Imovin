@@ -2,8 +2,10 @@ package sg.edu.nus.imovin.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +25,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import sg.edu.nus.imovin.Adapters.CheckboxAdapter;
 import sg.edu.nus.imovin.Event.ChangeCheckEvent;
+import sg.edu.nus.imovin.Event.EnableNextEvent;
 import sg.edu.nus.imovin.Objects.CheckboxOption;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.AnswerData;
 import sg.edu.nus.imovin.Retrofit.Object.QuestionData;
 
 
-public class MCQMOFragment extends QuesFragment implements TextWatcher {
+public class MCQMOFragment extends QuesFragment {
     @BindView(R.id.question) TextView question;
     @BindView(R.id.question_checklist) RecyclerView question_checklist;
     @BindView(R.id.other_input) EditText other_input;
@@ -86,11 +89,12 @@ public class MCQMOFragment extends QuesFragment implements TextWatcher {
         }
 
         CheckboxAdapter checkboxAdapter = new CheckboxAdapter(checkboxOptionList);
+        question_checklist.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         question_checklist.setAdapter(checkboxAdapter);
     }
 
     private void Init(){
-        other_input.addTextChangedListener(this);
+
     }
 
     @Override
@@ -104,65 +108,52 @@ public class MCQMOFragment extends QuesFragment implements TextWatcher {
     public List<AnswerData> getAnswer() {
         HideKeyboardAll();
 
-//        AnswerData answerData = new AnswerData();
-//        answerData.setAnswer(String.valueOf(selectedIndex));
-//        if(selectedIndex == questionData.getChoices().size()){
-//            answerData.setOthers(other_input.getText().toString());
-//        }
-//        answerData.setQuestion(questionData.get_id());
-//
-//        hasAnswer = true;
-//
-//        List<AnswerData> answerDataList = new ArrayList<>();
-//        answerDataList.add(answerData);
+        AnswerData answerData = new AnswerData();
+        List<String> answerStringList = new ArrayList<>();
+        int index = 0;
+        for(CheckboxOption checkboxOption : checkboxOptionList){
+            if(checkboxOption.getIs_check()){
+                answerStringList.add(String.valueOf(index));
+            }
+            index ++;
+        }
+        if(!other_input.getText().toString().equals("")){
+            answerStringList.add("\"" + other_input.getText().toString() + "\"");
+        }
+        String answerString = "[" + TextUtils.join(",", answerStringList) + "]";
 
-//        return answerDataList;
-        return null;
+        answerData.setAnswer(answerString);
+        answerData.setQuestion(questionData.get_id());
+
+        hasAnswer = true;
+
+        List<AnswerData> answerDataList = new ArrayList<>();
+        answerDataList.add(answerData);
+
+        return answerDataList;
     }
 
     @Override
     public void setAnswer(List<AnswerData> answerDataList) {
-//        AnswerData answerData = answerDataList.get(0);
-//        int count = mcq.getChildCount();
-//        for (int i=0;i<count;i++) {
-//            View view = mcq.getChildAt(i);
-//            if (view instanceof RadioButton) {
-//                if(String.valueOf(i).equals(answerData.getAnswer())){
-//                    ((RadioButton)view).setChecked(true);
-//                }
-//            }
-//        }
-//        other_input.setText(answerData.getOthers());
+        AnswerData answerData = answerDataList.get(0);
+
+        String answerRaw = answerData.getAnswer();
+        answerRaw = answerRaw.substring(1, answerRaw.length()-1);
+        String[] answerArray = answerRaw.split(",");
+        for(String answer : answerArray){
+            try {
+                int index = Integer.parseInt(answer);
+                checkboxOptionList.get(index).setIs_check(true);
+            }catch (Exception e){
+                other_input.setText(answer.substring(1, answer.length()-1));
+            }
+        }
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(ChangeCheckEvent event) {
-        
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//        if(questionData.getQuestion_type().equals(MCQ_O)) {
-//            if(hasAnswer){
-//                hasAnswer = false;
-//            }else {
-//                if (!charSequence.toString().equals("")) {
-//                    EventBus.getDefault().post(new EnableNextEvent());
-//                } else {
-//                    EventBus.getDefault().post(new EnableNextEvent(false));
-//                }
-//            }
-//        }
-    }
-
-    @Override
-    public void afterTextChanged(Editable editable) {
-
+        checkboxOptionList.get(event.getIndex()).setIs_check(event.getChecked());
+        question_checklist.getAdapter().notifyDataSetChanged();
     }
 
     private void HideKeyboardAll(){
