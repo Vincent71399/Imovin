@@ -222,7 +222,6 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         comment_list.getAdapter().notifyDataSetChanged();
     }
 
-
     private void loadCommentData(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)
@@ -286,6 +285,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
                 try {
                     ThreadResponse threadResponse = response.body();
                     threadData = threadResponse.getData();
+                    hasEdit = true;
                     setThreadData();
                 }catch (Exception e){
                     e.printStackTrace();

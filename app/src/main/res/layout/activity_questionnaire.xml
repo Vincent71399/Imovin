@@ -1,34 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".Activities.QuestionnaireActivity">
 
-    <com.flyco.tablayout.SlidingTabLayout
-        android:id="@+id/sub_tab_layout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:background="@color/grey_color"
-        android:paddingLeft="2dp"
-        android:paddingRight="2dp"
-        android:visibility="gone"
-        app:tl_textUnselectColor="@color/black_color"
-        app:tl_textSelectColor="@color/blue_color"
-        app:tl_indicator_height="0dp"
-        app:tl_textsize="18sp"
-        app:tl_tab_padding="15dp"
-        app:tl_textBold="SELECT" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <sg.edu.nus.imovin.Common.CustomViewPager
-        android:id="@+id/vp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        />
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/sub_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@color/grey_color"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:visibility="gone"
+            app:tl_textUnselectColor="@color/black_color"
+            app:tl_textSelectColor="@color/blue_color"
+            app:tl_indicator_height="0dp"
+            app:tl_textsize="18sp"
+            app:tl_tab_padding="15dp"
+            app:tl_textBold="SELECT" />
 
-    <include layout="@layout/questionnaire_bottom_layout"/>
+        <sg.edu.nus.imovin.Common.CustomViewPager
+            android:id="@+id/vp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
 
-</LinearLayout>
+        <include layout="@layout/questionnaire_bottom_layout"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,7 @@ import sg.edu.nus.imovin.Retrofit.Request.UploadQuestionRequest;
 import sg.edu.nus.imovin.Retrofit.Response.QuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Response.UploadQuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
+import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.Config;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.IntentConstants;
@@ -62,7 +64,7 @@ import sg.edu.nus.imovin.utils.ViewFindUtils;
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
 
-public class QuestionnaireActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener{
+public class QuestionnaireActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener{
     public static final String MCQ = "MCQ";
     public static final String MCQ_O = "MCQ_O";
     public static final String TEXT = "TEXT";
@@ -74,6 +76,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     @BindView(R.id.prevBtn) Button prevBtn;
 
     private View customActionBar;
+    @BindView(R.id.mainView) RelativeLayout mainView;
     @BindView(R.id.navigator_title) TextView navigator_title;
     @BindView(R.id.navigator_help) TextView navigator_help;
     @BindView(R.id.navigator_right_text) TextView navigator_right_text;
@@ -135,6 +138,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     }
 
     private void SetFunction(){
+        SetMainView(mainView);
         prevBtn.setOnClickListener(this);
         nextBtn.setOnClickListener(this);
         navigator_help.setOnClickListener(this);
@@ -155,7 +159,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         List<List<QuestionData>> questionDataList = new ArrayList<>();
 
         for(SectionData sectionData : sectionDataList){
-            if(sectionData.getName().equals(Config.FIRST_SECTION_NAME)){
+            if(!sectionData.getName().equals(Config.MULTI_B_SECTION_NAME) && !sectionData.getName().equals(Config.MULTI_C_SECTION_NAME)){
                 questionDataList.addAll(splitQuestionData(sectionData.getQuestions(), 1));
             }else{
                 questionDataList.addAll(splitQuestionData(sectionData.getQuestions(), Config.RATING_QUESTION_NUM_PER_PAGE));
@@ -225,7 +229,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         int totalQuestion = 0;
         for(SectionData sectionData : sectionDataList){
             int totalPage = sectionData.getQuestions().size();
-            if(!sectionData.getName().equals(Config.FIRST_SECTION_NAME)){
+            if(sectionData.getName().equals(Config.MULTI_B_SECTION_NAME) || sectionData.getName().equals(Config.MULTI_C_SECTION_NAME)){
                 if(totalPage % Config.RATING_QUESTION_NUM_PER_PAGE > 0){
                     totalPage = totalPage/Config.RATING_QUESTION_NUM_PER_PAGE + 1;
                 }else{
@@ -333,7 +337,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                 SectionData currentSectionData = null;
                 for(SectionData sectionData : sectionDataList){
                     int totalPage = sectionData.getQuestions().size();
-                    if(!sectionData.getName().equals(Config.FIRST_SECTION_NAME)){
+                    if(sectionData.getName().equals(Config.MULTI_B_SECTION_NAME) || sectionData.getName().equals(Config.MULTI_C_SECTION_NAME)){
                         if(totalPage % Config.RATING_QUESTION_NUM_PER_PAGE > 0){
                             totalPage = totalPage/Config.RATING_QUESTION_NUM_PER_PAGE + 1;
                         }else{
@@ -390,6 +394,8 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
         UploadQuestionRequest uploadQuestionRequest = new UploadQuestionRequest(answerDataList);
 
+        ShowConnectIndicator();
+
         Call<UploadQuestionnaireResponse> call = service.uploadQuestionnaire(uploadQuestionRequest);
         call.enqueue(new Callback<UploadQuestionnaireResponse>() {
             @Override
@@ -401,12 +407,14 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
                     Intent returnIntent = new Intent();
                     setResult(Activity.RESULT_OK,returnIntent);
+                    HideConnectIndicator();
                     finish();
 
                 }catch (Exception e){
                     e.printStackTrace();
                     Log.d(LogConstants.LogTag, "Exception upload answer : " + e.toString());
                     Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                    HideConnectIndicator();
                 }
             }
 
@@ -414,6 +422,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             public void onFailure(Call<UploadQuestionnaireResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure upload answer : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
+                HideConnectIndicator();
             }
         });
     }
@@ -478,7 +487,10 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         }else if(questionDataList.size() > 0
                 && questionDataList.get(0).getQuestion_type().equals(NUM_S)){
             nextBtn.setEnabled(true);
-        } else {
+        }else if(questionDataList.size() > 0
+                && questionDataList.get(0).getQuestion_type().equals(MCQ_MO)){
+            nextBtn.setEnabled(true);
+        }else {
             if(answerDataHashMap.containsKey(i)) {
                 nextBtn.setEnabled(true);
             }else{
