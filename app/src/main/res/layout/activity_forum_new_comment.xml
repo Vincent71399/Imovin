@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_bg">
+        
         <TextView
             android:layout_marginTop="24dp"
             android:layout_width="wrap_content"
@@ -23,6 +24,7 @@
             android:textSize="18sp"
             android:textColor="@color/black_color"
             android:layout_gravity="center"/>
+
         <LinearLayout
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
@@ -39,10 +41,12 @@
                 android:layout_height="80dp"
                 android:layout_weight="4"/>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
+
         <Button
             android:id="@+id/button_post"
             android:paddingTop="15dp"
@@ -54,10 +58,12 @@
             android:text="@string/post"
             android:textSize="18sp"
             android:textColor="@color/blue_color"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
+
         <Button
             android:id="@+id/button_cancel"
             android:layout_marginTop="15dp"

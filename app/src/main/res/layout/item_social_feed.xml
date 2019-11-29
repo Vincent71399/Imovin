@@ -20,14 +20,14 @@
             android:layout_width="0dp"
             android:layout_weight="4"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:padding="@dimen/postPadding">
 
             <TextView
                 android:id="@+id/body_text"
-                android:textSize="18sp"
+                android:textSize="@dimen/postTextSizeSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:padding="@dimen/postPadding"
                 android:maxLines="3"
                 android:ellipsize="end"/>
 
@@ -35,9 +35,9 @@
 
         <TextView
             android:id="@+id/owner_text"
-            android:textSize="18sp"
+            android:textSize="@dimen/postTextSizeSmall"
             android:textColor="@color/theme_purple"
-            android:padding="10dp"
+            android:padding="@dimen/postPadding"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -55,8 +55,8 @@
         <ImageView
             android:id="@+id/social_image"
             android:scaleType="centerCrop"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="@dimen/postImageSize"
+            android:layout_height="@dimen/postImageSize"
             android:adjustViewBounds="true" />
 
     </LinearLayout>
@@ -66,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="10dp"
+        android:padding="@dimen/postPadding"
         android:weightSum="3">
 
         <LinearLayout
@@ -76,7 +76,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center_vertical|start"
-            android:padding="10dp">
+            android:padding="@dimen/postPadding">
 
             <ImageView
                 android:id="@+id/thumbs_up_image"
@@ -87,9 +87,9 @@
 
             <TextView
                 android:id="@+id/likes_text"
-                android:textSize="18sp"
+                android:textSize="@dimen/postTextSizeSmall"
                 android:textColor="@color/black_color"
-                android:padding="10dp"
+                android:padding="@dimen/postPadding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|end"/>
@@ -98,9 +98,9 @@
 
         <TextView
             android:id="@+id/comment_count"
-            android:textSize="18sp"
+            android:textSize="@dimen/postTextSizeSmall"
             android:textColor="@color/black_color"
-            android:padding="10dp"
+            android:padding="@dimen/postPadding"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -108,9 +108,9 @@
 
         <TextView
             android:id="@+id/post_time"
-            android:textSize="18sp"
+            android:textSize="@dimen/postTextSizeSmall"
             android:textColor="@color/lesser_grey_color"
-            android:padding="10dp"
+            android:padding="@dimen/postPadding"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

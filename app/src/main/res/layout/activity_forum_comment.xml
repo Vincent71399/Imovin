@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:padding="10dp"
+        android:padding="@dimen/postPadding"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -26,24 +26,24 @@
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:padding="@dimen/postPadding">
 
                 <TextView
                     android:id="@+id/title_text"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/postTextSizeBig"
                     android:textColor="@color/black_color"
                     android:textStyle="bold"
-                    android:padding="10dp"
+                    android:padding="@dimen/postPadding"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|start"/>
 
                 <TextView
                     android:id="@+id/body_text"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/postTextSizeSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:padding="@dimen/postPadding"
                     android:maxLines="3"
                     android:ellipsize="end"/>
 
@@ -51,9 +51,9 @@
 
             <TextView
                 android:id="@+id/owner_text"
-                android:textSize="18sp"
+                android:textSize="@dimen/postTextSizeSmall"
                 android:textColor="@color/theme_purple"
-                android:padding="10dp"
+                android:padding="@dimen/postPadding"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:padding="10dp"
+            android:padding="@dimen/postPadding"
             android:weightSum="6">
 
             <LinearLayout
@@ -76,7 +76,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:gravity="center_vertical|start"
-                android:padding="10dp">
+                android:padding="@dimen/postPadding">
 
                 <ImageView
                     android:id="@+id/thumbs_up_image"
@@ -87,10 +87,10 @@
 
                 <TextView
                     android:id="@+id/likes_text"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/postTextSizeSmall"
                     android:textColor="@color/black_color"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:paddingStart="@dimen/postPadding"
+                    android:paddingEnd="@dimen/postPadding"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|end"/>
@@ -104,7 +104,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:padding="10dp">
+                android:padding="@dimen/postPadding">
 
                 <ImageView
                     android:src="@drawable/icon_pen_small"
@@ -121,7 +121,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:padding="10dp">
+                android:padding="@dimen/postPadding">
 
                 <ImageView
                     android:src="@drawable/icon_cross_small"
@@ -137,9 +137,9 @@
             android:id="@+id/comment_count"
             android:text="@string/comments_topics"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="@dimen/postTitleTextSize"
             android:background="@color/light_grey_color"
-            android:padding="10dp"
+            android:padding="@dimen/postTitlePadding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

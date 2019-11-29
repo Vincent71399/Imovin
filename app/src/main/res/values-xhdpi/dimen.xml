@@ -44,4 +44,14 @@
     <dimen name="libraryLinkTextPaddingSmallH">10dp</dimen>
     <dimen name="libraryLinkTextPaddingSmallV">3dp</dimen>
 
+    <dimen name="postTitleTextSize">20sp</dimen>
+    <dimen name="postTitlePadding">10dp</dimen>
+    <dimen name="postTextSizeBig">20dp</dimen>
+    <dimen name="postTextSizeSmall">18dp</dimen>
+    <dimen name="postPadding">10dp</dimen>
+    <dimen name="postImageSize">150dp</dimen>
+    <dimen name="postNewPostTitleInputHeight">100dp</dimen>
+    <dimen name="postNewPostTextSizeBig">24sp</dimen>
+    <dimen name="postNewPostTextSizeSmall">20sp</dimen>
+
 </resources>

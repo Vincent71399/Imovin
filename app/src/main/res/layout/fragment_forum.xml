@@ -19,9 +19,9 @@
             <TextView
                 android:text="@string/forum_topics"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="@dimen/postTitleTextSize"
                 android:background="@color/light_grey_color"
-                android:padding="10dp"
+                android:padding="@dimen/postTitlePadding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

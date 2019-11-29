@@ -51,7 +51,8 @@
     <string name="encourage_text">You seem to be missing your goal. Try to make time for a walk!</string>
     <string name="daily_goal_text">Daily Goal: </string>
 
-    <string name="forum_topics">forum topics</string>
+    <string name="forum_topics">Forum topics</string>
+    <string name="social_topics">Social topics</string>
     <string name="comments_topics_single">Comment</string>
     <string name="comments_topics">Comments</string>
     <string name="new_thread">New Thread</string>

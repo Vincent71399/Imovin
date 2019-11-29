@@ -16,6 +16,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:text="@string/social_topics"
+                android:textStyle="bold"
+                android:textSize="@dimen/postTitleTextSize"
+                android:background="@color/light_grey_color"
+                android:padding="@dimen/postTitlePadding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/socialFeedList"
                 android:layout_width="match_parent"
