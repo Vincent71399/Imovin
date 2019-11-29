@@ -67,7 +67,6 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
     @BindView(R.id.mainView) RelativeLayout mainView;
 
-    @BindView(R.id.navigator_middle_title) TextView navigator_middle_title;
     @BindView(R.id.navigator_left) LinearLayout navigator_left;
     @BindView(R.id.navigator_left_image) ImageView navigator_left_image;
     @BindView(R.id.navigator_left_text) TextView navigator_left_text;
@@ -173,8 +172,6 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
 
     private void SetFunction(){
         SetMainView(mainView);
-
-        navigator_middle_title.setText("");
 
         navigator_left_text.setText(getString(R.string.forum));
         navigator_left_text.setVisibility(View.VISIBLE);

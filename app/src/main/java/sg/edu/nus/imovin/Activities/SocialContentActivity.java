@@ -69,7 +69,6 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
 
     private View customActionBar;
 
-    @BindView(R.id.navigator_middle_title) TextView navigator_middle_title;
     @BindView(R.id.navigator_left) LinearLayout navigator_left;
     @BindView(R.id.navigator_left_image) ImageView navigator_left_image;
     @BindView(R.id.navigator_left_text) TextView navigator_left_text;

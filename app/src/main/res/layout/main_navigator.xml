@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_weight="28"
+        android:layout_weight="50"
         android:layout_height="match_parent"
         android:gravity="start">
 
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/white_color"
-                android:textSize="@dimen/navigatorText"
+                android:textSize="@dimen/navigatorTextSmall"
                 android:gravity="center"/>
 
         </LinearLayout>
@@ -40,26 +40,8 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/navigator_middle"
         android:layout_width="0dp"
-        android:layout_weight="44"
-        android:gravity="center"
-        android:layout_height="match_parent">
-        
-        <TextView
-            android:singleLine="true"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/navigator_middle_title"
-            android:textColor="@color/white_color"
-            android:textSize="@dimen/navigatorText" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_weight="28"
+        android:layout_weight="50"
         android:layout_height="match_parent"
         android:paddingStart="@dimen/navigatorPaddingH"
         android:paddingEnd="@dimen/navigatorPaddingH"
@@ -90,7 +72,7 @@
                 android:visibility="invisible"
                 android:singleLine="true"
                 android:textColor="@color/white_color"
-                android:textSize="@dimen/navigatorText"
+                android:textSize="@dimen/navigatorTextSmall"
                 />
 
         </RelativeLayout>

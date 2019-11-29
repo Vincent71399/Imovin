@@ -39,8 +39,6 @@ public class ForumNewPostActivity extends BaseActivity implements View.OnClickLi
 
     private View customActionBar;
 
-    @BindView(R.id.navigator_middle_title) TextView navigator_middle_title;
-
     @BindView(R.id.navigator_left) LinearLayout navigator_left;
     @BindView(R.id.navigator_left_image) ImageView navigator_left_image;
     @BindView(R.id.navigator_left_text) TextView navigator_left_text;
@@ -85,8 +83,6 @@ public class ForumNewPostActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void SetFunction(){
-        navigator_middle_title.setText(getString(R.string.new_thread));
-
         navigator_left_text.setText(getString(R.string.forum));
         navigator_left_text.setVisibility(View.VISIBLE);
         navigator_left_image.setVisibility(View.VISIBLE);

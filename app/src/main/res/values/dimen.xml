@@ -12,7 +12,8 @@
     <dimen name="loginPageTextSize">20sp</dimen>
     <dimen name="loginPageBtnTextSize">20sp</dimen>
 
-    <dimen name="navigatorText">25sp</dimen>
+    <dimen name="navigatorTextBig">25sp</dimen>
+    <dimen name="navigatorTextSmall">22sp</dimen>
     <dimen name="navigatorTextHint">22sp</dimen>
     <dimen name="navigatorPaddingH">20dp</dimen>
     <dimen name="navigatorPaddingV">10dp</dimen>

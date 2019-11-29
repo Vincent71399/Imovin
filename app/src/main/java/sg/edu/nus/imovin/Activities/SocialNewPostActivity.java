@@ -50,7 +50,6 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
 
     private View customActionBar;
 
-    @BindView(R.id.navigator_middle_title) TextView navigator_middle_title;
     @BindView(R.id.navigator_left) LinearLayout navigator_left;
     @BindView(R.id.navigator_left_image) ImageView navigator_left_image;
     @BindView(R.id.navigator_left_text) TextView navigator_left_text;
@@ -98,8 +97,6 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
         navigator_left_text.setText(getString(R.string.social_feed));
         navigator_left_text.setVisibility(View.VISIBLE);
         navigator_left_image.setVisibility(View.VISIBLE);
-
-        navigator_middle_title.setText(getString(R.string.new_post));
 
         navigator_right_text.setText(getString(R.string.post));
         navigator_right_text.setVisibility(View.VISIBLE);

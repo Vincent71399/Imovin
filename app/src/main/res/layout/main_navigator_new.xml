@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/white_color"
-            android:textSize="@dimen/navigatorText" />
+            android:textSize="@dimen/navigatorTextBig" />
 
     </RelativeLayout>
 

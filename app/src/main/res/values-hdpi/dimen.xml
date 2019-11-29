@@ -12,10 +12,11 @@
     <dimen name="loginPageTextSize">16sp</dimen>
     <dimen name="loginPageBtnTextSize">16sp</dimen>
 
-    <dimen name="navigatorText">22sp</dimen>
+    <dimen name="navigatorTextBig">22sp</dimen>
+    <dimen name="navigatorTextSmall">18sp</dimen>
     <dimen name="navigatorTextHint">20sp</dimen>
     <dimen name="navigatorPaddingH">10dp</dimen>
-    <dimen name="navigatorPaddingV">5dp</dimen>
+    <dimen name="navigatorPaddingV">8dp</dimen>
 
     <dimen name="homePadding">10dp</dimen>
     <dimen name="homeSubPadding">5dp</dimen>
