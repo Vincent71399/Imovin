@@ -9,6 +9,12 @@
     <dimen name="textSubMid">25sp</dimen>
     <dimen name="textSubSmall">20sp</dimen>
 
+    <dimen name="consentDocPadding">20dp</dimen>
+    <dimen name="consentSignPadding">10dp</dimen>
+    <dimen name="consentSignTextSize">18sp</dimen>
+
+    <dimen name="questionnaireDocPadding">20dp</dimen>
+
     <dimen name="loginPageTextSize">20sp</dimen>
     <dimen name="loginPageBtnTextSize">20sp</dimen>
 

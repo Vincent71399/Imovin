@@ -16,7 +16,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp">
+            android:padding="@dimen/questionnaireDocPadding">
 
             <TextView
                 android:text="@string/qn_title"

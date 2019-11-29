@@ -9,11 +9,17 @@
     <dimen name="textSubMid">20sp</dimen>
     <dimen name="textSubSmall">15sp</dimen>
 
+    <dimen name="consentDocPadding">15dp</dimen>
+    <dimen name="consentSignPadding">8dp</dimen>
+    <dimen name="consentSignTextSize">16sp</dimen>
+
+    <dimen name="questionnaireDocPadding">15dp</dimen>
+
     <dimen name="loginPageTextSize">16sp</dimen>
     <dimen name="loginPageBtnTextSize">16sp</dimen>
 
     <dimen name="navigatorTextBig">22sp</dimen>
-    <dimen name="navigatorTextSmall">18sp</dimen>
+    <dimen name="navigatorTextSmall">16sp</dimen>
     <dimen name="navigatorTextHint">20sp</dimen>
     <dimen name="navigatorPaddingH">10dp</dimen>
     <dimen name="navigatorPaddingV">8dp</dimen>

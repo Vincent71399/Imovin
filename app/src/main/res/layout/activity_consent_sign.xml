@@ -5,17 +5,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:padding="@dimen/consentSignPadding"
     tools:context=".Activities.ConsentSignActivity">
 
     <TextView
         android:id="@+id/sign_title"
         android:text="@string/sign_title"
-        android:textSize="18sp"
+        android:textSize="@dimen/consentSignTextSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+        android:paddingTop="@dimen/consentSignPadding"
+        android:paddingBottom="@dimen/consentSignPadding"/>
 
     <com.rm.freedrawview.FreeDrawView
         android:id="@+id/signature_box"
