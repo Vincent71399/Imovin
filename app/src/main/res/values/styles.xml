@@ -18,7 +18,7 @@
     </style>
 
     <style name="LoginTitleStyle">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/loginPageTextSize</item>
         <item name="android:textColor">@color/black_color</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:layout_marginTop">@dimen/LoginComponentMarginTop</item>
@@ -31,7 +31,7 @@
     </style>
 
     <style name="LoginInputStyle">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/loginPageTextSize</item>
         <item name="android:textColor">@color/black_color</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:layout_marginTop">@dimen/LoginComponentMarginTop</item>
@@ -45,7 +45,7 @@
     </style>
 
     <style name="buttonStyle">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/loginPageBtnTextSize</item>
         <item name="android:layout_marginTop">@dimen/LoginComponentMarginTop</item>
         <item name="android:textColor">@drawable/button_text_color</item>
         <item name="android:gravity">center</item>
@@ -61,7 +61,7 @@
     </style>
 
     <style name="clickableTitleStyle">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/loginPageBtnTextSize</item>
         <item name="android:textColor">@drawable/click_text_color</item>
         <item name="android:layout_marginTop">@dimen/LoginComponentMarginTop</item>
         <item name="android:paddingStart">20dp</item>
