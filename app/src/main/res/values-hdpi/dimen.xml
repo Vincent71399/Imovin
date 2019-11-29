@@ -2,13 +2,30 @@
 <resources>
     <dimen name="LoginComponentMarginTop">10dp</dimen>
 
-    <dimen name="textBig">60sp</dimen>
-    <dimen name="textSubBig">35sp</dimen>
+    <dimen name="textBig">40sp</dimen>
+    <dimen name="textSubBig">25sp</dimen>
 
-    <dimen name="textMid">40sp</dimen>
-    <dimen name="textSubMid">25sp</dimen>
-    <dimen name="textSubSmall">20sp</dimen>
+    <dimen name="textMid">30sp</dimen>
+    <dimen name="textSubMid">20sp</dimen>
+    <dimen name="textSubSmall">15sp</dimen>
 
     <dimen name="loginPageTextSize">16sp</dimen>
     <dimen name="loginPageBtnTextSize">16sp</dimen>
+
+    <dimen name="homePadding">10dp</dimen>
+    <dimen name="homeSubPadding">5dp</dimen>
+    <dimen name="homeMarginTop">10dp</dimen>
+    <dimen name="homeMarginStart">10dp</dimen>
+    <dimen name="homeWarningTextSize">20sp</dimen>
+    <dimen name="homeTextSize">18sp</dimen>
+    <dimen name="homeBtnTextSize">14sp</dimen>
+
+    <dimen name="challengePadding">10dp</dimen>
+    <dimen name="challengeMarginTop">10dp</dimen>
+    <dimen name="challengeSubMarginTop">5dp</dimen>
+    <dimen name="medalImagePadding">5dp</dimen>
+    <dimen name="medalTextPaddingH">8dp</dimen>
+    <dimen name="medalTextPaddingV">6dp</dimen>
+    <dimen name="medalTextMarginTop">5dp</dimen>
+
 </resources>

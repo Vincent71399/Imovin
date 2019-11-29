@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/challenge_season_text"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/challengeSubMarginTop"
             android:textColor="@color/theme_purple"
             android:textSize="@dimen/textSubBig"
             android:layout_width="wrap_content"
@@ -25,17 +25,17 @@
 
         <TextView
             android:id="@+id/challenge_season_end_date"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/challengeMarginTop"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/challengeSubMarginTop"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="10dp"
+            android:padding="@dimen/challengePadding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -60,7 +60,7 @@
 
         <TextView
             android:id="@+id/rank_text"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/challengeMarginTop"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
 
         <TextView
             android:id="@+id/daily_steps_title"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/challengeMarginTop"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
 
         <TextView
             android:id="@+id/active_days_for_the_week_title"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/challengeMarginTop"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
 
         <TextView
             android:id="@+id/daily_total_distance_title"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/challengeMarginTop"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"
@@ -107,7 +107,7 @@
 
         <TextView
             android:id="@+id/weekly_exercise_duration_title"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/challengeMarginTop"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
 
         <TextView
             android:id="@+id/total_days_with_steps_title"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/challengeMarginTop"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
 
         <TextView
             android:id="@+id/active_weeks_in_a_row_title"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/challengeMarginTop"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubMid"
             android:layout_width="wrap_content"

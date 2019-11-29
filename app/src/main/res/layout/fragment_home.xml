@@ -10,10 +10,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="20dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="20dp">
+        android:padding="@dimen/homePadding">
 
         <TextView
             android:id="@+id/steps_value"
@@ -37,7 +34,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp">
+            android:paddingTop="@dimen/homePadding">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -119,9 +116,9 @@
         <TextView
             android:id="@+id/warning"
             android:visibility="invisible"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/homeMarginTop"
             android:padding="10dp"
-            android:textSize="25sp"
+            android:textSize="@dimen/homeWarningTextSize"
             android:gravity="center"
             android:text="@string/warning_text"
             android:background="@drawable/wheat_background"
@@ -138,7 +135,7 @@
             android:id="@+id/daily_goal"
             android:text="@string/daily_goal_text"
             android:textColor="@color/black_color"
-            android:textSize="20sp"
+            android:textSize="@dimen/homeTextSize"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -147,14 +144,14 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
+            android:padding="@dimen/homePadding"
             android:weightSum="4">
 
             <TextView
                 android:id="@+id/steps_btn"
-                android:padding="10dp"
+                android:padding="@dimen/homeSubPadding"
                 android:text="@string/steps"
-                android:textSize="20sp"
+                android:textSize="@dimen/homeBtnTextSize"
                 android:gravity="center"
                 android:textColor="@color/white_color"
                 android:background="@drawable/purple_background"
@@ -164,10 +161,10 @@
 
             <TextView
                 android:id="@+id/calories_btn"
-                android:padding="10dp"
-                android:layout_marginStart="20dp"
+                android:padding="@dimen/homeSubPadding"
+                android:layout_marginStart="@dimen/homeMarginStart"
                 android:text="@string/calories"
-                android:textSize="20sp"
+                android:textSize="@dimen/homeBtnTextSize"
                 android:gravity="center"
                 android:textColor="@color/white_color"
                 android:background="@drawable/grey_background"
@@ -177,10 +174,10 @@
 
             <TextView
                 android:id="@+id/duration_btn"
-                android:padding="10dp"
-                android:layout_marginStart="20dp"
+                android:padding="@dimen/homeSubPadding"
+                android:layout_marginStart="@dimen/homeMarginStart"
                 android:text="@string/duration"
-                android:textSize="20sp"
+                android:textSize="@dimen/homeBtnTextSize"
                 android:gravity="center"
                 android:textColor="@color/white_color"
                 android:background="@drawable/grey_background"
@@ -190,10 +187,10 @@
 
             <TextView
                 android:id="@+id/distance_btn"
-                android:padding="10dp"
-                android:layout_marginStart="20dp"
+                android:padding="@dimen/homeSubPadding"
+                android:layout_marginStart="@dimen/homeMarginStart"
                 android:text="@string/distance"
-                android:textSize="20sp"
+                android:textSize="@dimen/homeBtnTextSize"
                 android:gravity="center"
                 android:textColor="@color/white_color"
                 android:background="@drawable/grey_background"

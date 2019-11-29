@@ -59,22 +59,22 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
                 holder.medal_count.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.tier_3));
                 switch (medalData.getCategory()){
                     case ValueConstants.CATEGORY_DAILY_STEP:
-                        holder.medal_img.setImageResource(R.drawable.daily_steps_3);
+                        holder.medal_img.setImageResource(R.drawable.daily_steps_3_sub);
                         break;
                     case ValueConstants.CATEGORY_ACTIVE_DAYS_FOR_THE_WEEK:
-                        holder.medal_img.setImageResource(R.drawable.active_days_for_the_week_3);
+                        holder.medal_img.setImageResource(R.drawable.active_days_for_the_week_3_sub);
                         break;
                     case ValueConstants.CATEGORY_DAILY_TOTAL_DISTANCE:
-                        holder.medal_img.setImageResource(R.drawable.daily_total_distance_3);
+                        holder.medal_img.setImageResource(R.drawable.daily_total_distance_3_sub);
                         break;
                     case ValueConstants.CATEGORY_WEEKLY_EXERCISE_DURATION:
-                        holder.medal_img.setImageResource(R.drawable.weekly_exercise_duration_3);
+                        holder.medal_img.setImageResource(R.drawable.weekly_exercise_duration_3_sub);
                         break;
                     case ValueConstants.CATEGORY_TOTAL_DAYS_WITH_STEPS:
-                        holder.medal_img.setImageResource(R.drawable.total_days_with_steps_3);
+                        holder.medal_img.setImageResource(R.drawable.total_days_with_steps_3_sub);
                         break;
                     case ValueConstants.CATEGORY_ACTIVE_WEEKS_IN_A_ROW:
-                        holder.medal_img.setImageResource(R.drawable.active_weeks_in_a_row_3);
+                        holder.medal_img.setImageResource(R.drawable.active_weeks_in_a_row_3_sub);
                         break;
                 }
                 break;
@@ -83,22 +83,22 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
                 holder.medal_count.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.tier_2));
                 switch (medalData.getCategory()){
                     case ValueConstants.CATEGORY_DAILY_STEP:
-                        holder.medal_img.setImageResource(R.drawable.daily_steps_2);
+                        holder.medal_img.setImageResource(R.drawable.daily_steps_2_sub);
                         break;
                     case ValueConstants.CATEGORY_ACTIVE_DAYS_FOR_THE_WEEK:
-                        holder.medal_img.setImageResource(R.drawable.active_days_for_the_week_2);
+                        holder.medal_img.setImageResource(R.drawable.active_days_for_the_week_2_sub);
                         break;
                     case ValueConstants.CATEGORY_DAILY_TOTAL_DISTANCE:
-                        holder.medal_img.setImageResource(R.drawable.daily_total_distance_2);
+                        holder.medal_img.setImageResource(R.drawable.daily_total_distance_2_sub);
                         break;
                     case ValueConstants.CATEGORY_WEEKLY_EXERCISE_DURATION:
-                        holder.medal_img.setImageResource(R.drawable.weekly_exercise_duration_2);
+                        holder.medal_img.setImageResource(R.drawable.weekly_exercise_duration_2_sub);
                         break;
                     case ValueConstants.CATEGORY_TOTAL_DAYS_WITH_STEPS:
-                        holder.medal_img.setImageResource(R.drawable.total_days_with_steps_2);
+                        holder.medal_img.setImageResource(R.drawable.total_days_with_steps_2_sub);
                         break;
                     case ValueConstants.CATEGORY_ACTIVE_WEEKS_IN_A_ROW:
-                        holder.medal_img.setImageResource(R.drawable.active_weeks_in_a_row_2);
+                        holder.medal_img.setImageResource(R.drawable.active_weeks_in_a_row_2_sub);
                         break;
                 }
                 break;
@@ -107,22 +107,22 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
                 holder.medal_count.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.tier_1));
                 switch (medalData.getCategory()){
                     case ValueConstants.CATEGORY_DAILY_STEP:
-                        holder.medal_img.setImageResource(R.drawable.daily_steps_1);
+                        holder.medal_img.setImageResource(R.drawable.daily_steps_1_sub);
                         break;
                     case ValueConstants.CATEGORY_ACTIVE_DAYS_FOR_THE_WEEK:
-                        holder.medal_img.setImageResource(R.drawable.active_days_for_the_week_1);
+                        holder.medal_img.setImageResource(R.drawable.active_days_for_the_week_1_sub);
                         break;
                     case ValueConstants.CATEGORY_DAILY_TOTAL_DISTANCE:
-                        holder.medal_img.setImageResource(R.drawable.daily_total_distance_1);
+                        holder.medal_img.setImageResource(R.drawable.daily_total_distance_1_sub);
                         break;
                     case ValueConstants.CATEGORY_WEEKLY_EXERCISE_DURATION:
-                        holder.medal_img.setImageResource(R.drawable.weekly_exercise_duration_1);
+                        holder.medal_img.setImageResource(R.drawable.weekly_exercise_duration_1_sub);
                         break;
                     case ValueConstants.CATEGORY_TOTAL_DAYS_WITH_STEPS:
-                        holder.medal_img.setImageResource(R.drawable.total_days_with_steps_1);
+                        holder.medal_img.setImageResource(R.drawable.total_days_with_steps_1_sub);
                         break;
                     case ValueConstants.CATEGORY_ACTIVE_WEEKS_IN_A_ROW:
-                        holder.medal_img.setImageResource(R.drawable.active_weeks_in_a_row_1);
+                        holder.medal_img.setImageResource(R.drawable.active_weeks_in_a_row_1_sub);
                         break;
                 }
                 break;
@@ -131,22 +131,22 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
                 holder.medal_count.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.tier_0));
                 switch (medalData.getCategory()){
                     case ValueConstants.CATEGORY_DAILY_STEP:
-                        holder.medal_img.setImageResource(R.drawable.daily_steps_0);
+                        holder.medal_img.setImageResource(R.drawable.daily_steps_0_sub);
                         break;
                     case ValueConstants.CATEGORY_ACTIVE_DAYS_FOR_THE_WEEK:
-                        holder.medal_img.setImageResource(R.drawable.active_days_for_the_week_0);
+                        holder.medal_img.setImageResource(R.drawable.active_days_for_the_week_0_sub);
                         break;
                     case ValueConstants.CATEGORY_DAILY_TOTAL_DISTANCE:
-                        holder.medal_img.setImageResource(R.drawable.daily_total_distance_0);
+                        holder.medal_img.setImageResource(R.drawable.daily_total_distance_0_sub);
                         break;
                     case ValueConstants.CATEGORY_WEEKLY_EXERCISE_DURATION:
-                        holder.medal_img.setImageResource(R.drawable.weekly_exercise_duration_0);
+                        holder.medal_img.setImageResource(R.drawable.weekly_exercise_duration_0_sub);
                         break;
                     case ValueConstants.CATEGORY_TOTAL_DAYS_WITH_STEPS:
-                        holder.medal_img.setImageResource(R.drawable.total_days_with_steps_0);
+                        holder.medal_img.setImageResource(R.drawable.total_days_with_steps_0_sub);
                         break;
                     case ValueConstants.CATEGORY_ACTIVE_WEEKS_IN_A_ROW:
-                        holder.medal_img.setImageResource(R.drawable.active_weeks_in_a_row_0);
+                        holder.medal_img.setImageResource(R.drawable.active_weeks_in_a_row_0_sub);
                         break;
                 }
                 break;

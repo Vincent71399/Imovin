@@ -1,6 +1,7 @@
 package sg.edu.nus.imovin.Fragments;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -152,7 +153,9 @@ public class ChallengeFragment extends BaseFragment {
         };
 
         if(dailyStepList.size() > 0) {
-            dailyStepList.sort(compareByTier);
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                dailyStepList.sort(compareByTier);
+            }
             daily_steps_title.setText(dailyStepList.get(0).getName());
             setMedalList(daily_step_list, dailyStepList);
 
@@ -170,7 +173,9 @@ public class ChallengeFragment extends BaseFragment {
         }
 
         if(activeDaysForTheWeekList.size() > 0) {
-            activeDaysForTheWeekList.sort(compareByTier);
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                activeDaysForTheWeekList.sort(compareByTier);
+            }
             active_days_for_the_week_title.setText(activeDaysForTheWeekList.get(0).getName());
             setMedalList(active_days_for_the_week_list, activeDaysForTheWeekList);
 
@@ -188,7 +193,9 @@ public class ChallengeFragment extends BaseFragment {
         }
 
         if(dailyTotalDistanceList.size() > 0){
-            dailyTotalDistanceList.sort(compareByTier);
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                dailyTotalDistanceList.sort(compareByTier);
+            }
             daily_total_distance_title.setText(dailyTotalDistanceList.get(0).getName());
             setMedalList(daily_total_distance_list, dailyTotalDistanceList);
 
@@ -206,7 +213,9 @@ public class ChallengeFragment extends BaseFragment {
         }
 
         if(weeklyExerciseDurationList.size() > 0){
-            weeklyExerciseDurationList.sort(compareByTier);
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                weeklyExerciseDurationList.sort(compareByTier);
+            }
             weekly_exercise_duration_title.setText(weeklyExerciseDurationList.get(0).getName());
             setMedalList(weekly_exercise_duration_list, weeklyExerciseDurationList);
 
@@ -224,7 +233,9 @@ public class ChallengeFragment extends BaseFragment {
         }
 
         if(totalDaysWithStepsList.size() > 0){
-            totalDaysWithStepsList.sort(compareByTier);
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                totalDaysWithStepsList.sort(compareByTier);
+            }
             total_days_with_steps_title.setText(totalDaysWithStepsList.get(0).getName());
             setMedalList(total_days_with_steps_list, totalDaysWithStepsList);
 
@@ -242,7 +253,9 @@ public class ChallengeFragment extends BaseFragment {
         }
 
         if(activeWeeksInARowList.size() > 0){
-            activeWeeksInARowList.sort(compareByTier);
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                activeWeeksInARowList.sort(compareByTier);
+            }
             active_weeks_in_a_row_title.setText(activeWeeksInARowList.get(0).getName());
             setMedalList(active_weeks_in_a_row_list, activeWeeksInARowList);
 
