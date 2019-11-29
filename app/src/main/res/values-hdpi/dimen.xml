@@ -63,5 +63,18 @@
     <dimen name="commentPopupTextSize">16sp</dimen>
     <dimen name="commentPopupInputHeight">100dp</dimen>
 
+    <dimen name="goalPadding">10dp</dimen>
+    <dimen name="goalTitlePadding">8dp</dimen>
+    <dimen name="goalTitleTextSize">20sp</dimen>
+    <dimen name="goalBodyPaddingH">10dp</dimen>
+    <dimen name="goalBodyPaddingV">5dp</dimen>
+    <dimen name="goalBodyTextSize">20sp</dimen>
+    <dimen name="goalPopupOutPaddingH">30dp</dimen>
+    <dimen name="goalPopupPadding">10dp</dimen>
+    <dimen name="goalTitleHeight">30dp</dimen>
+    <dimen name="goalMarginBig">15dp</dimen>
+    <dimen name="goalMarginSmall">10dp</dimen>
+    <dimen name="goalBtnPaddingV">10dp</dimen>
+    <dimen name="goalTextSize">16sp</dimen>
 
 </resources>

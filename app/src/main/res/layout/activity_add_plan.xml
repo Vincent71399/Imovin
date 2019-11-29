@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="50dp"
-    android:paddingRight="50dp"
+    android:paddingLeft="@dimen/goalPopupOutPaddingH"
+    android:paddingRight="@dimen/goalPopupOutPaddingH"
     android:background="#88222222"
     android:gravity="center"
     android:id="@+id/mainView"
@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
+        android:padding="@dimen/goalPopupPadding"
         android:background="@drawable/rounded_corner_bg">
 
         <EditText
@@ -25,12 +25,12 @@
             android:hint="@string/hint_add_plan"
             android:textColorHint="@color/lesser_grey_color"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/goalTitleHeight"
             android:layout_weight="4"/>
 
         <TextView
             android:id="@+id/steps_value"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/goalMarginSmall"
             android:text="10000"
             android:textSize="@dimen/textMid"
             android:textColor="@color/black_color"
@@ -40,7 +40,7 @@
 
         <TextView
             android:text="@string/steps"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/goalMarginSmall"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubMid"
             android:gravity="center"
@@ -59,26 +59,26 @@
             app:isb_indicator_color="@color/theme_purple"
             app:isb_tick_marks_size="3dp"
             app:isb_ticks_count="31"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginTop="@dimen/goalMarginBig"
+            android:layout_marginLeft="@dimen/goalMarginSmall"
+            android:layout_marginRight="@dimen/goalMarginSmall"/>
 
         <View
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/goalMarginSmall"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
 
         <Button
             android:id="@+id/button_add_plan"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
+            android:paddingTop="@dimen/goalBtnPaddingV"
+            android:paddingBottom="@dimen/goalBtnPaddingV"
             android:background="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/add"
-            android:textSize="18sp"
+            android:textSize="@dimen/goalTextSize"
             android:textColor="@color/blue_color"/>
 
         <View
@@ -88,14 +88,14 @@
 
         <Button
             android:id="@+id/button_cancel"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:paddingTop="@dimen/goalBtnPaddingV"
+            android:paddingBottom="@dimen/goalBtnPaddingV"
             android:background="@null"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel"
-            android:textSize="18sp"
+            android:textSize="@dimen/goalTextSize"
             android:textColor="@color/lesser_grey_color"/>
 
     </LinearLayout>

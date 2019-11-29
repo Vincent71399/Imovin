@@ -15,12 +15,12 @@
 
         <TextView
             android:id="@+id/plan_title"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
+            android:paddingTop="@dimen/goalBodyPaddingV"
+            android:paddingBottom="@dimen/goalBodyPaddingV"
+            android:paddingStart="@dimen/goalBodyPaddingH"
+            android:paddingEnd="@dimen/goalBodyPaddingH"
             android:textColor="@color/black_color"
-            android:textSize="24sp"
+            android:textSize="@dimen/goalBodyTextSize"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
