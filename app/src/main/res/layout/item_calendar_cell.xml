@@ -7,8 +7,8 @@
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/calendarProgressSize"
+        android:layout_height="@dimen/calendarProgressSize"
         android:indeterminate="false"
         android:progressDrawable="@drawable/circular_progress_bar"
         android:background="@drawable/circle_shape"
@@ -18,7 +18,7 @@
     <TextView
         android:id="@+id/date"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textSize="@dimen/calendarTextSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

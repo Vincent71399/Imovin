@@ -77,4 +77,18 @@
     <dimen name="goalBtnPaddingV">15dp</dimen>
     <dimen name="goalTextSize">18sp</dimen>
 
+    <dimen name="monitorPadding">10dp</dimen>
+    <dimen name="calendarBoxHeight">400dp</dimen>
+    <dimen name="calendarBoxColumnWidth">60dp</dimen>
+    <dimen name="calendarBoxSpaceV">10dp</dimen>
+    <dimen name="calendarBoxSpaceH">10dp</dimen>
+    <dimen name="calendarProgressSize">50dp</dimen>
+    <dimen name="calendarProgressThickness">5dp</dimen>
+    <dimen name="calendarTextSize">24sp</dimen>
+    <dimen name="monitorTextSizeBig">25sp</dimen>
+    <dimen name="monitorTextSizeSmall">20sp</dimen>
+    <dimen name="monitorWarningMarginV">20dp</dimen>
+    <dimen name="monitorWarningMarginH">30dp</dimen>
+
+
 </resources>

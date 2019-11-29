@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="10dp"
+            android:padding="@dimen/monitorPadding"
             android:weightSum="10">
 
             <ImageView
@@ -32,7 +32,7 @@
                 android:textColor="@color/theme_purple"
                 android:textSize="@dimen/textBig"
                 android:layout_weight="6"
-                android:layout_width="0px"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content" />
 
             <ImageView
@@ -47,19 +47,19 @@
         <GridView
             android:id="@+id/calendar_gridview"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:columnWidth="60dp"
+            android:layout_height="@dimen/calendarBoxHeight"
+            android:columnWidth="@dimen/calendarBoxColumnWidth"
             android:numColumns="7"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
+            android:verticalSpacing="@dimen/calendarBoxSpaceV"
+            android:horizontalSpacing="@dimen/calendarBoxSpaceH"
             android:stretchMode="columnWidth"
             />
 
         <TextView
             android:id="@+id/change_plan_btn"
-            android:padding="10dp"
+            android:padding="@dimen/monitorPadding"
             android:text="@string/change_plan"
-            android:textSize="20sp"
+            android:textSize="@dimen/monitorTextSizeSmall"
             android:gravity="center"
             android:textColor="@color/white_color"
             android:background="@drawable/purple_background"
@@ -69,11 +69,11 @@
         <TextView
             android:id="@+id/warning"
             android:visibility="invisible"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:padding="10dp"
-            android:textSize="25sp"
+            android:layout_marginTop="@dimen/monitorWarningMarginV"
+            android:layout_marginStart="@dimen/monitorWarningMarginH"
+            android:layout_marginEnd="@dimen/monitorWarningMarginH"
+            android:padding="@dimen/monitorPadding"
+            android:textSize="@dimen/monitorTextSizeBig"
             android:gravity="center"
             android:text="@string/encourage_text"
             android:background="@drawable/wheat_background"
