@@ -17,6 +17,7 @@
     <dimen name="questionNavigatorTextSmall">16sp</dimen>
     <dimen name="circleSize">12dp</dimen>
     <dimen name="questionEnterHeight">60dp</dimen>
+    <dimen name="mcqInputHeight">200dp</dimen>
 
     <dimen name="loginPageTextSize">16sp</dimen>
     <dimen name="loginPageBtnTextSize">16sp</dimen>

@@ -25,7 +25,7 @@
             android:id="@+id/other_input"
             android:singleLine="true"
             android:enabled="false"
-            android:layout_width="300dp"
+            android:layout_width="@dimen/mcqInputHeight"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
