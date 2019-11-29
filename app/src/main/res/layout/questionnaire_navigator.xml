@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/white_color"
-            android:textSize="@dimen/navigatorTextSmall" />
+            android:textSize="@dimen/questionNavigatorTextSmall" />
 
     </RelativeLayout>
 
@@ -46,7 +46,7 @@
             android:background="@drawable/theme_circle_border_blackground"
             android:singleLine="true"
             android:textColor="@color/white_color"
-            android:textSize="@dimen/navigatorTextSmall"
+            android:textSize="@dimen/questionNavigatorTextSmall"
             />
 
     </RelativeLayout>
@@ -56,8 +56,6 @@
         android:layout_width="0dp"
         android:layout_weight="15"
         android:layout_height="match_parent"
-        android:paddingStart="@dimen/navigatorPaddingH"
-        android:paddingEnd="@dimen/navigatorPaddingH"
         android:paddingTop="@dimen/navigatorPaddingV"
         android:paddingBottom="@dimen/navigatorPaddingV"
         android:gravity="center_vertical">
@@ -69,7 +67,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:textColor="@color/white_color"
-            android:textSize="@dimen/navigatorTextSmall"
+            android:textSize="@dimen/questionNavigatorTextSmall"
             />
 
     </RelativeLayout>

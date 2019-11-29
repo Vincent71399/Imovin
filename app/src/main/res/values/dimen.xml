@@ -14,6 +14,9 @@
     <dimen name="consentSignTextSize">18sp</dimen>
 
     <dimen name="questionnaireDocPadding">20dp</dimen>
+    <dimen name="questionNavigatorTextSmall">20sp</dimen>
+    <dimen name="circleSize">15dp</dimen>
+    <dimen name="questionEnterHeight">100dp</dimen>
 
     <dimen name="loginPageTextSize">20sp</dimen>
     <dimen name="loginPageBtnTextSize">20sp</dimen>
