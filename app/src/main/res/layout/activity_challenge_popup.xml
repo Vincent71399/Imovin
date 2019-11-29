@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="50dp"
-    android:paddingRight="50dp"
+    android:paddingLeft="@dimen/challengePopupOutPaddingH"
+    android:paddingRight="@dimen/challengePopupOutPaddingH"
     android:background="#88222222"
     android:gravity="center"
     android:id="@+id/mainView"
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="30dp"
+        android:padding="@dimen/challengePopupPadding"
         android:background="@drawable/rounded_corner_bg">
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/challengePopupMarginTop"
             android:id="@+id/medal_desc"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubMid"
@@ -35,14 +35,14 @@
             android:layout_height="wrap_content" />
 
         <ImageView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/challengePopupMarginTop"
             android:id="@+id/medal_img"
             android:adjustViewBounds="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/challengePopupMarginTop"
             android:id="@+id/medal_last_updated"
             android:textColor="@color/grey_color"
             android:textSize="@dimen/textSubMid"

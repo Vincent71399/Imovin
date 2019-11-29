@@ -33,6 +33,9 @@
     <dimen name="medalTextPaddingH">15dp</dimen>
     <dimen name="medalTextPaddingV">12dp</dimen>
     <dimen name="medalTextMarginTop">10dp</dimen>
+    <dimen name="challengePopupOutPaddingH">50dp</dimen>
+    <dimen name="challengePopupPadding">30dp</dimen>
+    <dimen name="challengePopupMarginTop">10dp</dimen>
 
     <dimen name="libraryLinkBoxPadding">10dp</dimen>
     <dimen name="libraryLinkPadding">5dp</dimen>
@@ -53,5 +56,11 @@
     <dimen name="postNewPostTitleInputHeight">100dp</dimen>
     <dimen name="postNewPostTextSizeBig">24sp</dimen>
     <dimen name="postNewPostTextSizeSmall">20sp</dimen>
+    <dimen name="commentPopupOutPaddingH">50dp</dimen>
+    <dimen name="commentPopupMarginTopBig">24dp</dimen>
+    <dimen name="commentPopupMarginTopSmall">15dp</dimen>
+    <dimen name="commentPopupPaddingV">15dp</dimen>
+    <dimen name="commentPopupTextSize">18sp</dimen>
+    <dimen name="commentPopupInputHeight">140dp</dimen>
 
 </resources>
