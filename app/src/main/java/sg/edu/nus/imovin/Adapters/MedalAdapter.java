@@ -51,7 +51,7 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
     public void onBindViewHolder(@NonNull MedalData_ViewHolder holder, int i) {
         MedalData medalData = medalDataList.get(i);
 
-        int colorFilter = Color.argb(200,255,255,255);
+        int colorFilter = Color.argb(120,255,255,255);
 
         switch (medalData.getTier()){
             case ValueConstants.MEDAL_TIER_PLATINUM:

@@ -9,10 +9,10 @@
         android:id="@+id/navigator_left"
         android:layout_width="0dp"
         android:layout_weight="70"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingStart="@dimen/navigatorPaddingH"
+        android:paddingEnd="@dimen/navigatorPaddingH"
+        android:paddingTop="@dimen/navigatorPaddingV"
+        android:paddingBottom="@dimen/navigatorPaddingV"
         android:gravity="center"
         android:layout_height="match_parent">
 
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/white_color"
-            android:textSize="22sp" />
+            android:textSize="@dimen/navigatorText" />
 
     </RelativeLayout>
 
@@ -33,8 +33,8 @@
         android:layout_width="0dp"
         android:layout_weight="15"
         android:layout_height="match_parent"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="@dimen/navigatorPaddingV"
+        android:paddingBottom="@dimen/navigatorPaddingV"
         android:gravity="center_vertical">
 
         <TextView
@@ -46,7 +46,7 @@
             android:background="@drawable/theme_circle_border_blackground"
             android:singleLine="true"
             android:textColor="@color/white_color"
-            android:textSize="22sp"
+            android:textSize="@dimen/navigatorTextHint"
             />
 
     </RelativeLayout>
@@ -56,8 +56,8 @@
         android:layout_width="0dp"
         android:layout_weight="15"
         android:layout_height="match_parent"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="@dimen/navigatorPaddingV"
+        android:paddingBottom="@dimen/navigatorPaddingV"
         android:gravity="center_vertical">
 
         <ImageView

@@ -18,8 +18,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/navigatorPaddingV"
+                android:layout_marginBottom="@dimen/navigatorPaddingV"
                 android:id="@+id/navigator_left_image"
                 android:visibility="invisible"
                 android:src="@drawable/icon_pointer_left_white"
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/white_color"
-                android:textSize="25sp"
+                android:textSize="@dimen/navigatorText"
                 android:gravity="center"/>
 
         </LinearLayout>
@@ -53,7 +53,7 @@
             android:layout_height="match_parent"
             android:id="@+id/navigator_middle_title"
             android:textColor="@color/white_color"
-            android:textSize="25sp" />
+            android:textSize="@dimen/navigatorText" />
 
     </RelativeLayout>
 
@@ -61,10 +61,10 @@
         android:layout_width="0dp"
         android:layout_weight="28"
         android:layout_height="match_parent"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingStart="@dimen/navigatorPaddingH"
+        android:paddingEnd="@dimen/navigatorPaddingH"
+        android:paddingTop="@dimen/navigatorPaddingV"
+        android:paddingBottom="@dimen/navigatorPaddingV"
         android:gravity="center_vertical">
 
         <RelativeLayout
@@ -76,8 +76,8 @@
                 android:id="@+id/navigator_right_image"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="end"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/navigatorPaddingV"
+                android:layout_marginBottom="@dimen/navigatorPaddingV"
                 android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
@@ -90,7 +90,7 @@
                 android:visibility="invisible"
                 android:singleLine="true"
                 android:textColor="@color/white_color"
-                android:textSize="25sp"
+                android:textSize="@dimen/navigatorText"
                 />
 
         </RelativeLayout>

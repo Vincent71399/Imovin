@@ -32,6 +32,8 @@ public class ImovinApplication extends Application {
     private static Integer target;
     private static OkHttpClient.Builder httpClient;
 
+    private static ImageLoader imageLoader;
+
     private SoftReference<SQLiteDatabase> databaseSoftReference;
 
     private Intent monitor_connection_service_intent;
@@ -111,7 +113,7 @@ public class ImovinApplication extends Application {
     private static void initImageLoader(){
         if(token != null && !token.equals("")) {
             ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(instance);
-            config.imageDownloader(new AuthDownloader(instance, "Authorization", "Bearer " + token));
+//            config.imageDownloader(new AuthDownloader(instance, "Authorization", "Bearer " + token));
 
             ImageLoader.getInstance().init(config.build());
         }

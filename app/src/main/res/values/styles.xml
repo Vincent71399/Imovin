@@ -75,43 +75,43 @@
     <style name="LinkContainerStyle">
         <item name="android:weightSum">100</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:padding">5dp</item>
+        <item name="android:padding">@dimen/libraryLinkPadding</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="LinkHeaderStyle">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/libraryLinkBigTextSize</item>
         <item name="android:textColor">@color/black_color</item>
         <item name="android:gravity">center_vertical|start</item>
-        <item name="android:paddingStart">10dp</item>
-        <item name="android:paddingEnd">10dp</item>
-        <item name="android:paddingTop">3dp</item>
-        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingStart">@dimen/libraryLinkTextPaddingSmallH</item>
+        <item name="android:paddingEnd">@dimen/libraryLinkTextPaddingSmallH</item>
+        <item name="android:paddingTop">@dimen/libraryLinkTextPaddingSmallV</item>
+        <item name="android:paddingBottom">@dimen/libraryLinkTextPaddingSmallV</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="LinkInfoStyle">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/libraryLinkMidTextSize</item>
         <item name="android:textColor">@color/grey_color</item>
         <item name="android:gravity">center_vertical|start</item>
-        <item name="android:paddingStart">10dp</item>
-        <item name="android:paddingEnd">10dp</item>
-        <item name="android:paddingTop">3dp</item>
-        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingStart">@dimen/libraryLinkTextPaddingSmallH</item>
+        <item name="android:paddingEnd">@dimen/libraryLinkTextPaddingSmallH</item>
+        <item name="android:paddingTop">@dimen/libraryLinkTextPaddingSmallV</item>
+        <item name="android:paddingBottom">@dimen/libraryLinkTextPaddingSmallV</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="LinkSubtitleStyle">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/libraryLinkMidTextSize</item>
         <item name="android:textColor">@color/grey_color</item>
         <item name="android:gravity">center_vertical|start</item>
-        <item name="android:paddingStart">20dp</item>
-        <item name="android:paddingEnd">20dp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingStart">@dimen/libraryLinkTextPaddingBigH</item>
+        <item name="android:paddingEnd">@dimen/libraryLinkTextPaddingBigH</item>
+        <item name="android:paddingTop">@dimen/libraryLinkTextPaddingBigV</item>
+        <item name="android:paddingBottom">@dimen/libraryLinkTextPaddingBigV</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">0</item>
@@ -120,37 +120,37 @@
     </style>
 
     <style name="LinkHeaderMinorStyle">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/libraryLinkMidTextSize</item>
         <item name="android:textColor">@color/black_color</item>
         <item name="android:gravity">center_vertical|start</item>
-        <item name="android:paddingStart">10dp</item>
-        <item name="android:paddingEnd">10dp</item>
-        <item name="android:paddingTop">3dp</item>
-        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingStart">@dimen/libraryLinkTextPaddingSmallH</item>
+        <item name="android:paddingEnd">@dimen/libraryLinkTextPaddingSmallH</item>
+        <item name="android:paddingTop">@dimen/libraryLinkTextPaddingSmallV</item>
+        <item name="android:paddingBottom">@dimen/libraryLinkTextPaddingSmallV</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="LinkInfoMinorStyle">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/libraryLinkSmallTextSize</item>
         <item name="android:textColor">@color/grey_color</item>
         <item name="android:gravity">center_vertical|start</item>
-        <item name="android:paddingStart">10dp</item>
-        <item name="android:paddingEnd">10dp</item>
-        <item name="android:paddingTop">3dp</item>
-        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingStart">@dimen/libraryLinkTextPaddingSmallH</item>
+        <item name="android:paddingEnd">@dimen/libraryLinkTextPaddingSmallH</item>
+        <item name="android:paddingTop">@dimen/libraryLinkTextPaddingSmallV</item>
+        <item name="android:paddingBottom">@dimen/libraryLinkTextPaddingSmallV</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="LinkSubtitleMinorStyle">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/libraryLinkSmallTextSize</item>
         <item name="android:textColor">@color/grey_color</item>
         <item name="android:gravity">center_vertical|start</item>
-        <item name="android:paddingStart">20dp</item>
-        <item name="android:paddingEnd">20dp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingStart">@dimen/libraryLinkTextPaddingBigH</item>
+        <item name="android:paddingEnd">@dimen/libraryLinkTextPaddingBigH</item>
+        <item name="android:paddingTop">@dimen/libraryLinkTextPaddingBigV</item>
+        <item name="android:paddingBottom">@dimen/libraryLinkTextPaddingBigV</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">0</item>

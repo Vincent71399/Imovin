@@ -12,6 +12,11 @@
     <dimen name="loginPageTextSize">16sp</dimen>
     <dimen name="loginPageBtnTextSize">16sp</dimen>
 
+    <dimen name="navigatorText">22sp</dimen>
+    <dimen name="navigatorTextHint">20sp</dimen>
+    <dimen name="navigatorPaddingH">10dp</dimen>
+    <dimen name="navigatorPaddingV">5dp</dimen>
+
     <dimen name="homePadding">10dp</dimen>
     <dimen name="homeSubPadding">5dp</dimen>
     <dimen name="homeMarginTop">10dp</dimen>
@@ -27,5 +32,15 @@
     <dimen name="medalTextPaddingH">8dp</dimen>
     <dimen name="medalTextPaddingV">6dp</dimen>
     <dimen name="medalTextMarginTop">5dp</dimen>
+
+    <dimen name="libraryLinkBoxPadding">5dp</dimen>
+    <dimen name="libraryLinkPadding">3dp</dimen>
+    <dimen name="libraryLinkBigTextSize">18sp</dimen>
+    <dimen name="libraryLinkMidTextSize">16sp</dimen>
+    <dimen name="libraryLinkSmallTextSize">14sp</dimen>
+    <dimen name="libraryLinkTextPaddingBigH">10dp</dimen>
+    <dimen name="libraryLinkTextPaddingBigV">5dp</dimen>
+    <dimen name="libraryLinkTextPaddingSmallH">5dp</dimen>
+    <dimen name="libraryLinkTextPaddingSmallV">3dp</dimen>
 
 </resources>
