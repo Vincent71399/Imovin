@@ -1,11 +1,9 @@
 package sg.edu.nus.imovin.System;
 
-import android.content.Context;
+import android.app.Application;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
-import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,7 +24,7 @@ import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Response.UserInfoResponse;
 import sg.edu.nus.imovin.Services.MonitorConnectionService;
 
-public class ImovinApplication extends MultiDexApplication {
+public class ImovinApplication extends Application {
     private static ImovinApplication instance;
     private static String token;
     private static UserInfoResponse userInfoResponse;
@@ -40,12 +38,6 @@ public class ImovinApplication extends MultiDexApplication {
 
     public static ImovinApplication getInstance(){
         return instance;
-    }
-
-    @Override
-    protected void attachBaseContext(Context context) {
-        super.attachBaseContext(context);
-        MultiDex.install(this);
     }
 
     @Override
