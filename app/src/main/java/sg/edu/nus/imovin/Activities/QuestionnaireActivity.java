@@ -166,6 +166,18 @@ public class QuestionnaireActivity extends BaseActivity implements View.OnClickL
             }
         }
 
+        if(questionDataList.size() > 0
+                && questionDataList.get(0).get(0).getQuestion_type().equals(MCQ)
+                && !questionDataList.get(0).get(0).getIs_custom()){
+            nextBtn.setEnabled(true);
+        }else if(questionDataList.size() > 0
+                && questionDataList.get(0).get(0).getQuestion_type().equals(NUM_S)){
+            nextBtn.setEnabled(true);
+        }else if(questionDataList.size() > 0
+                && questionDataList.get(0).get(0).getQuestion_type().equals(MCQ_MO)){
+            nextBtn.setEnabled(true);
+        }
+
         prevBtn.setEnabled(false);
 
         navigator_title.setText(sectionDataList.get(currentSection).getDisplay_name());

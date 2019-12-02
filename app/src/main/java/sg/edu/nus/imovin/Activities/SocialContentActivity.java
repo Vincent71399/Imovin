@@ -602,7 +602,9 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
             case IntentConstants.SOCIAL_EDIT_POST:
                 if(resultCode == Activity.RESULT_OK){
                     SocialFeedData socialFeedData = (SocialFeedData)data.getSerializableExtra(IntentConstants.SOCIAL_POST_DATA);
+                    this.socialFeedData = socialFeedData;
                     body_text.setText(socialFeedData.getMessage());
+                    post_time.setText(ConvertDateString2DisplayFormat(socialFeedData.getUpdated_at()));
                     if(socialFeedData.getImage() != null){
                         image_container.setVisibility(View.VISIBLE);
                         String imageUrl = SERVER + String.format(

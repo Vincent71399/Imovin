@@ -592,6 +592,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
             case IntentConstants.FORUM_EDIT_POST:
                 if(resultCode == Activity.RESULT_OK){
                     ThreadData threadData = (ThreadData)data.getSerializableExtra(IntentConstants.THREAD_DATA);
+                    this.threadData = threadData;
                     title_text.setText(threadData.getTitle());
                     body_text.setText(threadData.getMessage());
                     hasEdit = true;

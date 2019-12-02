@@ -72,8 +72,10 @@ public class CommonFunc {
                 return String.format("%dd", diffInDays);
             else if(diffInHours>0)
                 return String.format("%dh", diffInHours);
-            else
+            else if(diffInMinutes>0)
                 return String.format("%dm", diffInMinutes);
+            else
+                return "Just now";
 
         }catch (ParseException e){
             e.printStackTrace();
