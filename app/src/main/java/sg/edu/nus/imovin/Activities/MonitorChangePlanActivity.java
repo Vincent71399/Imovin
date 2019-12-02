@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +57,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
     private List<PlanData> planDataDefaultList;
     private List<PlanData> planDataCustomList;
 
+    @BindView(R.id.mainView) RelativeLayout mainView;
     @BindView(R.id.plan_list) RecyclerView plan_list;
     @BindView(R.id.add_plan_btn) TextView add_plan_btn;
 
@@ -91,6 +93,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
         }
 
         add_plan_btn.setOnClickListener(this);
+        mainView.setOnClickListener(this);
     }
 
     private void Init(){
@@ -133,6 +136,9 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
                 Intent intentGoal = new Intent();
                 intentGoal.setClass(this, AddPlanActivity.class);
                 startActivityForResult(intentGoal, IntentConstants.MONITOR_NEW_PLAN);
+                break;
+            case R.id.mainView:
+                finish();
                 break;
         }
     }

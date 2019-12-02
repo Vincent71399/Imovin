@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
 
 public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickListener {
 
+    @BindView(R.id.mainView) RelativeLayout mainView;
     @BindView(R.id.plan_title_input) EditText plan_title_input;
     @BindView(R.id.steps_value) TextView steps_value;
     @BindView(R.id.planStepsBar) IndicatorSeekBar planStepsBar;
@@ -70,6 +72,7 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
+        mainView.setOnClickListener(this);
         button_add_plan.setOnClickListener(this);
         button_cancel.setOnClickListener(this);
 
@@ -119,6 +122,9 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
                 }
                 break;
             case R.id.button_cancel:
+                finish();
+                break;
+            case R.id.mainView:
                 finish();
                 break;
         }
