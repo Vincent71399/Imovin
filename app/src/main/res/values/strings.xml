@@ -204,7 +204,7 @@
         Use the dashboard to monitor your physical activity over time. Your daily statistics are shown on
         the top portion of the page. The graph in the middle shows your physical activity for the past
         week. A bar in the graph that is filled indicates that you have met your set plan for the day. Toggle
-        between data for steps, calories and duration using the buttons below the graph. Check out the
+        between data for steps, calories, duration and distance using the buttons below the graph. Check out the
         other functions of iMovin below.
     </string>
 
@@ -226,7 +226,7 @@
 
     <string name="help_goal_plan">
         Create an exercise plan for your daily steps! Either set a default plan provided by iMovin, or create
-        a new personal plan by pressing ‘New Custom’. You can modify or delete all custom plans.
+        a new personal plan by pressing ‘New Custom’. You can modify or delete all custom plans. Plans can only be modified on Mondays.
     </string>
 
     <string name="help_monitor_plan">

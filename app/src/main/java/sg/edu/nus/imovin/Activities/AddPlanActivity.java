@@ -117,7 +117,7 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
                     if(update_plan_id == null) {
                         AddPlan(new CreatePlanRequest(plan_title_input.getText().toString(), Integer.parseInt(steps_value.getText().toString())));
                     }else{
-                        UpdatePlan(update_plan_id, new UpdatePlanRequest(Integer.parseInt(steps_value.getText().toString())));
+                        UpdatePlan(update_plan_id, new UpdatePlanRequest(plan_title_input.getText().toString(), Integer.parseInt(steps_value.getText().toString())));
                     }
                 }
                 break;
