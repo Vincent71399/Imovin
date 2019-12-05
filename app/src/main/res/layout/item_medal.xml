@@ -7,33 +7,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/medal_img"
+        android:src="@drawable/icon_star_gold"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/medal_img"
-            android:src="@drawable/icon_star_gold"
-            android:padding="@dimen/medalImagePadding"
-            android:layout_centerInParent="true"
-            android:scaleType="centerCrop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"/>
-
-        <TextView
-            android:id="@+id/medal_count"
-            android:visibility="gone"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:paddingStart="@dimen/medalTextPaddingH"
-            android:paddingEnd="@dimen/medalTextPaddingH"
-            android:paddingTop="@dimen/medalTextPaddingV"
-            android:paddingBottom="@dimen/medalTextPaddingV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"/>
 
     <TextView
         android:layout_marginTop="@dimen/medalTextMarginTop"

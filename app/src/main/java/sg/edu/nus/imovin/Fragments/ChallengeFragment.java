@@ -27,6 +27,7 @@ import sg.edu.nus.imovin.Activities.ChallengePopupActivity;
 import sg.edu.nus.imovin.Adapters.MedalAdapter;
 import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
+import sg.edu.nus.imovin.Common.SpanningLinearLayoutManager;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.MedalData;
 import sg.edu.nus.imovin.Retrofit.Response.ChallengeResponse;
@@ -275,7 +276,7 @@ public class ChallengeFragment extends BaseFragment {
 
     private void setMedalList(RecyclerView view, List<MedalData> dataArray){
         MedalAdapter dailyStepAdapter = new MedalAdapter(dataArray);
-        view.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        view.setLayoutManager(new SpanningLinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         view.setAdapter(dailyStepAdapter);
     }
 

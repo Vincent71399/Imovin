@@ -26,13 +26,11 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
 
     public final static class MedalData_ViewHolder extends RecyclerView.ViewHolder {
         ImageView medal_img;
-        TextView medal_count;
         TextView earned_count;
 
         public MedalData_ViewHolder(@NonNull View itemView) {
             super(itemView);
             medal_img = itemView.findViewById(R.id.medal_img);
-            medal_count = itemView.findViewById(R.id.medal_count);
             earned_count = itemView.findViewById(R.id.earned_count);
         }
     }
@@ -51,12 +49,10 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
     public void onBindViewHolder(@NonNull MedalData_ViewHolder holder, int i) {
         MedalData medalData = medalDataList.get(i);
 
-        int colorFilter = Color.argb(120,255,255,255);
+        int colorFilter = Color.argb(160,255,255,255);
 
         switch (medalData.getTier()){
             case ValueConstants.MEDAL_TIER_PLATINUM:
-                holder.medal_count.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.tier3_circle_border_blackground));
-                holder.medal_count.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.tier_3));
                 switch (medalData.getCategory()){
                     case ValueConstants.CATEGORY_DAILY_STEP:
                         holder.medal_img.setImageResource(R.drawable.daily_steps_3_sub);
@@ -79,8 +75,6 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
                 }
                 break;
             case ValueConstants.MEDAL_TIER_GOLD:
-                holder.medal_count.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.tier2_circle_border_blackground));
-                holder.medal_count.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.tier_2));
                 switch (medalData.getCategory()){
                     case ValueConstants.CATEGORY_DAILY_STEP:
                         holder.medal_img.setImageResource(R.drawable.daily_steps_2_sub);
@@ -103,8 +97,6 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
                 }
                 break;
             case ValueConstants.MEDAL_TIER_SILVER:
-                holder.medal_count.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.tier1_circle_border_blackground));
-                holder.medal_count.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.tier_1));
                 switch (medalData.getCategory()){
                     case ValueConstants.CATEGORY_DAILY_STEP:
                         holder.medal_img.setImageResource(R.drawable.daily_steps_1_sub);
@@ -127,8 +119,6 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
                 }
                 break;
             default:
-                holder.medal_count.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.tier0_circle_border_blackground));
-                holder.medal_count.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.tier_0));
                 switch (medalData.getCategory()){
                     case ValueConstants.CATEGORY_DAILY_STEP:
                         holder.medal_img.setImageResource(R.drawable.daily_steps_0_sub);
@@ -153,11 +143,7 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_Vi
         }
 
         if(medalData.getObtained_count() <= 0){
-            holder.medal_count.setVisibility(View.GONE);
             holder.medal_img.setColorFilter(colorFilter);
-        }else{
-            holder.medal_count.setVisibility(View.VISIBLE);
-            holder.medal_count.setText(String.valueOf(medalData.getObtained_count()));
         }
 
         if(medalData.getObtained_count() <= 1) {
