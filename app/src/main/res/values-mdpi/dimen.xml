@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="LoginComponentMarginTop">7dp</dimen>
+
+    <dimen name="textBig">30sp</dimen>
+    <dimen name="textSubBig">20sp</dimen>
+
+    <dimen name="textMid">25sp</dimen>
+    <dimen name="textSubMid">18sp</dimen>
+    <dimen name="textSubSmall">12sp</dimen>
+
+    <dimen name="consentDocPadding">10dp</dimen>
+    <dimen name="consentSignPadding">5dp</dimen>
+    <dimen name="consentSignTextSize">12sp</dimen>
+
+    <dimen name="questionnaireDocPadding">10dp</dimen>
+    <dimen name="questionNavigatorTextSmall">12sp</dimen>
+    <dimen name="circleSize">10dp</dimen>
+    <dimen name="questionEnterHeight">50dp</dimen>
+    <dimen name="mcqInputHeight">160dp</dimen>
+
+    <dimen name="loginPageTextSize">12sp</dimen>
+    <dimen name="loginPageBtnTextSize">12sp</dimen>
+
+    <dimen name="navigatorTextBig">18sp</dimen>
+    <dimen name="navigatorTextSmall">14sp</dimen>
+    <dimen name="navigatorTextHint">15sp</dimen>
+    <dimen name="navigatorPaddingH">5dp</dimen>
+    <dimen name="navigatorPaddingV">4dp</dimen>
+
+    <dimen name="homePadding">6dp</dimen>
+    <dimen name="homeSubPadding">5dp</dimen>
+    <dimen name="homeMarginTop">6dp</dimen>
+    <dimen name="homeMarginStart">6dp</dimen>
+    <dimen name="homeWarningTextSize">15sp</dimen>
+    <dimen name="homeTextSize">14sp</dimen>
+    <dimen name="homeBtnTextSize">12sp</dimen>
+
+    <dimen name="challengePadding">5dp</dimen>
+    <dimen name="challengeMarginTop">5dp</dimen>
+    <dimen name="challengeSubMarginTop">5dp</dimen>
+    <dimen name="medalImagePadding">5dp</dimen>
+    <dimen name="medalTextPaddingH">8dp</dimen>
+    <dimen name="medalTextPaddingV">6dp</dimen>
+    <dimen name="medalTextMarginTop">5dp</dimen>
+    <dimen name="challengePopupOutPaddingH">26dp</dimen>
+    <dimen name="challengePopupPadding">12dp</dimen>
+    <dimen name="challengePopupMarginTop">5dp</dimen>
+
+    <dimen name="libraryLinkBoxPadding">5dp</dimen>
+    <dimen name="libraryLinkPadding">3dp</dimen>
+    <dimen name="libraryLinkBigTextSize">14sp</dimen>
+    <dimen name="libraryLinkMidTextSize">12sp</dimen>
+    <dimen name="libraryLinkSmallTextSize">10sp</dimen>
+    <dimen name="libraryLinkTextPaddingBigH">6dp</dimen>
+    <dimen name="libraryLinkTextPaddingBigV">5dp</dimen>
+    <dimen name="libraryLinkTextPaddingSmallH">5dp</dimen>
+    <dimen name="libraryLinkTextPaddingSmallV">3dp</dimen>
+
+    <dimen name="postTitleTextSize">14sp</dimen>
+    <dimen name="postTitlePadding">5dp</dimen>
+    <dimen name="postTextSizeBig">12dp</dimen>
+    <dimen name="postTextSizeSmall">10dp</dimen>
+    <dimen name="postPadding">5dp</dimen>
+    <dimen name="postImageSize">80dp</dimen>
+    <dimen name="postNewPostTitleInputHeight">80dp</dimen>
+    <dimen name="postNewPostTextSizeBig">16sp</dimen>
+    <dimen name="postNewPostTextSizeSmall">14sp</dimen>
+    <dimen name="commentPopupOutPaddingH">25dp</dimen>
+    <dimen name="commentPopupMarginTopBig">12dp</dimen>
+    <dimen name="commentPopupMarginTopSmall">16dp</dimen>
+    <dimen name="commentPopupPaddingV">6dp</dimen>
+    <dimen name="commentPopupTextSize">12sp</dimen>
+    <dimen name="commentPopupInputHeight">80dp</dimen>
+
+    <dimen name="goalPadding">8dp</dimen>
+    <dimen name="goalTitlePadding">6dp</dimen>
+    <dimen name="goalTitleTextSize">16sp</dimen>
+    <dimen name="goalBodyPaddingH">8dp</dimen>
+    <dimen name="goalBodyPaddingV">5dp</dimen>
+    <dimen name="goalBodyTextSize">16sp</dimen>
+    <dimen name="goalPopupOutPaddingH">24dp</dimen>
+    <dimen name="goalPopupPadding">8dp</dimen>
+    <dimen name="goalTitleHeight">24dp</dimen>
+    <dimen name="goalMarginBig">12dp</dimen>
+    <dimen name="goalMarginSmall">8dp</dimen>
+    <dimen name="goalBtnPaddingV">8dp</dimen>
+    <dimen name="goalTextSize">12sp</dimen>
+
+    <dimen name="monitorPadding">5dp</dimen>
+    <dimen name="calendarBoxHeight">220dp</dimen>
+    <dimen name="calendarBoxColumnWidth">50dp</dimen>
+    <dimen name="calendarBoxSpaceV">5dp</dimen>
+    <dimen name="calendarBoxSpaceH">5dp</dimen>
+    <dimen name="calendarProgressSize">30dp</dimen>
+    <dimen name="calendarProgressThickness">3dp</dimen>
+    <dimen name="calendarTextSize">16sp</dimen>
+    <dimen name="monitorTextSizeBig">16sp</dimen>
+    <dimen name="monitorTextSizeSmall">12sp</dimen>
+    <dimen name="monitorWarningMarginV">12dp</dimen>
+    <dimen name="monitorWarningMarginH">16dp</dimen>
+
+
+</resources>
