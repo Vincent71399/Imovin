@@ -31,7 +31,7 @@
     <dimen name="homePadding">10dp</dimen>
     <dimen name="homeSubPadding">5dp</dimen>
     <dimen name="homeMarginTop">10dp</dimen>
-    <dimen name="homeMarginStart">10dp</dimen>
+    <dimen name="homeMarginStart">5dp</dimen>
     <dimen name="homeWarningTextSize">20sp</dimen>
     <dimen name="homeTextSize">18sp</dimen>
     <dimen name="homeBtnTextSize">14sp</dimen>

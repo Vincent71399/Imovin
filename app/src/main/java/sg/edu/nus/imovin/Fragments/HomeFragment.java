@@ -23,6 +23,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ import sg.edu.nus.imovin.Common.WeekdayAxisValueFormatter;
 import sg.edu.nus.imovin.Event.ChangePlanEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.DailySummaryData;
+import sg.edu.nus.imovin.Retrofit.Object.MedalData;
 import sg.edu.nus.imovin.Retrofit.Response.UserStatsResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
@@ -170,29 +172,29 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.steps_btn:
                 steps_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_background));
-                calories_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.grey_background));
-                duration_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.grey_background));
-                distance_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.grey_background));
+                calories_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_lesser_background));
+                duration_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_lesser_background));
+                distance_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_lesser_background));
                 updateBarChart(dailyStepsHashMap);
                 break;
             case R.id.calories_btn:
-                steps_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.grey_background));
+                steps_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_lesser_background));
                 calories_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_background));
-                duration_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.grey_background));
-                distance_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.grey_background));
+                duration_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_lesser_background));
+                distance_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_lesser_background));
                 updateBarChart(dailyCaloriesHashMap);
                 break;
             case R.id.duration_btn:
-                steps_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.grey_background));
-                calories_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.grey_background));
+                steps_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_lesser_background));
+                calories_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_lesser_background));
                 duration_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_background));
-                distance_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.grey_background));
+                distance_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_lesser_background));
                 updateBarChart(dailyDurationsHashMap);
                 break;
             case R.id.distance_btn:
-                steps_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.grey_background));
-                calories_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.grey_background));
-                duration_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.grey_background));
+                steps_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_lesser_background));
+                calories_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_lesser_background));
+                duration_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_lesser_background));
                 distance_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_background));
                 updateBarChartFloat(dailyDistanceHashMap);
                 break;
@@ -225,10 +227,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 if(dailyDataCalender != null && CommonFunc.isSameDay(dailyDataCalender, calendar)){
                     hasCalenderFlag = true;
                     SetHashMapValueForDay(calendar, dailySummaryData);
-                    if(dailySummaryDataList.get(0).getSteps() >= step_target){
+                    if(CommonFunc.isSameDay(dailyDataCalender, today)){
                         barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
                     }else{
-                        barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                        barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.lesser_theme_purple));
                     }
 
                     if(CommonFunc.isSameDay(dailyDataCalender, today)){
@@ -241,7 +243,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             }
             if(!hasCalenderFlag){
                 SetHashMapValueForDay(calendar);
-                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                barColors.add(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.lesser_theme_purple));
             }
         }
 
@@ -254,6 +256,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         createBarChart(dailyStepsHashMap);
     }
 
+    private Comparator<BarEntry> compareByX = new Comparator<BarEntry>() {
+        @Override
+        public int compare(BarEntry barEntry1, BarEntry barEntry2) {
+            return ((Float)barEntry1.getX()).compareTo((Float)barEntry2.getX());
+        }
+    };
+
     private void createBarChart(HashMap<String, Integer> dataHashMap) {
         chart_by_day.setScaleEnabled(false);
 
@@ -264,6 +273,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             int intValue = weekdayList.indexOf(entry.getKey());
             entries.add(new BarEntry(intValue,entry.getValue()));
         }
+        entries.sort(compareByX);
         BarDataSet dataSet = new BarDataSet(entries,"By Category");
         dataSet.setColors(barColors);
 
@@ -299,6 +309,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             int intValue = weekdayList.indexOf(entry.getKey());
             entries.add(new BarEntry(intValue,entry.getValue()));
         }
+        entries.sort(compareByX);
         BarDataSet dataSet = new BarDataSet(entries,"By Category");
         dataSet.setColors(barColors);
 
@@ -315,6 +326,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             float floatValue = weekdayList.indexOf(entry.getKey());
             entries.add(new BarEntry(floatValue, entry.getValue()));
         }
+        entries.sort(compareByX);
         BarDataSet dataSet = new BarDataSet(entries,"By Category");
         dataSet.setColors(barColors);
 

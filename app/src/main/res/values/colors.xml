@@ -18,6 +18,7 @@
     <color name="black_color">#1C1C1C</color>
     <color name="wheat_color">#FFF59F</color>
 
+    <color name="lesser_theme_purple">#77800080</color>
     <color name="theme_purple">#800080</color>
     <color name="tier_0">#9FC986</color>
     <color name="tier_1">#E1A777</color>

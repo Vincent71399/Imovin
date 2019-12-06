@@ -28,13 +28,13 @@
     <dimen name="navigatorPaddingH">20dp</dimen>
     <dimen name="navigatorPaddingV">10dp</dimen>
 
-    <dimen name="homePadding">20dp</dimen>
+    <dimen name="homePadding">10dp</dimen>
     <dimen name="homeSubPadding">10dp</dimen>
     <dimen name="homeMarginTop">20dp</dimen>
-    <dimen name="homeMarginStart">20dp</dimen>
+    <dimen name="homeMarginStart">10dp</dimen>
     <dimen name="homeWarningTextSize">25sp</dimen>
     <dimen name="homeTextSize">20sp</dimen>
-    <dimen name="homeBtnTextSize">20sp</dimen>
+    <dimen name="homeBtnTextSize">16sp</dimen>
 
     <dimen name="challengePadding">10dp</dimen>
     <dimen name="challengeMarginTop">20dp</dimen>
