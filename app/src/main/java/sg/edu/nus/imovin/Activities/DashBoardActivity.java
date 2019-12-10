@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.pusher.pushnotifications.PushNotifications;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -223,6 +224,8 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                 editor.remove(SystemConstant.USERNAME);
                 editor.remove(SystemConstant.PASSWORD);
                 editor.apply();
+
+                PushNotifications.unsubscribe(ImovinApplication.getUserInfoResponse().getEmail());
 
                 Intent intent = new Intent();
                 intent.setClass(this, LoginActivity.class);

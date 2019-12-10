@@ -372,7 +372,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     ImovinApplication.setUserInfoResponse(userInfoResponse);
                     Log.d(LogConstants.LogTag, "success get userinfo");
 
-                    PushNotifications.start(getApplicationContext(), "b25cdd15-cea2-4078-9394-fff4ef98a3a7");
+                    PushNotifications.start(getApplicationContext(), SystemConstant.PUSH_NOTIFICATION_TOKEN);
                     PushNotifications.subscribe(userInfoResponse.getEmail());
 
                     LaunchDashboard();
