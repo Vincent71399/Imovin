@@ -19,7 +19,6 @@ import java.lang.ref.SoftReference;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import sg.edu.nus.imovin.Common.AuthDownloader;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
 import sg.edu.nus.imovin.Retrofit.Response.UserInfoResponse;
 import sg.edu.nus.imovin.Services.MonitorConnectionService;

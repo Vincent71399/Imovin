@@ -41,7 +41,6 @@ import sg.edu.nus.imovin.Common.WeekdayAxisValueFormatter;
 import sg.edu.nus.imovin.Event.ChangePlanEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.DailySummaryData;
-import sg.edu.nus.imovin.Retrofit.Object.MedalData;
 import sg.edu.nus.imovin.Retrofit.Response.UserStatsResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;

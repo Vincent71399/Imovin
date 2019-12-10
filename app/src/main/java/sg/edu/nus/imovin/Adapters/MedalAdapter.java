@@ -2,7 +2,6 @@ package sg.edu.nus.imovin.Adapters;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import java.util.List;
 
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.MedalData;
-import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.ValueConstants;
 
 public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.MedalData_ViewHolder>{
