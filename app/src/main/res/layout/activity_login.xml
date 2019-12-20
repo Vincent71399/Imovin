@@ -24,7 +24,7 @@
 
             <ImageView
                 android:id="@+id/imovin_image"
-                android:src="@drawable/imovin_big"
+                android:src="@drawable/imovin_big2"
                 android:layout_marginTop="@dimen/LoginComponentMarginTop"
                 android:scaleType="center"
                 android:layout_width="wrap_content"
