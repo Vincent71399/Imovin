@@ -10,7 +10,7 @@
     <application
         android:name=".System.ImovinApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/imovin_icon2"
+        android:icon="@mipmap/imovin_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
