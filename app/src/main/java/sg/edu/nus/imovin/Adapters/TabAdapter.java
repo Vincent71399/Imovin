@@ -56,7 +56,7 @@ public class TabAdapter extends ArrayAdapter<String> {
             tab_text.setText(tab_name);
             if(mSelectedIndex == position) {
                 tab_image.setImageDrawable(ContextCompat.getDrawable(ImovinApplication.getInstance(), FuncBlockConstants.getSelectIcon_by_title(tab_name)));
-                tab_text.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.blue_color));
+                tab_text.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
             }else{
                 tab_image.setImageDrawable(ContextCompat.getDrawable(ImovinApplication.getInstance(), FuncBlockConstants.getUnselectIcon_by_title(tab_name)));
                 tab_text.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.black_color));

@@ -107,11 +107,18 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
     private void SetFunction(){
         navigator_help.setOnClickListener(this);
         navigator_logout.setOnClickListener(this);
-        int profile = ImovinApplication.getUserInfoResponse().getProfile();
-        mTitles = FuncBlockConstants.getFunctionBlockTitles_by_profile(profile);
-        moreTitles = FuncBlockConstants.getFunctionBlockMoreTitles_by_profile(profile);
-        mIconUnselectIds = FuncBlockConstants.getFunctionBlockUnselectIcons_by_profile(profile);
-        mIconSelectIds = FuncBlockConstants.getFunctionBlockSelectIcons_by_profile(profile);
+
+//        int profile = ImovinApplication.getUserInfoResponse().getProfile();
+//        mTitles = FuncBlockConstants.getFunctionBlockTitles_by_profile(profile);
+//        moreTitles = FuncBlockConstants.getFunctionBlockMoreTitles_by_profile(profile);
+//        mIconUnselectIds = FuncBlockConstants.getFunctionBlockUnselectIcons_by_profile(profile);
+//        mIconSelectIds = FuncBlockConstants.getFunctionBlockSelectIcons_by_profile(profile);
+
+        List<Integer> primaryFeatures = ImovinApplication.getUserInfoResponse().getPrimary_features();
+        mTitles = FuncBlockConstants.getFunctionBlockTitles_by_primary_features(primaryFeatures);
+        moreTitles = FuncBlockConstants.getFunctionBlockMoreTitles_by_primary_features(primaryFeatures);
+        mIconUnselectIds = FuncBlockConstants.getFunctionBlockUnselectIcons_by_primary_features(primaryFeatures);
+        mIconSelectIds = FuncBlockConstants.getFunctionBlockSelectIcons_by_primary_features(primaryFeatures);
 
         TabAdapter adapter = new TabAdapter(getApplicationContext(), Arrays.asList(moreTitles));
         more_spinner.setAdapter(adapter);

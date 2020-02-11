@@ -20,6 +20,7 @@ public class UserInfoResponse {
     private String name;
     private String password;
     private Integer profile;
+    private List<Integer> primary_features;
     private Integer riskLapse;
     private List<String> roles;
     private String signature;
@@ -144,6 +145,14 @@ public class UserInfoResponse {
 
     public void setProfile(Integer profile) {
         this.profile = profile;
+    }
+
+    public List<Integer> getPrimary_features() {
+        return primary_features;
+    }
+
+    public void setPrimary_features(List<Integer> primary_features) {
+        this.primary_features = primary_features;
     }
 
     public Integer getRiskLapse() {

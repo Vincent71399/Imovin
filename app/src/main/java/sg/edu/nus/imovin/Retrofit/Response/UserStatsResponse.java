@@ -14,6 +14,7 @@ public class UserStatsResponse {
     private List<Integer> motives;
     private String name;
     private Integer profile;
+    private List<Integer> primary_features;
     private Integer riskLapse;
     private Integer target;
     private String updated_at;
@@ -80,6 +81,14 @@ public class UserStatsResponse {
 
     public void setProfile(Integer profile) {
         this.profile = profile;
+    }
+
+    public List<Integer> getPrimary_features() {
+        return primary_features;
+    }
+
+    public void setPrimary_features(List<Integer> primary_features) {
+        this.primary_features = primary_features;
     }
 
     public Integer getRiskLapse() {
