@@ -37,7 +37,7 @@ import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.Objects.PlanDataCategory;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
-import sg.edu.nus.imovin.Retrofit.Response.MessageResponse;
+import sg.edu.nus.imovin.Retrofit.Response.GoalMessageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
@@ -219,19 +219,19 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_SELECT_PLAN, plan_id);
 
-        Call<MessageResponse> call = service.selectPlan(url);
+        Call<GoalMessageResponse> call = service.selectPlan(url);
 
-        call.enqueue(new Callback<MessageResponse>() {
+        call.enqueue(new Callback<GoalMessageResponse>() {
             @Override
-            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+            public void onResponse(Call<GoalMessageResponse> call, Response<GoalMessageResponse> response) {
                 try {
-                    MessageResponse messageResponse = response.body();
-                    if(messageResponse != null && messageResponse.getMessage().equals(getString(R.string.operation_success))) {
+                    GoalMessageResponse goalMessageResponse = response.body();
+                    if(goalMessageResponse != null && goalMessageResponse.getMessage().equals(getString(R.string.operation_success))) {
                         Init();
                     }else{
                         Gson g = new Gson();
-                        messageResponse = g.fromJson(response.errorBody().string(), MessageResponse.class);
-                        Toast.makeText(getActivity(), messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        goalMessageResponse = g.fromJson(response.errorBody().string(), GoalMessageResponse.class);
+                        Toast.makeText(getActivity(), goalMessageResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -241,7 +241,7 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFailure(Call<MessageResponse> call, Throwable t) {
+            public void onFailure(Call<GoalMessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure GoalFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
@@ -260,19 +260,19 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_DELETE_PLAN, plan_id);
 
-        Call<MessageResponse> call = service.deletePlan(url);
+        Call<GoalMessageResponse> call = service.deletePlan(url);
 
-        call.enqueue(new Callback<MessageResponse>() {
+        call.enqueue(new Callback<GoalMessageResponse>() {
             @Override
-            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+            public void onResponse(Call<GoalMessageResponse> call, Response<GoalMessageResponse> response) {
                 try {
-                    MessageResponse messageResponse = response.body();
-                    if(messageResponse != null && messageResponse.getMessage().equals(getString(R.string.operation_success))) {
+                    GoalMessageResponse goalMessageResponse = response.body();
+                    if(goalMessageResponse != null && goalMessageResponse.getMessage().equals(getString(R.string.operation_success))) {
                         Init();
                     }else{
                         Gson g = new Gson();
-                        messageResponse = g.fromJson(response.errorBody().string(), MessageResponse.class);
-                        Toast.makeText(getActivity(), messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        goalMessageResponse = g.fromJson(response.errorBody().string(), GoalMessageResponse.class);
+                        Toast.makeText(getActivity(), goalMessageResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -282,7 +282,7 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFailure(Call<MessageResponse> call, Throwable t) {
+            public void onFailure(Call<GoalMessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure GoalFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }

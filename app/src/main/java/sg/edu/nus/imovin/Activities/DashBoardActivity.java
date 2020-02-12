@@ -108,12 +108,6 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         navigator_help.setOnClickListener(this);
         navigator_logout.setOnClickListener(this);
 
-//        int profile = ImovinApplication.getUserInfoResponse().getProfile();
-//        mTitles = FuncBlockConstants.getFunctionBlockTitles_by_profile(profile);
-//        moreTitles = FuncBlockConstants.getFunctionBlockMoreTitles_by_profile(profile);
-//        mIconUnselectIds = FuncBlockConstants.getFunctionBlockUnselectIcons_by_profile(profile);
-//        mIconSelectIds = FuncBlockConstants.getFunctionBlockSelectIcons_by_profile(profile);
-
         List<Integer> primaryFeatures = ImovinApplication.getUserInfoResponse().getPrimary_features();
         mTitles = FuncBlockConstants.getFunctionBlockTitles_by_primary_features(primaryFeatures);
         moreTitles = FuncBlockConstants.getFunctionBlockMoreTitles_by_primary_features(primaryFeatures);
@@ -308,6 +302,15 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                 break;
             case FuncBlockConstants.FORUM:
                 help_text = getString(R.string.help_forum);
+                break;
+            case FuncBlockConstants.MESSAGE:
+                help_text = getString(R.string.help_message);
+                break;
+            case FuncBlockConstants.REWARDS:
+                help_text = getString(R.string.help_rewards);
+                break;
+            default:
+                help_text = "";
                 break;
         }
 

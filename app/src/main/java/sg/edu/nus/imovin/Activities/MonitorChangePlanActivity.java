@@ -38,7 +38,7 @@ import sg.edu.nus.imovin.Event.PlanEvent;
 import sg.edu.nus.imovin.Objects.PlanDataCategory;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.PlanData;
-import sg.edu.nus.imovin.Retrofit.Response.MessageResponse;
+import sg.edu.nus.imovin.Retrofit.Response.GoalMessageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseSimpleActivity;
@@ -220,20 +220,20 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_SELECT_PLAN, plan_id);
 
-        Call<MessageResponse> call = service.selectPlan(url);
+        Call<GoalMessageResponse> call = service.selectPlan(url);
 
-        call.enqueue(new Callback<MessageResponse>() {
+        call.enqueue(new Callback<GoalMessageResponse>() {
             @Override
-            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+            public void onResponse(Call<GoalMessageResponse> call, Response<GoalMessageResponse> response) {
                 try {
-                    MessageResponse messageResponse = response.body();
-                    if(messageResponse != null && messageResponse.getMessage().equals(getString(R.string.operation_success))) {
+                    GoalMessageResponse goalMessageResponse = response.body();
+                    if(goalMessageResponse != null && goalMessageResponse.getMessage().equals(getString(R.string.operation_success))) {
                         EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                         Init();
                     }else{
                         Gson g = new Gson();
-                        messageResponse = g.fromJson(response.errorBody().string(), MessageResponse.class);
-                        Toast.makeText(getApplicationContext(), messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        goalMessageResponse = g.fromJson(response.errorBody().string(), GoalMessageResponse.class);
+                        Toast.makeText(getApplicationContext(), goalMessageResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -243,7 +243,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
             }
 
             @Override
-            public void onFailure(Call<MessageResponse> call, Throwable t) {
+            public void onFailure(Call<GoalMessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure MonitorChangePlanActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
@@ -262,20 +262,20 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_DELETE_PLAN, plan_id);
 
-        Call<MessageResponse> call = service.deletePlan(url);
+        Call<GoalMessageResponse> call = service.deletePlan(url);
 
-        call.enqueue(new Callback<MessageResponse>() {
+        call.enqueue(new Callback<GoalMessageResponse>() {
             @Override
-            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+            public void onResponse(Call<GoalMessageResponse> call, Response<GoalMessageResponse> response) {
                 try {
-                    MessageResponse messageResponse = response.body();
-                    if(messageResponse != null && messageResponse.getMessage().equals(getString(R.string.operation_success))) {
+                    GoalMessageResponse goalMessageResponse = response.body();
+                    if(goalMessageResponse != null && goalMessageResponse.getMessage().equals(getString(R.string.operation_success))) {
                         EventBus.getDefault().post(new PlanEvent(EventConstants.REFRESH));
                         Init();
                     }else{
                         Gson g = new Gson();
-                        messageResponse = g.fromJson(response.errorBody().string(), MessageResponse.class);
-                        Toast.makeText(getApplicationContext(), messageResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        goalMessageResponse = g.fromJson(response.errorBody().string(), GoalMessageResponse.class);
+                        Toast.makeText(getApplicationContext(), goalMessageResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -285,7 +285,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
             }
 
             @Override
-            public void onFailure(Call<MessageResponse> call, Throwable t) {
+            public void onFailure(Call<GoalMessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure MonitorChangePlanActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }

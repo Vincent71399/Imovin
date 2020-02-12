@@ -31,6 +31,7 @@ import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
 import sg.edu.nus.imovin.Retrofit.Response.DailyLogResponse;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
 import sg.edu.nus.imovin.Retrofit.Response.LikeResponse;
+import sg.edu.nus.imovin.Retrofit.Response.GoalMessageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.MessageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.MonitorDailySymmaryResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
@@ -93,23 +94,23 @@ public interface ImovinService {
     Call<PlanMultiResponse> getAllPlans();
 
     @POST(ConnectionURL.REQUEST_CREATE_PLAN)
-    Call<MessageResponse> createPlan(
+    Call<GoalMessageResponse> createPlan(
             @Body CreatePlanRequest createPlanRequest
     );
 
     @PATCH
-    Call<MessageResponse> updatePlan(
+    Call<GoalMessageResponse> updatePlan(
             @Url String url,
             @Body UpdatePlanRequest updatePlanRequest
     );
 
     @POST
-    Call<MessageResponse> selectPlan(
+    Call<GoalMessageResponse> selectPlan(
             @Url String url
     );
 
     @POST
-    Call<MessageResponse> deletePlan(
+    Call<GoalMessageResponse> deletePlan(
             @Url String url
     );
 
@@ -132,7 +133,7 @@ public interface ImovinService {
     );
 
     @DELETE
-    Call<MessageResponse> deleteThread(
+    Call<GoalMessageResponse> deleteThread(
             @Url String url
     );
 
@@ -177,7 +178,7 @@ public interface ImovinService {
     );
 
     @DELETE
-    Call<MessageResponse> deleteComment(
+    Call<GoalMessageResponse> deleteComment(
             @Url String url
     );
 
@@ -203,7 +204,7 @@ public interface ImovinService {
     );
 
     @DELETE
-    Call<MessageResponse> deleteSocialPost(
+    Call<GoalMessageResponse> deleteSocialPost(
             @Url String url
     );
 
@@ -225,6 +226,10 @@ public interface ImovinService {
     //Library
     @GET(ConnectionURL.REQUEST_GET_ARTICLES)
     Call<ArticleResponse> getArticles();
+
+    //Message
+    @GET(ConnectionURL.REQUEST_GET_MESSAGE)
+    Call<MessageResponse> getMessage();
 
     //Log
     @POST(ConnectionURL.REQUEST_POST_DAILY_LOG)

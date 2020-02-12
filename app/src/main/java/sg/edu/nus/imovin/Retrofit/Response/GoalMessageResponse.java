@@ -2,17 +2,8 @@ package sg.edu.nus.imovin.Retrofit.Response;
 
 import sg.edu.nus.imovin.Retrofit.Object.MessageData;
 
-public class MessageResponse {
-    private MessageData data;
+public class GoalMessageResponse {
     private String message;
-
-    public MessageData getData() {
-        return data;
-    }
-
-    public void setData(MessageData data) {
-        this.data = data;
-    }
 
     public String getMessage() {
         return message;

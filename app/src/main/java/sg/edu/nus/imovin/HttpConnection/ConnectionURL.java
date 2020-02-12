@@ -42,6 +42,12 @@ public class ConnectionURL {
     public static final String REQUEST_LIKE_SOCIAL_COMMENT = "/api/social/comment/%s/like";
     public static final String REQUEST_SOCIAL_COMMENT_WITH_ID = "/api/social/comment/%s";
 
+    public static final String REQUEST_GET_MESSAGE = "/api/messages";
+
+    public static final String REQUEST_GET_REWARDS = "/api/rewards/me";
+    public static final String REQUEST_GET_REWARDS_COLLECTION_SLOTS = "/api/rewards/slots";
+    public static final String REQUEST_POST_CHECKOUT_REWARDS_REDEMPTION = "/api/rewards/checkout";
+
     public static final String REQUEST_POST_DAILY_LOG = "/api/daily-log";
 
     public static final String PARAMETER_DAILY_SUMMARY = "{\"$and\": [{\"date\":{\"$gte\":\"%s\"}}, {\"date\":{\"$lte\":\"%s\"}}]}";

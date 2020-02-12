@@ -92,7 +92,6 @@ public class LibraryFragment extends BaseFragment {
         }));
     }
 
-
     private void getArticleData(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER)

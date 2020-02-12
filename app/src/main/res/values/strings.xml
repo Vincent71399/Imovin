@@ -240,4 +240,12 @@
         users or post comments on the threads.
     </string>
 
+    <string name="help_message">
+        Access the messages sent from iMovin’ here!
+    </string>
+
+    <string name="help_rewards">
+        Get rewarded for moving! Earn points, redeem prizes! You can also monitor your progress towards an available reward!
+    </string>
+
 </resources>

@@ -48,7 +48,7 @@ import sg.edu.nus.imovin.Retrofit.Object.SocialFeedData;
 import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
 import sg.edu.nus.imovin.Retrofit.Response.CommentMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.LikeResponse;
-import sg.edu.nus.imovin.Retrofit.Response.MessageResponse;
+import sg.edu.nus.imovin.Retrofit.Response.GoalMessageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseActivity;
@@ -372,16 +372,16 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_SOCIAL_POST_WITH_ID, socialFeedData.get_id());
 
-        Call<MessageResponse> call = service.deleteSocialPost(url);
+        Call<GoalMessageResponse> call = service.deleteSocialPost(url);
 
         ShowConnectIndicator();
 
-        call.enqueue(new Callback<MessageResponse>() {
+        call.enqueue(new Callback<GoalMessageResponse>() {
             @Override
-            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+            public void onResponse(Call<GoalMessageResponse> call, Response<GoalMessageResponse> response) {
                 try {
-                    MessageResponse messageResponse = response.body();
-                    if(messageResponse.getMessage().equals(getString(R.string.operation_success))){
+                    GoalMessageResponse goalMessageResponse = response.body();
+                    if(goalMessageResponse.getMessage().equals(getString(R.string.operation_success))){
                         Intent resultIntent = new Intent();
                         setResult(RESULT_OK, resultIntent);
                         finish();
@@ -397,7 +397,7 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
             }
 
             @Override
-            public void onFailure(Call<MessageResponse> call, Throwable t) {
+            public void onFailure(Call<GoalMessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure ForumFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
                 HideConnectIndicator();
@@ -455,16 +455,16 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
         String url = SERVER + String.format(
                 Locale.ENGLISH, REQUEST_SOCIAL_COMMENT_WITH_ID, comment_id);
 
-        Call<MessageResponse> call = service.deleteComment(url);
+        Call<GoalMessageResponse> call = service.deleteComment(url);
 
         ShowConnectIndicator();
 
-        call.enqueue(new Callback<MessageResponse>() {
+        call.enqueue(new Callback<GoalMessageResponse>() {
             @Override
-            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+            public void onResponse(Call<GoalMessageResponse> call, Response<GoalMessageResponse> response) {
                 try {
-                    MessageResponse messageResponse = response.body();
-                    if(messageResponse.getMessage().equals(getString(R.string.operation_success))){
+                    GoalMessageResponse goalMessageResponse = response.body();
+                    if(goalMessageResponse.getMessage().equals(getString(R.string.operation_success))){
                         int index = 0;
                         for(CommentData commentData : commentDataList){
                             if(commentData.get_id().equals(comment_id)){
@@ -489,7 +489,7 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
             }
 
             @Override
-            public void onFailure(Call<MessageResponse> call, Throwable t) {
+            public void onFailure(Call<GoalMessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure ForumFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
                 HideConnectIndicator();
