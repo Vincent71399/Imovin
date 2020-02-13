@@ -21,7 +21,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Adapters.MessageAdapter;
 import sg.edu.nus.imovin.Adapters.MessageTitleAdapter;
+import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
+import sg.edu.nus.imovin.Common.SpanningLinearLayoutManager;
 import sg.edu.nus.imovin.R;
+import sg.edu.nus.imovin.Retrofit.Object.MessageData;
 import sg.edu.nus.imovin.Retrofit.Object.MessageItemData;
 import sg.edu.nus.imovin.Retrofit.Response.MessageResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
@@ -37,6 +40,13 @@ public class MessageFragment extends BaseFragment {
     @BindView(R.id.message_title_selection) RecyclerView message_title_selection;
     @BindView(R.id.message_list) RecyclerView message_list;
 
+    private MessageTitleAdapter messageTitleAdapter;
+    private MessageAdapter messageAdapter;
+
+    private List<String> messageTitleList;
+    private List<MessageItemData> messageItemDataList;
+    private List<List<MessageItemData>> cachMessageItemDataList;
+
     public static MessageFragment getInstance() {
         MessageFragment messageFragment = new MessageFragment();
         return messageFragment;
@@ -48,6 +58,7 @@ public class MessageFragment extends BaseFragment {
 
         LinkUIById();
         SetFunction();
+        Init();
 
         return rootView;
     }
@@ -57,26 +68,73 @@ public class MessageFragment extends BaseFragment {
     }
 
     private void SetFunction(){
-        List<String> demoList = new ArrayList<>();
-        demoList.add("Monitor");
-        demoList.add("Challenge");
-        demoList.add("Reminder");
-        demoList.add("Rewards");
+        if(messageTitleList == null) {
+            messageTitleList = new ArrayList<>();
+        }else{
+            messageTitleList.clear();
+        }
 
-        MessageTitleAdapter messageTitleAdapter = new MessageTitleAdapter(demoList);
-        message_title_selection.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        if(messageItemDataList == null){
+            messageItemDataList = new ArrayList<>();
+        }else{
+            messageItemDataList.clear();
+        }
+
+        if(cachMessageItemDataList == null){
+            cachMessageItemDataList = new ArrayList<>();
+        }else{
+            cachMessageItemDataList.clear();
+        }
+
+        messageTitleAdapter = new MessageTitleAdapter(messageTitleList);
+        message_title_selection.setLayoutManager(new SpanningLinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         message_title_selection.setAdapter(messageTitleAdapter);
 
-        List<MessageItemData> messageItemDataList = new ArrayList<>();
-        MessageItemData messageItemData1 = new MessageItemData();
-        messageItemData1.setTitle("title1");
-        messageItemData1.setDate("date1");
-        messageItemData1.setContent("content");
-        messageItemDataList.add(messageItemData1);
+        message_title_selection.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                messageTitleAdapter.setSelection(position);
+                messageTitleAdapter.notifyDataSetChanged();
+                SetupMessageList(position);
+            }
+        }));
 
-        MessageAdapter messageAdapter = new MessageAdapter(messageItemDataList);
+        messageAdapter = new MessageAdapter(messageItemDataList);
         message_list.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         message_list.setAdapter(messageAdapter);
+    }
+
+    private void Init(){
+        getMessageData();
+    }
+
+    private void SetupData(MessageResponse messageResponse){
+        MessageData messageData = messageResponse.getData();
+        if(messageData.getMonitor() != null){
+            messageTitleList.add(getString(R.string.message_monitor));
+            cachMessageItemDataList.add(messageData.getMonitor());
+        }
+        if(messageData.getReminder() != null){
+            messageTitleList.add(getString(R.string.message_reminder));
+            cachMessageItemDataList.add(messageData.getReminder());
+        }
+        if(messageData.getRewards() != null){
+            messageTitleList.add(getString(R.string.message_rewards));
+            cachMessageItemDataList.add(messageData.getRewards());
+        }
+        if(messageData.getChallenge() != null){
+            messageTitleList.add(getString(R.string.message_challenge));
+            cachMessageItemDataList.add(messageData.getChallenge());
+        }
+        messageTitleAdapter.notifyDataSetChanged();
+    }
+
+    private void SetupMessageList(int position){
+        messageItemDataList.clear();
+        if(cachMessageItemDataList.size() > position) {
+            messageItemDataList.addAll(cachMessageItemDataList.get(position));
+        }
+        messageAdapter.notifyDataSetChanged();
     }
 
     private void getMessageData(){
@@ -95,6 +153,7 @@ public class MessageFragment extends BaseFragment {
             public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                 try {
                     MessageResponse messageResponse = response.body();
+                    SetupData(messageResponse);
 
                 }catch (Exception e){
                     e.printStackTrace();

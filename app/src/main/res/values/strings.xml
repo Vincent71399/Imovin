@@ -110,6 +110,11 @@
     <string name="new_post">New Post</string>
     <string name="title_activity_monitor_change_plan">MonitorChangePlanActivity</string>
 
+    <string name="message_monitor">Monitor</string>
+    <string name="message_reminder">Reminder</string>
+    <string name="message_rewards">Rewards</string>
+    <string name="message_challenge">Challenge</string>
+
     <string name="cf">Consent Form</string>
     <string name="cf_title1">Study on Physical Activity Mobile App</string>
     <string name="cf_title2">School of Computing</string>
