@@ -45,8 +45,8 @@ import sg.edu.nus.imovin.Retrofit.Object.LikeData;
 import sg.edu.nus.imovin.Retrofit.Object.ThreadData;
 import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
 import sg.edu.nus.imovin.Retrofit.Response.CommentMultiResponse;
+import sg.edu.nus.imovin.Retrofit.Response.CommonMessageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.LikeResponse;
-import sg.edu.nus.imovin.Retrofit.Response.GoalMessageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseActivity;
@@ -358,16 +358,16 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_THREAD_WITH_ID, threadData.get_id());
 
-        Call<GoalMessageResponse> call = service.deleteThread(url);
+        Call<CommonMessageResponse> call = service.deleteThread(url);
 
         ShowConnectIndicator();
 
-        call.enqueue(new Callback<GoalMessageResponse>() {
+        call.enqueue(new Callback<CommonMessageResponse>() {
             @Override
-            public void onResponse(Call<GoalMessageResponse> call, Response<GoalMessageResponse> response) {
+            public void onResponse(Call<CommonMessageResponse> call, Response<CommonMessageResponse> response) {
                 try {
-                    GoalMessageResponse goalMessageResponse = response.body();
-                    if(goalMessageResponse.getMessage().equals(getString(R.string.operation_success))){
+                    CommonMessageResponse commonMessageResponse = response.body();
+                    if(commonMessageResponse.getMessage().equals(getString(R.string.operation_success))){
                         Intent resultIntent = new Intent();
                         setResult(RESULT_OK, resultIntent);
                         finish();
@@ -383,7 +383,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
             }
 
             @Override
-            public void onFailure(Call<GoalMessageResponse> call, Throwable t) {
+            public void onFailure(Call<CommonMessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure ForumFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
                 HideConnectIndicator();
@@ -441,16 +441,16 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_COMMENT_WITH_ID, comment_id);
 
-        Call<GoalMessageResponse> call = service.deleteComment(url);
+        Call<CommonMessageResponse> call = service.deleteComment(url);
 
         ShowConnectIndicator();
 
-        call.enqueue(new Callback<GoalMessageResponse>() {
+        call.enqueue(new Callback<CommonMessageResponse>() {
             @Override
-            public void onResponse(Call<GoalMessageResponse> call, Response<GoalMessageResponse> response) {
+            public void onResponse(Call<CommonMessageResponse> call, Response<CommonMessageResponse> response) {
                 try {
-                    GoalMessageResponse goalMessageResponse = response.body();
-                    if(goalMessageResponse.getMessage().equals(getString(R.string.operation_success))){
+                    CommonMessageResponse commonMessageResponse = response.body();
+                    if(commonMessageResponse.getMessage().equals(getString(R.string.operation_success))){
                         int index = 0;
                         for(CommentData commentData : commentDataList){
                             if(commentData.get_id().equals(comment_id)){
@@ -475,7 +475,7 @@ public class ForumCommentActivity extends BaseActivity implements View.OnClickLi
             }
 
             @Override
-            public void onFailure(Call<GoalMessageResponse> call, Throwable t) {
+            public void onFailure(Call<CommonMessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure ForumFragment : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
                 HideConnectIndicator();

@@ -21,6 +21,7 @@ import sg.edu.nus.imovin.Retrofit.Request.DailyLogRequest;
 import sg.edu.nus.imovin.Retrofit.Request.EmailLoginRequest;
 import sg.edu.nus.imovin.Retrofit.Request.LikeRequest;
 import sg.edu.nus.imovin.Retrofit.Request.ResetPasswordRequest;
+import sg.edu.nus.imovin.Retrofit.Request.RewardsPostCheckoutRedemptionRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UpdatePlanRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UploadQuestionRequest;
 import sg.edu.nus.imovin.Retrofit.Response.ArticleResponse;
@@ -28,15 +29,17 @@ import sg.edu.nus.imovin.Retrofit.Response.AuthFitbitResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ChallengeResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CommentMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.CommentResponse;
+import sg.edu.nus.imovin.Retrofit.Response.CommonMessageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.DailyLogResponse;
 import sg.edu.nus.imovin.Retrofit.Response.EmailLoginResponse;
 import sg.edu.nus.imovin.Retrofit.Response.LikeResponse;
-import sg.edu.nus.imovin.Retrofit.Response.GoalMessageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.MessageResponse;
 import sg.edu.nus.imovin.Retrofit.Response.MonitorDailySymmaryResponse;
 import sg.edu.nus.imovin.Retrofit.Response.PlanMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.QuestionnaireResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ResetPasswordResponse;
+import sg.edu.nus.imovin.Retrofit.Response.RewardsResponse;
+import sg.edu.nus.imovin.Retrofit.Response.RewardsSlotsResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostMultiResponse;
 import sg.edu.nus.imovin.Retrofit.Response.SocialPostResponse;
 import sg.edu.nus.imovin.Retrofit.Response.ThreadMultiResponse;
@@ -94,23 +97,23 @@ public interface ImovinService {
     Call<PlanMultiResponse> getAllPlans();
 
     @POST(ConnectionURL.REQUEST_CREATE_PLAN)
-    Call<GoalMessageResponse> createPlan(
+    Call<CommonMessageResponse> createPlan(
             @Body CreatePlanRequest createPlanRequest
     );
 
     @PATCH
-    Call<GoalMessageResponse> updatePlan(
+    Call<CommonMessageResponse> updatePlan(
             @Url String url,
             @Body UpdatePlanRequest updatePlanRequest
     );
 
     @POST
-    Call<GoalMessageResponse> selectPlan(
+    Call<CommonMessageResponse> selectPlan(
             @Url String url
     );
 
     @POST
-    Call<GoalMessageResponse> deletePlan(
+    Call<CommonMessageResponse> deletePlan(
             @Url String url
     );
 
@@ -133,7 +136,7 @@ public interface ImovinService {
     );
 
     @DELETE
-    Call<GoalMessageResponse> deleteThread(
+    Call<CommonMessageResponse> deleteThread(
             @Url String url
     );
 
@@ -178,7 +181,7 @@ public interface ImovinService {
     );
 
     @DELETE
-    Call<GoalMessageResponse> deleteComment(
+    Call<CommonMessageResponse> deleteComment(
             @Url String url
     );
 
@@ -204,7 +207,7 @@ public interface ImovinService {
     );
 
     @DELETE
-    Call<GoalMessageResponse> deleteSocialPost(
+    Call<CommonMessageResponse> deleteSocialPost(
             @Url String url
     );
 
@@ -230,6 +233,18 @@ public interface ImovinService {
     //Message
     @GET(ConnectionURL.REQUEST_GET_MESSAGE)
     Call<MessageResponse> getMessage();
+
+    //Rewards
+    @GET(ConnectionURL.REQUEST_GET_REWARDS)
+    Call<RewardsResponse> getRewards();
+
+    @GET(ConnectionURL.REQUEST_GET_REWARDS_COLLECTION_SLOTS)
+    Call<RewardsSlotsResponse> getRewardsSlots();
+
+    @POST(ConnectionURL.REQUEST_POST_CHECKOUT_REWARDS_REDEMPTION)
+    Call<CommonMessageResponse> postRewardsCheckoutRedemption(
+        @Body RewardsPostCheckoutRedemptionRequest rewardsPostCheckoutRedemptionRequest
+    );
 
     //Log
     @POST(ConnectionURL.REQUEST_POST_DAILY_LOG)

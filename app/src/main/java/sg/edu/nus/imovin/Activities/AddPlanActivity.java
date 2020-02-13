@@ -29,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Request.CreatePlanRequest;
 import sg.edu.nus.imovin.Retrofit.Request.UpdatePlanRequest;
-import sg.edu.nus.imovin.Retrofit.Response.GoalMessageResponse;
+import sg.edu.nus.imovin.Retrofit.Response.CommonMessageResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseSimpleActivity;
 import sg.edu.nus.imovin.System.ImovinApplication;
@@ -139,21 +139,21 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
 
         ImovinService service = retrofit.create(ImovinService.class);
 
-        Call<GoalMessageResponse> call = service.createPlan(createPlanRequest);
+        Call<CommonMessageResponse> call = service.createPlan(createPlanRequest);
 
-        call.enqueue(new Callback<GoalMessageResponse>() {
+        call.enqueue(new Callback<CommonMessageResponse>() {
             @Override
-            public void onResponse(Call<GoalMessageResponse> call, Response<GoalMessageResponse> response) {
+            public void onResponse(Call<CommonMessageResponse> call, Response<CommonMessageResponse> response) {
                 try {
-                    GoalMessageResponse goalMessageResponse = response.body();
-                    if(goalMessageResponse != null && goalMessageResponse.getMessage().equals(getString(R.string.operation_success))) {
+                    CommonMessageResponse commonMessageResponse = response.body();
+                    if(commonMessageResponse != null && commonMessageResponse.getMessage().equals(getString(R.string.operation_success))) {
                         Intent resultIntent = new Intent();
                         setResult(RESULT_OK, resultIntent);
                         finish();
                     }else{
                         Gson g = new Gson();
-                        goalMessageResponse = g.fromJson(response.errorBody().string(), GoalMessageResponse.class);
-                        Toast.makeText(getApplicationContext(), goalMessageResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        commonMessageResponse = g.fromJson(response.errorBody().string(), CommonMessageResponse.class);
+                        Toast.makeText(getApplicationContext(), commonMessageResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -163,7 +163,7 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
             }
 
             @Override
-            public void onFailure(Call<GoalMessageResponse> call, Throwable t) {
+            public void onFailure(Call<CommonMessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure NewPlanActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
@@ -182,21 +182,21 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
         String url = SERVER + String.format(
                 Locale.ENGLISH,REQUEST_UPDATE_PLAN, plan_id);
 
-        Call<GoalMessageResponse> call = service.updatePlan(url, updatePlanRequest);
+        Call<CommonMessageResponse> call = service.updatePlan(url, updatePlanRequest);
 
-        call.enqueue(new Callback<GoalMessageResponse>() {
+        call.enqueue(new Callback<CommonMessageResponse>() {
             @Override
-            public void onResponse(Call<GoalMessageResponse> call, Response<GoalMessageResponse> response) {
+            public void onResponse(Call<CommonMessageResponse> call, Response<CommonMessageResponse> response) {
                 try {
-                    GoalMessageResponse goalMessageResponse = response.body();
-                    if(goalMessageResponse != null && goalMessageResponse.getMessage().equals(getString(R.string.operation_success))) {
+                    CommonMessageResponse commonMessageResponse = response.body();
+                    if(commonMessageResponse != null && commonMessageResponse.getMessage().equals(getString(R.string.operation_success))) {
                         Intent resultIntent = new Intent();
                         setResult(RESULT_OK, resultIntent);
                         finish();
                     }else{
                         Gson g = new Gson();
-                        goalMessageResponse = g.fromJson(response.errorBody().string(), GoalMessageResponse.class);
-                        Toast.makeText(getApplicationContext(),  goalMessageResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        commonMessageResponse = g.fromJson(response.errorBody().string(), CommonMessageResponse.class);
+                        Toast.makeText(getApplicationContext(),  commonMessageResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }catch (Exception e){
@@ -207,7 +207,7 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
             }
 
             @Override
-            public void onFailure(Call<GoalMessageResponse> call, Throwable t) {
+            public void onFailure(Call<CommonMessageResponse> call, Throwable t) {
                 Log.d(LogConstants.LogTag, "Failure NewPlanActivity : " + t.toString());
                 Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
             }
