@@ -101,6 +101,6 @@
     <dimen name="monitorWarningMarginH">30dp</dimen>
 
     <dimen name="messagePadding">10dp</dimen>
-    <dimen name="messageTextMid">18dp</dimen>
+    <dimen name="messageTextMid">18sp</dimen>
 
 </resources>

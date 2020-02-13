@@ -100,5 +100,7 @@
     <dimen name="monitorWarningMarginV">16dp</dimen>
     <dimen name="monitorWarningMarginH">20dp</dimen>
 
+    <dimen name="messagePadding">7dp</dimen>
+    <dimen name="messageTextMid">14sp</dimen>
 
 </resources>
