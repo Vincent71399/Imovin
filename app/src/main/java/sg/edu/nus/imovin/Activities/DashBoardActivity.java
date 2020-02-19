@@ -419,7 +419,5 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                 Log.d(LogConstants.DailyLogTag, "Challenge Count : " + logFuncClick7.getChallengeCount());
                 break;
         }
-
     }
-
 }

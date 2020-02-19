@@ -5,7 +5,7 @@
             android:innerRadius="@dimen/circleSize"
             android:thickness="2dp"
             android:useLevel="false">
-            <solid android:color="@color/blue_color" />
+            <solid android:color="@color/theme_purple" />
         </shape>
     </item>
     <item>
@@ -13,7 +13,7 @@
             android:innerRadius="@dimen/circleSize"
             android:thickness="2dp"
             android:useLevel="false">
-            <solid android:color="@color/white_color" />
+            <solid android:color="@color/black_color" />
         </shape>
     </item>
 </selector>
