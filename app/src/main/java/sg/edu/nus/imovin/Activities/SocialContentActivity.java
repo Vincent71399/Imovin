@@ -129,7 +129,7 @@ public class SocialContentActivity extends BaseActivity implements View.OnClickL
 
     private void SetActionBar(){
         ActionBar actionBar = getSupportActionBar();
-        customActionBar = getLayoutInflater().inflate(R.layout.main_navigator, null);
+        customActionBar = getLayoutInflater().inflate(R.layout.sub_navigator, null);
 
         if(actionBar != null){
             actionBar.show();

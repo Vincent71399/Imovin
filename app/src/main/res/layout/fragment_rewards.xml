@@ -20,6 +20,7 @@
             android:orientation="horizontal"/>
 
         <TextView
+            android:id="@+id/points"
             android:text="1,500"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubBig"
@@ -51,8 +52,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/points_string"
-        android:text="Points"
+        android:text="@string/points"
         android:textColor="@color/black_color"
         android:textSize="@dimen/textSubMid"
         android:gravity="center"
@@ -75,7 +75,7 @@
 
     <TextView
         android:id="@+id/next_redeem_guide_text"
-        android:text="To Next Reward: 500"
+        android:text="@string/to_next_reward"
         android:textColor="@color/black_color"
         android:textSize="@dimen/textSubMid"
         android:gravity="center"
@@ -84,7 +84,7 @@
         android:layout_marginTop="@dimen/rewardMarginTop"/>
 
     <TextView
-        android:text="Available Rewards"
+        android:text="@string/available_rewards"
         android:textColor="@color/theme_purple"
         android:textSize="@dimen/textSubBig"
         android:gravity="center"
@@ -101,7 +101,7 @@
 
     <Button
         android:id="@+id/redeem_btn"
-        android:text="Redeem"
+        android:text="@string/redeem"
         style="@style/buttonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

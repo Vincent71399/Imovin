@@ -20,10 +20,12 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardAdap
 
     public final static class RewardAdapter_ViewHolder extends RecyclerView.ViewHolder {
         TextView reward_name;
+        TextView reward_points;
 
         public RewardAdapter_ViewHolder(@NonNull View itemView) {
             super(itemView);
             reward_name = itemView.findViewById(R.id.reward_name);
+            reward_points = itemView.findViewById(R.id.reward_points);
         }
     }
 

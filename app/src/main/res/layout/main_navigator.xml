@@ -6,77 +6,69 @@
     android:background="@color/theme_purple">
 
     <RelativeLayout
+        android:id="@+id/navigator_left"
         android:layout_width="0dp"
-        android:layout_weight="50"
-        android:layout_height="match_parent"
-        android:gravity="start">
-
-        <LinearLayout
-            android:id="@+id/navigator_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_marginTop="@dimen/navigatorPaddingV"
-                android:layout_marginBottom="@dimen/navigatorPaddingV"
-                android:id="@+id/navigator_left_image"
-                android:visibility="invisible"
-                android:src="@drawable/icon_pointer_left_white"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:singleLine="true"
-                android:id="@+id/navigator_left_text"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textColor="@color/white_color"
-                android:textSize="@dimen/navigatorTextSmall"
-                android:gravity="center"/>
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_weight="50"
-        android:layout_height="match_parent"
+        android:layout_weight="70"
         android:paddingStart="@dimen/navigatorPaddingH"
         android:paddingEnd="@dimen/navigatorPaddingH"
         android:paddingTop="@dimen/navigatorPaddingV"
         android:paddingBottom="@dimen/navigatorPaddingV"
+        android:gravity="center"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/navigator_title"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:gravity="start|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/white_color"
+            android:textSize="@dimen/navigatorTextBig" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/navigator_middle"
+        android:layout_width="0dp"
+        android:layout_weight="15"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/navigatorPaddingV"
+        android:paddingBottom="@dimen/navigatorPaddingV"
         android:gravity="center_vertical">
 
-        <RelativeLayout
-            android:id="@+id/navigator_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/navigator_help"
+            android:text="@string/question_mark"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:background="@drawable/theme_circle_border_blackground"
+            android:singleLine="true"
+            android:textColor="@drawable/main_question_text_color"
+            android:textSize="@dimen/navigatorTextHint"
+            />
 
-            <ImageView
-                android:id="@+id/navigator_right_image"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="end"
-                android:layout_marginTop="@dimen/navigatorPaddingV"
-                android:layout_marginBottom="@dimen/navigatorPaddingV"
-                android:visibility="invisible"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/navigator_right_text"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:gravity="center_vertical|end"
-                android:visibility="invisible"
-                android:singleLine="true"
-                android:textColor="@color/white_color"
-                android:textSize="@dimen/navigatorTextSmall"
-                />
+    <RelativeLayout
+        android:id="@+id/navigator_right"
+        android:layout_width="0dp"
+        android:layout_weight="15"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/navigatorPaddingV"
+        android:paddingBottom="@dimen/navigatorPaddingV"
+        android:gravity="center_vertical">
 
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/navigator_logout"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:src="@drawable/exit_icon"
+            />
 
     </RelativeLayout>
 
 </LinearLayout>
+

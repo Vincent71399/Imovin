@@ -84,7 +84,7 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
 
     private void SetActionBar(){
         ActionBar actionBar = getSupportActionBar();
-        customActionBar = getLayoutInflater().inflate(R.layout.main_navigator_new, null);
+        customActionBar = getLayoutInflater().inflate(R.layout.main_navigator, null);
 
         if(actionBar != null){
             actionBar.show();

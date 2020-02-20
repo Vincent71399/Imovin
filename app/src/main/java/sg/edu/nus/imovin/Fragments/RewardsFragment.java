@@ -1,14 +1,13 @@
 package sg.edu.nus.imovin.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -18,8 +17,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import sg.edu.nus.imovin.Activities.RewardsCheckoutActivity;
 import sg.edu.nus.imovin.Adapters.RewardAdapter;
-import sg.edu.nus.imovin.Event.RewardGotoCheckoutPageEvent;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.System.BaseFragment;
 
@@ -72,7 +71,9 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.redeem_btn:
-                EventBus.getDefault().post(new RewardGotoCheckoutPageEvent());
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), RewardsCheckoutActivity.class);
+                startActivity(intent);
                 break;
         }
     }
