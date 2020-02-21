@@ -95,8 +95,11 @@
     <string name="available_rewards">Available Rewards</string>
     <string name="redeem">Redeem</string>
     <string name="checkout">Checkout</string>
+    <string name="confirm">Confirm</string>
+    <string name="confirm_redemption">Confirm Redemption?</string>
     <string name="collection_venue">Collection Venue</string>
     <string name="choose_collection_time">Choose Collection Time</string>
+    <string name="collection">Collection</string>
 
     <string name="january">JAN</string>
     <string name="february">FEB</string>

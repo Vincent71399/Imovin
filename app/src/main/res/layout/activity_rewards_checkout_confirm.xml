@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="50dp"
+    android:background="#88222222"
+    android:id="@+id/mainView"
+    tools:context=".Activities.RewardsCheckoutConfirmActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_color"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/rewardPadding"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="@string/confirm_redemption"
+                android:textColor="@color/theme_purple"
+                android:textSize="@dimen/textSubBig"
+                android:gravity="start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/rewardMarginTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:src="@drawable/icon_reward_grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/rewardPadding"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/reward_name"
+                        android:text="$5 Gift Voucher"
+                        android:textColor="@color/black_color"
+                        android:textSize="@dimen/textSubSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/reward_points"
+                        android:text="5,000 Points"
+                        android:textColor="@color/black_color"
+                        android:textSize="@dimen/textSubSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="@dimen/rewardMarginTop"
+                android:text="@string/collection"
+                android:textColor="@color/theme_purple"
+                android:textSize="@dimen/textSubMid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/collection_time"
+                android:layout_marginTop="@dimen/rewardMarginTop"
+                android:text="4th February 2020, 12pm-1pm"
+                android:textColor="@color/black_color"
+                android:textSize="@dimen/textSubSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/collection_venue"
+                android:layout_marginTop="@dimen/rewardMarginTop"
+                android:text="COM1 #01-12"
+                android:textColor="@color/black_color"
+                android:textSize="@dimen/textSubSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/confirm_btn"
+                android:text="@string/confirm"
+                style="@style/buttonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/close_btn"
+            android:text="@string/close"
+            style="@style/buttonStyleNoSpace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</RelativeLayout>
