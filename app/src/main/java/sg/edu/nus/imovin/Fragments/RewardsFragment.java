@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import sg.edu.nus.imovin.Activities.RewardsCalendarActivity;
 import sg.edu.nus.imovin.Activities.RewardsCheckoutActivity;
 import sg.edu.nus.imovin.Adapters.RewardAdapter;
 import sg.edu.nus.imovin.R;
@@ -26,12 +25,9 @@ import sg.edu.nus.imovin.System.BaseFragment;
 public class RewardsFragment extends BaseFragment implements View.OnClickListener {
     private View rootView;
 
-    @BindView(R.id.reward_list)
-    RecyclerView reward_list;
-    @BindView(R.id.question_mark)
-    TextView question_mark;
-    @BindView(R.id.redeem_btn)
-    Button redeem_btn;
+    @BindView(R.id.reward_list) RecyclerView reward_list;
+    @BindView(R.id.question_mark) TextView question_mark;
+    @BindView(R.id.redeem_btn) Button redeem_btn;
 
     public static RewardsFragment getInstance() {
         RewardsFragment rewardsFragment = new RewardsFragment();
@@ -70,10 +66,15 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.question_mark:
+                Intent intentDetail = new Intent();
+                intentDetail.setClass(getActivity(), RewardsCalendarActivity.class);
+                startActivity(intentDetail);
+                break;
             case R.id.redeem_btn:
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), RewardsCheckoutActivity.class);
-                startActivity(intent);
+                Intent intentRedeem = new Intent();
+                intentRedeem.setClass(getActivity(), RewardsCheckoutActivity.class);
+                startActivity(intentRedeem);
                 break;
         }
     }

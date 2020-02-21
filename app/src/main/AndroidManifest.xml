@@ -14,7 +14,6 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.RewardsCheckoutActivity"></activity>
 
         <service
             android:name=".Services.MonitorConnectionService"
@@ -97,6 +96,13 @@
         <activity
             android:name=".Activities.QuestionnaireDocActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.RewardsCheckoutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.RewardsCalendarActivity"
+            android:theme="@style/Theme.Transparent"/>
+
     </application>
 
 </manifest>

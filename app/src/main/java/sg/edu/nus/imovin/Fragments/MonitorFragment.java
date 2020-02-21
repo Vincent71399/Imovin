@@ -272,13 +272,13 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
 
         int day = firstDay.get(Calendar.DAY_OF_WEEK);
 
-        goalList.add(new Goal("SUN"));
-        goalList.add(new Goal("MON"));
-        goalList.add(new Goal("TUE"));
-        goalList.add(new Goal("WED"));
-        goalList.add(new Goal("THU"));
-        goalList.add(new Goal("FRI"));
-        goalList.add(new Goal("SAT"));
+        goalList.add(new Goal(getString(R.string.sun)));
+        goalList.add(new Goal(getString(R.string.mon)));
+        goalList.add(new Goal(getString(R.string.tue)));
+        goalList.add(new Goal(getString(R.string.wed)));
+        goalList.add(new Goal(getString(R.string.thu)));
+        goalList.add(new Goal(getString(R.string.fri)));
+        goalList.add(new Goal(getString(R.string.sat)));
 
         for(int i=0; i<day-1; i++){
             goalList.add(new Goal(false));

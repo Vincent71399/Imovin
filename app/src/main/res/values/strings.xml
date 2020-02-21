@@ -111,6 +111,14 @@
     <string name="november">NOV</string>
     <string name="december">DEC</string>
 
+    <string name="sun">SUN</string>
+    <string name="mon">MON</string>
+    <string name="tue">TUE</string>
+    <string name="wed">WED</string>
+    <string name="thu">THU</string>
+    <string name="fri">FRI</string>
+    <string name="sat">SAT</string>
+
     <string name="operation_success">Operation Success</string>
     <string name="request_fail_message">Fail to connect the server, please check internet connection</string>
 
