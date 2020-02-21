@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -54,5 +55,23 @@ public class RewardsCalendarActivity extends Activity {
 
         reward_calendar_title.setLayoutManager(new SpanningLinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         reward_calendar_title.setAdapter(rewardCalendarTitleAdapter);
+
+        generateCalendar();
+    }
+
+    public void generateCalendar(){
+        List<String> dateList = new ArrayList<>();
+        for(int i=0;i<5;i++) {
+            dateList.add(null);
+        }
+
+        for(int i=1;i<=29;i++){
+            dateList.add(String.valueOf(i));
+        }
+
+        RewardCalendarAdapter rewardCalendarAdapter = new RewardCalendarAdapter(dateList);
+
+        reward_calendar.setLayoutManager(new GridLayoutManager(this, 7));
+        reward_calendar.setAdapter(rewardCalendarAdapter);
     }
 }

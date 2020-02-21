@@ -11,8 +11,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white_color"
+        android:layout_centerInParent="true"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -43,7 +44,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/date_text"
+                android:id="@+id/date_point"
                 android:text="JAN 2020: 300 Points"
                 android:gravity="center"
                 android:textColor="@color/black_color"
@@ -69,6 +70,58 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/reward_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:padding="@dimen/rewardPadding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:padding="@dimen/rewardPadding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_with_theme_border_bg"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/reward_message_title"
+                    android:text="1st January 2020"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@color/black_color"
+                    android:textSize="@dimen/textSubMid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/reward_detail_title"
+                    android:text="13,562 Steps -> 130 Points"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@color/black_color"
+                    android:textSize="@dimen/textSubSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/reward_add_on_title"
+                    android:text="* Every 100 Steps = 1 Point"
+                    android:gravity="end|center_vertical"
+                    android:textColor="@color/black_color"
+                    android:textSize="@dimen/textSubSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/close_btn"
+            android:text="@string/close"
+            style="@style/buttonStyleNoSpace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

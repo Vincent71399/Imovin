@@ -108,4 +108,6 @@
     <dimen name="rewardMarginTop">20dp</dimen>
     <dimen name="rewardItemPadding">10dp</dimen>
 
+    <dimen name="minorSpace">5dp</dimen>
+
 </resources>

@@ -50,7 +50,6 @@
             android:layout_height="@dimen/calendarBoxHeight"
             android:columnWidth="@dimen/calendarBoxColumnWidth"
             android:numColumns="7"
-            android:verticalSpacing="@dimen/calendarBoxSpaceV"
             android:horizontalSpacing="@dimen/calendarBoxSpaceH"
             android:stretchMode="columnWidth"
             />
