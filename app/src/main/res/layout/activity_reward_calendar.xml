@@ -19,7 +19,6 @@
 
         <TextView
             android:id="@+id/total_points"
-            android:text="Total: 1,500 Points"
             android:layout_marginTop="@dimen/rewardMarginTop"
             android:gravity="center"
             android:textColor="@color/theme_purple"

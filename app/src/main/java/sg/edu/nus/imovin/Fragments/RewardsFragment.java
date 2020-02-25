@@ -112,8 +112,11 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
         if(min_point_for_redemption != null){
             if(min_point_for_redemption < rewardsData.getPoints()){
                 reward_progress_bar.setProgress(100);
+                next_redeem_guide_text.setText(getString(R.string.to_next_reward) + " " + 0);
             }else{
                 reward_progress_bar.setProgress(100 * rewardsData.getPoints() / min_point_for_redemption);
+                int next_point = min_point_for_redemption - rewardsData.getPoints();
+                next_redeem_guide_text.setText(getString(R.string.to_next_reward) + " " + next_point);
             }
         }
 
