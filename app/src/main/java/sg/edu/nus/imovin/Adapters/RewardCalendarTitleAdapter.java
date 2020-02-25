@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import sg.edu.nus.imovin.R;
-import sg.edu.nus.imovin.Retrofit.Object.RewardsPointHistoryData;
 
 public class RewardCalendarTitleAdapter extends RecyclerView.Adapter<RewardCalendarTitleAdapter.RewardCalendarAdapter_ViewHolder>{
     List<String> calendarTitleList;

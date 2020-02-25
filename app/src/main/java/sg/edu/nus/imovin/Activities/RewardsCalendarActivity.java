@@ -1,10 +1,8 @@
 package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,12 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,13 +24,10 @@ import sg.edu.nus.imovin.Adapters.RewardCalendarTitleAdapter;
 import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.Common.SpanningLinearLayoutManager;
-import sg.edu.nus.imovin.Fragments.ChallengeFragment;
 import sg.edu.nus.imovin.R;
-import sg.edu.nus.imovin.Retrofit.Object.MedalData;
 import sg.edu.nus.imovin.Retrofit.Object.RewardsData;
 import sg.edu.nus.imovin.Retrofit.Object.RewardsPointHistoryData;
 
-import static sg.edu.nus.imovin.System.IntentConstants.MEDAL_DATA;
 import static sg.edu.nus.imovin.System.IntentConstants.REWARD_DAILY_DATA;
 
 public class RewardsCalendarActivity extends Activity implements View.OnClickListener {
