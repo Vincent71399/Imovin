@@ -9,23 +9,28 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.R;
+import sg.edu.nus.imovin.Retrofit.Object.RewardsAvailableItemData;
+import sg.edu.nus.imovin.System.ImovinApplication;
 
 public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardAdapter_ViewHolder>{
-    private List<String> rewardsDataList;
+    private List<RewardsAvailableItemData> rewardsAvailableItemDataList;
 
-    public RewardAdapter(List<String> rewardsDataList){
-        this.rewardsDataList = rewardsDataList;
+    public RewardAdapter(List<RewardsAvailableItemData> rewardsAvailableItemDataList){
+        this.rewardsAvailableItemDataList = rewardsAvailableItemDataList;
     }
 
     public final static class RewardAdapter_ViewHolder extends RecyclerView.ViewHolder {
         TextView reward_name;
         TextView reward_points;
+        TextView quantity;
 
         public RewardAdapter_ViewHolder(@NonNull View itemView) {
             super(itemView);
             reward_name = itemView.findViewById(R.id.reward_name);
             reward_points = itemView.findViewById(R.id.reward_points);
+            quantity = itemView.findViewById(R.id.quantity);
         }
     }
 
@@ -42,12 +47,14 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardAdap
 
     @Override
     public void onBindViewHolder(@NonNull RewardAdapter_ViewHolder holder, int position) {
-        String reward_name = rewardsDataList.get(position);
-        holder.reward_name.setText(reward_name);
+        RewardsAvailableItemData rewardsAvailableItemData = rewardsAvailableItemDataList.get(position);
+        holder.reward_name.setText(rewardsAvailableItemData.getName());
+        holder.reward_points.setText(CommonFunc.Integer2String(rewardsAvailableItemData.getPoints()) + " " + ImovinApplication.getInstance().getString(R.string.points));
+        holder.quantity.setText(rewardsAvailableItemData.getQuantity() + " " + ImovinApplication.getInstance().getString(R.string.left));
     }
 
     @Override
     public int getItemCount() {
-        return rewardsDataList.size();
+        return rewardsAvailableItemDataList.size();
     }
 }

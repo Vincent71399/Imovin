@@ -1,6 +1,8 @@
 package sg.edu.nus.imovin.Retrofit.Object;
 
-public class RewardsPointHistoryData {
+import java.io.Serializable;
+
+public class RewardsPointHistoryData implements Serializable {
     private String date;
     private Integer points;
     private Integer steps;

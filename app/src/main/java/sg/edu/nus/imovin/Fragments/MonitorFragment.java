@@ -122,6 +122,7 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
         calendarEndDay.set(Calendar.HOUR_OF_DAY, 0);
         calendarEndDay.set(Calendar.DAY_OF_MONTH, 1);
         calendarEndDay.set(Calendar.MONTH, calendarShownDay.get(Calendar.MONTH));
+        calendarEndDay.set(Calendar.YEAR, calendarShownDay.get(Calendar.YEAR));
         calendarEndDay.add(Calendar.MONTH, 1);
         calendarEndDay.add(Calendar.DAY_OF_MONTH, -1);
 
@@ -133,6 +134,7 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
         calendarStartDay.set(Calendar.HOUR_OF_DAY, 0);
         calendarStartDay.set(Calendar.MONTH, calendarShownDay.get(Calendar.MONTH));
         calendarStartDay.set(Calendar.DAY_OF_MONTH, 1);
+        calendarStartDay.set(Calendar.YEAR, calendarShownDay.get(Calendar.YEAR));
 
         String startDateStr = CommonFunc.GetQueryDateStringRevert(calendarStartDay);
         String endDateStr = CommonFunc.GetQueryDateStringRevert(calendarEndDay);
@@ -199,13 +201,13 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
 
     }
 
-    public boolean getPrevMonthCalendar(){
+    private boolean getPrevMonthCalendar(){
         calendarShownDay.set(Calendar.DAY_OF_MONTH, 1);
         calendarShownDay.add(Calendar.DAY_OF_MONTH, -1);
         return true;
     }
 
-    public boolean getNextMonthCalendar(){
+    private boolean getNextMonthCalendar(){
         if(!CommonFunc.isSameMonth(calendarShownDay, Calendar.getInstance())){
             calendarShownDay.add(Calendar.MONTH, 1);
             return true;

@@ -44,8 +44,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/date_point"
-                android:text="JAN 2020: 300 Points"
+                android:id="@+id/month_point"
                 android:gravity="center"
                 android:textColor="@color/black_color"
                 android:textSize="@dimen/textSubMid"
@@ -88,8 +87,7 @@
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/reward_message_title"
-                    android:text="1st January 2020"
+                    android:id="@+id/date_title"
                     android:gravity="start|center_vertical"
                     android:textColor="@color/black_color"
                     android:textSize="@dimen/textSubMid"
@@ -97,8 +95,7 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:id="@+id/reward_detail_title"
-                    android:text="13,562 Steps -> 130 Points"
+                    android:id="@+id/date_point_detail"
                     android:gravity="start|center_vertical"
                     android:textColor="@color/black_color"
                     android:textSize="@dimen/textSubSmall"
@@ -106,8 +103,7 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:id="@+id/reward_add_on_title"
-                    android:text="* Every 100 Steps = 1 Point"
+                    android:text="@string/reward_add_on"
                     android:gravity="end|center_vertical"
                     android:textColor="@color/black_color"
                     android:textSize="@dimen/textSubSmall"

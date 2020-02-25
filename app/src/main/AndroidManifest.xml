@@ -104,6 +104,9 @@
             android:theme="@style/Theme.Transparent" />
         <activity
             android:name=".Activities.RewardsCheckoutConfirmActivity"
+            android:theme="@style/Theme.Transparent" />
+        <activity
+            android:name=".Activities.RewardsRedeemSuccessActivity"
             android:theme="@style/Theme.Transparent"/>
 
     </application>

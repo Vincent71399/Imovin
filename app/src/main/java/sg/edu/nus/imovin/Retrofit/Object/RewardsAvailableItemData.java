@@ -1,6 +1,8 @@
 package sg.edu.nus.imovin.Retrofit.Object;
 
-public class RewardsAvailableItemData {
+import java.io.Serializable;
+
+public class RewardsAvailableItemData implements Serializable {
     private String id;
     private String name;
     private Integer points;

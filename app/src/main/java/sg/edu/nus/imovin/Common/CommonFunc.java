@@ -123,6 +123,16 @@ public class CommonFunc {
         return dateFormat;
     }
 
+    public static String GetDisplayMonth(Calendar date){
+        String dateFormat = convertInt2Month(date.get(Calendar.MONTH)) + " " + date.get(Calendar.YEAR);
+        return dateFormat;
+    }
+
+    public static String GetDisplayDateDetail(Calendar date){
+        String dateFormat = ordinal(date.get(Calendar.DAY_OF_MONTH)) + " " + convertInt2Month(date.get(Calendar.MONTH)) + " " + date.get(Calendar.YEAR);
+        return dateFormat;
+    }
+
     public static Calendar RevertFullDateStringRevert(String dateString){
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:SS");
 
@@ -188,6 +198,16 @@ public class CommonFunc {
 
     private static String addZero(Integer value){
         if(value < 10){
+            return "0" + value;
+        }else{
+            return String.valueOf(value);
+        }
+    }
+
+    private static String addZeroThousand(Integer value){
+        if(value < 10){
+            return "00" + value;
+        }else if(value < 100){
             return "0" + value;
         }else{
             return String.valueOf(value);
@@ -260,5 +280,10 @@ public class CommonFunc {
         return file;
     }
 
-    
+    public static String Integer2String(int value){
+        if(value/1000 > 0) {
+            return Integer2String(value / 1000) + "," + addZeroThousand(value % 1000);
+        }
+        return String.valueOf(value);
+    }
 }

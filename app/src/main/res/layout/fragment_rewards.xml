@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/points"
-            android:text="1,500"
+            android:text="0"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubBig"
             android:layout_marginTop="@dimen/rewardMarginTop"
@@ -70,7 +70,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:max="100"
-        android:progress="50"
+        android:progress="0"
         android:progressTint="@color/theme_purple"/>
 
     <TextView

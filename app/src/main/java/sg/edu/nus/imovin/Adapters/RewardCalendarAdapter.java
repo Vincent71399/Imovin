@@ -1,6 +1,7 @@
 package sg.edu.nus.imovin.Adapters;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,15 +9,20 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.List;
 
+import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.RewardsPointHistoryData;
+import sg.edu.nus.imovin.System.ImovinApplication;
 
 public class RewardCalendarAdapter extends RecyclerView.Adapter<RewardCalendarAdapter.RewardCalendarAdapter_ViewHolder>{
-    List<String> rewardsPointHistoryDataList;
 
-    public RewardCalendarAdapter(List<String> rewardsPointHistoryDataList){
+    private Calendar selectDate;
+    private List<RewardsPointHistoryData> rewardsPointHistoryDataList;
+
+    public RewardCalendarAdapter(List<RewardsPointHistoryData> rewardsPointHistoryDataList){
         this.rewardsPointHistoryDataList = rewardsPointHistoryDataList;
     }
 
@@ -43,12 +49,25 @@ public class RewardCalendarAdapter extends RecyclerView.Adapter<RewardCalendarAd
 
     @Override
     public void onBindViewHolder(@NonNull RewardCalendarAdapter_ViewHolder holder, int position) {
-        String rewardsPointHistoryData = rewardsPointHistoryDataList.get(position);
+        RewardsPointHistoryData rewardsPointHistoryData = rewardsPointHistoryDataList.get(position);
 
         if (rewardsPointHistoryData != null) {
+            Calendar calendar = CommonFunc.RevertFullDateStringRevert(rewardsPointHistoryData.getDate());
             holder.progress_bar.setVisibility(View.VISIBLE);
             holder.date.setVisibility(View.VISIBLE);
-            holder.date.setText(rewardsPointHistoryData);
+            if(calendar != null) {
+                holder.date.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+            }
+            if(selectDate != null) {
+                if (calendar.compareTo(selectDate) == 0) {
+                    holder.progress_bar.setProgress(100);
+                    holder.date.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                } else {
+                    holder.progress_bar.setProgress(0);
+                    holder.date.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                }
+            }
+
         } else {
             holder.progress_bar.setVisibility(View.GONE);
             holder.date.setVisibility(View.GONE);
@@ -58,5 +77,9 @@ public class RewardCalendarAdapter extends RecyclerView.Adapter<RewardCalendarAd
     @Override
     public int getItemCount() {
         return rewardsPointHistoryDataList.size();
+    }
+
+    public void setSelectDate(Calendar selectDate) {
+        this.selectDate = selectDate;
     }
 }

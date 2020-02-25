@@ -34,6 +34,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <TextView
+            android:id="@+id/quantity"
+            android:textColor="@color/black_color"
+            android:textSize="@dimen/textSubSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
 </LinearLayout>

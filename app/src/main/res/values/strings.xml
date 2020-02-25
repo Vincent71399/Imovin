@@ -90,6 +90,7 @@
     <string name="earned">Earned</string>
     <string name="pre_season">Pre-Season</string>
 
+    <string name="total">Total :</string>
     <string name="points">Points</string>
     <string name="to_next_reward">To Next Reward:</string>
     <string name="available_rewards">Available Rewards</string>
@@ -100,6 +101,11 @@
     <string name="collection_venue">Collection Venue</string>
     <string name="choose_collection_time">Choose Collection Time</string>
     <string name="collection">Collection</string>
+    <string name="redemption_complete">Redemption Complete!</string>
+    <string name="redemption_complete_text1">A confirmation email has been sent.</string>
+    <string name="redemption_complete_text2">You did well for this season, great job!</string>
+    <string name="left">Left</string>
+    <string name="reward_add_on">* Every 100 Steps = 1 Point</string>
 
     <string name="january">JAN</string>
     <string name="february">FEB</string>
