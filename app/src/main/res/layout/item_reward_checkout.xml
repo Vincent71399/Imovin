@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingStart="@dimen/rewardSubPadding"
+        android:paddingEnd="@dimen/rewardSubPadding"
         android:gravity="center_vertical">
 
         <TextView

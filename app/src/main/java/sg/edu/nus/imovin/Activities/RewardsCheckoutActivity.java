@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -14,13 +15,19 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import sg.edu.nus.imovin.Adapters.RewardCheckoutAdapter;
 import sg.edu.nus.imovin.R;
+import sg.edu.nus.imovin.Retrofit.Object.RewardsAvailableItemData;
+import sg.edu.nus.imovin.Retrofit.Object.RewardsData;
+
+import static sg.edu.nus.imovin.System.IntentConstants.REWARD_CHECKOUT_DATA;
 
 public class RewardsCheckoutActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -37,6 +44,9 @@ public class RewardsCheckoutActivity extends AppCompatActivity implements View.O
 
     @BindView(R.id.collection_time_choose_box) RadioGroup collection_time_choose_box;
 
+    private List<RewardsAvailableItemData> rewardsAvailableItemDataList;
+    private RewardCheckoutAdapter rewardCheckoutAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +54,7 @@ public class RewardsCheckoutActivity extends AppCompatActivity implements View.O
 
         SetActionBar();
         LinkUIbyId();
+        SetData();
         SetFunction();
         Init();
     }
@@ -65,6 +76,15 @@ public class RewardsCheckoutActivity extends AppCompatActivity implements View.O
 
     private void LinkUIbyId(){
         ButterKnife.bind(this);
+    }
+
+    private void SetData() {
+        RewardsData rewardsData = (RewardsData) getIntent().getSerializableExtra(REWARD_CHECKOUT_DATA);
+        rewardsAvailableItemDataList = rewardsData.getAvailable_items();
+
+        rewardCheckoutAdapter = new RewardCheckoutAdapter(rewardsAvailableItemDataList);
+        reward_checkout_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        reward_checkout_list.setAdapter(rewardCheckoutAdapter);
     }
 
     private void SetFunction() {

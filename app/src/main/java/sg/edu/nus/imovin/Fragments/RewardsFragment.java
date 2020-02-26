@@ -24,6 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Activities.RewardsCalendarActivity;
+import sg.edu.nus.imovin.Activities.RewardsCheckoutActivity;
 import sg.edu.nus.imovin.Activities.RewardsRedeemSuccessActivity;
 import sg.edu.nus.imovin.Adapters.RewardAdapter;
 import sg.edu.nus.imovin.Common.CommonFunc;
@@ -38,6 +39,7 @@ import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
+import static sg.edu.nus.imovin.System.IntentConstants.REWARD_CHECKOUT_DATA;
 import static sg.edu.nus.imovin.System.IntentConstants.REWARD_DAILY_DATA;
 
 
@@ -127,17 +129,19 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
 
     private void SetupData(RewardsData rewardsData){
         this.rewardsData = rewardsData;
-        rewardsAvailableItemDataList.addAll(rewardsData.getAvailable_items());
-        rewardAdapter.notifyDataSetChanged();
 
         min_point_for_redemption = null;
-        for(RewardsAvailableItemData rewardsAvailableItemData : rewardsAvailableItemDataList){
-            if(min_point_for_redemption == null){
-                min_point_for_redemption = rewardsAvailableItemData.getPoints();
-            }else if(min_point_for_redemption > rewardsAvailableItemData.getPoints()){
-                min_point_for_redemption = rewardsAvailableItemData.getPoints();
+        for(RewardsAvailableItemData rewardsAvailableItemData : this.rewardsData.getAvailable_items()){
+            if(rewardsAvailableItemData.getQuantity() > 0){
+                if(min_point_for_redemption == null){
+                    min_point_for_redemption = rewardsAvailableItemData.getPoints();
+                }else if(min_point_for_redemption > rewardsAvailableItemData.getPoints()){
+                    min_point_for_redemption = rewardsAvailableItemData.getPoints();
+                }
+                rewardsAvailableItemDataList.add(rewardsAvailableItemData);
             }
         }
+        rewardAdapter.notifyDataSetChanged();
 
         SetPointAndProgress();
     }
@@ -194,15 +198,34 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
         switch (view.getId()) {
             case R.id.question_mark:
                 Intent intentDetail = new Intent();
-                intentDetail.setClass(getActivity(), RewardsCalendarActivity.class);
+                intentDetail.setClass(ImovinApplication.getInstance(), RewardsCalendarActivity.class);
                 intentDetail.putExtra(REWARD_DAILY_DATA, rewardsData);
                 startActivity(intentDetail);
                 break;
             case R.id.redeem_btn:
-                Intent intentRedeem = new Intent();
-                intentRedeem.setClass(getActivity(), RewardsRedeemSuccessActivity.class);
-                startActivity(intentRedeem);
+                RewardsData rewardsData = generateCheckoutList();
+                if(rewardsData.getAvailable_items().size() > 0) {
+                    Intent intentCheckout = new Intent();
+                    intentCheckout.setClass(ImovinApplication.getInstance(), RewardsCheckoutActivity.class);
+                    intentCheckout.putExtra(REWARD_CHECKOUT_DATA, rewardsData);
+                    startActivity(intentCheckout);
+                }else{
+                    Toast.makeText(getActivity(), ImovinApplication.getInstance().getString(R.string.no_item_selected_message), Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
+    }
+
+    private RewardsData generateCheckoutList(){
+        List<RewardsAvailableItemData> rewardsAvailableItemDataList = new ArrayList<>();
+        for(RewardsAvailableItemData rewardsAvailableItemData : this.rewardsAvailableItemDataList){
+            if(rewardAdapter.checkItemSelected(rewardsAvailableItemData.getId())){
+                rewardsAvailableItemDataList.add(rewardsAvailableItemData);
+            }
+        }
+
+        RewardsData rewardsData = new RewardsData();
+        rewardsData.setAvailable_items(rewardsAvailableItemDataList);
+        return rewardsData;
     }
 }
