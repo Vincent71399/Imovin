@@ -2,10 +2,12 @@ package sg.edu.nus.imovin.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,6 +29,7 @@ import sg.edu.nus.imovin.Activities.RewardsCalendarActivity;
 import sg.edu.nus.imovin.Activities.RewardsRedeemSuccessActivity;
 import sg.edu.nus.imovin.Adapters.RewardAdapter;
 import sg.edu.nus.imovin.Common.CommonFunc;
+import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.RewardsAvailableItemData;
 import sg.edu.nus.imovin.Retrofit.Object.RewardsData;
@@ -54,6 +57,7 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
     private List<RewardsAvailableItemData> rewardsAvailableItemDataList;
     private RewardAdapter rewardAdapter;
     private RewardsData rewardsData;
+    private Integer min_point_for_redemption;
 
     public static RewardsFragment getInstance() {
         RewardsFragment rewardsFragment = new RewardsFragment();
@@ -87,6 +91,16 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
         reward_list.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         reward_list.setAdapter(rewardAdapter);
 
+        reward_list.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                RewardsAvailableItemData rewardsAvailableItemData = rewardsAvailableItemDataList.get(position);
+                if(rewardsAvailableItemData != null){
+                    RewardSelectFunc(rewardsAvailableItemData);
+                }
+            }
+        }));
+
         question_mark.setOnClickListener(this);
         redeem_btn.setOnClickListener(this);
     }
@@ -95,13 +109,30 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
         getRewardData();
     }
 
+    private void RewardSelectFunc(RewardsAvailableItemData rewardsAvailableItemData){
+        if(rewardAdapter.checkItemSelected(rewardsAvailableItemData.getId())){
+            rewardsData.setPoints(rewardsData.getPoints() + rewardsAvailableItemData.getPoints());
+            rewardAdapter.selectItem(rewardsAvailableItemData.getId());
+            SetPointAndProgress();
+        }else{
+            if(rewardsData.getPoints() < rewardsAvailableItemData.getPoints()){
+                Toast.makeText(getActivity(), "Not enough Points!", Toast.LENGTH_SHORT).show();
+            }else{
+                rewardsData.setPoints(rewardsData.getPoints() - rewardsAvailableItemData.getPoints());
+                rewardAdapter.selectItem(rewardsAvailableItemData.getId());
+                SetPointAndProgress();
+            }
+        }
+
+        rewardAdapter.notifyDataSetChanged();
+    }
+
     private void SetupData(RewardsData rewardsData){
         this.rewardsData = rewardsData;
-        points.setText(CommonFunc.Integer2String(rewardsData.getPoints()));
         rewardsAvailableItemDataList.addAll(rewardsData.getAvailable_items());
         rewardAdapter.notifyDataSetChanged();
 
-        Integer min_point_for_redemption = null;
+        min_point_for_redemption = null;
         for(RewardsAvailableItemData rewardsAvailableItemData : rewardsAvailableItemDataList){
             if(min_point_for_redemption == null){
                 min_point_for_redemption = rewardsAvailableItemData.getPoints();
@@ -109,6 +140,13 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
                 min_point_for_redemption = rewardsAvailableItemData.getPoints();
             }
         }
+
+        SetPointAndProgress();
+    }
+
+    private void SetPointAndProgress(){
+        points.setText(CommonFunc.Integer2String(rewardsData.getPoints()));
+
         if(min_point_for_redemption != null){
             if(min_point_for_redemption < rewardsData.getPoints()){
                 reward_progress_bar.setProgress(100);
@@ -119,7 +157,6 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
                 next_redeem_guide_text.setText(getString(R.string.to_next_reward) + " " + next_point);
             }
         }
-
     }
 
     private void getRewardData(){

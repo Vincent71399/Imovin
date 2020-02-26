@@ -3,23 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/rewardItemPadding"
-    android:gravity="center">
+    android:orientation="horizontal"
+    android:padding="@dimen/rewardSubPadding"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:src="@drawable/icon_reward_grey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/rewardItemPadding"
-        android:background="@drawable/rounded_corner_with_border_bg"
-        android:gravity="center">
-
-        <ImageView
-            android:src="@drawable/icon_reward_grey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:paddingStart="@dimen/rewardSubPadding"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/reward_name"
@@ -30,13 +28,6 @@
 
         <TextView
             android:id="@+id/reward_points"
-            android:textColor="@color/black_color"
-            android:textSize="@dimen/textSubSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/quantity"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubSmall"
             android:layout_width="wrap_content"

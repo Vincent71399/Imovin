@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ public class RewardsCheckoutActivity extends AppCompatActivity implements View.O
     @BindView(R.id.navigator_left) LinearLayout navigator_left;
     @BindView(R.id.navigator_left_image) ImageView navigator_left_image;
     @BindView(R.id.navigator_left_text) TextView navigator_left_text;
+
+    @BindView(R.id.reward_checkout_list) RecyclerView reward_checkout_list;
 
     @BindView(R.id.checkout_btn) Button checkout_btn;
     @BindView(R.id.return_btn) Button return_btn;
