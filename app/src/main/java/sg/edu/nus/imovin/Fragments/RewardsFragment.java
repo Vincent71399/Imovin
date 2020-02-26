@@ -180,7 +180,7 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
                     SetupData(rewardsResponse.getData());
                 }catch (Exception e){
                     e.printStackTrace();
-                    Log.d(LogConstants.LogTag, "Exception ChallengeFragment : " + e.toString());
+                    Log.d(LogConstants.LogTag, "Exception RewardsFragment : " + e.toString());
                     Toast.makeText(ImovinApplication.getInstance(), getString(R.string.request_fail_message), Toast.LENGTH_SHORT).show();
                 }
             }

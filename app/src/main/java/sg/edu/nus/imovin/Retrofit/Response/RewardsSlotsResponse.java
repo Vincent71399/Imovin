@@ -1,16 +1,18 @@
 package sg.edu.nus.imovin.Retrofit.Response;
 
+import java.util.List;
+
 import sg.edu.nus.imovin.Retrofit.Object.RewardsSlotData;
 
 public class RewardsSlotsResponse {
-    private RewardsSlotData data;
+    private List<RewardsSlotData> data;
     private String message;
 
-    public RewardsSlotData getData() {
+    public List<RewardsSlotData> getData() {
         return data;
     }
 
-    public void setData(RewardsSlotData data) {
+    public void setData(List<RewardsSlotData> data) {
         this.data = data;
     }
 

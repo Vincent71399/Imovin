@@ -29,13 +29,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <TextView
-        android:id="@+id/collection_venue"
-        android:layout_marginTop="@dimen/rewardMarginTop"
-        android:text="COM1 #01-12"
-        android:textColor="@color/black_color"
-        android:textSize="@dimen/textSubMid"
-        android:layout_width="wrap_content"
+    <RadioGroup
+        android:id="@+id/collection_venue_choose_box"
+        android:layout_marginTop="@dimen/rewardSubPadding"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <TextView
@@ -48,13 +45,11 @@
 
     <RadioGroup
         android:id="@+id/collection_time_choose_box"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/rewardSubPadding"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-    </RadioGroup>
+        android:orientation="vertical"/>
 
     <Button
         android:id="@+id/checkout_btn"
