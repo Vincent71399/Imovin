@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class MessageFragment extends BaseFragment {
 
     @BindView(R.id.message_title_selection) RecyclerView message_title_selection;
     @BindView(R.id.message_list) RecyclerView message_list;
+    @BindView(R.id.no_message) TextView no_message;
 
     private MessageTitleAdapter messageTitleAdapter;
     private MessageAdapter messageAdapter;
@@ -127,12 +129,18 @@ public class MessageFragment extends BaseFragment {
             cachMessageItemDataList.add(messageData.getChallenge());
         }
         messageTitleAdapter.notifyDataSetChanged();
+        SetupMessageList(0);
     }
 
     private void SetupMessageList(int position){
         messageItemDataList.clear();
         if(cachMessageItemDataList.size() > position) {
             messageItemDataList.addAll(cachMessageItemDataList.get(position));
+        }
+        if(messageItemDataList.size() == 0){
+            no_message.setVisibility(View.VISIBLE);
+        }else{
+            no_message.setVisibility(View.GONE);
         }
         messageAdapter.notifyDataSetChanged();
     }

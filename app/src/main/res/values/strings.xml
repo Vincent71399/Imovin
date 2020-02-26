@@ -107,6 +107,8 @@
     <string name="left">Left</string>
     <string name="reward_add_on">* Every 100 Steps = 1 Point</string>
 
+    <string name="no_message">There is no message for now</string>
+
     <string name="january">JAN</string>
     <string name="february">FEB</string>
     <string name="march">MAR</string>
