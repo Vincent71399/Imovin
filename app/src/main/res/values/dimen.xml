@@ -37,6 +37,7 @@
     <dimen name="homeBtnTextSize">20sp</dimen>
 
     <dimen name="challengePadding">10dp</dimen>
+
     <dimen name="challengeMarginTop">20dp</dimen>
     <dimen name="challengeSubMarginTop">10dp</dimen>
     <dimen name="medalImagePadding">10dp</dimen>
@@ -109,5 +110,6 @@
     <dimen name="rewardItemPadding">10dp</dimen>
 
     <dimen name="minorSpace">5dp</dimen>
+    <dimen name="PaddingBig">20dp</dimen>
 
 </resources>

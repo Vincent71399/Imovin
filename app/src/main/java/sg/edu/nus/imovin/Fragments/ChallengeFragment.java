@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
 
@@ -29,6 +30,7 @@ import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.Common.SpanningLinearLayoutManager;
 import sg.edu.nus.imovin.R;
+import sg.edu.nus.imovin.Retrofit.Object.ChallengeData;
 import sg.edu.nus.imovin.Retrofit.Object.MedalData;
 import sg.edu.nus.imovin.Retrofit.Response.ChallengeResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
@@ -43,11 +45,10 @@ import static sg.edu.nus.imovin.System.IntentConstants.MEDAL_DATA;
 public class ChallengeFragment extends BaseFragment {
     private View rootView;
 
-    @BindView(R.id.challenge_season_text) TextView challenge_season_text;
-    @BindView(R.id.challenge_season_end_date) TextView challenge_season_end_date;
-    @BindView(R.id.points_title) TextView points_title;
-    @BindView(R.id.points_number) TextView points_number;
-    @BindView(R.id.rank_text) TextView rank_text;
+    @BindView(R.id.challenge_points) TextView challenge_points;
+    @BindView(R.id.time_period) TextView time_period;
+    @BindView(R.id.point_rank) TextView point_rank;
+    @BindView(R.id.step_rank) TextView step_rank;
 
     @BindView(R.id.daily_steps_title) TextView daily_steps_title;
     @BindView(R.id.daily_step_list) RecyclerView daily_step_list;
@@ -97,24 +98,21 @@ public class ChallengeFragment extends BaseFragment {
         getChallengeData();
     }
 
-    private void SetupData(ChallengeResponse challengeResponse){
-        challenge_season_text.setText(getString(R.string.challenge) + " " + challengeResponse.getSeason().getName());
+    private void SetupData(ChallengeData challengeData){
+        challenge_points.setText(CommonFunc.Integer2String(challengeData.getChallenge_points()));
 
-        if(challengeResponse.getSeason().getName().equals(getString(R.string.pre_season))) {
-            if(challengeResponse.getSeason().getEnd_date() == null){
-                challenge_season_end_date.setText(getString(R.string.next_season) + " N/A");
-            }else {
-                challenge_season_end_date.setText(getString(R.string.next_season) + " " + CommonFunc.GetDisplayDate(CommonFunc.RevertFullDateStringRevert(challengeResponse.getSeason().getEnd_date())));
-            }
-            points_number.setText(" 0");
-            rank_text.setText("RANK: N/A");
-        }else{
-            challenge_season_end_date.setText(getString(R.string.ending) + " " + CommonFunc.GetDisplayDate(CommonFunc.RevertFullDateStringRevert(challengeResponse.getSeason().getEnd_date())));
-            points_number.setText(" " + challengeResponse.getPoints());
-            rank_text.setText("RANK: " + CommonFunc.ordinal(challengeResponse.getRank()) + " of " + challengeResponse.getTotal());
-        }
+        Calendar calendar = Calendar.getInstance();
+        int days = calendar.get(Calendar.DAY_OF_WEEK);
+        calendar.add(Calendar.DAY_OF_MONTH, 2-days);
+        String startTimePeriod = CommonFunc.GetDisplayDateDetail(calendar);
+        calendar.add(Calendar.DAY_OF_MONTH, 6);
+        String endTimePeriod = CommonFunc.GetDisplayDateDetail(calendar);
 
-        List<MedalData> medalDataList = challengeResponse.getMedals();
+        time_period.setText(startTimePeriod + " - " + endTimePeriod);
+        point_rank.setText(String.valueOf(challengeData.getChallenge_rank()));
+        step_rank.setText(String.valueOf(challengeData.getSteps_rank()));
+
+        List<MedalData> medalDataList = challengeData.getMedals();
 
         List<MedalData> dailyStepList = new ArrayList<>();
         List<MedalData> activeDaysForTheWeekList = new ArrayList<>();
@@ -296,7 +294,7 @@ public class ChallengeFragment extends BaseFragment {
             public void onResponse(Call<ChallengeResponse> call, Response<ChallengeResponse> response) {
                 try {
                     ChallengeResponse challengeResponse = response.body();
-                    SetupData(challengeResponse);
+                    SetupData(challengeResponse.getData());
                 }catch (Exception e){
                     e.printStackTrace();
                     Log.d(LogConstants.LogTag, "Exception ChallengeFragment : " + e.toString());

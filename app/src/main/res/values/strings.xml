@@ -89,6 +89,9 @@
     <string name="weekly_exercise_duration">Weekly exercise duration</string>
     <string name="earned">Earned</string>
     <string name="pre_season">Pre-Season</string>
+    <string name="weekly_ranking">Weekly Ranking</string>
+    <string name="rank_by_total_points">Rank by total points:</string>
+    <string name="rank_by_total_steps">Rank by total steps:</string>
 
     <string name="total">Total :</string>
     <string name="points">Points</string>
