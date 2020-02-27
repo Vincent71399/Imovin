@@ -109,8 +109,8 @@ public class ChallengeFragment extends BaseFragment {
         String endTimePeriod = CommonFunc.GetDisplayDateDetail(calendar);
 
         time_period.setText(startTimePeriod + " - " + endTimePeriod);
-        point_rank.setText(String.valueOf(challengeData.getChallenge_rank()));
-        step_rank.setText(String.valueOf(challengeData.getSteps_rank()));
+        point_rank.setText(CommonFunc.ordinal(challengeData.getChallenge_rank()));
+        step_rank.setText(CommonFunc.ordinal(challengeData.getSteps_rank()));
 
         List<MedalData> medalDataList = challengeData.getMedals();
 
