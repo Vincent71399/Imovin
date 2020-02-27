@@ -8,7 +8,7 @@
     android:gravity="center_vertical">
 
     <ImageView
-        android:src="@drawable/icon_reward_grey"
+        android:src="@drawable/gift_redeemed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
