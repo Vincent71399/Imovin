@@ -1,7 +1,6 @@
 package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,7 +21,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,7 +32,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Adapters.RewardCheckoutAdapter;
 import sg.edu.nus.imovin.R;
-import sg.edu.nus.imovin.Retrofit.Object.RewardsAvailableItemData;
 import sg.edu.nus.imovin.Retrofit.Object.RewardsData;
 import sg.edu.nus.imovin.Retrofit.Object.RewardsSlotData;
 import sg.edu.nus.imovin.Retrofit.Object.RewardsSlotItemData;
@@ -45,7 +42,6 @@ import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
-import static sg.edu.nus.imovin.System.IntentConstants.REWARD_CHECKOUT_CONFIRM;
 import static sg.edu.nus.imovin.System.IntentConstants.REWARD_CHECKOUT_DATA;
 import static sg.edu.nus.imovin.System.IntentConstants.REWARD_TIME;
 import static sg.edu.nus.imovin.System.IntentConstants.REWARD_VENUE;
