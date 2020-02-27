@@ -17,6 +17,7 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/room_name"
                 android:text="@string/forum_topics"
                 android:textStyle="bold"
                 android:textSize="@dimen/postTitleTextSize"

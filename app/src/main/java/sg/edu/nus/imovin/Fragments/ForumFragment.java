@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -60,6 +61,8 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
     @BindView(R.id.mainView) RelativeLayout mainView;
     @BindView(R.id.newPostBtn) Button newPostBtn;
     @BindView(R.id.thread_list) RecyclerView thread_list;
+
+    @BindView(R.id.room_name) TextView room_name;
 
     public static ForumFragment getInstance() {
         ForumFragment forumFragment = new ForumFragment();
@@ -155,6 +158,7 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
             public void onResponse(Call<ThreadMultiResponse> call, Response<ThreadMultiResponse> response) {
                 try {
                     ThreadMultiResponse threadMultiResponse = response.body();
+                    room_name.setText(threadMultiResponse.getRoom());
                     request_page = threadMultiResponse.getPage();
                     total_page = threadMultiResponse.getTotal();
                     threadDataList.addAll(threadMultiResponse.getData());

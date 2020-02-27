@@ -7,6 +7,7 @@ import sg.edu.nus.imovin.Retrofit.Object.ThreadData;
 public class ThreadMultiResponse {
     private List<ThreadData> data;
     private Integer page;
+    private String room;
     private Integer total;
     private String message;
 
@@ -24,6 +25,14 @@ public class ThreadMultiResponse {
 
     public void setPage(Integer page) {
         this.page = page;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
     }
 
     public Integer getTotal() {
