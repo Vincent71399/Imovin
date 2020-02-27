@@ -15,6 +15,9 @@ public class IntentConstants {
     public static final int SOCIAL_EDIT_POST = 111;
     public static final int SOCIAL_NEW_COMMENT = 112;
     public static final int SOCIAL_EDIT_COMMENT = 113;
+    public static final int REWARD_CHECKOUT = 114;
+    public static final int REWARD_CHECKOUT_CONFIRM = 115;
+    public static final int REWARD_COMPLETE = 116;
 
     public static final int CONSENT = 201;
     public static final int QUESTIONNAIRE = 202;
@@ -28,6 +31,8 @@ public class IntentConstants {
     public static final String SOCIAL_POST_COMMENT = "SOCIAL_POST_COMMENT";
     public static final String REWARD_DAILY_DATA = "REWARD_DAILY_DATA";
     public static final String REWARD_CHECKOUT_DATA = "REWARD_CHECKOUT_DATA";
+    public static final String REWARD_VENUE = "REWARD_VENUE";
+    public static final String REWARD_TIME = "REWARD_TIME";
 
     public static final String QUESTION_DATA = "QUESTION_DATA";
     public static final String MEDAL_DATA = "MEDAL_DATA";

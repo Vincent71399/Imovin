@@ -32,44 +32,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:layout_marginTop="@dimen/rewardMarginTop"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/reward_checkout_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:src="@drawable/icon_reward_grey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingStart="@dimen/rewardPadding"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:id="@+id/reward_name"
-                        android:text="$5 Gift Voucher"
-                        android:textColor="@color/black_color"
-                        android:textSize="@dimen/textSubSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:id="@+id/reward_points"
-                        android:text="5,000 Points"
-                        android:textColor="@color/black_color"
-                        android:textSize="@dimen/textSubSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_marginTop="@dimen/rewardMarginTop"
@@ -82,7 +48,6 @@
             <TextView
                 android:id="@+id/collection_time"
                 android:layout_marginTop="@dimen/rewardMarginTop"
-                android:text="4th February 2020, 12pm-1pm"
                 android:textColor="@color/black_color"
                 android:textSize="@dimen/textSubSmall"
                 android:layout_width="match_parent"
@@ -91,7 +56,6 @@
             <TextView
                 android:id="@+id/collection_venue"
                 android:layout_marginTop="@dimen/rewardMarginTop"
-                android:text="COM1 #01-12"
                 android:textColor="@color/black_color"
                 android:textSize="@dimen/textSubSmall"
                 android:layout_width="match_parent"

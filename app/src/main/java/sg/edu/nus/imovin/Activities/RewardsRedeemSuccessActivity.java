@@ -1,6 +1,7 @@
 package sg.edu.nus.imovin.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +25,13 @@ public class RewardsRedeemSuccessActivity extends Activity implements View.OnCli
         SetFunction();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent resultIntent = new Intent();
+        setResult(RESULT_OK, resultIntent);
+        finish();
+    }
+
     private void LinkUIbyId(){
         ButterKnife.bind(this);
     }
@@ -39,6 +47,8 @@ public class RewardsRedeemSuccessActivity extends Activity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.close_btn:
+                Intent resultIntent = new Intent();
+                setResult(RESULT_OK, resultIntent);
                 finish();
                 break;
         }

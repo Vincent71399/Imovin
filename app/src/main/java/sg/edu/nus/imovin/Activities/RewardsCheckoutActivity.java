@@ -1,8 +1,10 @@
 package sg.edu.nus.imovin.Activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -39,10 +41,14 @@ import sg.edu.nus.imovin.Retrofit.Object.RewardsSlotItemData;
 import sg.edu.nus.imovin.Retrofit.Response.RewardsSlotsResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.ImovinApplication;
+import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
+import static sg.edu.nus.imovin.System.IntentConstants.REWARD_CHECKOUT_CONFIRM;
 import static sg.edu.nus.imovin.System.IntentConstants.REWARD_CHECKOUT_DATA;
+import static sg.edu.nus.imovin.System.IntentConstants.REWARD_TIME;
+import static sg.edu.nus.imovin.System.IntentConstants.REWARD_VENUE;
 
 public class RewardsCheckoutActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
@@ -55,16 +61,18 @@ public class RewardsCheckoutActivity extends AppCompatActivity implements View.O
     @BindView(R.id.reward_checkout_list) RecyclerView reward_checkout_list;
 
     @BindView(R.id.collection_venue_choose_box) RadioGroup collection_venue_choose_box;
+    @BindView(R.id.collection_time_choose_box) RadioGroup collection_time_choose_box;
 
     @BindView(R.id.checkout_btn) Button checkout_btn;
     @BindView(R.id.return_btn) Button return_btn;
 
-    @BindView(R.id.collection_time_choose_box) RadioGroup collection_time_choose_box;
-
-    private List<RewardsAvailableItemData> rewardsAvailableItemDataList;
+    private RewardsData rewardsData;
     private RewardCheckoutAdapter rewardCheckoutAdapter;
 
     private List<RewardsSlotData> rewardsSlotDataList;
+
+    private RewardsSlotData selectedSlotData = null;
+    private RewardsSlotItemData selectedSlotTimeData = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,10 +106,9 @@ public class RewardsCheckoutActivity extends AppCompatActivity implements View.O
     }
 
     private void SetData() {
-        RewardsData rewardsData = (RewardsData) getIntent().getSerializableExtra(REWARD_CHECKOUT_DATA);
-        rewardsAvailableItemDataList = rewardsData.getAvailable_items();
+        rewardsData = (RewardsData) getIntent().getSerializableExtra(REWARD_CHECKOUT_DATA);
 
-        rewardCheckoutAdapter = new RewardCheckoutAdapter(rewardsAvailableItemDataList);
+        rewardCheckoutAdapter = new RewardCheckoutAdapter(rewardsData.getAvailable_items());
         reward_checkout_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         reward_checkout_list.setAdapter(rewardCheckoutAdapter);
     }
@@ -116,6 +123,7 @@ public class RewardsCheckoutActivity extends AppCompatActivity implements View.O
         return_btn.setOnClickListener(this);
 
         collection_venue_choose_box.setOnCheckedChangeListener(this);
+        collection_time_choose_box.setOnCheckedChangeListener(this);
     }
 
     private void Init(){
@@ -191,20 +199,51 @@ public class RewardsCheckoutActivity extends AppCompatActivity implements View.O
                 finish();
                 break;
             case R.id.checkout_btn:
-                Intent intent = new Intent();
-                intent.setClass(this, RewardsCheckoutConfirmActivity.class);
-                startActivity(intent);
+                if(selectedSlotData != null && selectedSlotTimeData != null){
+                    Intent intent = new Intent();
+                    intent.setClass(this, RewardsCheckoutConfirmActivity.class);
+                    intent.putExtra(REWARD_CHECKOUT_DATA, rewardsData);
+                    intent.putExtra(REWARD_VENUE, selectedSlotData);
+                    intent.putExtra(REWARD_TIME, selectedSlotTimeData);
+                    startActivityForResult(intent, IntentConstants.REWARD_CHECKOUT_CONFIRM);
+                }else{
+                    Toast.makeText(this, getString(R.string.select_checkout_message), Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        RadioButton rb = findViewById(checkedId);
-        for(int i=0; i<rewardsSlotDataList.size(); i++){
-            if(rb.getText().equals(rewardsSlotDataList.get(i).getVenue())){
-                SetupTimeData(i);
+        if(group.getId() == R.id.collection_venue_choose_box) {
+            RadioButton rb = findViewById(checkedId);
+            for (int i = 0; i < rewardsSlotDataList.size(); i++) {
+                if (rb.getText().equals(rewardsSlotDataList.get(i).getVenue())) {
+                    SetupTimeData(i);
+                    selectedSlotData = rewardsSlotDataList.get(i);
+                    selectedSlotTimeData = null;
+                }
             }
+        }else if(group.getId() == R.id.collection_time_choose_box){
+            RadioButton rb = findViewById(checkedId);
+            for (int i = 0; i < selectedSlotData.getSlots().size(); i++) {
+                if (rb.getText().equals(selectedSlotData.getSlots().get(i).getSlot_time())) {
+                    selectedSlotTimeData = selectedSlotData.getSlots().get(i);
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case IntentConstants.REWARD_CHECKOUT_CONFIRM:
+                if(resultCode == Activity.RESULT_OK){
+                    Intent resultIntent = new Intent();
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                }
+                break;
         }
     }
 }

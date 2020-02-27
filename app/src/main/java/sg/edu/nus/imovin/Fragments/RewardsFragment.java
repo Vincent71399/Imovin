@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin.Fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -36,6 +37,7 @@ import sg.edu.nus.imovin.Retrofit.Response.RewardsResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
 import sg.edu.nus.imovin.System.ImovinApplication;
+import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 
 import static sg.edu.nus.imovin.HttpConnection.ConnectionURL.SERVER;
@@ -130,6 +132,8 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
     private void SetupData(RewardsData rewardsData){
         this.rewardsData = rewardsData;
 
+        rewardsAvailableItemDataList.clear();
+
         min_point_for_redemption = null;
         for(RewardsAvailableItemData rewardsAvailableItemData : this.rewardsData.getAvailable_items()){
             if(rewardsAvailableItemData.getQuantity() > 0){
@@ -208,7 +212,7 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
                     Intent intentCheckout = new Intent();
                     intentCheckout.setClass(ImovinApplication.getInstance(), RewardsCheckoutActivity.class);
                     intentCheckout.putExtra(REWARD_CHECKOUT_DATA, rewardsData);
-                    startActivity(intentCheckout);
+                    startActivityForResult(intentCheckout, IntentConstants.REWARD_CHECKOUT);
                 }else{
                     Toast.makeText(getActivity(), ImovinApplication.getInstance().getString(R.string.no_item_selected_message), Toast.LENGTH_SHORT).show();
                 }
@@ -227,5 +231,23 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
         RewardsData rewardsData = new RewardsData();
         rewardsData.setAvailable_items(rewardsAvailableItemDataList);
         return rewardsData;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case IntentConstants.REWARD_CHECKOUT:
+                if(resultCode == Activity.RESULT_OK){
+                    Intent intent = new Intent();
+                    intent.setClass(ImovinApplication.getInstance(), RewardsRedeemSuccessActivity.class);
+                    startActivityForResult(intent, IntentConstants.REWARD_COMPLETE);
+                }
+                break;
+            case IntentConstants.REWARD_COMPLETE:
+                if(resultCode == Activity.RESULT_OK){
+                    Init();
+                }
+                break;
+        }
     }
 }

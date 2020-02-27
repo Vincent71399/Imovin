@@ -109,6 +109,7 @@
 
     <string name="no_message">There is no message for now</string>
     <string name="no_item_selected_message">Must select at least one item</string>
+    <string name="select_checkout_message">Must select venue and time</string>
 
     <string name="january">JAN</string>
     <string name="february">FEB</string>
