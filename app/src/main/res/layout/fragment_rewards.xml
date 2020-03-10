@@ -99,6 +99,17 @@
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
+    <TextView
+        android:id="@+id/all_redeemed_message"
+        android:visibility="gone"
+        android:text="@string/all_redeemed_message"
+        android:textColor="@color/black_color"
+        android:textSize="@dimen/textSubMid"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"/>
+
     <Button
         android:id="@+id/redeem_btn"
         android:text="@string/redeem"

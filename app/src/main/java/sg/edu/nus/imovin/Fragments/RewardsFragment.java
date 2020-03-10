@@ -53,6 +53,7 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
     @BindView(R.id.points) TextView points;
     @BindView(R.id.next_redeem_guide_text) TextView next_redeem_guide_text;
     @BindView(R.id.reward_progress_bar) ProgressBar reward_progress_bar;
+    @BindView(R.id.all_redeemed_message) TextView all_redeemed_message;
 
     @BindView(R.id.redeem_btn) Button redeem_btn;
 
@@ -151,6 +152,14 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
             }
         }
         rewardAdapter.notifyDataSetChanged();
+
+        if(rewardsAvailableItemDataList.size() == 0){
+            all_redeemed_message.setVisibility(View.VISIBLE);
+            reward_list.setVisibility(View.GONE);
+        }else{
+            all_redeemed_message.setVisibility(View.GONE);
+            reward_list.setVisibility(View.VISIBLE);
+        }
 
         SetPointAndProgress();
     }

@@ -109,6 +109,7 @@
     <string name="redemption_complete_text2">You did well for this season, great job!</string>
     <string name="left">Left</string>
     <string name="reward_add_on">* Every 100 Steps = 1 Point</string>
+    <string name="all_redeemed_message">All rewards redeemed! Check back soon!" in place of the available gifts list. When an empty list is returned.</string>
 
     <string name="no_message">There is no message for now</string>
     <string name="no_item_selected_message">Must select at least one item</string>
