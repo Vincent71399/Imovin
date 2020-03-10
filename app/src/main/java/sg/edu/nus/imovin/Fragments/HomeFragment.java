@@ -92,7 +92,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         LinkUIById();
         SetFunction();
-        Init();
         return rootView;
     }
 
@@ -100,6 +99,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        Init();
     }
 
     @Override

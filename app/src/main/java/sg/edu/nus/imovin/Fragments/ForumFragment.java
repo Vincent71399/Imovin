@@ -76,7 +76,6 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
         LinkUIById();
         SetupData();
         SetFunction();
-        Init();
 
         return rootView;
     }
@@ -85,6 +84,7 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        Init();
     }
 
     @Override

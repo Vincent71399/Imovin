@@ -114,6 +114,11 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         mIconUnselectIds = FuncBlockConstants.getFunctionBlockUnselectIcons_by_primary_features(primaryFeatures);
         mIconSelectIds = FuncBlockConstants.getFunctionBlockSelectIcons_by_primary_features(primaryFeatures);
 
+//        mTitles = FuncBlockConstants.getFunctionBlockTitlesTest();
+//        moreTitles = FuncBlockConstants.getFunctionBlockMoreTitlesTest();
+//        mIconUnselectIds = FuncBlockConstants.getFunctionBlockUnselectIconsTest();
+//        mIconSelectIds = FuncBlockConstants.getFunctionBlockSelectIconsTest();
+
         TabAdapter adapter = new TabAdapter(getApplicationContext(), Arrays.asList(moreTitles));
         more_spinner.setAdapter(adapter);
         more_spinner.setOnItemSelectedListener(this);

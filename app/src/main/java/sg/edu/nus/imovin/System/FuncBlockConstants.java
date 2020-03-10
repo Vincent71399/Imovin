@@ -137,65 +137,6 @@ public class FuncBlockConstants {
         return icon;
     }
 
-    public static String[] getFunctionBlockTitles_by_profile(int profile){
-        List<String> mTitleList = new ArrayList<>();
-        switch (profile){
-            case 0:
-                mTitleList.add(HOME);
-                mTitleList.add(CHALLENGE);
-                mTitleList.add(MORE);
-                break;
-            case 1:
-                mTitleList.add(HOME);
-                mTitleList.add(SOCIAL);
-                mTitleList.add(MORE);
-                break;
-            case 2:
-                mTitleList.add(HOME);
-                mTitleList.add(LIBRARY);
-                mTitleList.add(MORE);
-                break;
-            case 3:
-                mTitleList.add(HOME);
-                mTitleList.add(GOAL);
-                mTitleList.add(LIBRARY);
-                mTitleList.add(MORE);
-                break;
-            case 4:
-                mTitleList.add(HOME);
-                mTitleList.add(GOAL);
-                mTitleList.add(MONITOR);
-                mTitleList.add(MORE);
-                break;
-            case 5:
-                mTitleList.add(HOME);
-                mTitleList.add(GOAL);
-                mTitleList.add(MONITOR);
-                mTitleList.add(MORE);
-                break;
-            case 6:
-                mTitleList.add(HOME);
-                mTitleList.add(LIBRARY);
-                mTitleList.add(FORUM);
-                mTitleList.add(MORE);
-                break;
-            default:
-                mTitleList.add(HOME);
-                mTitleList.add(LIBRARY);
-                mTitleList.add(FORUM);
-                mTitleList.add(GOAL);
-                mTitleList.add(MONITOR);
-                mTitleList.add(SOCIAL);
-                mTitleList.add(CHALLENGE);
-                break;
-
-        }
-
-        String[] mTitles = new String[mTitleList.size()];
-        mTitles = mTitleList.toArray(mTitles);
-        return mTitles;
-    }
-
     public static String[] getFunctionBlockTitles_by_primary_features(List<Integer> primary_features){
         List<String> mTitleList = new ArrayList<>();
         mTitleList.add(HOME);
@@ -236,61 +177,6 @@ public class FuncBlockConstants {
         return mTitles;
     }
 
-    public static String[] getFunctionBlockMoreTitles_by_profile(int profile){
-        List<String> mTitleList = new ArrayList<>();
-        switch (profile){
-            case 0:
-                mTitleList.add(LIBRARY);
-                mTitleList.add(FORUM);
-                mTitleList.add(GOAL);
-                mTitleList.add(MONITOR);
-                mTitleList.add(SOCIAL);
-                break;
-            case 1:
-                mTitleList.add(LIBRARY);
-                mTitleList.add(FORUM);
-                mTitleList.add(GOAL);
-                mTitleList.add(MONITOR);
-                mTitleList.add(CHALLENGE);
-                break;
-            case 2:
-                mTitleList.add(FORUM);
-                mTitleList.add(GOAL);
-                mTitleList.add(MONITOR);
-                mTitleList.add(SOCIAL);
-                mTitleList.add(CHALLENGE);
-                break;
-            case 3:
-                mTitleList.add(FORUM);
-                mTitleList.add(MONITOR);
-                mTitleList.add(SOCIAL);
-                mTitleList.add(CHALLENGE);
-                break;
-            case 4:
-                mTitleList.add(LIBRARY);
-                mTitleList.add(FORUM);
-                mTitleList.add(SOCIAL);
-                mTitleList.add(CHALLENGE);
-                break;
-            case 5:
-                mTitleList.add(LIBRARY);
-                mTitleList.add(FORUM);
-                mTitleList.add(SOCIAL);
-                mTitleList.add(CHALLENGE);
-                break;
-            case 6:
-                mTitleList.add(GOAL);
-                mTitleList.add(MONITOR);
-                mTitleList.add(SOCIAL);
-                mTitleList.add(CHALLENGE);
-                break;
-        }
-
-        String[] mTitles = new String[mTitleList.size()];
-        mTitles = mTitleList.toArray(mTitles);
-        return mTitles;
-    }
-
     public static String[] getFunctionBlockMoreTitles_by_primary_features(List<Integer> primary_features){
         List<String> mTitleList = new ArrayList<>();
         if(!primary_features.contains(0)){
@@ -323,30 +209,6 @@ public class FuncBlockConstants {
         return mTitles;
     }
 
-    public static Integer[] getFunctionBlockUnselectIcons_by_profile(int profile){
-        String[] mTitles = getFunctionBlockTitles_by_profile(profile);
-        List<Integer> iconList = new ArrayList<>();
-        for(String title : mTitles){
-            iconList.add(getUnselectIcon_by_title(title));
-        }
-
-        Integer[] icons = new Integer[iconList.size()];
-        icons = iconList.toArray(icons);
-        return icons;
-    }
-
-    public static Integer[] getFunctionBlockSelectIcons_by_profile(int profile){
-        String[] mTitles = getFunctionBlockTitles_by_profile(profile);
-        List<Integer> iconList = new ArrayList<>();
-        for(String title : mTitles){
-            iconList.add(getSelectIcon_by_title(title));
-        }
-
-        Integer[] icons = new Integer[iconList.size()];
-        icons = iconList.toArray(icons);
-        return icons;
-    }
-
     public static Integer[] getFunctionBlockUnselectIcons_by_primary_features(List<Integer> primary_features){
         String[] mTitles = getFunctionBlockTitles_by_primary_features(primary_features);
         List<Integer> iconList = new ArrayList<>();
@@ -361,6 +223,48 @@ public class FuncBlockConstants {
 
     public static Integer[] getFunctionBlockSelectIcons_by_primary_features(List<Integer> primary_features){
         String[] mTitles = getFunctionBlockTitles_by_primary_features(primary_features);
+        List<Integer> iconList = new ArrayList<>();
+        for(String title : mTitles){
+            iconList.add(getSelectIcon_by_title(title));
+        }
+
+        Integer[] icons = new Integer[iconList.size()];
+        icons = iconList.toArray(icons);
+        return icons;
+    }
+
+    public static String[] getFunctionBlockTitlesTest(){
+        List<String> mTitleList = new ArrayList<>();
+        mTitleList.add(HOME);
+        mTitleList.add(MESSAGE);
+
+        String[] mTitles = new String[mTitleList.size()];
+        mTitles = mTitleList.toArray(mTitles);
+        return mTitles;
+    }
+
+    public static String[] getFunctionBlockMoreTitlesTest(){
+        List<String> mTitleList = new ArrayList<>();
+
+        String[] mTitles = new String[mTitleList.size()];
+        mTitles = mTitleList.toArray(mTitles);
+        return mTitles;
+    }
+
+    public static Integer[] getFunctionBlockUnselectIconsTest(){
+        String[] mTitles = getFunctionBlockTitlesTest();
+        List<Integer> iconList = new ArrayList<>();
+        for(String title : mTitles){
+            iconList.add(getUnselectIcon_by_title(title));
+        }
+
+        Integer[] icons = new Integer[iconList.size()];
+        icons = iconList.toArray(icons);
+        return icons;
+    }
+
+    public static Integer[] getFunctionBlockSelectIconsTest(){
+        String[] mTitles = getFunctionBlockTitlesTest();
         List<Integer> iconList = new ArrayList<>();
         for(String title : mTitles){
             iconList.add(getSelectIcon_by_title(title));

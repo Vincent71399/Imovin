@@ -51,9 +51,14 @@ public class LibraryFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_library, null);
 
         LinkUIById();
-        Init();
 
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Init();
     }
 
     private void LinkUIById(){

@@ -75,7 +75,6 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
 
         LinkUIById();
         SetFunction();
-        Init();
 
         return rootView;
     }
@@ -84,6 +83,7 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        Init();
     }
 
     @Override

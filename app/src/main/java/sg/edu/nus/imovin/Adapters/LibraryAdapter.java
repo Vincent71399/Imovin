@@ -1,6 +1,7 @@
 package sg.edu.nus.imovin.Adapters;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
@@ -106,25 +107,35 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
                 holder.pic_container.setVisibility(View.GONE);
             }
         }else{
-//            YouTubePlayerSupportFragment video = YouTubePlayerSupportFragment.newInstance();
-//            video.initialize(Config.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
-//                @Override
-//                public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
-////                    if (!wasRestored) {
-//                        youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
-//                        youTubePlayer.cueVideo(CommonFunc.RemoveVideoPrefix(libraryData.getVideo_url()));
-////                    }
-//                }
-//
-//                @Override
-//                public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-//
-//                }
-//            });
-//
-//            FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-//            transaction.add(R.id.video_container, video);
-//            transaction.commit();
+            YouTubePlayerSupportFragment video = YouTubePlayerSupportFragment.newInstance();
+            video.initialize(Config.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+                @Override
+                public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
+                    youTubePlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
+                        @Override
+                        public void onFullscreen(boolean fullscreen) {
+                            if(fullscreen) {
+                                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                            }
+                            else {
+                                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                            }
+                        }
+                    });
+                    if (!wasRestored) {
+                        youTubePlayer.cueVideo(CommonFunc.RemoveVideoPrefix(libraryData.getVideo_url()));
+                    }
+                }
+
+                @Override
+                public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+                }
+            });
+
+            FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.video_container, video);
+            transaction.commit();
         }
 
         holder.link_container.setOnClickListener(new View.OnClickListener() {

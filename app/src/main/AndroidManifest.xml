@@ -46,7 +46,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.DashBoardActivity" />
+            android:name=".Activities.DashBoardActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activities.ChallengePopupActivity"
             android:theme="@style/Theme.Transparent" />

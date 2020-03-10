@@ -72,7 +72,6 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
         LinkUIById();
         SetupData();
         SetFunction();
-        Init();
 
         return rootView;
     }
@@ -81,6 +80,7 @@ public class SocialFeedFragment extends BaseFragment implements View.OnClickList
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        Init();
     }
 
     @Override
