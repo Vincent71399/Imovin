@@ -42,7 +42,7 @@ public class RewardCalendarAdapter extends RecyclerView.Adapter<RewardCalendarAd
     public RewardCalendarAdapter_ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
-                inflate(R.layout.item_calendar_cell, viewGroup, false);
+                inflate(R.layout.item_reward_calendar_cell, viewGroup, false);
 
         return new RewardCalendarAdapter.RewardCalendarAdapter_ViewHolder(itemView);
     }
@@ -61,10 +61,16 @@ public class RewardCalendarAdapter extends RecyclerView.Adapter<RewardCalendarAd
             if(selectDate != null) {
                 if (calendar.compareTo(selectDate) == 0) {
                     holder.progress_bar.setProgress(100);
-                    holder.date.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.theme_purple));
+                    holder.progress_bar.setVisibility(View.VISIBLE);
+                    holder.date.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.white_color));
                 } else {
                     holder.progress_bar.setProgress(0);
-                    holder.date.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.grey_color));
+                    holder.progress_bar.setVisibility(View.INVISIBLE);
+                    if(rewardsPointHistoryData.getPoints() == 0) {
+                        holder.date.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.lesser_grey_color));
+                    }else{
+                        holder.date.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.black_color));
+                    }
                 }
             }
 
