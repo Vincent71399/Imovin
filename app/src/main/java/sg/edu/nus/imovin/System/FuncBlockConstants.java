@@ -232,47 +232,4 @@ public class FuncBlockConstants {
         icons = iconList.toArray(icons);
         return icons;
     }
-
-    public static String[] getFunctionBlockTitlesTest(){
-        List<String> mTitleList = new ArrayList<>();
-        mTitleList.add(HOME);
-        mTitleList.add(MESSAGE);
-
-        String[] mTitles = new String[mTitleList.size()];
-        mTitles = mTitleList.toArray(mTitles);
-        return mTitles;
-    }
-
-    public static String[] getFunctionBlockMoreTitlesTest(){
-        List<String> mTitleList = new ArrayList<>();
-
-        String[] mTitles = new String[mTitleList.size()];
-        mTitles = mTitleList.toArray(mTitles);
-        return mTitles;
-    }
-
-    public static Integer[] getFunctionBlockUnselectIconsTest(){
-        String[] mTitles = getFunctionBlockTitlesTest();
-        List<Integer> iconList = new ArrayList<>();
-        for(String title : mTitles){
-            iconList.add(getUnselectIcon_by_title(title));
-        }
-
-        Integer[] icons = new Integer[iconList.size()];
-        icons = iconList.toArray(icons);
-        return icons;
-    }
-
-    public static Integer[] getFunctionBlockSelectIconsTest(){
-        String[] mTitles = getFunctionBlockTitlesTest();
-        List<Integer> iconList = new ArrayList<>();
-        for(String title : mTitles){
-            iconList.add(getSelectIcon_by_title(title));
-        }
-
-        Integer[] icons = new Integer[iconList.size()];
-        icons = iconList.toArray(icons);
-        return icons;
-    }
-
 }

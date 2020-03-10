@@ -22,7 +22,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.nus.imovin.Adapters.LibraryAdapter;
-import sg.edu.nus.imovin.Common.RecyclerItemClickListener;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.ArticleData;
 import sg.edu.nus.imovin.Retrofit.Object.LibraryData;
