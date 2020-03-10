@@ -286,4 +286,8 @@ public class CommonFunc {
         }
         return String.valueOf(value);
     }
+
+    public static String RemoveVideoPrefix(String videoUrl){
+        return videoUrl.replace("https://www.youtube.com/watch?v=", "");
+    }
 }

@@ -1,6 +1,8 @@
 package sg.edu.nus.imovin.System;
 
 public class Config {
+    public static final String YOUTUBE_API_KEY = "AIzaSyAM1VllF6sGFZjzmsEF7ROlJjv_9RYU3-w";
+
     public static final boolean ENABLE_SPLASH_ANIMATION = true;
     public static final boolean AUTO_LOGIN = true;
 

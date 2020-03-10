@@ -73,23 +73,24 @@ public class LibraryFragment extends BaseFragment {
                     articleData.getSource(),
                     String.valueOf(articleData.getYear()),
                     articleData.getPicture_url(),
-                    articleData.getUrl()
+                    articleData.getUrl(),
+                    articleData.getVideo_url()
             );
             libraryDataList.add(libraryData);
         }
 
-        LibraryAdapter libraryAdapter = new LibraryAdapter(libraryDataList);
+        LibraryAdapter libraryAdapter = new LibraryAdapter(getActivity(), libraryDataList);
 
         library_list.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         library_list.setAdapter(libraryAdapter);
 
-        library_list.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                LibraryData libraryData = libraryDataList.get(position);
-                OpenUrlInBrowser(libraryData.getLink_url());
-            }
-        }));
+//        library_list.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                LibraryData libraryData = libraryDataList.get(position);
+//                OpenUrlInBrowser(libraryData.getLink_url());
+//            }
+//        }));
     }
 
     private void getArticleData(){

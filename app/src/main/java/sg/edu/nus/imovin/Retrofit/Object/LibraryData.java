@@ -7,14 +7,16 @@ public class LibraryData {
     private String year;
     private String pic_url;
     private String link_url;
+    private String video_url;
 
-    public LibraryData(String title, String subtitle, String publish, String year, String pic_url, String link_url) {
+    public LibraryData(String title, String subtitle, String publish, String year, String pic_url, String link_url, String video_url) {
         this.title = title;
         this.subtitle = subtitle;
         this.publish = publish;
         this.year = year;
         this.pic_url = pic_url;
         this.link_url = link_url;
+        this.video_url = video_url;
     }
 
     public String getTitle() {
@@ -63,5 +65,13 @@ public class LibraryData {
 
     public void setLink_url(String link_url) {
         this.link_url = link_url;
+    }
+
+    public String getVideo_url() {
+        return video_url;
+    }
+
+    public void setVideo_url(String video_url) {
+        this.video_url = video_url;
     }
 }

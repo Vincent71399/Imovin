@@ -14,6 +14,7 @@ public class ArticleData {
     private String updated_at;
     private String url;
     private Integer year;
+    private String video_url;
 
     public String get_id() {
         return _id;
@@ -101,5 +102,13 @@ public class ArticleData {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public String getVideo_url() {
+        return video_url;
+    }
+
+    public void setVideo_url(String video_url) {
+        this.video_url = video_url;
     }
 }
