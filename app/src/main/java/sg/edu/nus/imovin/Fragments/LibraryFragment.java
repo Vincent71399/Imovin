@@ -90,8 +90,6 @@ public class LibraryFragment extends BaseFragment {
             libraryDataList.add(libraryData);
         }
 
-        libraryDataList.get(1).setVideo_url("ie2X5yXn8KY");
-
         LibraryAdapter libraryAdapter = new LibraryAdapter(getActivity(), libraryDataList);
 
         library_list.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));

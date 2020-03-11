@@ -47,7 +47,7 @@
         </activity>
         <activity
             android:name=".Activities.DashBoardActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.ChallengePopupActivity"
             android:theme="@style/Theme.Transparent" />
@@ -107,7 +107,9 @@
             android:theme="@style/Theme.Transparent" />
         <activity
             android:name=".Activities.RewardsRedeemSuccessActivity"
-            android:theme="@style/Theme.Transparent"/>
+            android:theme="@style/Theme.Transparent" />
+        <activity
+            android:name=".Activities.SingleVideoActivity" />
 
     </application>
 

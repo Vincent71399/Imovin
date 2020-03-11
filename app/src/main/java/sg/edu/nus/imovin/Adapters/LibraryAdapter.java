@@ -27,11 +27,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
+import sg.edu.nus.imovin.Activities.SingleVideoActivity;
 import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.LibraryData;
 import sg.edu.nus.imovin.System.Config;
 import sg.edu.nus.imovin.System.ImovinApplication;
+import sg.edu.nus.imovin.System.IntentConstants;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryData_ViewHolder>{
     private static final int FirstView = 0;
@@ -124,7 +126,11 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
                     holder.video_container.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Toast.makeText(ImovinApplication.getInstance(), libraryData.getVideo_url(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(ImovinApplication.getInstance(), libraryData.getVideo_url(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            intent.setClass(activity, SingleVideoActivity.class);
+                            intent.putExtra(IntentConstants.VIDEO_URL, libraryData.getVideo_url());
+                            ImovinApplication.getInstance().startActivity(intent);
                         }
                     });
                 }
