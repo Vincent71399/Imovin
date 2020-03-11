@@ -7,17 +7,22 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubeThumbnailLoader;
+import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -52,6 +57,8 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
         TextView link_subtitle;
         TextView link_info;
         ImageView link_pic;
+        YouTubeThumbnailView video_container;
+        ImageView play_btn;
 
         public LibraryData_ViewHolder(View itemView){
             super(itemView);
@@ -61,6 +68,8 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
             link_subtitle = itemView.findViewById(R.id.link_subtitle);
             link_info = itemView.findViewById(R.id.link_info);
             link_pic = itemView.findViewById(R.id.link_pic);
+            video_container = itemView.findViewById(R.id.video_container);
+            play_btn = itemView.findViewById(R.id.play_btn);
         }
     }
 
@@ -92,7 +101,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
     }
 
     @Override
-    public void onBindViewHolder(LibraryData_ViewHolder holder, int position) {
+    public void onBindViewHolder(final LibraryData_ViewHolder holder, int position) {
         final LibraryData libraryData = libraryDataList.get(position);
 
         holder.link_header.setText(libraryData.getTitle());
@@ -107,35 +116,24 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
                 holder.pic_container.setVisibility(View.GONE);
             }
         }else{
-            YouTubePlayerSupportFragment video = YouTubePlayerSupportFragment.newInstance();
-            video.initialize(Config.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+            holder.video_container.initialize(Config.YOUTUBE_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
                 @Override
-                public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
-                    youTubePlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
+                public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
+                    youTubeThumbnailLoader.setVideo(libraryData.getVideo_url());
+                    holder.play_btn.setVisibility(View.VISIBLE);
+                    holder.video_container.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onFullscreen(boolean fullscreen) {
-                            if(fullscreen) {
-                                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                            }
-                            else {
-                                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                            }
+                        public void onClick(View view) {
+                            Toast.makeText(ImovinApplication.getInstance(), libraryData.getVideo_url(), Toast.LENGTH_SHORT).show();
                         }
                     });
-                    if (!wasRestored) {
-                        youTubePlayer.cueVideo(CommonFunc.RemoveVideoPrefix(libraryData.getVideo_url()));
-                    }
                 }
 
                 @Override
-                public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
+                public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+                    Toast.makeText(ImovinApplication.getInstance(), "Fail to load video", Toast.LENGTH_SHORT).show();
                 }
             });
-
-            FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.video_container, video);
-            transaction.commit();
         }
 
         holder.link_container.setOnClickListener(new View.OnClickListener() {

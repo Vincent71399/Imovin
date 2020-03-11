@@ -1,8 +1,10 @@
 package sg.edu.nus.imovin.Fragments;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +34,7 @@ import sg.edu.nus.imovin.Retrofit.Object.LibraryData;
 import sg.edu.nus.imovin.Retrofit.Response.ArticleResponse;
 import sg.edu.nus.imovin.Retrofit.Service.ImovinService;
 import sg.edu.nus.imovin.System.BaseFragment;
+import sg.edu.nus.imovin.System.Config;
 import sg.edu.nus.imovin.System.ImovinApplication;
 import sg.edu.nus.imovin.System.LogConstants;
 
@@ -83,18 +90,12 @@ public class LibraryFragment extends BaseFragment {
             libraryDataList.add(libraryData);
         }
 
+        libraryDataList.get(1).setVideo_url("ie2X5yXn8KY");
+
         LibraryAdapter libraryAdapter = new LibraryAdapter(getActivity(), libraryDataList);
 
         library_list.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         library_list.setAdapter(libraryAdapter);
-
-//        library_list.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                LibraryData libraryData = libraryDataList.get(position);
-//                OpenUrlInBrowser(libraryData.getLink_url());
-//            }
-//        }));
     }
 
     private void getArticleData(){
@@ -130,9 +131,4 @@ public class LibraryFragment extends BaseFragment {
         });
     }
 
-    private void OpenUrlInBrowser(String url){
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(url));
-        startActivity(i);
-    }
 }
