@@ -38,6 +38,7 @@ import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.System.BaseActivity;
 import sg.edu.nus.imovin.System.FuncBlockConstants;
 import sg.edu.nus.imovin.System.ImovinApplication;
+import sg.edu.nus.imovin.System.IntentConstants;
 import sg.edu.nus.imovin.System.LogConstants;
 import sg.edu.nus.imovin.System.SystemConstant;
 import sg.edu.nus.imovin.utils.TabEntity;
@@ -70,6 +71,8 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
 
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private MyPagerAdapter mAdapter;
+
+    private int redirect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +123,9 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void Init(){
+        redirect = getIntent().getIntExtra(IntentConstants.REDIRECT, -1);
+        Log.d("fcm_notification", "redirect : " + redirect);
+
         ClearPreviousFragments();
         if(mFragments == null){
             mFragments = new ArrayList<>();
@@ -211,6 +217,34 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         OtherFunc.GetDBFunction().addHomeCount(year, month, day);
         LogFuncClick logFuncClick1 = OtherFunc.GetDBFunction().queryLogFuncClick_by_Date(year, month, day);
         Log.d(LogConstants.DailyLogTag, "Home Count : " + logFuncClick1.getHomeCount());
+
+        SetRedirect(redirect);
+    }
+
+    private void SetRedirect(int redirect){
+        String redirectTitle = FuncBlockConstants.getRedirectTitle(redirect);
+        if(!redirectTitle.equals("")) {
+            int position = -1, more_position = -1;
+            for (int i = 0; i < mTitles.length; i++) {
+                if (redirectTitle.equals(mTitles[i])) {
+                    position = i;
+                }
+            }
+            for (int i = 0; i < moreTitles.length; i++) {
+                if (redirectTitle.equals(moreTitles[i])) {
+                    more_position = i;
+                }
+            }
+
+            if (position >= 0) {
+                vp.setCurrentItem(position);
+                sub_tab_layout.setCurrentTab(position);
+            } else if (more_position > 0) {
+                vp.setCurrentItem(mTitles.length - 1 + more_position);
+                sub_tab_layout.setCurrentTab(mTitles.length - 1);
+                ((TabAdapter) more_spinner.getAdapter()).setSelection(more_position);
+            }
+        }
     }
 
     @Override
@@ -288,7 +322,7 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
             case FuncBlockConstants.CHALLENGE:
                 help_text = getString(R.string.help_challenge);
                 break;
-            case FuncBlockConstants.SOCIAL:
+            case FuncBlockConstants.COMMUNITY:
                 help_text = getString(R.string.help_social_feed);
                 break;
             case FuncBlockConstants.LIBRARY:
@@ -408,10 +442,10 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                 LogFuncClick logFuncClick5 = OtherFunc.GetDBFunction().queryLogFuncClick_by_Date(year, month, day);
                 Log.d(LogConstants.DailyLogTag, "Monitor Count : " + logFuncClick5.getMonitorCount());
                 break;
-            case FuncBlockConstants.SOCIAL:
+            case FuncBlockConstants.COMMUNITY:
                 OtherFunc.GetDBFunction().addSocialCount(year, month, day);
                 LogFuncClick logFuncClick6 = OtherFunc.GetDBFunction().queryLogFuncClick_by_Date(year, month, day);
-                Log.d(LogConstants.DailyLogTag, "Social Count : " + logFuncClick6.getSocialCount());
+                Log.d(LogConstants.DailyLogTag, "Community Count : " + logFuncClick6.getSocialCount());
                 break;
             case FuncBlockConstants.CHALLENGE:
                 OtherFunc.GetDBFunction().addChallengeCount(year, month, day);

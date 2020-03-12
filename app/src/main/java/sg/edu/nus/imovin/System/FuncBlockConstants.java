@@ -22,7 +22,7 @@ public class FuncBlockConstants {
     public static final String FORUM = "Forum";
     public static final String GOAL = "Goal";
     public static final String MONITOR = "Monitor";
-    public static final String SOCIAL = "Social";
+    public static final String COMMUNITY = "Community";
     public static final String CHALLENGE = "Challenge";
     public static final String MORE = "More";
 
@@ -47,7 +47,7 @@ public class FuncBlockConstants {
             case MONITOR:
                 fragment = MonitorFragment.getInstance();
                 break;
-            case SOCIAL:
+            case COMMUNITY:
                 fragment = SocialFeedFragment.getInstance();
                 break;
             case CHALLENGE:
@@ -81,7 +81,7 @@ public class FuncBlockConstants {
             case MONITOR:
                 icon = R.drawable.icon_monitor_grey;
                 break;
-            case SOCIAL:
+            case COMMUNITY:
                 icon = R.drawable.icon_feed_grey;
                 break;
             case CHALLENGE:
@@ -118,7 +118,7 @@ public class FuncBlockConstants {
             case MONITOR:
                 icon = R.drawable.icon_monitor_purple;
                 break;
-            case SOCIAL:
+            case COMMUNITY:
                 icon = R.drawable.icon_feed_purple;
                 break;
             case CHALLENGE:
@@ -149,7 +149,7 @@ public class FuncBlockConstants {
                     mTitleList.add(REWARDS);
                     break;
                 case 2:
-                    mTitleList.add(SOCIAL);
+                    mTitleList.add(COMMUNITY);
                     break;
                 case 3:
                     mTitleList.add(LIBRARY);
@@ -186,7 +186,7 @@ public class FuncBlockConstants {
             mTitleList.add(REWARDS);
         }
         if(!primary_features.contains(2)){
-            mTitleList.add(SOCIAL);
+            mTitleList.add(COMMUNITY);
         }
         if(!primary_features.contains(3)){
             mTitleList.add(LIBRARY);
@@ -231,5 +231,36 @@ public class FuncBlockConstants {
         Integer[] icons = new Integer[iconList.size()];
         icons = iconList.toArray(icons);
         return icons;
+    }
+
+    public static String getRedirectTitle(int redirect){
+        String title = "";
+        switch (redirect){
+            case 0:
+                title = MESSAGE;
+                break;
+            case 1:
+                title = REWARDS;
+                break;
+            case 2:
+                title = COMMUNITY;
+                break;
+            case 3:
+                title = LIBRARY;
+                break;
+            case 4:
+                title = FORUM;
+                break;
+            case 5:
+                title = MONITOR;
+                break;
+            case 6:
+                title = GOAL;
+                break;
+            case 7:
+                title = CHALLENGE;
+                break;
+        }
+        return title;
     }
 }

@@ -26,7 +26,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -108,9 +107,7 @@
         <activity
             android:name=".Activities.RewardsRedeemSuccessActivity"
             android:theme="@style/Theme.Transparent" />
-        <activity
-            android:name=".Activities.SingleVideoActivity" />
-
+        <activity android:name=".Activities.SingleVideoActivity" />
     </application>
 
 </manifest>

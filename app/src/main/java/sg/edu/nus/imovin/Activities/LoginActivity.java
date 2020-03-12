@@ -67,10 +67,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private EmailLoginResponse emailLoginResponse;
 
+    private int redirect = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("redirect")) {
+            redirect = Integer.parseInt(getIntent().getExtras().getString("redirect"));
+            Log.d("fcm_notification", "login redirect : " + redirect);
+        }
 
         HideActionBar();
         LinkUIById();
@@ -395,6 +402,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void LaunchDashboard(){
         Intent intent = new Intent();
         intent.setClass(this, DashBoardActivity.class);
+        intent.putExtra(IntentConstants.REDIRECT, redirect);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }

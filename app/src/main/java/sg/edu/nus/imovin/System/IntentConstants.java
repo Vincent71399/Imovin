@@ -34,6 +34,7 @@ public class IntentConstants {
     public static final String REWARD_VENUE = "REWARD_VENUE";
     public static final String REWARD_TIME = "REWARD_TIME";
     public static final String VIDEO_URL = "VIDEO_URL";
+    public static final String REDIRECT = "REDIRECT";
 
     public static final String QUESTION_DATA = "QUESTION_DATA";
     public static final String MEDAL_DATA = "MEDAL_DATA";
