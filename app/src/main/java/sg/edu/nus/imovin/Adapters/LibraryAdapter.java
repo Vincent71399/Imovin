@@ -1,26 +1,20 @@
 package sg.edu.nus.imovin.Adapters;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -28,7 +22,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 import sg.edu.nus.imovin.Activities.SingleVideoActivity;
-import sg.edu.nus.imovin.Common.CommonFunc;
 import sg.edu.nus.imovin.R;
 import sg.edu.nus.imovin.Retrofit.Object.LibraryData;
 import sg.edu.nus.imovin.System.Config;
