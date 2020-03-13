@@ -99,16 +99,32 @@
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <TextView
-        android:id="@+id/all_redeemed_message"
+    <LinearLayout
+        android:id="@+id/all_redeemed_message_container"
         android:visibility="gone"
-        android:text="@string/all_redeemed_message"
-        android:textColor="@color/black_color"
-        android:textSize="@dimen/textSubMid"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center_horizontal"/>
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:text="@string/all_redeemed_message1"
+            android:textColor="@color/black_color"
+            android:textSize="@dimen/textSubBig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:text="@string/all_redeemed_message2"
+            android:textColor="@color/black_color"
+            android:textSize="@dimen/textSubMid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/redeem_btn"
