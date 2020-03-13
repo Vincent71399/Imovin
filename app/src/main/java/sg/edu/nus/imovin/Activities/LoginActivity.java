@@ -68,6 +68,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private EmailLoginResponse emailLoginResponse;
 
     private int redirect = -1;
+    private boolean isAutoLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +146,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             Log.d("lutarez", "username : " + username + " ---  password : " + password);
 
             if (!username.equals("") && !password.equals("")) {
+                isAutoLogin = true;
                 EmailLogin(username, password);
             }
         }
@@ -275,7 +277,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if(emailLoginResponse.getData().getFitbitAuthenticated()){
             GetUserInfo();
         }else {
-            StartOauth();
+            if(isAutoLogin){
+                SharedPreferences preferences = getApplicationContext().getSharedPreferences(SystemConstant.SHARE_PREFERENCE_LOCATION, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString(SystemConstant.USERNAME, "");
+                editor.putString(SystemConstant.PASSWORD, "");
+                editor.apply();
+            }else {
+                StartOauth();
+            }
         }
     }
 
