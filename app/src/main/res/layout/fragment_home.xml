@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sg.edu.nus.imovin.Fragments.HomeFragment">
+    tools:context="sg.edu.nus.imovin2.Fragments.HomeFragment">
 
     <LinearLayout
         android:orientation="vertical"

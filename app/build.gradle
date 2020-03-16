@@ -5,11 +5,11 @@ apply plugin: 'io.fabric'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "sg.edu.nus.imovin"
+        applicationId "sg.edu.nus.imovin2"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }

@@ -3,6 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sg.edu.nus.imovin.Activities.SocialNewCommentActivity">
+    tools:context="sg.edu.nus.imovin2.Activities.SocialNewCommentActivity">
 
 </android.support.constraint.ConstraintLayout>

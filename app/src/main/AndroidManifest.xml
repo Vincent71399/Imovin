@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="sg.edu.nus.imovin">
+    package="sg.edu.nus.imovin2">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".System.ImovinApplication"
+        android:name="sg.edu.nus.imovin2.System.ImovinApplication"
         android:allowBackup="false"
         android:icon="@mipmap/imovin_icon"
         android:label="@string/app_name"
@@ -16,12 +16,12 @@
         android:theme="@style/AppTheme">
 
         <service
-            android:name=".Services.MonitorConnectionService"
+            android:name="sg.edu.nus.imovin2.Services.MonitorConnectionService"
             android:enabled="true"
             android:exported="false" />
 
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name="sg.edu.nus.imovin2.Activities.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.OauthResponseActivity"
+            android:name="sg.edu.nus.imovin2.Activities.OauthResponseActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -45,69 +45,69 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.DashBoardActivity"
+            android:name="sg.edu.nus.imovin2.Activities.DashBoardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ChallengePopupActivity"
+            android:name="sg.edu.nus.imovin2.Activities.ChallengePopupActivity"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name=".Activities.ForumNewPostActivity"
+            android:name="sg.edu.nus.imovin2.Activities.ForumNewPostActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".Activities.NewCommentActivity"
+            android:name="sg.edu.nus.imovin2.Activities.NewCommentActivity"
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".Activities.NewSocialCommentActivity"
+            android:name="sg.edu.nus.imovin2.Activities.NewSocialCommentActivity"
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".Activities.ForumCommentActivity" />
+        <activity android:name="sg.edu.nus.imovin2.Activities.ForumCommentActivity" />
         <activity
-            android:name=".Activities.SocialNewPostActivity"
+            android:name="sg.edu.nus.imovin2.Activities.SocialNewPostActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".Activities.SocialContentActivity" />
+        <activity android:name="sg.edu.nus.imovin2.Activities.SocialContentActivity" />
         <activity
-            android:name=".Activities.AddPlanActivity"
+            android:name="sg.edu.nus.imovin2.Activities.AddPlanActivity"
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".Activities.MonitorChangePlanActivity"
+            android:name="sg.edu.nus.imovin2.Activities.MonitorChangePlanActivity"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name=".Activities.MonitorDetailActivity"
+            android:name="sg.edu.nus.imovin2.Activities.MonitorDetailActivity"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name=".Activities.ConsentDocActivity"
+            android:name="sg.edu.nus.imovin2.Activities.ConsentDocActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ConsentSignActivity"
+            android:name="sg.edu.nus.imovin2.Activities.ConsentSignActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".Activities.QuestionnaireActivity"
+            android:name="sg.edu.nus.imovin2.Activities.QuestionnaireActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".Activities.QuestionnaireSummaryActivity"
+            android:name="sg.edu.nus.imovin2.Activities.QuestionnaireSummaryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.QuestionnaireDocActivity"
+            android:name="sg.edu.nus.imovin2.Activities.QuestionnaireDocActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.RewardsCheckoutActivity"
+            android:name="sg.edu.nus.imovin2.Activities.RewardsCheckoutActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.RewardsCalendarActivity"
+            android:name="sg.edu.nus.imovin2.Activities.RewardsCalendarActivity"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name=".Activities.RewardsCheckoutConfirmActivity"
+            android:name="sg.edu.nus.imovin2.Activities.RewardsCheckoutConfirmActivity"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name=".Activities.RewardsRedeemSuccessActivity"
+            android:name="sg.edu.nus.imovin2.Activities.RewardsRedeemSuccessActivity"
             android:theme="@style/Theme.Transparent" />
-        <activity android:name=".Activities.SingleVideoActivity" />
+        <activity android:name="sg.edu.nus.imovin2.Activities.SingleVideoActivity" />
     </application>
 
 </manifest>

@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <sg.edu.nus.imovin.Common.NDSpinner
+            <sg.edu.nus.imovin2.Common.NDSpinner
                 android:id="@+id/more_spinner"
                 android:visibility="invisible"
                 android:layout_alignParentBottom="true"

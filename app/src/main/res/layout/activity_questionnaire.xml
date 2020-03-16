@@ -28,7 +28,7 @@
             app:tl_tab_padding="15dp"
             app:tl_textBold="SELECT" />
 
-        <sg.edu.nus.imovin.Common.CustomViewPager
+        <sg.edu.nus.imovin2.Common.CustomViewPager
             android:id="@+id/vp"
             android:layout_width="match_parent"
             android:layout_height="0dp"

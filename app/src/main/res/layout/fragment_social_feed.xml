@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sg.edu.nus.imovin.Fragments.SocialFeedFragment">
+    tools:context="sg.edu.nus.imovin2.Fragments.SocialFeedFragment">
 
     <RelativeLayout
         android:id="@+id/mainView"
