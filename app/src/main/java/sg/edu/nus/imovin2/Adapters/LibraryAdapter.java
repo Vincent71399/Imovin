@@ -119,7 +119,6 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
                     holder.video_container.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-//                            Toast.makeText(ImovinApplication.getInstance(), libraryData.getVideo_url(), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent();
                             intent.setClass(activity, SingleVideoActivity.class);
                             intent.putExtra(IntentConstants.VIDEO_URL, libraryData.getVideo_url());
