@@ -48,7 +48,7 @@
     <dimen name="challengePopupPadding">30dp</dimen>
     <dimen name="challengePopupMarginTop">10dp</dimen>
 
-    <dimen name="libraryLinkBoxPadding">20dp</dimen>
+    <dimen name="libraryLinkBoxPadding">16dp</dimen>
     <dimen name="libraryLinkPadding">5dp</dimen>
     <dimen name="libraryLinkBigTextSize">20sp</dimen>
     <dimen name="libraryLinkMidTextSize">18sp</dimen>

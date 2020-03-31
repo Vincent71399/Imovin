@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/libraryLinkBoxPadding">
+    android:paddingStart="@dimen/libraryLinkBoxPadding"
+    android:paddingEnd="@dimen/libraryLinkBoxPadding"
+    android:paddingTop="@dimen/libraryLinkBoxPadding">
 
     <TextView
         android:id="@+id/link_header"
@@ -48,6 +50,7 @@
         style="@style/LinkInfoStyle" />
 
     <LinearLayout
+        android:layout_marginTop="@dimen/libraryLinkBoxPadding"
         android:orientation="vertical"
         android:background="@color/grey_color"
         android:layout_width="match_parent"

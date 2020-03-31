@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:paddingStart="@dimen/libraryLinkBoxPadding"
-    android:paddingEnd="@dimen/libraryLinkBoxPadding">
+    android:paddingEnd="@dimen/libraryLinkBoxPadding"
+    android:paddingTop="@dimen/libraryLinkBoxPadding">
 
     <LinearLayout
         android:id="@+id/link_container"
@@ -78,6 +79,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="@dimen/libraryLinkBoxPadding"
         android:orientation="vertical"
         android:background="@color/grey_color"
         android:layout_width="match_parent"

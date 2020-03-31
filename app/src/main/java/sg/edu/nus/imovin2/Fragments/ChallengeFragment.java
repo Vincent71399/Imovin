@@ -81,14 +81,9 @@ public class ChallengeFragment extends BaseFragment {
 
         LinkUIById();
         SetFunction();
+        Init();
 
         return rootView;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Init();
     }
 
     private void LinkUIById(){

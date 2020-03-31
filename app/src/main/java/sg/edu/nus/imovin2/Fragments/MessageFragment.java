@@ -60,14 +60,8 @@ public class MessageFragment extends BaseFragment {
 
         LinkUIById();
         SetFunction();
-
-        return rootView;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         Init();
+        return rootView;
     }
 
     private void LinkUIById(){

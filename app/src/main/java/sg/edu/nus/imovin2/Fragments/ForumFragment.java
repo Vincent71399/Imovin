@@ -76,6 +76,7 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
         LinkUIById();
         SetupData();
         SetFunction();
+        Init();
 
         return rootView;
     }
@@ -84,7 +85,6 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        Init();
     }
 
     @Override
@@ -260,8 +260,11 @@ public class ForumFragment extends BaseFragment implements View.OnClickListener{
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(LaunchThreadDetailEvent event) {
+        Log.d("forum_event", String.valueOf(event.getThread_id()));
         for(ThreadData threadData : threadDataList){
             if(event.getThread_id().equals(threadData.get_id())){
+                Log.d("forum_event", String.valueOf(event.getThread_id()));
+
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), ForumCommentActivity.class);
                 intent.putExtra(IntentConstants.THREAD_DATA, threadData);
