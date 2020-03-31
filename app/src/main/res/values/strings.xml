@@ -242,47 +242,35 @@
     </string>
 
     <string name="help_home">
-        Use the dashboard to monitor your physical activity over time. Your daily statistics are shown on
-        the top portion of the page. The graph in the middle shows your physical activity for the past
-        week. A bar in the graph that is filled indicates that you have met your set plan for the day. Toggle
-        between data for steps, calories, duration and distance using the buttons below the graph. Check out the
-        other functions of iMovin below.
+        This shows your physical activity for this week! Toggle between data for steps, calories, duration, and distance using the buttons below the graph.
     </string>
 
     <string name="help_challenge">
-        Earn points and badges for moving! You can receive badges for achieving specific milestones such
-        as steps or duration. Click on each badge to see its details such as the number of points it is worth
-        and the number of times you have earned it. Each challenge lasts for 30 days. You will be
-        participating in the challenge with other users, so try to aim for first place!
+        Earn badges for achieving milestones such as steps, duration, and distance! Click on your earned badges for more details.
     </string>
 
     <string name="help_social_feed">
-        You can create a new post by filling in the textbox, or upload a photo from your mobile device.
+        Check how others how are doing! Upload messages and photos about your physical activity.
     </string>
 
     <string name="help_library">
-        Check out new articles about exercising by clicking on each article. The articles will change
-        regularly, so come back for new articles!
+        Check out new articles about exercising here! The articles update regularly, so come back for more!
     </string>
 
     <string name="help_goal_plan">
-        Create an exercise plan for your daily steps! Either set a default plan provided by iMovin, or create
-        a new personal plan by pressing ‘New Custom’. You can modify or delete all custom plans. Plans can only be modified on Mondays.
+        Create an exercise plan for your daily steps! Set a default plan or create a new plan via ‘New Custom’. Plans can be modified on Mondays.
     </string>
 
     <string name="help_monitor_plan">
-        Check out how you are faring in your exercise plans for your daily steps! Each day in the calendar
-        shows how close you are to completing your set plan. Click on each day to see more details. You
-        can also change the plan you are monitoring by pressing ‘Change Plan’.
+        Monitor your progress in your exercise plans here! Each day in the calendar shows how close you are to meeting your plan. Click on it for more details!
     </string>
 
     <string name="help_forum">
-        Interact with other users via the Forum! Start a new forum thread, like threads posted by other
-        users or post comments on the threads.
+        Interact with other users here! Start a new thread, like threads from others or comment on them!
     </string>
 
     <string name="help_message">
-        Access the messages sent from iMovin’ here!
+        View your previous messages here!
     </string>
 
     <string name="help_rewards">
