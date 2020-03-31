@@ -49,7 +49,7 @@
 
     <string name="warning_text">Keep Moving!</string>
     <string name="encourage_text">You seem to be missing your goal. Try to make time for a walk!</string>
-    <string name="daily_goal_text">Daily Goal: </string>
+    <string name="daily_goal_text">Daily Goal :</string>
 
     <string name="forum_topics">Forum topics</string>
     <string name="social_topics">Social topics</string>

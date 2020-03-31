@@ -243,9 +243,9 @@ public class RewardsCalendarActivity extends Activity implements View.OnClickLis
         if(hashMap.containsKey(dateString)){
             RewardsPointHistoryData rewardsPointHistoryData = hashMap.get(dateString);
             date_point_detail.setText(CommonFunc.Integer2String(rewardsPointHistoryData.getSteps()) + " " + getString(R.string.steps)
-                    + " -> " + CommonFunc.Integer2String(rewardsPointHistoryData.getPoints()) + " " + getString(R.string.points));
+                    + " → " + CommonFunc.Integer2String(rewardsPointHistoryData.getPoints()) + " " + getString(R.string.points));
         }else{
-            date_point_detail.setText("0 Steps -> 0 Points");
+            date_point_detail.setText("0 Steps → 0 Points");
         }
     }
 

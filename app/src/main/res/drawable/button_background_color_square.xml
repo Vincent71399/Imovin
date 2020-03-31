@@ -4,11 +4,16 @@
         <shape android:shape="rectangle"  >
             <stroke android:width="3dip" android:color="@color/theme_purple" />
             <solid android:color="@color/white_color"/>
+            <corners android:topLeftRadius="0dp" android:topRightRadius="0dp"
+                android:bottomLeftRadius="10dp" android:bottomRightRadius="10dp"/>
+
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle"  >
             <solid android:color="@color/theme_purple"/>
+            <corners android:topLeftRadius="0dp" android:topRightRadius="0dp"
+                android:bottomLeftRadius="10dp" android:bottomRightRadius="10dp"/>
         </shape>
     </item>
 </selector>

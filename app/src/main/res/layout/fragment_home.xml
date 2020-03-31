@@ -131,8 +131,10 @@
 
         <TextView
             android:id="@+id/daily_goal"
+            android:layout_marginTop="@dimen/homeSubPadding"
             android:text="@string/daily_goal_text"
             android:textColor="@color/black_color"
+            android:textStyle="bold"
             android:textSize="@dimen/homeTextSize"
             android:gravity="center"
             android:layout_width="match_parent"

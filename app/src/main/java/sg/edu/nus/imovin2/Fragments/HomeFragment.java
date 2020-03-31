@@ -210,7 +210,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         ImovinApplication.setTarget(step_target);
 
-        daily_goal.setText(getString(R.string.daily_goal_text) + step_target);
+        daily_goal.setText(getString(R.string.daily_goal_text) + " " + step_target  + " " +  getString(R.string.steps));
 
         barColors = new ArrayList<>();
 
