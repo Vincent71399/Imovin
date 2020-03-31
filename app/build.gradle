@@ -8,8 +8,8 @@ android {
         applicationId "sg.edu.nus.imovin2"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 3
-        versionName "1.1.0"
+        versionCode 4
+        versionName "1.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
