@@ -104,6 +104,7 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
         navigator_left.setOnClickListener(this);
         navigator_right.setOnClickListener(this);
         image_input.setOnClickListener(this);
+        uploadingText.setOnClickListener(this);
     }
 
     private void SetupData(){
@@ -143,6 +144,11 @@ public class SocialNewPostActivity extends BaseActivity implements View.OnClickL
             case R.id.socialPostUploadImage:
                 Intent chooseImageIntent = ImagePicker.getPickImageIntent(this);
                 startActivityForResult(chooseImageIntent, IntentConstants.SELECT_PICTURE);
+                break;
+            case R.id.uploadingText:
+                Intent chooseImageIntent2 = ImagePicker.getPickImageIntent(this);
+                startActivityForResult(chooseImageIntent2, IntentConstants.SELECT_PICTURE);
+                break;
         }
     }
 

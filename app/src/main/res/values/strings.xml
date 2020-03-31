@@ -63,6 +63,7 @@
     <string name="close">Close</string>
     <string name="return_text">Return</string>
 
+    <string name="upload_photo">Upload Photo</string>
     <string name="new_thread_title_hint">Enter thread title...</string>
     <string name="new_thread_message_hint">Enter thread message...</string>
     <string name="thread_delete_title">Delete Thread</string>

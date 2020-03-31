@@ -14,15 +14,19 @@
         android:textSize="@dimen/postNewPostTextSizeSmall"
         android:gravity="top|start"/>
 
-        <ImageView
-            android:id="@+id/socialPostUploadImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icons_upload_image" />
+    <ImageView
+        android:id="@+id/socialPostUploadImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icons_upload_image" />
 
-        <TextView
-            android:id="@+id/uploadingText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/uploadingText"
+        android:text="@string/upload_photo"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSubMid"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
