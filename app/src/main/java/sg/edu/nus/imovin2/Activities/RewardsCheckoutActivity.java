@@ -43,6 +43,7 @@ import sg.edu.nus.imovin2.System.LogConstants;
 
 import static sg.edu.nus.imovin2.HttpConnection.ConnectionURL.SERVER;
 import static sg.edu.nus.imovin2.System.IntentConstants.REWARD_CHECKOUT_DATA;
+import static sg.edu.nus.imovin2.System.IntentConstants.REWARD_FIRST_DATA;
 import static sg.edu.nus.imovin2.System.IntentConstants.REWARD_TIME;
 import static sg.edu.nus.imovin2.System.IntentConstants.REWARD_VENUE;
 
@@ -237,6 +238,9 @@ public class RewardsCheckoutActivity extends AppCompatActivity implements View.O
                 if(resultCode == Activity.RESULT_OK){
                     Intent resultIntent = new Intent();
                     setResult(RESULT_OK, resultIntent);
+                    if(rewardsData!= null && rewardsData.getAvailable_items().size() > 0) {
+                        resultIntent.putExtra(REWARD_FIRST_DATA, rewardsData.getAvailable_items().get(0));
+                    }
                     finish();
                 }
                 break;

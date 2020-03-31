@@ -1,10 +1,14 @@
 package sg.edu.nus.imovin2.Adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -24,11 +28,13 @@ public class RewardCheckoutAdapter extends RecyclerView.Adapter<RewardCheckoutAd
     public final static class RewardCheckoutAdapter_ViewHolder extends RecyclerView.ViewHolder {
         TextView reward_name;
         TextView reward_points;
+        ImageView icon;
 
         public RewardCheckoutAdapter_ViewHolder(@NonNull View itemView) {
             super(itemView);
             reward_name = itemView.findViewById(R.id.reward_name);
             reward_points = itemView.findViewById(R.id.reward_points);
+            icon = itemView.findViewById(R.id.icon);
         }
     }
 
@@ -48,6 +54,15 @@ public class RewardCheckoutAdapter extends RecyclerView.Adapter<RewardCheckoutAd
         RewardsAvailableItemData rewardsAvailableItemData = rewardsAvailableItemDataList.get(position);
         holder.reward_name.setText(rewardsAvailableItemData.getName());
         holder.reward_points.setText(CommonFunc.Integer2String(rewardsAvailableItemData.getPoints()) + " " + ImovinApplication.getInstance().getString(R.string.points));
+
+        if(!rewardsAvailableItemData.getIcon().equals("")){
+            byte[] imageBytes = Base64.decode(rewardsAvailableItemData.getIcon(), Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+
+            holder.icon.setImageBitmap(bitmap);
+        }else{
+            holder.icon.setImageDrawable(ImovinApplication.getInstance().getDrawable(R.drawable.gift_redeemed));
+        }
     }
 
     @Override

@@ -25,9 +25,11 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/icon"
                 android:src="@drawable/gift_redeemed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:scaleType="centerInside"
+                android:layout_width="@dimen/rewardImageSizeBig"
+                android:layout_height="@dimen/rewardImageSizeBig"/>
 
             <TextView
                 android:text="@string/redemption_complete"

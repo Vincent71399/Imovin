@@ -31,6 +31,7 @@ public class IntentConstants {
     public static final String SOCIAL_POST_COMMENT = "SOCIAL_POST_COMMENT";
     public static final String REWARD_DAILY_DATA = "REWARD_DAILY_DATA";
     public static final String REWARD_CHECKOUT_DATA = "REWARD_CHECKOUT_DATA";
+    public static final String REWARD_FIRST_DATA = "REWARD_FIRST_DATA";
     public static final String REWARD_VENUE = "REWARD_VENUE";
     public static final String REWARD_TIME = "REWARD_TIME";
     public static final String VIDEO_URL = "VIDEO_URL";

@@ -7,6 +7,7 @@ public class RewardsAvailableItemData implements Serializable {
     private String name;
     private Integer points;
     private Integer quantity;
+    private String icon;
 
     public String getId() {
         return id;
@@ -38,5 +39,13 @@ public class RewardsAvailableItemData implements Serializable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

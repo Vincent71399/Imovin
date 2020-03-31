@@ -17,10 +17,12 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/icon"
             android:layout_marginTop="@dimen/rewardSubPadding"
             android:src="@drawable/gift_redeemed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:scaleType="centerInside"
+            android:layout_width="@dimen/rewardImageSize"
+            android:layout_height="@dimen/rewardImageSize"/>
 
         <TextView
             android:id="@+id/reward_name"

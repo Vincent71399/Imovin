@@ -103,4 +103,14 @@
     <dimen name="messagePadding">10dp</dimen>
     <dimen name="messageTextMid">18sp</dimen>
 
+    <dimen name="rewardPadding">20dp</dimen>
+    <dimen name="rewardSubPadding">10dp</dimen>
+    <dimen name="rewardMarginTop">20dp</dimen>
+    <dimen name="rewardItemPadding">10dp</dimen>
+    <dimen name="rewardImageSize">50dp</dimen>
+    <dimen name="rewardImageSizeBig">100dp</dimen>
+
+    <dimen name="minorSpace">5dp</dimen>
+    <dimen name="PaddingBig">20dp</dimen>
+
 </resources>

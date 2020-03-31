@@ -44,6 +44,7 @@ import sg.edu.nus.imovin2.System.LogConstants;
 import static sg.edu.nus.imovin2.HttpConnection.ConnectionURL.SERVER;
 import static sg.edu.nus.imovin2.System.IntentConstants.REWARD_CHECKOUT_DATA;
 import static sg.edu.nus.imovin2.System.IntentConstants.REWARD_DAILY_DATA;
+import static sg.edu.nus.imovin2.System.IntentConstants.REWARD_FIRST_DATA;
 
 
 public class RewardsFragment extends BaseFragment implements View.OnClickListener {
@@ -255,6 +256,7 @@ public class RewardsFragment extends BaseFragment implements View.OnClickListene
                 if(resultCode == Activity.RESULT_OK){
                     Intent intent = new Intent();
                     intent.setClass(ImovinApplication.getInstance(), RewardsRedeemSuccessActivity.class);
+                    intent.putExtra(REWARD_FIRST_DATA, data.getSerializableExtra(REWARD_FIRST_DATA));
                     startActivityForResult(intent, IntentConstants.REWARD_COMPLETE);
                 }
                 break;

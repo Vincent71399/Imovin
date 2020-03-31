@@ -1,11 +1,15 @@
 package sg.edu.nus.imovin2.Adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +35,7 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardAdap
         TextView reward_name;
         TextView reward_points;
         TextView quantity;
+        ImageView icon;
 
         public RewardAdapter_ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -38,6 +43,7 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardAdap
             reward_name = itemView.findViewById(R.id.reward_name);
             reward_points = itemView.findViewById(R.id.reward_points);
             quantity = itemView.findViewById(R.id.quantity);
+            icon = itemView.findViewById(R.id.icon);
         }
     }
 
@@ -68,6 +74,15 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardAdap
             holder.reward_name.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.black_color));
             holder.reward_points.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.black_color));
             holder.quantity.setTextColor(ContextCompat.getColor(ImovinApplication.getInstance(), R.color.black_color));
+        }
+
+        if(!rewardsAvailableItemData.getIcon().equals("")){
+            byte[] imageBytes = Base64.decode(rewardsAvailableItemData.getIcon(), Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+
+            holder.icon.setImageBitmap(bitmap);
+        }else{
+            holder.icon.setImageDrawable(ImovinApplication.getInstance().getDrawable(R.drawable.gift_redeemed));
         }
     }
 
