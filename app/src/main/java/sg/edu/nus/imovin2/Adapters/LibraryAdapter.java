@@ -137,9 +137,10 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
         holder.link_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(libraryData.getLink_url()));
-                ImovinApplication.getInstance().startActivity(i);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(libraryData.getLink_url()));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                ImovinApplication.getInstance().startActivity(intent);
             }
         });
         holder.itemView.setActivated(selectedItems.get(position, false));
