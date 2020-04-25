@@ -3,6 +3,7 @@ package sg.edu.nus.imovin2.System;
 import android.app.Application;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -72,7 +73,11 @@ public class ImovinApplication extends Application {
 
     public void StartPendingUploadService(){
         monitor_connection_service_intent = new Intent(getApplicationContext(), MonitorConnectionService.class);
-        startService(monitor_connection_service_intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(monitor_connection_service_intent);
+        } else {
+            startService(monitor_connection_service_intent);
+        }
     }
 
     public static String getToken() {
