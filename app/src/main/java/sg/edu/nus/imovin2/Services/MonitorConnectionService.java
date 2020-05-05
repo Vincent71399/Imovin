@@ -115,6 +115,13 @@ public class MonitorConnectionService extends Service {
                 logFuncClick.getGoalCount()
         );
 
+        Log.d(LogConstants.LogTag, "Home Count : " + logFuncClick.getHomeCount());
+        Log.d(LogConstants.LogTag, "Challenge Count : " + logFuncClick.getChallengeCount());
+        Log.d(LogConstants.LogTag, "Library Count : " + logFuncClick.getLibraryCount());
+        Log.d(LogConstants.LogTag, "Social Count : " + logFuncClick.getSocialCount());
+        Log.d(LogConstants.LogTag, "Forum Count : " + logFuncClick.getForumCount());
+        Log.d(LogConstants.LogTag, "Monitor Count : " + logFuncClick.getMonitorCount());
+        Log.d(LogConstants.LogTag, "Goal Count : " + logFuncClick.getGoalCount());
         UploadDailyLogRequest(dailyLogRequest, logFuncClick);
     }
 

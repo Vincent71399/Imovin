@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -39,6 +40,7 @@ import sg.edu.nus.imovin2.Retrofit.Response.QuestionnaireResponse;
 import sg.edu.nus.imovin2.Retrofit.Response.ResetPasswordResponse;
 import sg.edu.nus.imovin2.Retrofit.Response.UserInfoResponse;
 import sg.edu.nus.imovin2.Retrofit.Service.ImovinService;
+import sg.edu.nus.imovin2.Services.MonitorConnectionService;
 import sg.edu.nus.imovin2.System.BaseActivity;
 import sg.edu.nus.imovin2.System.Config;
 import sg.edu.nus.imovin2.System.FitbitConstants;
@@ -70,6 +72,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private int redirect = -1;
     private boolean isAutoLogin = false;
 
+    private Intent monitor_connection_service_intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +88,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         LinkUIById();
         SetFunction();
         Init();
-
+        StartPendingUploadService();
     }
 
     @Override
@@ -150,6 +154,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 EmailLogin(username, password);
             }
         }
+    }
+
+    public void StartPendingUploadService(){
+        monitor_connection_service_intent = new Intent(getApplicationContext(), MonitorConnectionService.class);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            startForegroundService(monitor_connection_service_intent);
+//        } else {
+            startService(monitor_connection_service_intent);
+//        }
     }
 
     @Override

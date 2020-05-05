@@ -122,6 +122,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
                             Intent intent = new Intent();
                             intent.setClass(activity, SingleVideoActivity.class);
                             intent.putExtra(IntentConstants.VIDEO_URL, libraryData.getVideo_url());
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             ImovinApplication.getInstance().startActivity(intent);
                         }
                     });

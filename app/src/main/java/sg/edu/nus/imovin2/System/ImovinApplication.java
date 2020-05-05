@@ -62,23 +62,23 @@ public class ImovinApplication extends Application {
             }
         });
 
-        StartPendingUploadService();
+//        StartPendingUploadService();
     }
 
     @Override
     public void onTerminate() {
-        stopService(monitor_connection_service_intent);
+//        stopService(monitor_connection_service_intent);
         super.onTerminate();
     }
 
-    public void StartPendingUploadService(){
-        monitor_connection_service_intent = new Intent(getApplicationContext(), MonitorConnectionService.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(monitor_connection_service_intent);
-        } else {
-            startService(monitor_connection_service_intent);
-        }
-    }
+//    public void StartPendingUploadService(){
+//        monitor_connection_service_intent = new Intent(getApplicationContext(), MonitorConnectionService.class);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            startForegroundService(monitor_connection_service_intent);
+//        } else {
+//            startService(monitor_connection_service_intent);
+//        }
+//    }
 
     public static String getToken() {
         return token;
