@@ -171,6 +171,8 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
                         }
                         if(pendingEditPlan != null){
                             intentGoal.putExtra(AddPlanActivity.Default_Plan_Name, pendingEditPlan.getName());
+
+                            Log.d("SelectedPlanData", "target save : " + pendingEditPlan.getTarget());
                             intentGoal.putExtra(AddPlanActivity.Default_Plan_Target, pendingEditPlan.getTarget());
                         }
                         startActivityForResult(intentGoal, IntentConstants.GOAL_EDIT_PLAN);
@@ -192,6 +194,8 @@ public class GoalFragment extends BaseFragment implements View.OnClickListener {
             }
 
             if(planData.getIs_selected()){
+                Log.d("SelectedPlanData", "Id : " + planData.get_id());
+                Log.d("SelectedPlanData", "Target : " + planData.getTarget());
                 ImovinApplication.setPlanData(planData);
                 EventBus.getDefault().post(new ChangePlanEvent());
             }

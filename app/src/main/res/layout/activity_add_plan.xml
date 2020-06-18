@@ -31,7 +31,6 @@
         <TextView
             android:id="@+id/active_minutes_value"
             android:layout_marginTop="@dimen/goalMarginSmall"
-            android:text="100"
             android:textSize="@dimen/textMid"
             android:textColor="@color/black_color"
             android:gravity="center"
@@ -60,7 +59,7 @@
             app:isb_track_progress_color="@color/theme_purple"
             app:isb_indicator_color="@color/theme_purple"
             app:isb_tick_marks_size="3dp"
-            app:isb_ticks_count="31"
+            app:isb_ticks_count="43"
             android:layout_marginTop="@dimen/goalMarginBig"
             android:layout_marginLeft="@dimen/goalMarginSmall"
             android:layout_marginRight="@dimen/goalMarginSmall"/>
