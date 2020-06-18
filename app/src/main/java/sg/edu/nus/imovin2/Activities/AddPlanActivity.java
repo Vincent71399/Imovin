@@ -82,7 +82,6 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
             @Override
             public void onSeeking(SeekParams seekParams) {
                 int steps = seekParams.progress;
-                Log.d("SelectedPlanData", "steps : " + steps);
                 active_minutes_value.setText(String.valueOf(steps));
             }
 
@@ -102,8 +101,6 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
         String default_plan_name = getIntent().getStringExtra(Default_Plan_Name);
         update_plan_id = getIntent().getStringExtra(Update_Plan_ID);
         int default_plan_target = getIntent().getIntExtra(Default_Plan_Target, 100);
-
-        Log.d("SelectedPlanData", "target add/edit plan : " + default_plan_target);
 
         if(update_plan_id != null){
             button_add_plan.setText(getString(R.string.edit));
