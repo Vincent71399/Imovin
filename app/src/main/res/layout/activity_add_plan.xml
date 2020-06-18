@@ -29,9 +29,9 @@
             android:layout_weight="4"/>
 
         <TextView
-            android:id="@+id/steps_value"
+            android:id="@+id/active_minutes_value"
             android:layout_marginTop="@dimen/goalMarginSmall"
-            android:text="10000"
+            android:text="100"
             android:textSize="@dimen/textMid"
             android:textColor="@color/black_color"
             android:gravity="center"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:text="@string/steps"
+            android:text="@string/active_minutes"
             android:layout_marginTop="@dimen/goalMarginSmall"
             android:textColor="@color/black_color"
             android:textSize="@dimen/textSubMid"
@@ -51,9 +51,11 @@
             android:id="@+id/planStepsBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:isb_progress="10000"
-            app:isb_max="20000"
-            app:isb_min="5000"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            app:isb_progress="10"
+            app:isb_max="280"
+            app:isb_min="70"
             app:isb_thumb_color="@color/theme_purple"
             app:isb_track_progress_color="@color/theme_purple"
             app:isb_indicator_color="@color/theme_purple"

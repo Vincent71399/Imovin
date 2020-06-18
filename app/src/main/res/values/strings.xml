@@ -38,6 +38,7 @@
     <string name="question_mark">\?</string>
 
     <string name="steps">Steps</string>
+    <string name="active_minutes">Active Minutes</string>
     <string name="cal">Cal</string>
     <string name="min">Min</string>
     <string name="kilometer">KM</string>
@@ -50,6 +51,7 @@
     <string name="warning_text">Keep Moving!</string>
     <string name="encourage_text">You seem to be missing your goal. Try to make time for a walk!</string>
     <string name="daily_goal_text">Daily Goal :</string>
+    <string name="weekly_goal_text">Weekly Goal :</string>
 
     <string name="forum_topics">Forum topics</string>
     <string name="social_topics">Social topics</string>

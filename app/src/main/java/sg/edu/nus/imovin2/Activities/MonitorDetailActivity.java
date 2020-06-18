@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin2.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class MonitorDetailActivity extends BaseSimpleActivity implements View.On
         ButterKnife.bind(this);
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     private void SetFunction(){
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -54,7 +56,7 @@ public class MonitorDetailActivity extends BaseSimpleActivity implements View.On
         date_display.setText(goal.getDate() + " " + month_year);
         steps_value.setText(String.valueOf(goal.getSteps()));
         plan_steps_bar.setProgress(100 * goal.getSteps() / goal.getGoal());
-        steps_left.setText("Steps left : " + (goal.getGoal() - goal.getSteps()));
+        steps_left.setText(getString(R.string.active_minutes) + " left : " + (goal.getGoal() - goal.getSteps()));
     }
 
     @Override

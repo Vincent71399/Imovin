@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin2.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -42,7 +43,7 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
 
     @BindView(R.id.mainView) RelativeLayout mainView;
     @BindView(R.id.plan_title_input) EditText plan_title_input;
-    @BindView(R.id.steps_value) TextView steps_value;
+    @BindView(R.id.active_minutes_value) TextView active_minutes_value;
     @BindView(R.id.planStepsBar) IndicatorSeekBar planStepsBar;
     @BindView(R.id.button_add_plan) Button button_add_plan;
     @BindView(R.id.button_cancel) Button button_cancel;
@@ -67,6 +68,7 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
         ButterKnife.bind(this);
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     private void SetFunction(){
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -80,7 +82,7 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
             @Override
             public void onSeeking(SeekParams seekParams) {
                 int steps = seekParams.progress;
-                steps_value.setText(String.valueOf(steps));
+                active_minutes_value.setText(String.valueOf(steps));
             }
 
             @Override
@@ -98,11 +100,13 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
     private void Init(){
         String default_plan_name = getIntent().getStringExtra(Default_Plan_Name);
         update_plan_id = getIntent().getStringExtra(Update_Plan_ID);
-        int default_plan_target = getIntent().getIntExtra(Default_Plan_Target, 10000);
+        int default_plan_target = getIntent().getIntExtra(Default_Plan_Target, 100);
 
         if(update_plan_id != null){
             button_add_plan.setText(getString(R.string.edit));
             plan_title_input.setText(default_plan_name);
+            planStepsBar.setProgress(default_plan_target);
+        }else{
             planStepsBar.setProgress(default_plan_target);
         }
     }
@@ -115,9 +119,9 @@ public class AddPlanActivity extends BaseSimpleActivity implements View.OnClickL
                     Toast.makeText(this, "Plan Name cannot be empty", Toast.LENGTH_SHORT).show();
                 }else {
                     if(update_plan_id == null) {
-                        AddPlan(new CreatePlanRequest(plan_title_input.getText().toString(), Integer.parseInt(steps_value.getText().toString())));
+                        AddPlan(new CreatePlanRequest(plan_title_input.getText().toString(), Integer.parseInt(active_minutes_value.getText().toString())));
                     }else{
-                        UpdatePlan(update_plan_id, new UpdatePlanRequest(plan_title_input.getText().toString(), Integer.parseInt(steps_value.getText().toString())));
+                        UpdatePlan(update_plan_id, new UpdatePlanRequest(plan_title_input.getText().toString(), Integer.parseInt(active_minutes_value.getText().toString())));
                     }
                 }
                 break;

@@ -71,7 +71,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.calories_btn) TextView calories_btn;
     @BindView(R.id.duration_btn) TextView duration_btn;
     @BindView(R.id.distance_btn) TextView distance_btn;
-    @BindView(R.id.daily_goal) TextView daily_goal;
+    @BindView(R.id.weekly_goal) TextView weekly_goal;
 
     ArrayList<String> weekdayList;
     HashMap<String, Integer> dailyStepsHashMap;
@@ -210,7 +210,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         ImovinApplication.setTarget(step_target);
 
-        daily_goal.setText(getString(R.string.daily_goal_text) + " " + step_target  + " " +  getString(R.string.steps));
+        weekly_goal.setText(getString(R.string.weekly_goal_text) + " " + step_target  + " " +  getString(R.string.active_minutes));
 
         barColors = new ArrayList<>();
 
@@ -252,7 +252,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             warning.setVisibility(View.INVISIBLE);
         }
 
-        createBarChart(dailyStepsHashMap);
+        duration_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_background));
+        createBarChart(dailyDurationsHashMap);
     }
 
     private Comparator<BarEntry> compareByX = new Comparator<BarEntry>() {
