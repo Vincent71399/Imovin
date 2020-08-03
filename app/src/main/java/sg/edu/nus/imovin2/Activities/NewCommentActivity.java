@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin2.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -60,6 +61,7 @@ public class NewCommentActivity extends BaseSimpleActivity implements View.OnCli
         ButterKnife.bind(this);
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     private void SetFunction(){
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

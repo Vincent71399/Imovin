@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin2.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -83,6 +84,7 @@ public class RewardsCalendarActivity extends Activity implements View.OnClickLis
         }
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     private void SetFunction() {
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

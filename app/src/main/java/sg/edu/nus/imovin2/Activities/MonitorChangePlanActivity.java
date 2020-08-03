@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin2.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -87,6 +88,7 @@ public class MonitorChangePlanActivity extends BaseSimpleActivity implements Vie
         ButterKnife.bind(this);
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     private void SetFunction(){
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
