@@ -8,31 +8,33 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="sg.edu.nus.imovin2.System.ImovinApplication"
+        android:name=".System.ImovinApplication"
         android:allowBackup="false"
         android:icon="@mipmap/imovin_icon"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activities.HomePopActivity"></activity>
 
         <service
-            android:name="sg.edu.nus.imovin2.Services.MonitorConnectionService"
+            android:name=".Services.MonitorConnectionService"
             android:enabled="true"
             android:exported="false" />
 
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.OauthResponseActivity"
+            android:name=".Activities.OauthResponseActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
@@ -48,78 +50,78 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.DashBoardActivity"
+            android:name=".Activities.DashBoardActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.ChallengePopupActivity"
+            android:name=".Activities.ChallengePopupActivity"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.ForumNewPostActivity"
+            android:name=".Activities.ForumNewPostActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.NewCommentActivity"
+            android:name=".Activities.NewCommentActivity"
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.NewSocialCommentActivity"
+            android:name=".Activities.NewSocialCommentActivity"
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="sg.edu.nus.imovin2.Activities.ForumCommentActivity" />
+        <activity android:name=".Activities.ForumCommentActivity" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.SocialNewPostActivity"
+            android:name=".Activities.SocialNewPostActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name="sg.edu.nus.imovin2.Activities.SocialContentActivity" />
+        <activity android:name=".Activities.SocialContentActivity" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.AddPlanActivity"
+            android:name=".Activities.AddPlanActivity"
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.MonitorChangePlanActivity"
+            android:name=".Activities.MonitorChangePlanActivity"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.MonitorDetailActivity"
+            android:name=".Activities.MonitorDetailActivity"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.ConsentDocActivity"
+            android:name=".Activities.ConsentDocActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.ConsentSignActivity"
+            android:name=".Activities.ConsentSignActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.QuestionnaireActivity"
+            android:name=".Activities.QuestionnaireActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.QuestionnaireSummaryActivity"
+            android:name=".Activities.QuestionnaireSummaryActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.QuestionnaireDocActivity"
+            android:name=".Activities.QuestionnaireDocActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.RewardsCheckoutActivity"
+            android:name=".Activities.RewardsCheckoutActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.RewardsCalendarActivity"
+            android:name=".Activities.RewardsCalendarActivity"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.RewardsCheckoutConfirmActivity"
+            android:name=".Activities.RewardsCheckoutConfirmActivity"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name="sg.edu.nus.imovin2.Activities.RewardsRedeemSuccessActivity"
+            android:name=".Activities.RewardsRedeemSuccessActivity"
             android:theme="@style/Theme.Transparent" />
-        <activity android:name="sg.edu.nus.imovin2.Activities.SingleVideoActivity" />
+        <activity android:name=".Activities.SingleVideoActivity" />
     </application>
 
 </manifest>

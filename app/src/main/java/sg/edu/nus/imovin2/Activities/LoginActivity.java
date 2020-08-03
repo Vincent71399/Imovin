@@ -158,11 +158,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     public void StartPendingUploadService(){
         monitor_connection_service_intent = new Intent(getApplicationContext(), MonitorConnectionService.class);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            startForegroundService(monitor_connection_service_intent);
-//        } else {
-            startService(monitor_connection_service_intent);
-//        }
+        startService(monitor_connection_service_intent);
     }
 
     @Override
