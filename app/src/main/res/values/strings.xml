@@ -23,8 +23,8 @@
     <string name="prev">Prev</string>
     <string name="continue_text">Continue</string>
 
-    <string name="very_disagree">Very Disagree</string>
-    <string name="very_agree">Very Agree</string>
+    <string name="very_disagree">Strongly Disagree</string>
+    <string name="very_agree">Strongly Agree</string>
     <string name="rate1">1</string>
     <string name="rate2">2</string>
     <string name="rate3">3</string>
@@ -278,5 +278,25 @@
     <string name="help_rewards">
         Get rewarded for moving! Earn points, redeem prizes! You can also monitor your progress towards an available reward!
     </string>
+
+    <string name="log_steps">steps</string>
+    <string name="log_calories">cals</string>
+    <string name="log_duration">mins</string>
+    <string name="log_distance">km</string>
+    <string name="log_average_hr">avg bpm</string>
+
+    <string name="log_bike">bike</string>
+    <string name="log_elliptical">elliptical</string>
+    <string name="log_interval">interval</string>
+    <string name="log_martialarts">martialarts</string>
+    <string name="log_pilates">pilates</string>
+    <string name="log_run">run</string>
+    <string name="log_stairs">stairs</string>
+    <string name="log_swim">swim</string>
+    <string name="log_threadmill">threadmill</string>
+    <string name="log_walk">walk</string>
+    <string name="log_weights">weights</string>
+    <string name="log_yoga">yoga</string>
+    <string name="log_workout">workout</string>
 
 </resources>

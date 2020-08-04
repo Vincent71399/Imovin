@@ -35,6 +35,13 @@
     <dimen name="homeWarningTextSize">15sp</dimen>
     <dimen name="homeTextSize">14sp</dimen>
     <dimen name="homeBtnTextSize">12sp</dimen>
+    <dimen name="homePopupOutPaddingH">26dp</dimen>
+    <dimen name="homePopupOutPaddingV">40dp</dimen>
+    <dimen name="homePopupPadding">12dp</dimen>
+    <dimen name="homePopupMarginTop">5dp</dimen>
+    <dimen name="homePopupBoxPadding">4dp</dimen>
+    <dimen name="homePopupTextSizeBig">16sp</dimen>
+    <dimen name="homePopupTextSizeSmall">14sp</dimen>
 
     <dimen name="challengePadding">5dp</dimen>
     <dimen name="challengeMarginTop">5dp</dimen>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white_color"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/date"
+        android:textSize="@dimen/homePopupTextSizeBig"
+        android:textColor="@color/white"
+        android:background="@color/theme_purple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/homePopupBoxPadding"/>
+
+    <LinearLayout
+        android:id="@+id/divider"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/libraryLinkBoxPadding"
+        android:orientation="vertical"
+        android:background="@color/grey_color"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical"
+        android:padding="@dimen/homePopupBoxPadding">
+
+        <ImageView
+            android:id="@+id/log_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/homePopupBoxPadding"
+            android:paddingEnd="@dimen/homePopupBoxPadding">
+
+            <TextView
+                android:id="@+id/name"
+                android:textSize="@dimen/homePopupTextSizeBig"
+                android:textColor="@color/black_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/time"
+                android:textSize="@dimen/homePopupTextSizeSmall"
+                android:textColor="@color/grey_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/sub_log"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

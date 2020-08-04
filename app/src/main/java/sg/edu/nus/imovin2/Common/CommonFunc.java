@@ -133,6 +133,19 @@ public class CommonFunc {
         return dateFormat;
     }
 
+    public static String GetDisplayDateDetail(String dateString){
+        return GetDisplayDateDetail(RevertFullDateStringRevert(dateString));
+    }
+
+    public static String GetTimeDetail(Calendar date){
+        String timeFormat = convertInt2DAY_OF_WEEK(date.get(Calendar.DAY_OF_WEEK)) + " at " + date.get(Calendar.HOUR_OF_DAY) + ":" + date.get(Calendar.MINUTE);
+        return timeFormat;
+    }
+
+    public static String GetTimeDetail(String dateString){
+        return GetTimeDetail(RevertFullDateStringRevert(dateString));
+    }
+
     public static Calendar RevertFullDateStringRevert(String dateString){
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:SS");
 
@@ -151,6 +164,10 @@ public class CommonFunc {
         return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
                 cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
                 cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public static boolean isSameDay(String cal1, String cal2){
+        return isSameDay(RevertFullDateStringRevert(cal1), RevertFullDateStringRevert(cal2));
     }
 
     private static String convertInt2Month(Integer monthInt){
@@ -195,6 +212,35 @@ public class CommonFunc {
         }
         return monthString;
     }
+
+    private static String convertInt2DAY_OF_WEEK(Integer day_of_week_int){
+        String dayString = "";
+        switch (day_of_week_int){
+            case 1:
+                dayString = ImovinApplication.getInstance().getString(R.string.sun);
+                break;
+            case 2:
+                dayString = ImovinApplication.getInstance().getString(R.string.mon);
+                break;
+            case 3:
+                dayString = ImovinApplication.getInstance().getString(R.string.tue);
+                break;
+            case 4:
+                dayString = ImovinApplication.getInstance().getString(R.string.wed);
+                break;
+            case 5:
+                dayString = ImovinApplication.getInstance().getString(R.string.thu);
+                break;
+            case 6:
+                dayString = ImovinApplication.getInstance().getString(R.string.fri);
+                break;
+            case 7:
+                dayString = ImovinApplication.getInstance().getString(R.string.sat);
+                break;
+        }
+        return dayString;
+    }
+
 
     private static String addZero(Integer value){
         if(value < 10){

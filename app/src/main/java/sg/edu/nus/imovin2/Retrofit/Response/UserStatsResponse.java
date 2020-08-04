@@ -2,12 +2,14 @@ package sg.edu.nus.imovin2.Retrofit.Response;
 
 import java.util.List;
 
+import sg.edu.nus.imovin2.Retrofit.Object.ActivityLogData;
 import sg.edu.nus.imovin2.Retrofit.Object.DailySummaryData;
 
 
 public class UserStatsResponse {
     private String _id;
     private String created_at;
+    private List<ActivityLogData> activity_logs;
     private List<DailySummaryData> daily_summaries;
     private String email;
     private Boolean fitbitAuthenticated;
@@ -33,6 +35,14 @@ public class UserStatsResponse {
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
+    }
+
+    public List<ActivityLogData> getActivity_logs() {
+        return activity_logs;
+    }
+
+    public void setActivity_logs(List<ActivityLogData> activity_logs) {
+        this.activity_logs = activity_logs;
     }
 
     public List<DailySummaryData> getDaily_summaries() {

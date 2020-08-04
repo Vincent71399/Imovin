@@ -15,7 +15,6 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.HomePopActivity"></activity>
 
         <service
             android:name=".Services.MonitorConnectionService"
@@ -121,6 +120,9 @@
         <activity
             android:name=".Activities.RewardsRedeemSuccessActivity"
             android:theme="@style/Theme.Transparent" />
+        <activity
+            android:name=".Activities.HomePopActivity"
+            android:theme="@style/Theme.Transparent"/>
         <activity android:name=".Activities.SingleVideoActivity" />
     </application>
 

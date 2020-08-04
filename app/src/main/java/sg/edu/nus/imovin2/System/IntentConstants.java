@@ -39,4 +39,6 @@ public class IntentConstants {
 
     public static final String QUESTION_DATA = "QUESTION_DATA";
     public static final String MEDAL_DATA = "MEDAL_DATA";
+
+    public static final String ACTIVITY_LOG_DATA = "ACTIVITY_LOG_DATA";
 }

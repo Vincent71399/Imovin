@@ -1,5 +1,6 @@
 package sg.edu.nus.imovin2.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -35,10 +36,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import sg.edu.nus.imovin2.Activities.HomePopActivity;
 import sg.edu.nus.imovin2.Common.CommonFunc;
 import sg.edu.nus.imovin2.Common.IntValueFormatter;
 import sg.edu.nus.imovin2.Common.WeekdayAxisValueFormatter;
 import sg.edu.nus.imovin2.Event.ChangePlanEvent;
+import sg.edu.nus.imovin2.Objects.DisplayLog;
 import sg.edu.nus.imovin2.R;
 import sg.edu.nus.imovin2.Retrofit.Object.DailySummaryData;
 import sg.edu.nus.imovin2.Retrofit.Response.UserStatsResponse;
@@ -48,6 +51,7 @@ import sg.edu.nus.imovin2.System.ImovinApplication;
 import sg.edu.nus.imovin2.System.LogConstants;
 
 import static sg.edu.nus.imovin2.HttpConnection.ConnectionURL.SERVER;
+import static sg.edu.nus.imovin2.System.IntentConstants.ACTIVITY_LOG_DATA;
 
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
@@ -80,6 +84,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     HashMap<String, Float> dailyDistanceHashMap;
 
     private List<Integer> barColors;
+    private DisplayLog displayLog;
 
     public static HomeFragment getInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -125,6 +130,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         calories_btn.setOnClickListener(this);
         duration_btn.setOnClickListener(this);
         distance_btn.setOnClickListener(this);
+        chart_by_day.setOnClickListener(this);
     }
 
     private void Init(){
@@ -197,6 +203,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 distance_btn.setBackground(ContextCompat.getDrawable(ImovinApplication.getInstance(), R.drawable.purple_background));
                 updateBarChartFloat(dailyDistanceHashMap);
                 break;
+            case R.id.chart_by_day:
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), HomePopActivity.class);
+                intent.putExtra(ACTIVITY_LOG_DATA, displayLog);
+                startActivity(intent);
+                break;
         }
     }
 
@@ -206,6 +218,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void SetupDataNew(UserStatsResponse userStatsResponse){
+        displayLog = new DisplayLog(userStatsResponse.getActivity_logs());
+
         int step_target = userStatsResponse.getTarget();
 
         ImovinApplication.setTarget(step_target);
