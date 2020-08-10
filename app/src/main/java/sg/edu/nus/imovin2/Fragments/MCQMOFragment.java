@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import sg.edu.nus.imovin2.Activities.QuestionnaireActivity;
 import sg.edu.nus.imovin2.Adapters.CheckboxAdapter;
 import sg.edu.nus.imovin2.Event.ChangeCheckEvent;
 import sg.edu.nus.imovin2.Objects.CheckboxOption;
@@ -33,6 +35,7 @@ public class MCQMOFragment extends QuesFragment {
     @BindView(R.id.question) TextView question;
     @BindView(R.id.question_checklist) RecyclerView question_checklist;
     @BindView(R.id.other_input) EditText other_input;
+    @BindView(R.id.other_container) LinearLayout other_container;
 
     private View rootView;
     private QuestionData questionData;
@@ -75,6 +78,9 @@ public class MCQMOFragment extends QuesFragment {
 
     private void SetFunction(){
         question.setText(questionData.getQuestion());
+        if(questionData.getQuestion_type().equals(QuestionnaireActivity.MCQ_M)){
+            other_container.setVisibility(View.GONE);
+        }
 
         if(checkboxOptionList == null) {
             checkboxOptionList = new ArrayList<>();

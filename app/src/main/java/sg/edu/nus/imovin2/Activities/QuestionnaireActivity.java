@@ -69,6 +69,7 @@ public class QuestionnaireActivity extends BaseActivity implements View.OnClickL
     public static final String TEXT = "TEXT";
     public static final String NUM = "NUM";
     public static final String NUM_S = "NUM_S";
+    public static final String MCQ_M = "MCQ_M";
     public static final String MCQ_MO = "MCQ_MO";
 
     @BindView(R.id.nextBtn) Button nextBtn;
@@ -175,6 +176,9 @@ public class QuestionnaireActivity extends BaseActivity implements View.OnClickL
         }else if(questionDataList.size() > 0
                 && questionDataList.get(0).get(0).getQuestion_type().equals(MCQ_MO)){
             nextBtn.setEnabled(true);
+        }else if(questionDataList.size() > 0
+                && questionDataList.get(0).get(0).getQuestion_type().equals(MCQ_M)){
+            nextBtn.setEnabled(true);
         }
 
         prevBtn.setEnabled(false);
@@ -221,6 +225,7 @@ public class QuestionnaireActivity extends BaseActivity implements View.OnClickL
                     mFragments.add(SetStepFragment.getInstance(questionDataList.get(0)));
                     break;
                 case MCQ_MO:
+                case MCQ_M:
                     mFragments.add(MCQMOFragment.getInstance(questionDataList.get(0)));
                     break;
             }
@@ -500,6 +505,9 @@ public class QuestionnaireActivity extends BaseActivity implements View.OnClickL
             nextBtn.setEnabled(true);
         }else if(questionDataList.size() > 0
                 && questionDataList.get(0).getQuestion_type().equals(MCQ_MO)){
+            nextBtn.setEnabled(true);
+        }else if(questionDataList.size() > 0
+                && questionDataList.get(0).getQuestion_type().equals(MCQ_M)){
             nextBtn.setEnabled(true);
         }else {
             if(answerDataHashMap.containsKey(i)) {
