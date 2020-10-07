@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:955789651656:android:efbf8d752463d2bc",
+        "mobilesdk_app_id": "1:955789651656:android:960f0b26daec327a9a3ffd",
         "android_client_info": {
           "package_name": "sg.edu.nus.imovin2"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "955789651656-vm5dphvell5lek20rbtqqsp1087sa2m3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sg.edu.nus.imovin2",
+            "certificate_hash": "5289a475ef8aec4fd9f188089887542868d5cc4d"
+          }
+        },
         {
           "client_id": "955789651656-idvbekgj8odstevdu9f5s8c7ouqim3g6.apps.googleusercontent.com",
           "client_type": 3
@@ -21,19 +29,24 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDXar2hU2wkgueOwqtTwxSTlDs74EcLxSc"
+          "current_key": "AIzaSyB1zahU6uRZmUI0sJTTJnGif9LuzpfYYZA"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955789651656-idvbekgj8odstevdu9f5s8c7ouqim3g6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "955789651656-90qg106t06tokbh6i89mp2c1hj9eh9q1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "nus.imovin.alfredong"
+              }
+            }
+          ]
         }
       }
     }

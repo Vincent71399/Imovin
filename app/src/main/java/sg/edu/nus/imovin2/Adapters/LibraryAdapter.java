@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.json.JSONStringer;
+
 import java.util.List;
 
 import sg.edu.nus.imovin2.Activities.SingleVideoActivity;
@@ -27,6 +30,7 @@ import sg.edu.nus.imovin2.Retrofit.Object.LibraryData;
 import sg.edu.nus.imovin2.System.Config;
 import sg.edu.nus.imovin2.System.ImovinApplication;
 import sg.edu.nus.imovin2.System.IntentConstants;
+import sg.edu.nus.imovin2.System.LogConstants;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryData_ViewHolder>{
     private static final int FirstView = 0;
@@ -119,11 +123,13 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
                     holder.video_container.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent();
-                            intent.setClass(activity, SingleVideoActivity.class);
-                            intent.putExtra(IntentConstants.VIDEO_URL, libraryData.getVideo_url());
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            ImovinApplication.getInstance().startActivity(intent);
+                            if(libraryData.getVideo_url() != null && !libraryData.getVideo_url().equals("")) {
+                                Intent intent = new Intent();
+                                intent.setClass(activity, SingleVideoActivity.class);
+                                intent.putExtra(IntentConstants.VIDEO_URL, libraryData.getVideo_url());
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                ImovinApplication.getInstance().startActivity(intent);
+                            }
                         }
                     });
                 }
@@ -138,10 +144,14 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
         holder.link_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(libraryData.getLink_url()));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                ImovinApplication.getInstance().startActivity(intent);
+                if(libraryData.getLink_url() != null && !libraryData.getLink_url().equals("")) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(libraryData.getLink_url()));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    ImovinApplication.getInstance().startActivity(intent);
+                }else{
+                    Log.d("link", "null");
+                }
             }
         });
         holder.itemView.setActivated(selectedItems.get(position, false));
