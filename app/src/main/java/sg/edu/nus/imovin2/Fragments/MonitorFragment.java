@@ -285,12 +285,12 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
             goalList.add(new Goal(false));
         }
 
-        int step_threshold = 0;
+        int target_threshold = 0;
         PlanData planData = ImovinApplication.getPlanData();
         if(planData != null) {
-            step_threshold = planData.getTarget();
+            target_threshold = planData.getTarget();
         }else{
-            step_threshold = ImovinApplication.getTarget();
+            target_threshold = ImovinApplication.getTarget();
         }
 
         int dailySummaryIndex = 0;
@@ -300,18 +300,18 @@ public class MonitorFragment extends BaseFragment implements View.OnClickListene
                 DailySummaryData dailySummaryData = dailySummaryDataList.get(dailySummaryIndex);
                 Calendar calendar = CommonFunc.RevertFullDateStringRevert(dailySummaryData.getDate());
                 if (i == calendar.get(Calendar.DAY_OF_MONTH)) {
-                    int step = dailySummaryData.getSteps();
-                    if (step >= step_threshold) {
-                        goalList.add(new Goal(step_threshold, step_threshold, String.valueOf(i)));
+                    int target = dailySummaryData.getDuration();
+                    if (target >= target_threshold) {
+                        goalList.add(new Goal(target_threshold, target_threshold, String.valueOf(i)));
                     } else {
-                        goalList.add(new Goal(step, step_threshold, String.valueOf(i)));
+                        goalList.add(new Goal(target, target_threshold, String.valueOf(i)));
                     }
                     dailySummaryIndex++;
                 } else if (i < calendar.get(Calendar.DAY_OF_MONTH)) {
-                    goalList.add(new Goal(0, step_threshold, String.valueOf(i)));
+                    goalList.add(new Goal(0, target_threshold, String.valueOf(i)));
                 }
             }else{
-                goalList.add(new Goal(0, step_threshold, String.valueOf(i)));
+                goalList.add(new Goal(0, target_threshold, String.valueOf(i)));
             }
         }
 

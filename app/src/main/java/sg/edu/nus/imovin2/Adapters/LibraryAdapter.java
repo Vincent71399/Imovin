@@ -107,7 +107,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryD
         holder.link_subtitle.setText(libraryData.getSubtitle());
         holder.link_info.setText(libraryData.getPublish() + " " + libraryData.getYear());
 
-        if(libraryData.getVideo_url() == null) {
+        if(libraryData.getVideo_url() == null || libraryData.getVideo_url().equals("")) {
             if (libraryData.getPic_url() != null && !libraryData.getPic_url().equals("")) {
                 holder.pic_container.setVisibility(View.VISIBLE);
                 ImageLoader.getInstance().displayImage(libraryData.getPic_url(), holder.link_pic);
