@@ -115,13 +115,14 @@ public class MonitorConnectionService extends Service {
                 logFuncClick.getGoalCount()
         );
 
-        Log.d(LogConstants.LogTag, "Home Count : " + logFuncClick.getHomeCount());
-        Log.d(LogConstants.LogTag, "Challenge Count : " + logFuncClick.getChallengeCount());
-        Log.d(LogConstants.LogTag, "Library Count : " + logFuncClick.getLibraryCount());
-        Log.d(LogConstants.LogTag, "Social Count : " + logFuncClick.getSocialCount());
-        Log.d(LogConstants.LogTag, "Forum Count : " + logFuncClick.getForumCount());
-        Log.d(LogConstants.LogTag, "Monitor Count : " + logFuncClick.getMonitorCount());
-        Log.d(LogConstants.LogTag, "Goal Count : " + logFuncClick.getGoalCount());
+        Log.d(LogConstants.DailyLogTag, "dateString : " + dateString);
+        Log.d(LogConstants.DailyLogTag, "Home Count : " + logFuncClick.getHomeCount());
+        Log.d(LogConstants.DailyLogTag, "Challenge Count : " + logFuncClick.getChallengeCount());
+        Log.d(LogConstants.DailyLogTag, "Library Count : " + logFuncClick.getLibraryCount());
+        Log.d(LogConstants.DailyLogTag, "Social Count : " + logFuncClick.getSocialCount());
+        Log.d(LogConstants.DailyLogTag, "Forum Count : " + logFuncClick.getForumCount());
+        Log.d(LogConstants.DailyLogTag, "Monitor Count : " + logFuncClick.getMonitorCount());
+        Log.d(LogConstants.DailyLogTag, "Goal Count : " + logFuncClick.getGoalCount());
         UploadDailyLogRequest(dailyLogRequest, logFuncClick);
     }
 

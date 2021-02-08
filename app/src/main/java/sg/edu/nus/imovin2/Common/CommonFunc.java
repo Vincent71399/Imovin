@@ -118,7 +118,7 @@ public class CommonFunc {
     }
 
     public static String GetDisplayDate(int year, int month, int day){
-        String dateFormat = addZero(day) + "/" + addZero(month + 1) + "/" + year + " 00:00:00";
+        String dateFormat = addZero(day) + "/" + addZero(month) + "/" + year + " 00:00:00";
 
         return dateFormat;
     }
